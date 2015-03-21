@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CFF13583-CB6D-4FF6-9273-917E056F6ECF}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RCTDataEditor</RootNamespace>
+    <AssemblyName>RCT2 Content Browser</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ObjectListView">
+      <HintPath>.\ObjectListView.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataObjects\GroupInfo.cs" />
+    <Compile Include="DataObjects\GraphicsData.cs" />
+    <Compile Include="DataObjects\ImageDirectory.cs" />
+    <Compile Include="DataObjects\ObjectData.cs" />
+    <Compile Include="DataObjects\Types\Attraction.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\AttractionFlags.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\CarFlags.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\CarFrames.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\ItemFlags.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\TrackSections.cs" />
+    <Compile Include="DataObjects\Types\PathAddition.cs" />
+    <Compile Include="DataObjects\Types\Pathing.cs" />
+    <Compile Include="DataObjects\Types\PathBanner.cs" />
+    <Compile Include="DataObjects\Types\ParkEntrance.cs" />
+    <Compile Include="DataObjects\Types\Water.cs" />
+    <Compile Include="DataObjects\Types\SceneryGroup.cs" />
+    <Compile Include="DataObjects\Types\Wall.cs" />
+    <Compile Include="DataObjects\Types\SmallScenery.cs" />
+    <Compile Include="DataObjects\Palette.cs" />
+    <Compile Include="DataObjects\Types\LargeScenery.cs" />
+    <Compile Include="DataObjects\SpriteFont.cs" />
+    <Compile Include="DataObjects\StringTable.cs" />
+    <Compile Include="DataObjects\Terrain.cs" />
+    <Compile Include="BrowserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BrowserForm.Designer.cs">
+      <DependentUpon>BrowserForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FileIO\PropertyList.cs" />
+    <Compile Include="FileIO\Property.cs" />
+    <Compile Include="FileIO\PropertySection.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BrowserForm.resx">
+      <DependentUpon>BrowserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SortUp.png" />
+    <None Include="Resources\SortDown.png" />
+    <None Include="Resources\Tabs\TabSettings.png" />
+    <None Include="Resources\Tabs\TabWater.png" />
+    <None Include="Resources\Tabs\TabParkEntrances.png" />
+    <None Include="Resources\Tabs\TabSceneryGroups.png" />
+    <None Include="Resources\Tabs\TabWalls.png" />
+    <None Include="Resources\Tabs\TabPathAdditions.png" />
+    <None Include="Resources\Tabs\TabPaths.png" />
+    <None Include="Resources\Tabs\TabSigns.png" />
+    <None Include="Resources\Tabs\TabLargeScenery.png" />
+    <None Include="Resources\Tabs\TabSmallScenery.png" />
+    <None Include="Resources\Tabs\TabAttractions.png" />
+    <None Include="Resources\Tabs\TabAll.png" />
+    <None Include="Resources\Tabs\TabInfo.png" />
+    <None Include="Resources\StatusBar.png" />
+    <None Include="Resources\TabPanelBackground.png" />
+    <None Include="Resources\Water2.png" />
+    <None Include="Resources\Water.png" />
+    <None Include="Resources\TestFlagDown.png" />
+    <None Include="Resources\TestFlag.png" />
+    <None Include="Resources\CloseFlag.png" />
+    <None Include="Resources\ColorPalette.png" />
+    <None Include="Resources\Buttons\PaletteButton.png" />
+    <None Include="Resources\Buttons\PaletteButtonPressed.png" />
+    <None Include="Resources\BoldFont.png" />
+    <None Include="Resources\InvalidError.png" />
+    <Content Include="App.ico" />
+    <None Include="Resources\Buttons\ButtonRotate.png" />
+    <None Include="Resources\Buttons\ButtonSlope.png" />
+    <None Include="Resources\Buttons\ButtonCorner.png" />
+    <None Include="Resources\Buttons\ButtonElevate.png" />
+    <None Include="Resources\Buttons\ButtonBack.png" />
+    <None Include="Resources\Buttons\ButtonForward.png" />
+    <None Include="Resources\Buttons\ButtonLeft.png" />
+    <None Include="Resources\Buttons\ButtonRight.png" />
+    <Content Include="Resources\LandTile.png" />
+    <Content Include="Resources\LandTileReal.png" />
+    <None Include="Resources\SmallSceneryBackgroundLarge.png" />
+    <None Include="Resources\SlopeSW.png" />
+    <None Include="Resources\SlopeSE.png" />
+    <None Include="Resources\SlopeNW.png" />
+    <None Include="Resources\SlopeNE.png" />
+    <None Include="Resources\SmallSceneryBackground.png" />
+    <None Include="Resources\OpenFlagDown.png" />
+    <None Include="Resources\MissingImagesError.png" />
+    <Content Include="Resources\Selector.png" />
+    <Content Include="Resources\SelectorQuarter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CustomControls\CustomControls.csproj">
+      <Project>{b278983b-b66a-4add-84a4-dff9120633f0}</Project>
+      <Name>CustomControls</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
