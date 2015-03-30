@@ -1,7 +1,7 @@
 # RCT2 Content Browser
 
 * Author: Robert Jordan
-* Version: v1.1.0
+* Version: v1.1.0.1
 
 RCT2 Content Browser is a more advanced program originally designed to replace DatChecker.
 With this you can easily browse and manage all content in your RCT2 directory.
