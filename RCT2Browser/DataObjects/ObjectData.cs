@@ -281,7 +281,7 @@ public class ObjectData {
 		try {
 			objInfo.FileName = path.Substring(path.Replace('/', '\\').LastIndexOf('\\') + 1);
 			objInfo.FileName = objInfo.FileName.Substring(0, objInfo.FileName.Length - 4);
-			BinaryReader reader = new BinaryReader(new FileStream(path, FileMode.Open), Encoding.Unicode);
+			BinaryReader reader = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read), Encoding.Unicode);
 
 			// Read the object data header
 			objInfo.Flags = reader.ReadUInt32();
@@ -333,7 +333,7 @@ public class ObjectData {
 		try {
 			objectHeader.FileName = path.Substring(path.Replace('/', '\\').LastIndexOf('\\') + 1);
 			objectHeader.FileName = objectHeader.FileName.Substring(0, objectHeader.FileName.Length - 4);
-			BinaryReader reader = new BinaryReader(new FileStream(path, FileMode.Open), Encoding.Unicode);
+			BinaryReader reader = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read), Encoding.Unicode);
 
 			objectHeader.Read(reader);
 
