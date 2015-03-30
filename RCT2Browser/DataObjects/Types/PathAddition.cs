@@ -86,10 +86,47 @@ public class PathAddition : ObjectData {
 	/** <summary> Constructs the default object. </summary> */
 	public override bool Draw(Graphics g, Point position, int rotation = 0, int corner = 0, int slope = -1, int elevation = 0, int frame = 0) {
 		try {
-			g.DrawImage(graphicsData.Images[1 + rotation], new Point(
-				position.X + imageDirectory.Entries[1 + rotation].XOffset,
-				position.Y + imageDirectory.Entries[1 + rotation].YOffset
-			));
+			if (Header.Flags.HasFlag(PathAdditionFlags.JumpFountain) || Header.Flags.HasFlag(PathAdditionFlags.JumpSnowball)) {
+				g.DrawImage(graphicsData.Images[1 + 0], new Point(
+					position.X + imageDirectory.Entries[1 + 0].XOffset,
+					position.Y + imageDirectory.Entries[1 + 0].YOffset
+				));
+				g.DrawImage(graphicsData.Images[1 + 1], new Point(
+					position.X + imageDirectory.Entries[1 + 1].XOffset,
+					position.Y + imageDirectory.Entries[1 + 1].YOffset
+				));
+				g.DrawImage(graphicsData.Images[1 + 2], new Point(
+					position.X + imageDirectory.Entries[1 + 2].XOffset,
+					position.Y + imageDirectory.Entries[1 + 2].YOffset
+				));
+				g.DrawImage(graphicsData.Images[1 + 3], new Point(
+					position.X + imageDirectory.Entries[1 + 3].XOffset,
+					position.Y + imageDirectory.Entries[1 + 3].YOffset
+				));
+			}
+			else {
+				Point offset = Point.Empty;
+				if (Header.Subtype == PathAdditionSubtypes.Bench || Header.Subtype == PathAdditionSubtypes.LitterBin) {
+					switch (rotation) {
+					case 0: offset = new Point(16 - 4, 8 + 2); break;
+					case 1: offset = new Point(16 - 4, 24 - 4); break;
+					case 2: offset = new Point(-16 + 4, 24 - 4); break;
+					case 3: offset = new Point(-16 + 4, 8 + 4); break;
+					}
+				}
+				else {
+					switch (rotation) {
+					case 0: offset = new Point(16, 8); break;
+					case 1: offset = new Point(16, 24); break;
+					case 2: offset = new Point(-16, 24); break;
+					case 3: offset = new Point(-16, 8); break;
+					}
+				}
+				g.DrawImage(graphicsData.Images[1 + rotation], new Point(
+					position.X + imageDirectory.Entries[1 + rotation].XOffset + offset.X,
+					position.Y + imageDirectory.Entries[1 + rotation].YOffset + offset.Y
+				));
+			}
 		}
 		catch (IndexOutOfRangeException) { return false; }
 		catch (ArgumentOutOfRangeException) { return false; }

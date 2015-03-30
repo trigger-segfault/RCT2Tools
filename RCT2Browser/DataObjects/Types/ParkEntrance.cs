@@ -139,10 +139,10 @@ public class ParkEntranceHeader : ObjectTypeHeader {
 	//=========== MEMBERS ============
 	#region Members
 
-	/** <summary> The positions of all non-zero bytes. </summary> */
-	public List<uint> BytePositions;
-	/** <summary> The list of all non-zero bytes. </summary> */
-	public List<byte> NonZeroBytes;
+	/** <summary> The x position of the sign text. </summary> */
+	public byte SignX;
+	/** <summary> The y position of the sign text. </summary> */
+	public byte SignY;
 
 	#endregion
 	//========= CONSTRUCTORS =========
@@ -150,8 +150,8 @@ public class ParkEntranceHeader : ObjectTypeHeader {
 
 	/** <summary> Constructs the default object header. </summary> */
 	public ParkEntranceHeader() {
-		this.BytePositions	= new List<uint>();
-		this.NonZeroBytes	= new List<byte>();
+		this.SignX	= 0;
+		this.SignY	= 0;
 	}
 
 	#endregion
@@ -182,13 +182,9 @@ public class ParkEntranceHeader : ObjectTypeHeader {
 
 	/** <summary> Reads the object header. </summary> */
 	public override void Read(BinaryReader reader) {
-		for (int i = 0; i < ParkEntrance.HeaderSize; i++) {
-			byte b = reader.ReadByte();
-			if (b != 0x00) {
-				this.BytePositions.Add((uint)i);
-				this.NonZeroBytes.Add(b);
-			}
-		}
+		reader.ReadBytes(0x6);
+		this.SignX	= reader.ReadByte();
+		this.SignY	= reader.ReadByte();
 	}
 
 	#endregion

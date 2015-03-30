@@ -145,8 +145,8 @@
   <data name="MissingImagesError" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\MissingImagesError.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="TabSceneryGroups" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tabs\TabSceneryGroups.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SlopeSE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SlopeSE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ButtonRotate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Buttons\ButtonRotate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -165,9 +165,6 @@
   </data>
   <data name="TabLargeScenery" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tabs\TabLargeScenery.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TabParkEntrances" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Tabs\TabParkEntrances.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TabInfo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tabs\TabInfo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -199,14 +196,26 @@
   <data name="CloseFlag" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\CloseFlag.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="PaletteButtonPressed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Buttons\PaletteButtonPressed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SortDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SortDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ColorPalette1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ColorPalette.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="TabWater" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tabs\TabWater.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Selector" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Selector.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="SortUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SortUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TabSigns" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tabs\TabSigns.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="OpenFlagDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OpenFlagDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TabAll" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Tabs\TabAll.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -214,8 +223,8 @@
   <data name="BoldFont" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BoldFont.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="SlopeSE" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SlopeSE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TabSceneryGroups" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tabs\TabSceneryGroups.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="App" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\App.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -229,8 +238,8 @@
   <data name="SlopeNE" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SlopeNE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="OpenFlagDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\OpenFlagDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="TabParkEntrances" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tabs\TabParkEntrances.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="SlopeSW" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SlopeSW.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -241,8 +250,8 @@
   <data name="SelectorQuarter" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SelectorQuarter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="PaletteButtonPressed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Buttons\PaletteButtonPressed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Selector" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Selector.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="TabPanelBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\TabPanelBackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -253,13 +262,7 @@
   <data name="InvalidError" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\InvalidError.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ColorPalette1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ColorPalette.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SortDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SortDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="SortUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SortUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="AboutImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\AboutImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

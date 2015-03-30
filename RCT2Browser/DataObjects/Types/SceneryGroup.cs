@@ -137,10 +137,12 @@ public class SceneryGroupHeader : ObjectTypeHeader {
 	//=========== MEMBERS ============
 	#region Members
 
-	/** <summary> The positions of all non-zero bytes. </summary> */
-	public List<uint> BytePositions;
-	/** <summary> The list of all non-zero bytes. </summary> */
-	public List<byte> NonZeroBytes;
+	/** <summary> An unknown byte that is never zero. </summary> */
+	public byte Unknown0x108;
+	/** <summary> An unknown byte that is most often zero. </summary> */
+	public byte Unknown0x10A;
+	/** <summary> An unknown byte that is most often zero. </summary> */
+	public byte Unknown0x10B;
 
 	#endregion
 	//========= CONSTRUCTORS =========
@@ -148,8 +150,9 @@ public class SceneryGroupHeader : ObjectTypeHeader {
 
 	/** <summary> Constructs the default object header. </summary> */
 	public SceneryGroupHeader() {
-		this.BytePositions	= new List<uint>();
-		this.NonZeroBytes	= new List<byte>();
+		this.Unknown0x108	= 0;
+		this.Unknown0x10A	= 0;
+		this.Unknown0x10B	= 0;
 	}
 
 	#endregion
@@ -180,13 +183,12 @@ public class SceneryGroupHeader : ObjectTypeHeader {
 
 	/** <summary> Reads the object header. </summary> */
 	public override void Read(BinaryReader reader) {
-		for (int i = 0; i < SceneryGroup.HeaderSize; i++) {
-			byte b = reader.ReadByte();
-			if (b != 0x00) {
-				this.BytePositions.Add((uint)i);
-				this.NonZeroBytes.Add(b);
-			}
-		}
+		reader.ReadBytes(0x108);
+		this.Unknown0x108 = reader.ReadByte();
+		reader.ReadByte();
+		this.Unknown0x10A = reader.ReadByte();
+		this.Unknown0x10B = reader.ReadByte();
+		reader.ReadBytes(2);
 	}
 
 	#endregion

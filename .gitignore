@@ -17,6 +17,10 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Compiling Folders
+bin
+obj
+
 # =========================
 # Operating System Files
 # =========================

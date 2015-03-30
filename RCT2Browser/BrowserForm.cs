@@ -1,5 +1,4 @@
-﻿using BrightIdeasSoftware;
-using CustomControls;
+﻿using CustomControls;
 using RCTDataEditor.DataObjects;
 using RCTDataEditor.DataObjects.Types;
 using RCTDataEditor.DataObjects.Types.AttractionInfo;
@@ -88,6 +87,10 @@ namespace RCTDataEditor {
 		int corner = 0;
 		/** <summary> The elevation of the object view. </summary> */
 		int elevation = 0;
+		/** <summary> The connections of the current path. </summary> */
+		uint pathConnections = 0x00000000;
+		/** <summary> True if the queue path is being drawn. </summary> */
+		bool queue = false;
 		/** <summary> The frame of the object view. </summary> */
 		int frame = 0;
 		/** <summary> True if only viewing a dialog image. </summary> */
@@ -145,6 +148,8 @@ namespace RCTDataEditor {
 		byte highestValue;
 		byte highestValue2;
 
+		AboutForm aboutForm = new AboutForm();
+
 		#endregion
 		//--------------------------------
 		#endregion
@@ -154,6 +159,8 @@ namespace RCTDataEditor {
 		/** <summary> Constructs the form. </summary> */
 		public BrowserForm() {
 			InitializeComponent();
+
+			Pathing.SetPathSprites();
 
 			this.fontBold = new SpriteFont(Resources.BoldFont, ' ', 'z', 10);
 
@@ -187,6 +194,7 @@ namespace RCTDataEditor {
 			this.LoadSettings(null, null);
 
 			this.directory = this.defaultDirectory;
+
 
 			#region Palette Buttons
 			Bitmap paletteButton = Resources.PaletteButton;
@@ -325,8 +333,12 @@ namespace RCTDataEditor {
 				element = doc.GetElementsByTagName("ObjectsPerTick");
 				if (element.Count != 0) this.objectsPerTick = Int32.Parse(element[0].InnerText);
 
+				element = doc.GetElementsByTagName("QuickLoad");
+				if (element.Count != 0) Attraction.QuickLoad = Boolean.Parse(element[0].InnerText);
+
 				this.textBoxDirectory.Text = this.defaultDirectory;
 				this.numericUpDownObjectsPerTick.Value = this.objectsPerTick;
+				this.checkBoxQuickLoad.CheckState = (Attraction.QuickLoad ? CheckState.Checked : CheckState.Unchecked);
 			}
 			else {
 				SaveSettings(null, null);
@@ -347,6 +359,10 @@ namespace RCTDataEditor {
 			element = doc.CreateElement("ObjectsPerTick");
 			settings.AppendChild(element);
 			element.AppendChild(doc.CreateTextNode(this.objectsPerTick.ToString()));
+
+			element = doc.CreateElement("QuickLoad");
+			settings.AppendChild(element);
+			element.AppendChild(doc.CreateTextNode(Attraction.QuickLoad.ToString()));
 
 			doc.Save(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Settings.xml");
 		}
@@ -369,84 +385,7 @@ namespace RCTDataEditor {
 				if (files[i].EndsWith(".DAT", true, CultureInfo.DefaultThreadCurrentCulture)) {
 					ObjectDataInfo info = ObjectData.ReadObjectInfo(files[i], true);
 					if (!info.Invalid) {
-						//bool cont = false;
-						//bool nocont = false;
-						//if (info.Header is AttractionHeader) {
-							//if ((info.Header as AttractionHeader).RideType == RideTypes.Stall)
-							//	continue;
-
-							/*if (!(info.Header as AttractionHeader).Flags.HasFlag(AttractionFlags.Unknown8_2)) {
-								cont = true;
-							}*/
-
-							/*for (int j = 0; j < (info.Header as AttractionHeader).CarCount; j++) {
-								if (!(info.Header as AttractionHeader).CarTypeList[j].Flags.HasFlag(CarFlags.Unknown8_7))
-									cont = true;
-								else
-									nocont = true;
-							}*/
-							/*for (int j = 0; j < (info.Header as AttractionHeader).CarCount; j++) {
-								if ((info.Header as AttractionHeader).CarTypeList[j].Unknown0x57[0] != 0xFF) {
-									highestValue = Math.Max(highestValue, (info.Header as AttractionHeader).CarTypeList[j].Unknown0x57[0]);
-								}
-								if ((info.Header as AttractionHeader).CarTypeList[j].Unknown0x57[2] != 0xFF) {
-									highestValue2 = Math.Max(highestValue2, (info.Header as AttractionHeader).CarTypeList[j].Unknown0x57[2]);
-									usedBytes[(info.Header as AttractionHeader).CarTypeList[j].Unknown0x57[2]] = true;
-								}
-							}*/
-							/*for (int j = 0; j < (info.Header as AttractionHeader).CarCount; j++) {
-								if ((info.Header as AttractionHeader).CarTypeList[j].Unknown0x0E[0] == 0x00)
-									cont = true;
-								else
-									nocont = true;
-								if ((info.Header as AttractionHeader).CarTypeList[j].Unknown0x0E[1] == 0x00)
-									cont = true;
-								else
-									nocont = true;
-								if ((info.Header as AttractionHeader).CarTypeList[j].Unknown0x0E[2] == 0x00)
-									cont = true;
-								else
-									nocont = true;
-							}*/
-
-							/*if ((info.Header as AttractionHeader).RideType == RideTypes.Rollercoaster ||
-								(info.Header as AttractionHeader).RideType == RideTypes.Transport) {
-								cont = true;
-							}
-							else {
-								for (int j = 0; j < (info.Header as AttractionHeader).CarCount; j++) {
-									if ((info.Header as AttractionHeader).CarTypeList[j].Flags.HasFlag(CarFlags.CleanupSprites))
-										cont = true;
-									else
-										nocont = true;
-								}
-							}*/
-							/*for (int j = 0; j < (info.Header as AttractionHeader).CarCount; j++) {
-								if ((info.Header as AttractionHeader).CarTypeList[j].Unknown0x0A == 0)
-									cont = true;
-								else
-									nocont = true;
-							}*/
-							/*for (int j = 0; j < (info.Header as AttractionHeader).CarCount; j++) {
-								if (!(info.Header as AttractionHeader).CarTypeList[j].Flags.HasFlag(CarFlags.Unknown4_4))
-									cont = true;
-								else
-									nocont = true;
-							}*/
-							/*for (int j = 0; j < (info.Header as AttractionHeader).CarCount; j++) {
-								if ((info.Header as AttractionHeader).CarTypeList[j].Flags.HasFlag(CarFlags.Unknown2_7) ||
-									!(info.Header as AttractionHeader).CarTypeList[j].Flags.HasFlag(CarFlags.Swinging))
-									cont = true;
-								else
-									nocont = true;
-							}*/
-
-							//if (cont && !nocont)
-							//	continue;
-						/*}
-						else {
-							continue;
-						}*/
+						
 						ListViewItem item = new ListViewItem();
 						item.ImageIndex = 1;
 						if (info.Source == SourceTypes.Custom) item.ImageIndex = 2;
@@ -774,6 +713,16 @@ namespace RCTDataEditor {
 		//=========== BUTTONS ============
 		#region Buttons
 
+		/** <summary> Opens the about window. </summary> */
+		private void OpenAboutForm(object sender, EventArgs e) {
+			if (aboutForm.IsDisposed)
+				aboutForm = new AboutForm();
+			aboutForm.Show();
+		}
+		/** <summary> Changes the quick load setting. </summary> */
+		private void QuickLoadAttractions(object sender, EventArgs e) {
+			Attraction.QuickLoad = (sender as RCTCheckBox).CheckState == CheckState.Checked;
+		}
 		/** <summary> Changes the dialog view. </summary> */
 		private void DialogView(object sender, EventArgs e) {
 			this.dialogView = (sender as RCTCheckBox).CheckState == CheckState.Checked;
@@ -833,6 +782,24 @@ namespace RCTDataEditor {
 		private void RotateObject(object sender, EventArgs e) {
 			this.rotation++;
 			if (rotation > 3) rotation = 0;
+
+			bool validQueueConnection = true;
+			do {
+				this.pathConnections += 1;
+				if (this.pathConnections >= 256)
+					this.pathConnections = 0;
+				if ((this.pathConnections & 0x0F) == this.pathConnections)
+					validQueueConnection = true;
+				int dirCount = 0;
+				for (int i = 0; i < 4; i++) {
+					if ((this.pathConnections & (1 << i)) != 0)
+						dirCount++;
+				}
+				if (dirCount > 2)
+					validQueueConnection = false;
+			} while (!Pathing.PathSpriteIndexes.ContainsKey(this.pathConnections) || (this.queue && !validQueueConnection));
+			Pathing.PathConnections = this.pathConnections;
+
 			this.UpdateImages(); this.UpdateInfo();
 		}
 		/** <summary> Rotates the slope. </summary> */
@@ -845,6 +812,36 @@ namespace RCTDataEditor {
 		private void RotateCorner(object sender, EventArgs e) {
 			this.corner++;
 			if (corner > 3) corner = 0;
+			this.queue = !this.queue;
+			Pathing.Queue = this.queue;
+			if (this.queue) {
+				bool validQueueConnection = false;
+				if ((this.pathConnections & 0x0F) == this.pathConnections)
+					validQueueConnection = true;
+				int dirCount = 0;
+				for (int i = 0; i < 4; i++) {
+					if ((this.pathConnections & (1 << i)) != 0)
+						dirCount++;
+				}
+				if (dirCount > 2)
+					validQueueConnection = false;
+				while (!Pathing.PathSpriteIndexes.ContainsKey(this.pathConnections) || (this.queue && !validQueueConnection)) {
+					this.pathConnections += 1;
+					if (this.pathConnections >= 256)
+						this.pathConnections = 0;
+					if ((this.pathConnections & 0x0F) == this.pathConnections)
+						validQueueConnection = true;
+					dirCount = 0;
+					for (int i = 0; i < 4; i++) {
+						if ((this.pathConnections & (1 << i)) != 0)
+							dirCount++;
+					}
+					if (dirCount > 2)
+						validQueueConnection = false;
+				}
+				Pathing.PathConnections = this.pathConnections;
+			}
+
 			this.UpdateImages();
 		}
 		/** <summary> Changes the elevation. </summary> */
@@ -853,6 +850,8 @@ namespace RCTDataEditor {
 				this.elevation = 0;
 			else
 				this.elevation = 16;
+
+			this.UpdateImages();
 		}
 		/** <summary> Switches to the previous object. </summary> */
 		private void PreviousObject(object sender, EventArgs e) {
@@ -1288,16 +1287,9 @@ namespace RCTDataEditor {
 			}
 			else if (objectData is SceneryGroup) {
 				SceneryGroup obj = (SceneryGroup)objectData;
-				string nonZeroStr = "None";
-				if (obj.Header.NonZeroBytes.Count > 0) {
-					nonZeroStr = "";
-					for (int i = 0; i < obj.Header.NonZeroBytes.Count; i++) {
-						if (i != 0)
-							nonZeroStr += ", ";
-						nonZeroStr += "[0x" + obj.Header.BytePositions[i].ToString("X") + ": 0x" + obj.Header.NonZeroBytes[i].ToString("X") + "]";
-					}
-				}
-				AddInfoItem("header", "Non-Zero Bytes", nonZeroStr);
+				AddInfoItem("header", "Unknown0x108", "0x" + obj.Header.Unknown0x108.ToString("X"));
+				AddInfoItem("header", "Unknown0x10A", "0x" + obj.Header.Unknown0x10A.ToString("X"));
+				AddInfoItem("header", "Unknown0x10B", "0x" + obj.Header.Unknown0x10B.ToString("X"));
 
 				SetOptionalName("Scenery Items");
 				for (int i = 0; i < obj.Contents.Count; i++) {
@@ -1306,16 +1298,7 @@ namespace RCTDataEditor {
 			}
 			else if (objectData is Pathing) {
 				Pathing obj = (Pathing)objectData;
-				string nonZeroStr = "None";
-				if (obj.Header.NonZeroBytes.Count > 0) {
-					nonZeroStr = "";
-					for (int i = 0; i < obj.Header.NonZeroBytes.Count; i++) {
-						if (i != 0)
-							nonZeroStr += ", ";
-						nonZeroStr += "[0x" + obj.Header.BytePositions[i].ToString("X") + ": 0x" + obj.Header.NonZeroBytes[i].ToString("X") + "]";
-					}
-				}
-				AddInfoItem("header", "Non-Zero Bytes", nonZeroStr);
+				AddInfoItem("header", "Flags", obj.Header.Flags.ToString());
 			}
 			else if (objectData is Water) {
 				Water obj = (Water)objectData;
@@ -1332,16 +1315,8 @@ namespace RCTDataEditor {
 			}
 			else if (objectData is ParkEntrance) {
 				ParkEntrance obj = (ParkEntrance)objectData;
-				string nonZeroStr = "None";
-				if (obj.Header.NonZeroBytes.Count > 0) {
-					nonZeroStr = "";
-					for (int i = 0; i < obj.Header.NonZeroBytes.Count; i++) {
-						if (i != 0)
-							nonZeroStr += ", ";
-						nonZeroStr += "[0x" + obj.Header.BytePositions[i].ToString("X") + ": 0x" + obj.Header.NonZeroBytes[i].ToString("X") + "]";
-					}
-				}
-				AddInfoItem("header", "Non-Zero Bytes", nonZeroStr);
+				AddInfoItem("header", "SignX", obj.Header.SignX.ToString());
+				AddInfoItem("header", "SignY", obj.Header.SignY.ToString());
 			}
 
 		}

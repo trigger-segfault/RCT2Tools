@@ -17,6 +17,9 @@ public class Attraction : ObjectData {
 	/** <summary> The size of the header for this object type. </summary> */
 	public const uint HeaderSize = 0x1C2;
 
+	/** <summary> True if rides should be quick loaded, in turn leaving some images out. </summary> */
+	public static bool QuickLoad = false;
+
 	#endregion
 	//=========== MEMBERS ============
 	#region Members
@@ -127,6 +130,8 @@ public class Attraction : ObjectData {
 
 		// Read the image directory and graphics data
 		imageDirectory.Read(reader);
+		if (Attraction.QuickLoad)
+			imageDirectory.Count = Math.Min(imageDirectory.Count, 35);
 		graphicsData.Read(reader, imageDirectory);
 	}
 	/** <summary> Constructs the default object. </summary> */

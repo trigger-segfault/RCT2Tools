@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{CFF13583-CB6D-4FF6-9273-917E056F6ECF}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RCTDataEditor</RootNamespace>
     <AssemblyName>RCT2 Content Browser</AssemblyName>
@@ -38,9 +38,6 @@
     <ApplicationIcon>App.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ObjectListView">
-      <HintPath>.\ObjectListView.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceProcess" />
@@ -54,6 +51,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataObjects\GroupInfo.cs" />
     <Compile Include="DataObjects\GraphicsData.cs" />
     <Compile Include="DataObjects\ImageDirectory.cs" />
@@ -88,6 +91,9 @@
     <Compile Include="FileIO\PropertySection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BrowserForm.resx">
       <DependentUpon>BrowserForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -151,6 +157,7 @@
     <None Include="Resources\Buttons\ButtonForward.png" />
     <None Include="Resources\Buttons\ButtonLeft.png" />
     <None Include="Resources\Buttons\ButtonRight.png" />
+    <None Include="Resources\AboutImage.png" />
     <Content Include="Resources\LandTile.png" />
     <Content Include="Resources\LandTileReal.png" />
     <None Include="Resources\SmallSceneryBackgroundLarge.png" />
