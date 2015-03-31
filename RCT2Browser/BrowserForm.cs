@@ -322,9 +322,10 @@ namespace RCTDataEditor {
 		}
 		/** <summary> Called to load the settings file. </summary> */
 		private void LoadSettings(object sender, EventArgs e) {
-			if (File.Exists(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Settings.xml")) {
+			string pathToSettings = Path.Combine(Path.GetDirectoryName (Assembly.GetEntryAssembly ().Location),"Settings.xml");
+			if (File.Exists(pathToSettings)) {
 				XmlDocument doc = new XmlDocument();
-				doc.Load(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Settings.xml");
+				doc.Load(pathToSettings);
 				XmlNodeList element;
 
 				element = doc.GetElementsByTagName("DefaultDirectory");
@@ -364,7 +365,7 @@ namespace RCTDataEditor {
 			settings.AppendChild(element);
 			element.AppendChild(doc.CreateTextNode(Attraction.QuickLoad.ToString()));
 
-			doc.Save(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Settings.xml");
+			doc.Save(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location),"Settings.xml"));
 		}
 		/** <summary> Called when the browse default button is pressed. </summary> */
 		private void BrowseDefaultDirectory(object sender, EventArgs e) {
