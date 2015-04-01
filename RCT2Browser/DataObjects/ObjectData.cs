@@ -279,8 +279,7 @@ public class ObjectData {
 		ObjectDataInfo objInfo = new ObjectDataInfo();
 
 		try {
-			objInfo.FileName = path.Substring(path.Replace('/', '\\').LastIndexOf('\\') + 1);
-			objInfo.FileName = objInfo.FileName.Substring(0, objInfo.FileName.Length - 4);
+			objInfo.FileName = Path.GetFileNameWithoutExtension(path);
 			BinaryReader reader = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read), Encoding.Unicode);
 
 			// Read the object data header
@@ -331,8 +330,7 @@ public class ObjectData {
 		ChunkHeader chunkHeader = new ChunkHeader();
 
 		try {
-			objectHeader.FileName = path.Substring(path.Replace('/', '\\').LastIndexOf('\\') + 1);
-			objectHeader.FileName = objectHeader.FileName.Substring(0, objectHeader.FileName.Length - 4);
+			objectHeader.FileName = Path.GetFileNameWithoutExtension(path);
 			BinaryReader reader = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read), Encoding.Unicode);
 
 			objectHeader.Read(reader);
