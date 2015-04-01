@@ -392,7 +392,7 @@ namespace RCTDataEditor {
 						if (info.Source == SourceTypes.Custom) item.ImageIndex = 2;
 						else if (info.Source == SourceTypes.RCT2) item.ImageIndex = 0;
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Source.ToString()));
-						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, files[i].Substring(files[i].LastIndexOf('\\') + 1)));
+						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, Path.GetFileName(files[i])));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Name));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Type.ToString()));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Subtype.ToString()));
@@ -403,7 +403,7 @@ namespace RCTDataEditor {
 						if (info.Source == SourceTypes.Custom) item.ImageIndex = 2;
 						else if (info.Source == SourceTypes.RCT2) item.ImageIndex = 0;
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Source.ToString()));
-						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, files[i].Substring(files[i].LastIndexOf('\\') + 1)));
+						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, Path.GetFileName(files[i])));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Name));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Type.ToString()));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Subtype.ToString()));
@@ -432,7 +432,7 @@ namespace RCTDataEditor {
 						if (info.Source == SourceTypes.Custom) item.ImageIndex = 2;
 						else if (info.Source == SourceTypes.RCT2) item.ImageIndex = 0;
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, ""));
-						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, files[i].Substring(files[i].LastIndexOf('\\') + 1)));
+						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, Path.GetFileName(files[i])));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, ""));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, ""));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, ""));
@@ -617,7 +617,7 @@ namespace RCTDataEditor {
 			if (e.Item.Selected && ((sender as ListView).SelectedItems.Count == 0 || (sender as ListView).SelectedItems[0] == e.Item)) {
 				currentList = name;
 				objectIndex = e.ItemIndex;
-				objectData = ObjectData.ReadObject(directory + "/" + e.Item.SubItems[2].Text);
+				objectData = ObjectData.ReadObject(Path.Combine(directory,e.Item.SubItems[2].Text));
 				this.frame = 0;
 				this.UpdateImages(); this.UpdateInfo(); this.UpdateColorRemap();
 				this.labelCurrentObject.Text = (objectData != null ? objectData.ObjectHeader.FileName + ".DAT" : "");
