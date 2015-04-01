@@ -10,6 +10,8 @@ This makes the tool useful for Studying RCT2 file types as well.
 All variables and flags listed in the info tab have information on them in the source code.
 Please note that not all objects are 100% accurately displayed in the view window.
 
+**[Standalone Download](http://www.mediafire.com/download/nmu7ck6gljd9ke6/RCT2+Content+Browser+v1.1.1.0.zip)**
+
 ## Requirements
 
 Works with Windows 7, Windows 8 has not been tested. Has partial Linux support.
@@ -73,6 +75,8 @@ Change the current image being viewed in image mode or change the current frame 
 * Version: v1.0.0.0
 
 RCT2 Graphics Extractor is a simple tool for extracting all graphics in RollerCoaster Tycoon 2 from the *g1.dat* file. All the images are output into the specified directory in PNG format. Palettes are saved as images as well as text files in a subfolder. To find your g1.dat file go to your RCT2 directory and select your Data folder.
+
+**[Standalone Download](http://www.mediafire.com/download/2r3937vpgf7lpp1/RCT2+Graphics+Extractor+v1.0.0.0.zip)**
 
 ## Requirements
 
