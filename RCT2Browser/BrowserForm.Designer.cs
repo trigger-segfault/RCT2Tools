@@ -26,18 +26,18 @@ namespace RCTDataEditor {
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BrowserForm));
-			System.Windows.Forms.ListViewGroup listViewGroup37 = new System.Windows.Forms.ListViewGroup("General", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup38 = new System.Windows.Forms.ListViewGroup("Graphics", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup39 = new System.Windows.Forms.ListViewGroup("String Table", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup40 = new System.Windows.Forms.ListViewGroup("Header", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup41 = new System.Windows.Forms.ListViewGroup("Header 1", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup42 = new System.Windows.Forms.ListViewGroup("Header 2", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup43 = new System.Windows.Forms.ListViewGroup("Header 3", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup44 = new System.Windows.Forms.ListViewGroup("Header 4", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup45 = new System.Windows.Forms.ListViewGroup("Group Info", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup46 = new System.Windows.Forms.ListViewGroup("Optional", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup47 = new System.Windows.Forms.ListViewGroup("Optional", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup48 = new System.Windows.Forms.ListViewGroup("Optional", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup25 = new System.Windows.Forms.ListViewGroup("General", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup26 = new System.Windows.Forms.ListViewGroup("Graphics", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup27 = new System.Windows.Forms.ListViewGroup("String Table", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup28 = new System.Windows.Forms.ListViewGroup("Header", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup29 = new System.Windows.Forms.ListViewGroup("Header 1", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup30 = new System.Windows.Forms.ListViewGroup("Header 2", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup31 = new System.Windows.Forms.ListViewGroup("Header 3", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup32 = new System.Windows.Forms.ListViewGroup("Header 4", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup33 = new System.Windows.Forms.ListViewGroup("Group Info", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup34 = new System.Windows.Forms.ListViewGroup("Optional", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup35 = new System.Windows.Forms.ListViewGroup("Optional", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup36 = new System.Windows.Forms.ListViewGroup("Optional", System.Windows.Forms.HorizontalAlignment.Left);
 			this.splitContainerSideView = new System.Windows.Forms.SplitContainer();
 			this.panelColorPalette = new System.Windows.Forms.Panel();
 			this.rctPanel1 = new CustomControls.RCTPanel();
@@ -76,6 +76,10 @@ namespace RCTDataEditor {
 			this.tabWater = new CustomControls.RCTTabButton();
 			this.tabSettings = new CustomControls.RCTTabButton();
 			this.tabGroupSettings = new System.Windows.Forms.Panel();
+			this.buttonAbout = new CustomControls.RCTButton();
+			this.rctLabel2 = new CustomControls.RCTLabel();
+			this.rctLabel1 = new CustomControls.RCTLabel();
+			this.checkBoxQuickLoad = new CustomControls.RCTCheckBox();
 			this.buttonSaveSettings = new CustomControls.RCTButton();
 			this.buttonBrowseDefault = new CustomControls.RCTButton();
 			this.numericUpDownObjectsPerTick = new System.Windows.Forms.NumericUpDown();
@@ -189,10 +193,7 @@ namespace RCTDataEditor {
 			this.labelObjectsScanned = new CustomControls.RCTLabel();
 			this.labelScanProgress = new CustomControls.RCTLabel();
 			this.toolTips = new System.Windows.Forms.ToolTip(this.components);
-			this.checkBoxQuickLoad = new CustomControls.RCTCheckBox();
-			this.rctLabel1 = new CustomControls.RCTLabel();
-			this.rctLabel2 = new CustomControls.RCTLabel();
-			this.buttonAbout = new CustomControls.RCTButton();
+			this.checkBoxRemapImage = new CustomControls.RCTCheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerSideView)).BeginInit();
 			this.splitContainerSideView.Panel1.SuspendLayout();
 			this.splitContainerSideView.Panel2.SuspendLayout();
@@ -986,6 +987,7 @@ namespace RCTDataEditor {
 			// tabGroupSettings
 			// 
 			this.tabGroupSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
+			this.tabGroupSettings.Controls.Add(this.checkBoxRemapImage);
 			this.tabGroupSettings.Controls.Add(this.buttonAbout);
 			this.tabGroupSettings.Controls.Add(this.rctLabel2);
 			this.tabGroupSettings.Controls.Add(this.rctLabel1);
@@ -1000,6 +1002,64 @@ namespace RCTDataEditor {
 			this.tabGroupSettings.Size = new System.Drawing.Size(545, 359);
 			this.tabGroupSettings.TabIndex = 33;
 			this.tabGroupSettings.Visible = false;
+			// 
+			// buttonAbout
+			// 
+			this.buttonAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonAbout.BorderOnHover = false;
+			this.buttonAbout.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonAbout.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonAbout.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonAbout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonAbout.Image = null;
+			this.buttonAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonAbout.Location = new System.Drawing.Point(410, 10);
+			this.buttonAbout.Name = "buttonAbout";
+			this.buttonAbout.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonAbout.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonAbout.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonAbout.Size = new System.Drawing.Size(60, 18);
+			this.buttonAbout.TabIndex = 148;
+			this.buttonAbout.Text = "About";
+			this.buttonAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonAbout.Toggleable = false;
+			this.buttonAbout.Toggled = false;
+			this.buttonAbout.ButtonPressed += new System.EventHandler(this.OpenAboutForm);
+			// 
+			// rctLabel2
+			// 
+			this.rctLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.rctLabel2.Location = new System.Drawing.Point(14, 16);
+			this.rctLabel2.Name = "rctLabel2";
+			this.rctLabel2.Size = new System.Drawing.Size(100, 14);
+			this.rctLabel2.TabIndex = 147;
+			this.rctLabel2.Text = "Default Directory:";
+			this.rctLabel2.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+			// 
+			// rctLabel1
+			// 
+			this.rctLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.rctLabel1.Location = new System.Drawing.Point(16, 76);
+			this.rctLabel1.Name = "rctLabel1";
+			this.rctLabel1.Size = new System.Drawing.Size(94, 14);
+			this.rctLabel1.TabIndex = 146;
+			this.rctLabel1.Text = "Objects Per Tick:";
+			this.rctLabel1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+			// 
+			// checkBoxQuickLoad
+			// 
+			this.checkBoxQuickLoad.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.checkBoxQuickLoad.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.checkBoxQuickLoad.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.checkBoxQuickLoad.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
+			this.checkBoxQuickLoad.CheckState = System.Windows.Forms.CheckState.Unchecked;
+			this.checkBoxQuickLoad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.checkBoxQuickLoad.Location = new System.Drawing.Point(15, 105);
+			this.checkBoxQuickLoad.Name = "checkBoxQuickLoad";
+			this.checkBoxQuickLoad.Size = new System.Drawing.Size(140, 11);
+			this.checkBoxQuickLoad.TabIndex = 142;
+			this.checkBoxQuickLoad.Text = "Quick Load Attractions";
+			this.checkBoxQuickLoad.CheckStateChanged += new System.EventHandler(this.QuickLoadAttractions);
 			// 
 			// buttonSaveSettings
 			// 
@@ -1786,43 +1846,43 @@ namespace RCTDataEditor {
 			this.tabGroupInfo.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabGroupInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabGroupInfo.FullRowSelect = true;
-			listViewGroup37.Header = "General";
-			listViewGroup37.Name = "general";
-			listViewGroup38.Header = "Graphics";
-			listViewGroup38.Name = "graphics";
-			listViewGroup39.Header = "String Table";
-			listViewGroup39.Name = "strings";
-			listViewGroup40.Header = "Header";
-			listViewGroup40.Name = "header";
-			listViewGroup41.Header = "Header 1";
-			listViewGroup41.Name = "header1";
-			listViewGroup42.Header = "Header 2";
-			listViewGroup42.Name = "header2";
-			listViewGroup43.Header = "Header 3";
-			listViewGroup43.Name = "header3";
-			listViewGroup44.Header = "Header 4";
-			listViewGroup44.Name = "header4";
-			listViewGroup45.Header = "Group Info";
-			listViewGroup45.Name = "groupInfo";
-			listViewGroup46.Header = "Optional";
-			listViewGroup46.Name = "optional";
-			listViewGroup47.Header = "Optional";
-			listViewGroup47.Name = "optional1";
-			listViewGroup48.Header = "Optional";
-			listViewGroup48.Name = "optional2";
+			listViewGroup25.Header = "General";
+			listViewGroup25.Name = "general";
+			listViewGroup26.Header = "Graphics";
+			listViewGroup26.Name = "graphics";
+			listViewGroup27.Header = "String Table";
+			listViewGroup27.Name = "strings";
+			listViewGroup28.Header = "Header";
+			listViewGroup28.Name = "header";
+			listViewGroup29.Header = "Header 1";
+			listViewGroup29.Name = "header1";
+			listViewGroup30.Header = "Header 2";
+			listViewGroup30.Name = "header2";
+			listViewGroup31.Header = "Header 3";
+			listViewGroup31.Name = "header3";
+			listViewGroup32.Header = "Header 4";
+			listViewGroup32.Name = "header4";
+			listViewGroup33.Header = "Group Info";
+			listViewGroup33.Name = "groupInfo";
+			listViewGroup34.Header = "Optional";
+			listViewGroup34.Name = "optional";
+			listViewGroup35.Header = "Optional";
+			listViewGroup35.Name = "optional1";
+			listViewGroup36.Header = "Optional";
+			listViewGroup36.Name = "optional2";
 			this.tabGroupInfo.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup37,
-            listViewGroup38,
-            listViewGroup39,
-            listViewGroup40,
-            listViewGroup41,
-            listViewGroup42,
-            listViewGroup43,
-            listViewGroup44,
-            listViewGroup45,
-            listViewGroup46,
-            listViewGroup47,
-            listViewGroup48});
+            listViewGroup25,
+            listViewGroup26,
+            listViewGroup27,
+            listViewGroup28,
+            listViewGroup29,
+            listViewGroup30,
+            listViewGroup31,
+            listViewGroup32,
+            listViewGroup33,
+            listViewGroup34,
+            listViewGroup35,
+            listViewGroup36});
 			this.tabGroupInfo.Location = new System.Drawing.Point(1, 1);
 			this.tabGroupInfo.MultiSelect = false;
 			this.tabGroupInfo.Name = "tabGroupInfo";
@@ -2159,62 +2219,20 @@ namespace RCTDataEditor {
 			this.toolTips.InitialDelay = 1000;
 			this.toolTips.ReshowDelay = 600;
 			// 
-			// checkBoxQuickLoad
+			// checkBoxRemapImage
 			// 
-			this.checkBoxQuickLoad.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.checkBoxQuickLoad.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.checkBoxQuickLoad.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.checkBoxQuickLoad.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
-			this.checkBoxQuickLoad.CheckState = System.Windows.Forms.CheckState.Unchecked;
-			this.checkBoxQuickLoad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.checkBoxQuickLoad.Location = new System.Drawing.Point(15, 105);
-			this.checkBoxQuickLoad.Name = "checkBoxQuickLoad";
-			this.checkBoxQuickLoad.Size = new System.Drawing.Size(140, 11);
-			this.checkBoxQuickLoad.TabIndex = 142;
-			this.checkBoxQuickLoad.Text = "Quick Load Attractions";
-			this.checkBoxQuickLoad.CheckStateChanged += new System.EventHandler(this.QuickLoadAttractions);
-			// 
-			// rctLabel1
-			// 
-			this.rctLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctLabel1.Location = new System.Drawing.Point(16, 76);
-			this.rctLabel1.Name = "rctLabel1";
-			this.rctLabel1.Size = new System.Drawing.Size(94, 14);
-			this.rctLabel1.TabIndex = 146;
-			this.rctLabel1.Text = "Objects Per Tick:";
-			this.rctLabel1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-			// 
-			// rctLabel2
-			// 
-			this.rctLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctLabel2.Location = new System.Drawing.Point(14, 16);
-			this.rctLabel2.Name = "rctLabel2";
-			this.rctLabel2.Size = new System.Drawing.Size(100, 14);
-			this.rctLabel2.TabIndex = 147;
-			this.rctLabel2.Text = "Default Directory:";
-			this.rctLabel2.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-			// 
-			// buttonAbout
-			// 
-			this.buttonAbout.BorderOnHover = false;
-			this.buttonAbout.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonAbout.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonAbout.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonAbout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonAbout.Image = null;
-			this.buttonAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonAbout.Location = new System.Drawing.Point(410, 10);
-			this.buttonAbout.Name = "buttonAbout";
-			this.buttonAbout.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonAbout.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonAbout.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonAbout.Size = new System.Drawing.Size(60, 18);
-			this.buttonAbout.TabIndex = 148;
-			this.buttonAbout.Text = "About";
-			this.buttonAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonAbout.Toggleable = false;
-			this.buttonAbout.Toggled = false;
-			this.buttonAbout.ButtonPressed += new System.EventHandler(this.OpenAboutForm);
+			this.checkBoxRemapImage.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.checkBoxRemapImage.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.checkBoxRemapImage.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.checkBoxRemapImage.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
+			this.checkBoxRemapImage.CheckState = System.Windows.Forms.CheckState.Unchecked;
+			this.checkBoxRemapImage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.checkBoxRemapImage.Location = new System.Drawing.Point(15, 130);
+			this.checkBoxRemapImage.Name = "checkBoxRemapImage";
+			this.checkBoxRemapImage.Size = new System.Drawing.Size(116, 11);
+			this.checkBoxRemapImage.TabIndex = 149;
+			this.checkBoxRemapImage.Text = "Remap Image View";
+			this.checkBoxRemapImage.CheckStateChanged += new System.EventHandler(this.RemapImageView);
 			// 
 			// BrowserForm
 			// 
@@ -2412,6 +2430,7 @@ namespace RCTDataEditor {
 		private RCTLabel rctLabel2;
 		private RCTLabel rctLabel1;
 		private RCTCheckBox checkBoxQuickLoad;
+		private RCTCheckBox checkBoxRemapImage;
 	}
 }
 

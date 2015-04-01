@@ -20,6 +20,11 @@ public class Attraction : ObjectData {
 	/** <summary> True if rides should be quick loaded, in turn leaving some images out. </summary> */
 	public static bool QuickLoad = false;
 
+	/** <summary> Used for viewing and rotating cars. </summary> */
+	public static int CarRotationFrame = 0;
+	/** <summary> Used for viewing the current cars. </summary> */
+	public static int CurrentCar = 0;
+
 	#endregion
 	//=========== MEMBERS ============
 	#region Members
@@ -81,7 +86,8 @@ public class Attraction : ObjectData {
 			if (Header.RideType == RideTypes.Stall) {
 				return 1;
 			}
-			return 3;
+			return (!Header.CarTypeList[Attraction.CurrentCar].Flags.HasFlag(CarFlags.NoRemap3) ? 3 :
+				(Header.CarTypeList[Attraction.CurrentCar].Flags.HasFlag(CarFlags.Remap2) ? 2 : 1));
 		}
 	}
 	/** <summary> Gets the number of frames in the animation. </summary> */
@@ -90,7 +96,34 @@ public class Attraction : ObjectData {
 			if (Header.RideType == RideTypes.Stall) {
 				return 1;
 			}
-			return (int)1;// Header.RotationFrames + 1;
+			int frameOffset = 1;
+			CarHeader car = Header.CarTypeList[Attraction.CurrentCar];
+			if (car.Flags.HasFlag(CarFlags.Spinning)) {
+				if (car.Flags.HasFlag(CarFlags.SpinningIndependantWheels))
+					frameOffset *= (car.LastRotationFrame + 1);
+			}
+			if (car.Flags.HasFlag(CarFlags.Swinging)) {
+				int swingingFrames = 5;
+				if (car.Flags.HasFlag(CarFlags.SwingingMoreFrames))
+					swingingFrames += 2;
+				if (car.Flags.HasFlag(CarFlags.SwingingSlide))
+					swingingFrames += 2;
+				if (car.Flags.HasFlag(CarFlags.SwingingTilting))
+					swingingFrames -= 2;
+				frameOffset *= swingingFrames;
+			}
+			if (car.SpecialFrames != 0)
+				frameOffset *= car.SpecialFrames;
+			return frameOffset;// Header.RotationFrames + 1;
+		}
+	}
+	/** <summary> Gets the number of rotation frames for the ride. </summary> */
+	public int RotationFrames {
+		get {
+			if (Header.RideType == RideTypes.Stall) {
+				return 1;
+			}
+			return Header.CarTypeList[Attraction.CurrentCar].LastRotationFrame + 1;
 		}
 	}
 
@@ -213,14 +246,76 @@ public class Attraction : ObjectData {
 				}
 			}
 			else {
-				graphicsData.PaletteImages[3 + frame].Draw(g,
-					position.X + imageDirectory.Entries[3 + frame].XOffset,
-					position.Y + imageDirectory.Entries[3 + frame].YOffset,
-					Palette.DefaultPalette,
-					GraphicsData.ColorRemap1,
-					GraphicsData.ColorRemap2,
-					GraphicsData.ColorRemap3
-				);
+				int nextCarOffset = 0;
+				for (int i = 0; i <= Attraction.CurrentCar; i++) {
+					CarHeader car = Header.CarTypeList[i];
+					int C = 0; // Offset for this car
+					int R = car.LastRotationFrame + 1; // number of rotation frames
+					int F = 1; // Number of frames per rotation
+					int P = car.RiderSprites; // number of rider sprites
+					if (car.Flags.HasFlag(CarFlags.Spinning)) {
+						if (car.Flags.HasFlag(CarFlags.SpinningIndependantWheels))
+							F *= (car.LastRotationFrame + 1);
+					}
+					if (car.Flags.HasFlag(CarFlags.Swinging)) {
+						int swingingFrames = 5;
+						if (car.Flags.HasFlag(CarFlags.SwingingMoreFrames))
+							swingingFrames += 2;
+						if (car.Flags.HasFlag(CarFlags.SwingingSlide))
+							swingingFrames += 2;
+						if (car.Flags.HasFlag(CarFlags.SwingingTilting))
+							swingingFrames -= 2;
+						F *= swingingFrames;
+					}
+					if (car.SpecialFrames != 0) {
+						F *= car.SpecialFrames;
+					}
+
+					if (i == Attraction.CurrentCar) {
+						graphicsData.PaletteImages[3 + nextCarOffset + Attraction.CarRotationFrame * F + frame].Draw(g,
+							position.X + imageDirectory.Entries[3 + nextCarOffset + Attraction.CarRotationFrame * F + frame].XOffset,
+							position.Y + imageDirectory.Entries[3 + nextCarOffset + Attraction.CarRotationFrame * F + frame].YOffset,
+							Palette.DefaultPalette,
+							GraphicsData.ColorRemap1,
+							(car.Flags.HasFlag(CarFlags.Remap2) ? GraphicsData.ColorRemap2 : -1),
+							(!car.Flags.HasFlag(CarFlags.NoRemap3) ? GraphicsData.ColorRemap3 : -1)
+						);
+					}
+					else {
+						if (car.SpriteFlags.HasFlag(CarSpriteFlags.Flat))
+							C += (R * F);
+						if (car.SpriteFlags.HasFlag(CarSpriteFlags.GentleSlopes))
+							C += ((4 * F) * 2) + ((R * F) * 2);
+						if (car.SpriteFlags.HasFlag(CarSpriteFlags.SteepSlopes))
+							C += ((8 * F) * 2) + ((R * F) * 2);
+						if (car.SpriteFlags.HasFlag(CarSpriteFlags.VerticalSlopes))
+							C += ((4 * F) * 2) + ((R * F) * 2) + (((4 * F) * 2) * 5) + (4 * F);
+						if (car.SpriteFlags.HasFlag(CarSpriteFlags.DiagonalSlopes))
+							C += ((4 * F) * 2) + ((4 * F) * 2) + ((4 * F) * 2);
+						if (car.SpriteFlags.HasFlag(CarSpriteFlags.FlatBanked))
+							C += ((8 * F) * 2) + ((R * F) * 2);
+						if (car.SpriteFlags.HasFlag(CarSpriteFlags.InlineTwists))
+							C += ((4 * F) * 10);
+						if (car.SpriteFlags.HasFlag(CarSpriteFlags.FlatToGentleSlopeBankedTransitions))
+							C += ((R * F) * 4);
+						if (car.SpriteFlags.HasFlag(CarSpriteFlags.DiagonalGentleSlopeBankedTransitions))
+							C += ((4 * F) * 4);
+						if (car.SpriteFlags.HasFlag(CarSpriteFlags.GentleSlopeBankedTransitions))
+							C += ((4 * F) * 4);
+						if (car.SpriteFlags.HasFlag(CarSpriteFlags.GentleSlopeBankedTurns))
+							C += ((R * F) * 4);
+						if (car.SpriteFlags.HasFlag(CarSpriteFlags.FlatToGentleSlopeWhileBankedTransitions))
+							C += ((4 * F) * 4);
+						if (car.SpriteFlags.HasFlag(CarSpriteFlags.Corkscrews))
+							C += ((4 * F) * 20);
+						if (car.SpriteFlags.HasFlag(CarSpriteFlags.RestraintAnimation))
+							C += ((4 * F) * 3);
+
+						C *= (P + 1);
+						nextCarOffset += C;
+					}
+				}
+
 			}
 		}
 		catch (IndexOutOfRangeException) { return false; }

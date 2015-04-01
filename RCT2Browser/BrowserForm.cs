@@ -70,6 +70,8 @@ namespace RCTDataEditor {
 		string defaultDirectory = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Rollercoaster Tycoon 2\\ObjData";
 		/** <summary> The default number of objects to load per tick. </summary> */
 		int objectsPerTick = 50;
+		/** <summary> True if the image view should have remap options. </summary> */
+		bool remapImageView = false;
 
 		#endregion
 		//--------------------------------
@@ -336,9 +338,13 @@ namespace RCTDataEditor {
 				element = doc.GetElementsByTagName("QuickLoad");
 				if (element.Count != 0) Attraction.QuickLoad = Boolean.Parse(element[0].InnerText);
 
+				element = doc.GetElementsByTagName("RemapImage");
+				if (element.Count != 0) this.remapImageView = Boolean.Parse(element[0].InnerText);
+
 				this.textBoxDirectory.Text = this.defaultDirectory;
 				this.numericUpDownObjectsPerTick.Value = this.objectsPerTick;
 				this.checkBoxQuickLoad.CheckState = (Attraction.QuickLoad ? CheckState.Checked : CheckState.Unchecked);
+				this.checkBoxRemapImage.CheckState = (this.remapImageView ? CheckState.Checked : CheckState.Unchecked);
 			}
 			else {
 				SaveSettings(null, null);
@@ -363,6 +369,10 @@ namespace RCTDataEditor {
 			element = doc.CreateElement("QuickLoad");
 			settings.AppendChild(element);
 			element.AppendChild(doc.CreateTextNode(Attraction.QuickLoad.ToString()));
+
+			element = doc.CreateElement("RemapImage");
+			settings.AppendChild(element);
+			element.AppendChild(doc.CreateTextNode(this.remapImageView.ToString()));
 
 			doc.Save(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Settings.xml");
 		}
@@ -618,6 +628,8 @@ namespace RCTDataEditor {
 				objectIndex = e.ItemIndex;
 				objectData = ObjectData.ReadObject(directory + "/" + e.Item.SubItems[2].Text);
 				this.frame = 0;
+				Attraction.CurrentCar = 0;
+				Attraction.CarRotationFrame = 0;
 				this.UpdateImages(); this.UpdateInfo(); this.UpdateColorRemap();
 				this.labelCurrentObject.Text = (objectData != null ? objectData.ObjectHeader.FileName + ".DAT" : "");
 				if (objectData == null) {
@@ -723,6 +735,11 @@ namespace RCTDataEditor {
 		private void QuickLoadAttractions(object sender, EventArgs e) {
 			Attraction.QuickLoad = (sender as RCTCheckBox).CheckState == CheckState.Checked;
 		}
+		/** <summary> Changes the remap image view setting. </summary> */
+		private void RemapImageView(object sender, EventArgs e) {
+			this.remapImageView = (sender as RCTCheckBox).CheckState == CheckState.Checked;
+			this.UpdateColorRemap();
+		}
 		/** <summary> Changes the dialog view. </summary> */
 		private void DialogView(object sender, EventArgs e) {
 			this.dialogView = (sender as RCTCheckBox).CheckState == CheckState.Checked;
@@ -739,6 +756,7 @@ namespace RCTDataEditor {
 			this.scrollBarImage.Visible = false;
 			this.labelImageSize.Text = "";
 			this.labelImageOffset.Text = "";
+			this.UpdateColorRemap();
 		}
 		/** <summary> Changes the frame view. </summary> */
 		private void FrameView(object sender, EventArgs e) {
@@ -776,6 +794,7 @@ namespace RCTDataEditor {
 				this.labelImageSize.Text = "";
 				this.labelImageOffset.Text = "";
 			}
+			this.UpdateColorRemap();
 		}
 
 		/** <summary> Rotates the object. </summary> */
@@ -799,8 +818,10 @@ namespace RCTDataEditor {
 					validQueueConnection = false;
 			} while (!Pathing.PathSpriteIndexes.ContainsKey(this.pathConnections) || (this.queue && !validQueueConnection));
 			Pathing.PathConnections = this.pathConnections;
-
-			this.UpdateImages(); this.UpdateInfo();
+			if (objectData is Attraction) {
+				Attraction.CarRotationFrame = (Attraction.CarRotationFrame + 1) % (objectData as Attraction).RotationFrames;
+			}
+			this.UpdateImages();
 		}
 		/** <summary> Rotates the slope. </summary> */
 		private void RotateSlope(object sender, EventArgs e) {
@@ -841,6 +862,10 @@ namespace RCTDataEditor {
 				}
 				Pathing.PathConnections = this.pathConnections;
 			}
+			if (objectData is Attraction) {
+				Attraction.CurrentCar = (Attraction.CurrentCar + 1) % (objectData as Attraction).Header.CarCount;
+				this.UpdateColorRemap();
+			}
 
 			this.UpdateImages();
 		}
@@ -861,6 +886,8 @@ namespace RCTDataEditor {
 					list.SelectedItems[0].Selected = false;
 				}
 				objectIndex--;
+				Attraction.CurrentCar = 0;
+				Attraction.CarRotationFrame = 0;
 				if (objectIndex < 0)
 					objectIndex = list.Items.Count - 1;
 				list.Items[objectIndex].Selected = true;
@@ -875,6 +902,8 @@ namespace RCTDataEditor {
 					list.SelectedItems[0].Selected = false;
 				}
 				objectIndex++;
+				Attraction.CurrentCar = 0;
+				Attraction.CarRotationFrame = 0;
 				if (objectIndex >= list.Items.Count)
 					objectIndex = 0;
 				list.Items[objectIndex].Selected = true;
@@ -1050,6 +1079,7 @@ namespace RCTDataEditor {
 		#endregion
 		//========= INFORMATION ==========
 		#region Information
+
 		private void SetOptionalName(string name) {
 			this.tabGroupInfo.Groups["optional"].Header = name;
 		}
@@ -1449,9 +1479,18 @@ namespace RCTDataEditor {
 		private void UpdateColorRemap() {
 			this.panelColorPalette.Visible = false;
 
-			this.buttonRemap1.Visible = (objectData != null && objectData.ColorRemaps >= 1);
-			this.buttonRemap2.Visible = (objectData != null && objectData.ColorRemaps >= 2);
-			this.buttonRemap3.Visible = (objectData != null && objectData.ColorRemaps == 3);
+			if (!this.dialogView && (!this.imageView || this.remapImageView)) {
+				GraphicsData.DisableRemap = false;
+				this.buttonRemap1.Visible = (objectData != null && objectData.ColorRemaps >= 1);
+				this.buttonRemap2.Visible = (objectData != null && objectData.ColorRemaps >= 2);
+				this.buttonRemap3.Visible = (objectData != null && objectData.ColorRemaps == 3);
+			}
+			else {
+				GraphicsData.DisableRemap = true;
+				this.buttonRemap1.Visible = false;
+				this.buttonRemap2.Visible = false;
+				this.buttonRemap3.Visible = false;
+			}
 			this.colorRemap = 0;
 		}
 

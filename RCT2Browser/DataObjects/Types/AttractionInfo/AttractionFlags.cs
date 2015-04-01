@@ -13,7 +13,7 @@ public enum AttractionFlags : uint {
 
 	/** <summary> Disallow first remap color on the track. Used mainly for trams and trains. </summary> */
 	NoTrackRemap = 0x00000008,
-	/** <summary> Set on magic carpet and swinging inverter ship. </summary> */
+	/** <summary> Set on magic carpet and swinging inverted ship. </summary> */
 	MagicCarpetInvertedShip = 0x00000010,
 	/** <summary> Set on twist and snow cups. </summary> */
 	TwistSnowCups = 0x00000020,

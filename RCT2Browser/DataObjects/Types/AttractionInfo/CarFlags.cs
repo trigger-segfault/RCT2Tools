@@ -35,11 +35,11 @@ public enum CarFlags : ulong {
 	Invertable = 0x0000200000,
 	/** <summary> This specifies that for each rotation frame, each spinning car has R rotation frames of the car spinning while the wheels stay in place. </summary> */
 	SpinningIndependantWheels = 0x0000400000,
-	/** <summary> Enables remap color 3. </summary> */
-	Remap3 = 0x0000800000,
+	/** <summary> Disables remap color 3. </summary> */
+	NoRemap3 = 0x0000800000,
 	/** <summary> Enables remap color 2. </summary> */
 	Remap2 = 0x0001000000,
-	/** <summary> This car is swinging. The default number of swinging frames is 2 pairs. </summary> */
+	/** <summary> This car is swinging. The default number of swinging frames is 2 pairs (5 total frames). </summary> */
 	Swinging = 0x0002000000,
 	/** <summary> This car is spinning. </summary> */
 	Spinning = 0x0004000000,
@@ -172,9 +172,10 @@ public enum CarSpriteFlags : ushort {
 	 * <para>Two R-frame rotations angled left then right at a bank.</para>
 	 * </summary> */
 	FlatBanked = 0x0020,
-
-	Unknown4_1 = 0x0040,
-
+	/** <summary> All inline twist car sprites. Consists of:
+	 * <para>10 sets of 4-frame rotations. Angle information not available yet.</para>
+	 * </summary> */
+	InlineTwists = 0x0040,
 	/** <summary> All flat to gentle slope bank transition car sprites. Consists of:
 	 * <para>Four R-frame rotations angled up-left, up-right, down-left, then down-right at a flat to gentle slope bank transition.</para>
 	 * </summary> */
@@ -195,16 +196,17 @@ public enum CarSpriteFlags : ushort {
 	 * <para>Four 4-frame rotations angled up-left, up-right, down-left, then down-right at a flat bank to gentle slope bank transition.</para>
 	 * </summary> */
 	FlatToGentleSlopeWhileBankedTransitions = 0x0800,
-
-	Unknown1_3 = 0x1000,
-
+	/** <summary> All corkscrew car sprites. Consists of:
+	 * <para>20 sets of 4-frame rotations. Angle information not available yet.</para>
+	 * </summary> */
+	Corkscrews = 0x1000,
 	/** <summary> All restraint animation car sprites. Consists of:
 	 * <para>Three sets of 4 frame rotations with the restraints opening.</para>
 	 * </summary> */
 	RestraintAnimation = 0x2000,
 
-	Unknown4_3 = 0x4000,
-	Unknown8_3 = 0x8000,
+	Unused4_3 = 0x4000,
+	Unused8_3 = 0x8000,
 }
 /** <summary> The different kinds of car types. </summary> */
 public enum CarTypes : byte {

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RCT2 Content Browser")]
-[assembly: AssemblyDescription("A browser for RCT2 ObjData.")]
+[assembly: AssemblyTitle("RCT2 Graphics Extractor")]
+[assembly: AssemblyDescription("Extracts all graphics from g1.dat.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RCT2 Content Browser")]
+[assembly: AssemblyProduct("RCT2 Graphics Extractor")]
 [assembly: AssemblyCopyright("Copyright © Robert Jordan 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("d46905a3-0921-4d8d-aaef-c1d349c876af")]
+[assembly: Guid("84075377-952d-47bf-878c-aa1d5570e339")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.1.0")]
-[assembly: AssemblyFileVersion("1.1.1.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

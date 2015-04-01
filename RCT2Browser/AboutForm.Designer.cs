@@ -35,11 +35,11 @@
 			// rctLabel1
 			// 
 			this.rctLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctLabel1.Location = new System.Drawing.Point(39, 32);
+			this.rctLabel1.Location = new System.Drawing.Point(36, 32);
 			this.rctLabel1.Name = "rctLabel1";
-			this.rctLabel1.Size = new System.Drawing.Size(75, 14);
+			this.rctLabel1.Size = new System.Drawing.Size(90, 14);
 			this.rctLabel1.TabIndex = 0;
-			this.rctLabel1.Text = "Version 1.1.0";
+			this.rctLabel1.Text = "Version 1.1.1.0";
 			this.rctLabel1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
 			// 
 			// rctLabel2
