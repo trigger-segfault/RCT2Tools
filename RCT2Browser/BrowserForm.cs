@@ -322,9 +322,10 @@ namespace RCTDataEditor {
 		}
 		/** <summary> Called to load the settings file. </summary> */
 		private void LoadSettings(object sender, EventArgs e) {
-			if (File.Exists(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Settings.xml")) {
+			string pathToSettings = Path.Combine(Path.GetDirectoryName (Assembly.GetEntryAssembly ().Location),"Settings.xml");
+			if (File.Exists(pathToSettings)) {
 				XmlDocument doc = new XmlDocument();
-				doc.Load(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Settings.xml");
+				doc.Load(pathToSettings);
 				XmlNodeList element;
 
 				element = doc.GetElementsByTagName("DefaultDirectory");
@@ -364,7 +365,7 @@ namespace RCTDataEditor {
 			settings.AppendChild(element);
 			element.AppendChild(doc.CreateTextNode(Attraction.QuickLoad.ToString()));
 
-			doc.Save(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Settings.xml");
+			doc.Save(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location),"Settings.xml"));
 		}
 		/** <summary> Called when the browse default button is pressed. </summary> */
 		private void BrowseDefaultDirectory(object sender, EventArgs e) {
@@ -391,7 +392,7 @@ namespace RCTDataEditor {
 						if (info.Source == SourceTypes.Custom) item.ImageIndex = 2;
 						else if (info.Source == SourceTypes.RCT2) item.ImageIndex = 0;
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Source.ToString()));
-						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, files[i].Substring(files[i].LastIndexOf('\\') + 1)));
+						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, Path.GetFileName(files[i])));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Name));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Type.ToString()));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Subtype.ToString()));
@@ -402,7 +403,7 @@ namespace RCTDataEditor {
 						if (info.Source == SourceTypes.Custom) item.ImageIndex = 2;
 						else if (info.Source == SourceTypes.RCT2) item.ImageIndex = 0;
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Source.ToString()));
-						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, files[i].Substring(files[i].LastIndexOf('\\') + 1)));
+						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, Path.GetFileName(files[i])));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Name));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Type.ToString()));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Subtype.ToString()));
@@ -431,7 +432,7 @@ namespace RCTDataEditor {
 						if (info.Source == SourceTypes.Custom) item.ImageIndex = 2;
 						else if (info.Source == SourceTypes.RCT2) item.ImageIndex = 0;
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, ""));
-						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, files[i].Substring(files[i].LastIndexOf('\\') + 1)));
+						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, Path.GetFileName(files[i])));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, ""));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, ""));
 						item.SubItems.Add(new ListViewItem.ListViewSubItem(item, ""));
@@ -616,7 +617,7 @@ namespace RCTDataEditor {
 			if (e.Item.Selected && ((sender as ListView).SelectedItems.Count == 0 || (sender as ListView).SelectedItems[0] == e.Item)) {
 				currentList = name;
 				objectIndex = e.ItemIndex;
-				objectData = ObjectData.ReadObject(directory + "/" + e.Item.SubItems[2].Text);
+				objectData = ObjectData.ReadObject(Path.Combine(directory,e.Item.SubItems[2].Text));
 				this.frame = 0;
 				this.UpdateImages(); this.UpdateInfo(); this.UpdateColorRemap();
 				this.labelCurrentObject.Text = (objectData != null ? objectData.ObjectHeader.FileName + ".DAT" : "");
