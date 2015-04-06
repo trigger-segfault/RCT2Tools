@@ -10,7 +10,9 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -72,6 +74,10 @@ namespace RCTDataEditor {
 		int objectsPerTick = 50;
 		/** <summary> True if the image view should have remap options. </summary> */
 		bool remapImageView = false;
+		/** <summary> True if files are allowed to be deleted. </summary> */
+		bool allowDeletion = false;
+		/** <summary> True if files are backed up after being deleted. </summary> */
+		bool backupDeletion = true;
 
 		#endregion
 		//--------------------------------
@@ -136,6 +142,17 @@ namespace RCTDataEditor {
 
 		#endregion
 		//--------------------------------
+		#region Extracting
+
+		/** <summary> The start time of the extraction. </summary> */
+		DateTime extractStart;
+		/** <summary> The index of the next image in the list to extract. </summary> */
+		int extractIndex = 0;
+		/** <summary> The object used for extracting. </summary> */
+		ObjectData extractObject = null;
+
+		#endregion
+		//--------------------------------
 		#region Other
 
 		/** <summary> The sbold RCT sprite font. </summary> */
@@ -145,12 +162,7 @@ namespace RCTDataEditor {
 		/** <summary> The image lists for the palette buttons. </summary> */
 		ImageList[] paletteImageLists;
 
-		bool[] usedBytes;
-
-		byte highestValue;
-		byte highestValue2;
-
-		AboutForm aboutForm = new AboutForm();
+		AboutBox aboutForm = new AboutBox();
 
 		#endregion
 		//--------------------------------
@@ -159,7 +171,7 @@ namespace RCTDataEditor {
 		#region Constructors
 
 		/** <summary> Constructs the form. </summary> */
-		public BrowserForm() {
+		public BrowserForm(string[] args) {
 			InitializeComponent();
 
 			Pathing.SetPathSprites();
@@ -265,12 +277,21 @@ namespace RCTDataEditor {
 			this.buttonRemap3.ImageList = this.paletteImageLists[GraphicsData.ColorRemap3];
 			#endregion
 
-			this.usedBytes = new bool[256];
-			for (int i = 0; i < 256; i++) {
-				this.usedBytes[i] = false;
+			if (args.Length > 0) {
+				this.directory = Path.GetDirectoryName(args[0]);
+				this.objectData = ObjectData.ReadObject(args[0]);
+				this.UpdateImages();
+				this.UpdateColorRemap();
+				this.UpdateInfo();
+
+				string name = "Info";
+				currentTab = "Info";
+				this.labelObjectsInGroup.Text = tabNames[GetTabIndex(name)];
+
+				this.tabInfo.ToggleTab();
+
+				this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + frame : (!dialogView ? "frame " + frame : "dialog"));
 			}
-			this.highestValue = 0;
-			this.highestValue2 = 0;
 
 			Attraction o;
 
@@ -342,10 +363,18 @@ namespace RCTDataEditor {
 				element = doc.GetElementsByTagName("RemapImage");
 				if (element.Count != 0) this.remapImageView = Boolean.Parse(element[0].InnerText);
 
+				element = doc.GetElementsByTagName("AllowDeletion");
+				if (element.Count != 0) this.allowDeletion = Boolean.Parse(element[0].InnerText);
+
+				element = doc.GetElementsByTagName("BackupDeletion");
+				if (element.Count != 0) this.backupDeletion = Boolean.Parse(element[0].InnerText);
+
 				this.textBoxDirectory.Text = this.defaultDirectory;
 				this.numericUpDownObjectsPerTick.Value = this.objectsPerTick;
 				this.checkBoxQuickLoad.CheckState = (Attraction.QuickLoad ? CheckState.Checked : CheckState.Unchecked);
 				this.checkBoxRemapImage.CheckState = (this.remapImageView ? CheckState.Checked : CheckState.Unchecked);
+				this.checkBoxAllowDeletions.CheckState = (this.allowDeletion ? CheckState.Checked : CheckState.Unchecked);
+				this.checkBoxBackupDeletions.CheckState = (this.backupDeletion ? CheckState.Checked : CheckState.Unchecked);
 			}
 			else {
 				SaveSettings(null, null);
@@ -374,6 +403,14 @@ namespace RCTDataEditor {
 			element = doc.CreateElement("RemapImage");
 			settings.AppendChild(element);
 			element.AppendChild(doc.CreateTextNode(this.remapImageView.ToString()));
+
+			element = doc.CreateElement("AllowDeletion");
+			settings.AppendChild(element);
+			element.AppendChild(doc.CreateTextNode(this.allowDeletion.ToString()));
+
+			element = doc.CreateElement("BackupDeletion");
+			settings.AppendChild(element);
+			element.AppendChild(doc.CreateTextNode(this.backupDeletion.ToString()));
 
 			doc.Save(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Settings.xml"));
 		}
@@ -453,13 +490,6 @@ namespace RCTDataEditor {
 			if (fileIndex >= files.Length) {
 				this.labelScanProgress.Text = "Scan Finished - Took " + Math.Round((DateTime.Now - this.scanStart).TotalSeconds) + " seconds";
 				this.timerLoadObjects.Stop();
-				for (int i = 0; i < 256; i++) {
-					if (usedBytes[i])
-						Console.Write(i.ToString() + ", ");
-				}
-				Console.WriteLine();
-				Console.WriteLine(highestValue);
-				Console.WriteLine(highestValue2);
 			}
 			else {
 				//this.labelScanStatus.Text = "Scanning - " + Math.Round((double)fileIndex / (double)files.Length * 100.0) + "%";
@@ -558,7 +588,7 @@ namespace RCTDataEditor {
 
 		/** <summary> Called when the scan button is pressed. </summary> */
 		private void StartScan(object sender, EventArgs e) {
-			if (!this.timerLoadObjects.Enabled) {
+			if (!this.timerLoadObjects.Enabled && !this.timerExtract.Enabled) {
 				this.tabGroupInfo.Items.Clear();
 				for (int i = 1; i < this.tabList.Length; i++) {
 					if (tabList[i] != "Settings")
@@ -726,11 +756,80 @@ namespace RCTDataEditor {
 		//=========== BUTTONS ============
 		#region Buttons
 
+		/** <summary> Called when the delete button is pressed. </summary> */
+		private void TabGroupDeleteSelection(object sender, KeyEventArgs e) {
+			if (e.KeyCode == Keys.Delete && allowDeletion) {
+				DeleteObject(sender, e);
+			}
+		}
+		/** <summary> Deletes the selected object. </summary> */
+		private void DeleteObject(object sender, EventArgs e) {
+			ListView currentListView = (this.Controls.Find("tabGroup" + currentList, true)[0] as ListView); 
+			if (currentListView.SelectedItems.Count != 0) {
+				DialogResult result = DeleteMessageBox.Show(this, (currentListView.SelectedItems.Count > 1 ? "[multiple objects]" : currentListView.SelectedItems[0].SubItems[2].Text));
+				bool error = false;
+				if (result == DialogResult.Yes) {
+					string backupDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Deleted Objects");
+					if (backupDeletion && !Directory.Exists(backupDirectory))
+						Directory.CreateDirectory(backupDirectory);
+					for (int j = currentListView.SelectedItems.Count - 1; j >= 0; j--) {
+						try {
+							if (currentListView.SelectedItems[j].SubItems.Count <= 2)
+								continue;
+							if (currentListView.SelectedItems[j].SubItems[1].Text != "Custom" && currentListView.SelectedItems[j].SubItems[1].Text != "")
+								continue;
+							string fileName = currentListView.SelectedItems[j].SubItems[2].Text;
+
+							if (backupDeletion)
+								File.Move(Path.Combine(this.directory, fileName), Path.Combine(backupDirectory, fileName));
+							else
+								File.Delete(Path.Combine(this.directory, fileName));
+
+							for (int i = 0; i < this.tabGroupAll.Items.Count; i++) {
+								if (this.tabGroupAll.Items[i].SubItems.Count > 2) {
+									if (fileName == this.tabGroupAll.Items[i].SubItems[2].Text) {
+										this.tabGroupAll.Items.RemoveAt(i);
+									}
+								}
+							}
+							ListView listView = this.tabGroupAttractions;
+							for (int k = 0; k < 10; k++) {
+								switch ((ObjectTypes)k) {
+								case ObjectTypes.Attraction: listView = this.tabGroupAttractions; break;
+								case ObjectTypes.SmallScenery: listView = this.tabGroupSmallScenery; break;
+								case ObjectTypes.LargeScenery: listView = this.tabGroupLargeScenery; break;
+								case ObjectTypes.Wall: listView = this.tabGroupWalls; break;
+								case ObjectTypes.PathBanner: listView = this.tabGroupSigns; break;
+								case ObjectTypes.Path: listView = this.tabGroupPaths; break;
+								case ObjectTypes.PathAddition: listView = this.tabGroupPathAdditions; break;
+								case ObjectTypes.SceneryGroup: listView = this.tabGroupSceneryGroups; break;
+								case ObjectTypes.ParkEntrance: listView = this.tabGroupParkEntrances; break;
+								case ObjectTypes.Water: listView = this.tabGroupWater; break;
+								}
+								for (int i = 0; i < listView.Items.Count; i++) {
+									if (listView.Items[i].SubItems.Count > 2) {
+										if (fileName == listView.Items[i].SubItems[2].Text) {
+											listView.Items.RemoveAt(i);
+										}
+									}
+								}
+							}
+						}
+						catch (Exception) {
+							error = true;
+						}
+					}
+				}
+				if (error) {
+					ErrorForm.Show(this, "Error deleting object file!", "You may need to run as administrator.");
+				}
+			}
+		}
 		/** <summary> Opens the about window. </summary> */
 		private void OpenAboutForm(object sender, EventArgs e) {
 			if (aboutForm.IsDisposed)
-				aboutForm = new AboutForm();
-			aboutForm.Show();
+				aboutForm = new AboutBox();
+			aboutForm.ShowDialog(this);
 		}
 		/** <summary> Changes the quick load setting. </summary> */
 		private void QuickLoadAttractions(object sender, EventArgs e) {
@@ -740,6 +839,14 @@ namespace RCTDataEditor {
 		private void RemapImageView(object sender, EventArgs e) {
 			this.remapImageView = (sender as RCTCheckBox).CheckState == CheckState.Checked;
 			this.UpdateColorRemap();
+		}
+		/** <summary> Changes the allow deletions setting. </summary> */
+		private void AllowDeletions(object sender, EventArgs e) {
+			this.allowDeletion = (sender as RCTCheckBox).CheckState == CheckState.Checked;
+		}
+		/** <summary> Changes the backup deletions setting. </summary> */
+		private void BackupDeletions(object sender, EventArgs e) {
+			this.backupDeletion = (sender as RCTCheckBox).CheckState == CheckState.Checked;
 		}
 		/** <summary> Changes the dialog view. </summary> */
 		private void DialogView(object sender, EventArgs e) {
@@ -946,6 +1053,72 @@ namespace RCTDataEditor {
 			this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + "image " + frame;
 			this.labelImageSize.Text = "Image Size:  " + objectData.ImageDirectory.Entries[frame].Width + ", " + objectData.ImageDirectory.Entries[frame].Height + "";
 			this.labelImageOffset.Text = "Image Offset:  " + objectData.ImageDirectory.Entries[frame].XOffset + ", " + objectData.ImageDirectory.Entries[frame].YOffset + "";
+		}
+		/** <summary> Extracts the images to the executable directory. </summary> */
+		private void ExtractImages(object sender, EventArgs e) {
+			if (objectData != null && !this.timerExtract.Enabled && !this.timerLoadObjects.Enabled) {
+				string directory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Extracted Images", objectData.ObjectHeader.FileName);
+				string paletteDirectory = Path.Combine(directory, "Palettes");
+
+				if (!Directory.Exists(directory))
+					Directory.CreateDirectory(directory);
+				if (objectData.GraphicsData.NumPalettes > 0 && !Directory.Exists(paletteDirectory))
+					Directory.CreateDirectory(paletteDirectory);
+
+				extractIndex = 0;
+				extractObject = objectData;
+				extractStart = DateTime.Now;
+				this.timerExtract.Start();
+			}
+		}
+		/** <summary> Extracts the images to the executable directory. </summary> */
+		private void ExtractingImages(object sender, EventArgs e) {
+			string directory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Extracted Images", extractObject.ObjectHeader.FileName);
+			string paletteDirectory = Path.Combine(directory, "Palettes");
+			for (int i = 0; i < 100 && extractIndex < extractObject.GraphicsData.Images.Count; i++, extractIndex++) {
+				if (extractObject.GraphicsData.Palettes[extractIndex] != null) {
+					if (!Directory.Exists(paletteDirectory))
+						Directory.CreateDirectory(paletteDirectory);
+					extractObject.GraphicsData.Images[extractIndex].Save(Path.Combine(paletteDirectory, extractIndex.ToString() + ".png"), ImageFormat.Png);
+
+					Palette palette = extractObject.GraphicsData.Palettes[extractIndex];
+					string paletteText = "Colors: " + palette.Colors.Length.ToString() + "\r\nOffset: " + palette.Offset.ToString();
+
+					// Write each color
+					for (int j = 0; j < palette.Colors.Length; j++) {
+						if (j % 12 == 0)
+							paletteText += "\r\n\r\n";
+						else if (j % 4 == 0)
+							paletteText += "\r\n";
+						else
+							paletteText += " ";
+
+						paletteText += "(" + palette.Colors[j].R.ToString() + ", " + palette.Colors[j].G.ToString() + ", " + palette.Colors[j].B.ToString() + ")";
+						if (j + 1 < palette.Colors.Length)
+							paletteText += ",";
+					}
+
+					StreamWriter writer = new StreamWriter(Path.Combine(paletteDirectory, extractIndex.ToString() + ".txt"));
+					writer.Write(paletteText);
+					writer.Close();
+				}
+				else {
+					objectData.GraphicsData.Images[extractIndex].Save(Path.Combine(directory, extractIndex.ToString() + ".png"), ImageFormat.Png);
+				}
+			}
+			if (extractIndex == extractObject.GraphicsData.Images.Count) {
+				labelScanProgress.Text = "Finished - Took " + Math.Round((DateTime.Now - this.extractStart).TotalSeconds) + " seconds";
+				this.timerExtract.Stop();
+				extractObject = null;
+			}
+			else {
+				this.labelScanProgress.Text = "Extracting - " + Math.Round((double)extractIndex / (double)extractObject.GraphicsData.Images.Count * 100.0) + "%";
+			}
+		}
+		/** <summary> Opens the directory where images are extracted to. </summary> */
+		private void OpenExtractDirectory(object sender, EventArgs e) {
+			string directory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+			Process.Start(directory);
 		}
 
 		#endregion
@@ -1166,8 +1339,8 @@ namespace RCTDataEditor {
 			AddInfoItem("general", "Name", (objectData.StringTable.Entries[0][Languages.British].Replace(" ", "").Length != 0 ? objectData.StringTable.Entries[0][Languages.British] : objectData.StringTable.Entries[0][Languages.American]));
 			AddInfoItem("general", "Type", objectData.Type.ToString());
 			AddInfoItem("general", "Source", objectData.Source.ToString());
-			AddInfoItem("graphics", "Images", objectData.GraphicsData.Images.Count.ToString());
-			AddInfoItem("graphics", "Palettes", objectData.GraphicsData.Palettes.Count.ToString());
+			AddInfoItem("graphics", "Images", objectData.GraphicsData.NumImages.ToString());
+			AddInfoItem("graphics", "Palettes", objectData.GraphicsData.NumPalettes.ToString());
 
 			for (int i = 0; i < objectData.StringTable.Count; i++) {
 				AddInfoItem("strings", "Entry " + (i + 1), objectData.StringTable.Entries[i][Languages.British]);
@@ -1333,7 +1506,7 @@ namespace RCTDataEditor {
 			}
 			else if (objectData is Water) {
 				Water obj = (Water)objectData;
-				string nonZeroStr = "None";
+				/*string nonZeroStr = "None";
 				if (obj.Header.NonZeroBytes.Count > 0) {
 					nonZeroStr = "";
 					for (int i = 0; i < obj.Header.NonZeroBytes.Count; i++) {
@@ -1342,7 +1515,7 @@ namespace RCTDataEditor {
 						nonZeroStr += "[0x" + obj.Header.BytePositions[i].ToString("X") + ": 0x" + obj.Header.NonZeroBytes[i].ToString("X") + "]";
 					}
 				}
-				AddInfoItem("header", "Non-Zero Bytes", nonZeroStr);
+				AddInfoItem("header", "Non-Zero Bytes", nonZeroStr);*/
 			}
 			else if (objectData is ParkEntrance) {
 				ParkEntrance obj = (ParkEntrance)objectData;
@@ -1378,6 +1551,15 @@ namespace RCTDataEditor {
 						this.objectData.ImageDirectory.Entries[frame].Width,
 						this.objectData.ImageDirectory.Entries[frame].Height
 					);
+
+					if (objectData.GraphicsData.Palettes[frame] != null) {
+						rect = new Rectangle(
+							this.objectView.Width / 2 - 128 / 2 - 1,
+							this.objectView.Height / 2 - 128 / 2 - 1,
+							128,
+							128
+						);
+					}
 
 					Brush brush = new SolidBrush(Color.FromArgb(99, 155, 119));
 					g.FillRectangle(brush, rect);

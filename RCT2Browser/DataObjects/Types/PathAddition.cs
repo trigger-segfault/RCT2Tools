@@ -68,7 +68,7 @@ public class PathAddition : ObjectData {
 	//--------------------------------
 	#region Reading
 
-	/** <summary> Constructs the default object. </summary> */
+	/** <summary> Reads the object. </summary> */
 	public override void Read(BinaryReader reader) {
 		Header.Read(reader);
 
@@ -77,6 +77,31 @@ public class PathAddition : ObjectData {
 
 		imageDirectory.Read(reader);
 		graphicsData.Read(reader, imageDirectory);
+	}
+	/** <summary> Writes the object. </summary> */
+	public void Write(BinaryWriter writer) {
+		// Write the header
+		Header.Write(writer);
+
+		// Write the 1 string table entry
+		stringTable.Write(writer);
+
+		// Write the group info
+		groupInfo.Write(writer);
+
+		long imageDirectoryPosition = writer.BaseStream.Position;
+
+		// Write the image directory and graphics data
+		imageDirectory.Write(writer);
+		graphicsData.Write(writer, imageDirectory);
+
+		// Rewrite the image directory after the image addresses are known
+		long finalPosition = writer.BaseStream.Position;
+		writer.BaseStream.Position = imageDirectoryPosition;
+		imageDirectory.Write(writer);
+
+		// Set the position to the end of the file so the file size is known
+		writer.BaseStream.Position = finalPosition;
 	}
 
 	#endregion
@@ -250,6 +275,17 @@ public class PathAdditionHeader : ObjectTypeHeader {
 		this.BuildCost	= reader.ReadUInt16();
 		this.Reserved2	= reader.ReadByte();
 		this.Reserved3	= reader.ReadByte();
+	}
+	/** <summary> Writes the object header. </summary> */
+	public void Write(BinaryWriter writer) {
+		writer.Write(this.Reserved0);
+		writer.Write(this.Reserved1);
+		writer.Write((ushort)this.Flags);
+		writer.Write((byte)this.Subtype);
+		writer.Write(this.Cursor);
+		writer.Write(this.BuildCost);
+		writer.Write(this.Reserved2);
+		writer.Write(this.Reserved3);
 	}
 
 	#endregion

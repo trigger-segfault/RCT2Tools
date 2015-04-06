@@ -76,7 +76,7 @@ public class SmallScenery : ObjectData {
 	//--------------------------------
 	#region Reading
 
-	/** <summary> Constructs the default object. </summary> */
+	/** <summary> Reads the object. </summary> */
 	public override void Read(BinaryReader reader) {
 		Header.Read(reader);
 
@@ -95,6 +95,39 @@ public class SmallScenery : ObjectData {
 
 		imageDirectory.Read(reader);
 		graphicsData.Read(reader, imageDirectory);
+	}
+	/** <summary> Writes the object. </summary> */
+	public void Write(BinaryWriter writer) {
+		// Write the header
+		Header.Write(writer);
+
+		// Write the 1 string table entry
+		stringTable.Write(writer);
+
+		// Write the group info
+		groupInfo.Write(writer);
+
+		// Animation sequence
+		if (Header.Flags.HasFlag(SmallSceneryFlags.AnimationData)) {
+			for (int i = 0; i < this.AnimationSequence.Count; i++) {
+				writer.Write(this.AnimationSequence[i]);
+			}
+			writer.Write((byte)0xFF);
+		}
+
+		long imageDirectoryPosition = writer.BaseStream.Position;
+
+		// Write the image directory and graphics data
+		imageDirectory.Write(writer);
+		graphicsData.Write(writer, imageDirectory);
+
+		// Rewrite the image directory after the image addresses are known
+		long finalPosition = writer.BaseStream.Position;
+		writer.BaseStream.Position = imageDirectoryPosition;
+		imageDirectory.Write(writer);
+
+		// Set the position to the end of the file so the file size is known
+		writer.BaseStream.Position = finalPosition;
 	}
 
 	#endregion
@@ -327,7 +360,6 @@ public class SmallSceneryHeader : ObjectTypeHeader {
 
 	/** <summary> Reads the object header. </summary> */
 	public override void Read(BinaryReader reader) {
-
 		MessageRef = reader.ReadUInt16();
 		Fill1 = reader.ReadUInt32();
 		Flags = (SmallSceneryFlags)reader.ReadUInt32();
@@ -341,6 +373,22 @@ public class SmallSceneryHeader : ObjectTypeHeader {
 		Animation3 = reader.ReadUInt16();
 		BaseIndex = reader.ReadByte();
 		Fill2 = reader.ReadByte();
+	}
+	/** <summary> Writes the object header. </summary> */
+	public void Write(BinaryWriter writer) {
+		writer.Write(this.MessageRef);
+		writer.Write(this.Fill1);
+		writer.Write((uint)this.Flags);
+		writer.Write(this.Height);
+		writer.Write(this.Cursor);
+		writer.Write(this.BuildCost);
+		writer.Write(this.RemoveCost);
+		writer.Write(this.GraphicsStart);
+		writer.Write(this.Animation1);
+		writer.Write(this.Animation2);
+		writer.Write(this.Animation3);
+		writer.Write(this.BaseIndex);
+		writer.Write(this.Fill2);
 	}
 
 	#endregion

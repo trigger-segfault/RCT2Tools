@@ -133,7 +133,7 @@ public class Attraction : ObjectData {
 	//--------------------------------
 	#region Reading
 
-	/** <summary> Constructs the default object. </summary> */
+	/** <summary> Reads the object. </summary> */
 	public override void Read(BinaryReader reader) {
 		// Read the attraction and car headers
 		Header.Read(reader);
@@ -167,7 +167,7 @@ public class Attraction : ObjectData {
 			imageDirectory.Count = Math.Min(imageDirectory.Count, 35);
 		graphicsData.Read(reader, imageDirectory);
 	}
-	/** <summary> Constructs the default object. </summary> */
+	/** <summary> Writes the object. </summary> */
 	public void Write(BinaryWriter writer) {
 		// Write the attraction and car headers
 		Header.Write(writer);

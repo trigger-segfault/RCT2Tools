@@ -17,6 +17,34 @@ public class Water : ObjectData {
 	/** <summary> The size of the header for this object type. </summary> */
 	public const uint HeaderSize = 0x0E;
 
+	private static Palette[] WaterPalettes = new Palette[]{
+		new Palette(new Color[]{Color.FromArgb(55, 155, 151), Color.FromArgb(39, 143, 135), Color.FromArgb(27, 131, 123), Color.FromArgb(15, 119, 111),
+								Color.FromArgb(7, 107, 99), Color.FromArgb(7, 107, 99), Color.FromArgb(7, 107, 99), Color.FromArgb(7, 107, 99),
+								Color.FromArgb(7, 107, 99), Color.FromArgb(7, 107, 99), Color.FromArgb(7, 107, 99), Color.FromArgb(7, 107, 99),
+								Color.FromArgb(15, 119, 111), Color.FromArgb(27, 131, 123), Color.FromArgb(39, 143, 135)}),
+		new Palette(new Color[]{Color.FromArgb(23, 127, 119), Color.FromArgb(15, 115, 107), Color.FromArgb(7, 107, 99), Color.FromArgb(0, 95, 87),
+								Color.FromArgb(0, 87, 79), Color.FromArgb(0, 87, 79), Color.FromArgb(0, 87, 79), Color.FromArgb(0, 87, 79),
+								Color.FromArgb(0, 87, 79), Color.FromArgb(0, 87, 79), Color.FromArgb(0, 87, 79), Color.FromArgb(0, 87, 79),
+								Color.FromArgb(0, 95, 87), Color.FromArgb(7, 103, 95), Color.FromArgb(15, 115, 107)}),
+		new Palette(new Color[]{Color.FromArgb(7, 107, 99), Color.FromArgb(0, 99, 91), Color.FromArgb(0, 91, 83), Color.FromArgb(0, 83, 75),
+								Color.FromArgb(0, 75, 67), Color.FromArgb(0, 75, 67), Color.FromArgb(0, 75, 67), Color.FromArgb(0, 75, 67),
+								Color.FromArgb(0, 75, 67), Color.FromArgb(0, 75, 67), Color.FromArgb(0, 75, 67), Color.FromArgb(0, 75, 67),
+								Color.FromArgb(0, 83, 75), Color.FromArgb(0, 91, 83), Color.FromArgb(0, 99, 91)}),
+		new Palette(new Color[]{Color.FromArgb(199, 255, 255), Color.FromArgb(155, 227, 227), Color.FromArgb(115, 203, 203), Color.FromArgb(83, 179, 175),
+								Color.FromArgb(55, 155, 151), Color.FromArgb(55, 155, 151), Color.FromArgb(55, 155, 151), Color.FromArgb(55, 155, 151),
+								Color.FromArgb(55, 155, 151), Color.FromArgb(55, 155, 151), Color.FromArgb(55, 155, 151), Color.FromArgb(55, 155, 151),
+								Color.FromArgb(83, 179, 175), Color.FromArgb(115, 203, 203), Color.FromArgb(155, 227, 227)}),
+		new Palette(new Color[]{Color.FromArgb(171, 231, 231), Color.FromArgb(123, 203, 203), Color.FromArgb(83, 179, 175), Color.FromArgb(47, 151, 147),
+								Color.FromArgb(23, 127, 119), Color.FromArgb(23, 127, 119), Color.FromArgb(23, 127, 119), Color.FromArgb(23, 127, 119),
+								Color.FromArgb(23, 127, 119), Color.FromArgb(23, 127, 119), Color.FromArgb(23, 127, 119), Color.FromArgb(23, 127, 119),
+								Color.FromArgb(47, 151, 147), Color.FromArgb(83, 175, 175), Color.FromArgb(123, 203, 203)}),
+		new Palette(new Color[]{Color.FromArgb(131, 207, 207), Color.FromArgb(87, 179, 179), Color.FromArgb(55, 155, 151), Color.FromArgb(27, 131, 123),
+								Color.FromArgb(7, 107, 99), Color.FromArgb(7, 107, 99), Color.FromArgb(7, 107, 99), Color.FromArgb(7, 107, 99),
+								Color.FromArgb(7, 107, 99), Color.FromArgb(7, 107, 99), Color.FromArgb(7, 107, 99), Color.FromArgb(7, 107, 99),
+								Color.FromArgb(27, 131, 123), Color.FromArgb(51, 155, 151), Color.FromArgb(87, 179, 179)})
+	};
+
+
 	#endregion
 	//=========== MEMBERS ============
 	#region Members
@@ -63,13 +91,12 @@ public class Water : ObjectData {
 	//--------------------------------
 	#region Reading
 
-	/** <summary> Constructs the default object. </summary> */
+	/** <summary> Reads the object. </summary> */
 	public override void Read(BinaryReader reader) {
 		Header.Read(reader);
 
 		stringTable.Read(reader);
 
-		//groupInfo.Read(reader);
 		imageDirectory.Read(reader);
 		graphicsData.Read(reader, imageDirectory);
 
@@ -80,16 +107,45 @@ public class Water : ObjectData {
 		for (int x = 0; x < PreviewImage.Width; x++) {
 			for (int y = 0; y < 32; y++) {
 				//Console.WriteLine(x + " " + y);
-				for (int i = 190; i < 240; i++) {
+				bool colorFound = false;
+				for (int i = 190; i < 202 && !colorFound; i++) {
 					if (Palette.DefaultPalette.Colors[i] == (PreviewImage as Bitmap).GetPixel(x, y)) {
 						(PreviewImage as Bitmap).SetPixel(x, y, graphicsData.Palettes[0].Colors[i - 10]);
-						break;
+						colorFound = true;
 					}
-					if (i == 201)
-						i = 229;
+				}
+				for (int j = 0; j < Water.WaterPalettes.Length && !colorFound; j++) {
+					for (int i = 0; i < Water.WaterPalettes[j].Colors.Length && !colorFound; i++) {
+						if (Water.WaterPalettes[j].Colors[i] == (PreviewImage as Bitmap).GetPixel(x, y)) {
+							(PreviewImage as Bitmap).SetPixel(x, y, graphicsData.Palettes[j + 1].Colors[i]);
+							colorFound = true;
+						}
+					}
 				}
 			}
 		}
+	}
+	/** <summary> Writes the object. </summary> */
+	public void Write(BinaryWriter writer) {
+		// Write the header
+		Header.Write(writer);
+
+		// Write the 1 string table entry
+		stringTable.Write(writer);
+
+		long imageDirectoryPosition = writer.BaseStream.Position;
+
+		// Write the image directory and graphics data
+		imageDirectory.Write(writer);
+		graphicsData.Write(writer, imageDirectory);
+
+		// Rewrite the image directory after the image addresses are known
+		long finalPosition = writer.BaseStream.Position;
+		writer.BaseStream.Position = imageDirectoryPosition;
+		imageDirectory.Write(writer);
+
+		// Set the position to the end of the file so the file size is known
+		writer.BaseStream.Position = finalPosition;
 	}
 
 	#endregion
@@ -116,8 +172,12 @@ public class Water : ObjectData {
 	}
 	/** <summary> Draws a single frame of the object. </summary> */
 	public override bool DrawSingleFrame(Graphics g, Point position, int frame) {
-
-		return false;
+		try {
+			g.DrawImage(graphicsData.Images[frame], position.X - graphicsData.Images[frame].Width / 2, position.Y - graphicsData.Images[frame].Height / 2);
+		}
+		catch (IndexOutOfRangeException) { return false; }
+		catch (ArgumentOutOfRangeException) { return false; }
+		return true;
 	}
 
 	#endregion
@@ -130,10 +190,8 @@ public class WaterHeader : ObjectTypeHeader {
 	//=========== MEMBERS ============
 	#region Members
 
-	/** <summary> The positions of all non-zero bytes. </summary> */
-	public List<uint> BytePositions;
-	/** <summary> The list of all non-zero bytes. </summary> */
-	public List<byte> NonZeroBytes;
+	/** <summary> 14 bytes that are always zero in dat files. </summary> */
+	public byte[] Reserved0;
 
 	#endregion
 	//========= CONSTRUCTORS =========
@@ -141,8 +199,7 @@ public class WaterHeader : ObjectTypeHeader {
 
 	/** <summary> Constructs the default object header. </summary> */
 	public WaterHeader() {
-		this.BytePositions	= new List<uint>();
-		this.NonZeroBytes	= new List<byte>();
+		this.Reserved0	= new byte[14];
 	}
 
 	#endregion
@@ -173,13 +230,11 @@ public class WaterHeader : ObjectTypeHeader {
 
 	/** <summary> Reads the object header. </summary> */
 	public override void Read(BinaryReader reader) {
-		for (int i = 0; i < Water.HeaderSize; i++) {
-			byte b = reader.ReadByte();
-			if (b != 0x00) {
-				this.BytePositions.Add((uint)i);
-				this.NonZeroBytes.Add(b);
-			}
-		}
+		reader.Read(this.Reserved0, 0, this.Reserved0.Length);
+	}
+	/** <summary> Writes the object header. </summary> */
+	public void Write(BinaryWriter writer) {
+		writer.Write(this.Reserved0);
 	}
 
 	#endregion

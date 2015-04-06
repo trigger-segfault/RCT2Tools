@@ -14,7 +14,8 @@ public class GraphicsData {
 	public static int ColorRemap1 = 26;
 	public static int ColorRemap2 = 18;
 	public static int ColorRemap3 = 24;
-	public static bool DisableRemap = false;
+
+	public static string LastPaletteText = "";
 
 	//=========== MEMBERS ============
 	#region Members
@@ -26,11 +27,6 @@ public class GraphicsData {
 	/** <summary> The list of palettes. </summary> */
 	public List<Palette> Palettes;
 
-	/** <summary> The number of images in the graphics data. </summary> */
-	public int NumImages;
-	/** <summary> The palettes of images in the graphics data. </summary> */
-	public int NumPalettes;
-
 	#endregion
 	//========= CONSTRUCTORS =========
 	#region Constructors
@@ -40,8 +36,6 @@ public class GraphicsData {
 		this.Images			= new List<Bitmap>();
 		this.PaletteImages	= new List<PaletteImage>();
 		this.Palettes		= new List<Palette>();
-		this.NumImages		= 0;
-		this.NumPalettes	= 0;
 	}
 
 	#endregion
@@ -49,99 +43,98 @@ public class GraphicsData {
 	#region Reading
 
 	/** <summary> Reads the graphics data. </summary> */
-	public void Read(BinaryReader reader, ImageDirectory directory, Palette colorPalette = null) {
-		if (colorPalette == null) {
-			colorPalette = Palette.DefaultPalette;
-		}
-		long startPosition = reader.BaseStream.Position;
+	public Bitmap Read(BinaryReader reader, long startPosition, int i, ImageDirectory directory) {
+		GraphicsData.LastPaletteText = "";
+		Palette colorPalette = Palette.DefaultPalette;
+		if (i >= 23215 && i <= 23216)
+			colorPalette = Palette.ChrisSawyerPalette;
+		else if (i >= 23218 && i <= 23223)
+			colorPalette = Palette.LogoPalette;
 
-		for (int i = 0; i < directory.Count; i++) {
-			ImageEntry entry = directory.Entries[i];
-			if (entry.Flags == ImageFlags.DirectBitmap) {
-				Bitmap image = new Bitmap(entry.Width, entry.Height);
-				PaletteImage paletteImage = new PaletteImage(entry.Width, entry.Height);
-				reader.BaseStream.Position = startPosition + entry.StartAddress;
+		ImageEntry entry = directory.Entries[i];
+		if (entry.Flags == ImageFlags.DirectBitmap) {
+			Bitmap image = new Bitmap(entry.Width, entry.Height);
+			reader.BaseStream.Position = startPosition + entry.StartAddress;
 
-				// Read each row
-				for (int y = 0; y < entry.Height; y++) {
-					for (int x = 0; x < entry.Width; x++) {
-						byte b = reader.ReadByte();
-						image.SetPixel(x, y, colorPalette.Colors[b]);
-						paletteImage.Pixels[x, y] = b;
-					}
+			// Read each row
+			for (int y = 0; y < entry.Height; y++) {
+				for (int x = 0; x < entry.Width; x++) {
+					byte b = reader.ReadByte();
+					image.SetPixel(x, y, colorPalette.Colors[b]);
 				}
-
-				this.NumImages++;
-				this.Palettes.Add(null);
-				this.Images.Add(image);
-				this.PaletteImages.Add(paletteImage);
 			}
-			else if (entry.Flags == ImageFlags.CompactedBitmap) {
-				Bitmap image = new Bitmap(entry.Width, entry.Height);
-				PaletteImage paletteImage = new PaletteImage(entry.Width, entry.Height);
-				uint[] rowOffsets = new uint[entry.Height];
-				reader.BaseStream.Position = startPosition + entry.StartAddress;
 
-				// Read the row offsets
-				for (int j = 0; j < entry.Height; j++) {
-					rowOffsets[j] = reader.ReadUInt16();
-				}
+			return image;
+		}
+		else if (entry.Flags == ImageFlags.CompactedBitmap) {
+			Bitmap image = new Bitmap(entry.Width, entry.Height);
+			uint[] rowOffsets = new uint[entry.Height];
+			reader.BaseStream.Position = startPosition + entry.StartAddress;
 
-				// Read the scan lines in each row
-				for (int j = 0; j < entry.Height; j++) {
-					reader.BaseStream.Position = startPosition + entry.StartAddress + rowOffsets[j];
-					byte b1 = 0;
-					byte b2 = 0;
+			// Read the row offsets
+			for (int j = 0; j < entry.Height; j++) {
+				rowOffsets[j] = reader.ReadUInt16();
+			}
 
-					// A MSB of 1 means the last scan line in a row
-					while ((b1 & 0x80) == 0) {
-						// Read the number of bytes of data
-						b1 = reader.ReadByte();
-						// Read the offset from the left edge of the image
-						b2 = reader.ReadByte();
-						for (int k = 0; k < (int)(b1 & 0x7F); k++) {
-							byte b3 = reader.ReadByte();
-							try {
-								image.SetPixel((int)b2 + k, j, colorPalette.Colors[b3]);
-								paletteImage.Pixels[(int)b2 + k, j] = b3;
-							}
-							catch (Exception) {
-							}
+			// Read the scan lines in each row
+			for (int j = 0; j < entry.Height; j++) {
+				reader.BaseStream.Position = startPosition + entry.StartAddress + rowOffsets[j];
+				byte b1 = 0;
+				byte b2 = 0;
+
+				// A MSB of 1 means the last scan line in a row
+				while ((b1 & 0x80) == 0) {
+					// Read the number of bytes of data
+					b1 = reader.ReadByte();
+					// Read the offset from the left edge of the image
+					b2 = reader.ReadByte();
+					for (int k = 0; k < (int)(b1 & 0x7F); k++) {
+						byte b3 = reader.ReadByte();
+						try {
+							image.SetPixel((int)b2 + k, j, colorPalette.Colors[b3]);
+						}
+						catch (Exception) {
+							Console.WriteLine("Help");
 						}
 					}
 				}
-
-				this.NumImages++;
-				this.Palettes.Add(null);
-				this.Images.Add(image);
-				this.PaletteImages.Add(paletteImage);
 			}
-			else if (entry.Flags == ImageFlags.PaletteEntries) {
-				Palette palette = new Palette(entry.Width, entry.XOffset);
-				Bitmap image = new Bitmap(16 * 8, 16 * 8);
-				reader.BaseStream.Position = startPosition + entry.StartAddress;
 
-				// Read each color
-				for (int j = 0; j < entry.Width; j++) {
-					// Yes the colors are in the order blue, green, red
-					byte blue = reader.ReadByte();
-					byte green = reader.ReadByte();
-					byte red = reader.ReadByte();
+			return image;
+		}
+		else if (entry.Flags == ImageFlags.PaletteEntries) {
+			Bitmap image = new Bitmap(16 * 10, 16 * 10);
+			reader.BaseStream.Position = startPosition + entry.StartAddress;
 
-					palette.Colors[j] = Color.FromArgb(red, green, blue);
+			GraphicsData.LastPaletteText += "Colors: " + entry.Width.ToString() + "\r\nOffset: " + entry.XOffset.ToString();
 
-					for (int x = 0; x < 8; x++) {
-						for (int y = 0; y < 8; y++) {
-							image.SetPixel(((entry.XOffset + j) % 16) * 8 + x, ((entry.XOffset + j) / 16) * 8 + y, Color.FromArgb(red, green, blue));
-						}
+			// Read each color
+			for (int j = 0; j < entry.Width; j++) {
+				// Yes the colors are in the order blue, green, red
+				byte blue = reader.ReadByte();
+				byte green = reader.ReadByte();
+				byte red = reader.ReadByte();
+
+				if (j % 12 == 0)
+					GraphicsData.LastPaletteText += "\r\n\r\n";
+				else if (j % 4 == 0)
+					GraphicsData.LastPaletteText += "\r\n";
+				else
+					GraphicsData.LastPaletteText += " ";
+
+				GraphicsData.LastPaletteText += "(" + red.ToString() + ", " + green.ToString() + ", " + blue.ToString() + ")";
+				if (j + 1 < entry.Width)
+					GraphicsData.LastPaletteText += ",";
+
+				for (int x = 0; x < 10; x++) {
+					for (int y = 0; y < 10; y++) {
+						image.SetPixel(((entry.XOffset + j) % 16) * 10 + x, ((entry.XOffset + j) / 16) * 10 + y, Color.FromArgb(red, green, blue));
 					}
 				}
-				this.NumPalettes++;
-				this.Palettes.Add(palette);
-				this.Images.Add(image);
-				this.PaletteImages.Add(null);
 			}
+			return image;
 		}
+		return null;
 	}
 	/** <summary> Writes the graphics data. </summary> */
 	public void Write(BinaryWriter writer, ImageDirectory directory) {

@@ -64,7 +64,7 @@ public class Pathing : ObjectData {
 	//--------------------------------
 	#region Reading
 
-	/** <summary> Constructs the default object. </summary> */
+	/** <summary> Reads the object. </summary> */
 	public override void Read(BinaryReader reader) {
 		Header.Read(reader);
 
@@ -72,6 +72,28 @@ public class Pathing : ObjectData {
 
 		imageDirectory.Read(reader);
 		graphicsData.Read(reader, imageDirectory);
+	}
+	/** <summary> Writes the object. </summary> */
+	public void Write(BinaryWriter writer) {
+		// Write the header
+		Header.Write(writer);
+
+		// Write the 1 string table entry
+		stringTable.Write(writer);
+
+		long imageDirectoryPosition = writer.BaseStream.Position;
+
+		// Write the image directory and graphics data
+		imageDirectory.Write(writer);
+		graphicsData.Write(writer, imageDirectory);
+
+		// Rewrite the image directory after the image addresses are known
+		long finalPosition = writer.BaseStream.Position;
+		writer.BaseStream.Position = imageDirectoryPosition;
+		imageDirectory.Write(writer);
+
+		// Set the position to the end of the file so the file size is known
+		writer.BaseStream.Position = finalPosition;
 	}
 
 	#endregion
@@ -618,9 +640,13 @@ public class PathingHeader : ObjectTypeHeader {
 
 	//=========== MEMBERS ============
 	#region Members
-
+	
+	/** <summary> Ten bytes of data that are always zero in dat files. </summary> */
+	public byte[] Reserved0;
 	/** <summary> The flags used by the object. </summary> */
 	public PathingFlags Flags;
+	/** <summary> Always zero in dat files. </summary> */
+	public ushort Reserved1;
 
 	#endregion
 	//========= CONSTRUCTORS =========
@@ -628,7 +654,9 @@ public class PathingHeader : ObjectTypeHeader {
 
 	/** <summary> Constructs the default object header. </summary> */
 	public PathingHeader() {
-		this.Flags	= PathingFlags.None;
+		this.Reserved0	= new byte[10];
+		this.Flags		= PathingFlags.None;
+		this.Reserved1	= 0;
 	}
 
 	#endregion
@@ -659,9 +687,15 @@ public class PathingHeader : ObjectTypeHeader {
 
 	/** <summary> Reads the object header. </summary> */
 	public override void Read(BinaryReader reader) {
-		reader.ReadBytes(10);
-		this.Flags = (PathingFlags)reader.ReadUInt16();
-		reader.ReadBytes(2);
+		reader.Read(this.Reserved0, 0, this.Reserved0.Length);
+		this.Flags		= (PathingFlags)reader.ReadUInt16();
+		this.Reserved1	= reader.ReadUInt16();
+	}
+	/** <summary> Writes the object header. </summary> */
+	public void Write(BinaryWriter writer) {
+		writer.Write(this.Reserved0);
+		writer.Write((ushort)this.Flags);
+		writer.Write(this.Reserved1);
 	}
 
 	#endregion

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomControls", "CustomCon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCT2GraphicsExtractor", "RCT2GraphicsExtractor\RCT2GraphicsExtractor.csproj", "{D260A35B-12BB-442C-BC5E-6AB05A5A6088}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCT2PaletteConverter", "RCT2PaletteConverter\RCT2PaletteConverter.csproj", "{74D9236D-949E-40CA-84EE-7B6F6411B0C1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{D260A35B-12BB-442C-BC5E-6AB05A5A6088}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D260A35B-12BB-442C-BC5E-6AB05A5A6088}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D260A35B-12BB-442C-BC5E-6AB05A5A6088}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74D9236D-949E-40CA-84EE-7B6F6411B0C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74D9236D-949E-40CA-84EE-7B6F6411B0C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74D9236D-949E-40CA-84EE-7B6F6411B0C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74D9236D-949E-40CA-84EE-7B6F6411B0C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

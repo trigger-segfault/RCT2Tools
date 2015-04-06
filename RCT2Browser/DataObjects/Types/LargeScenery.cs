@@ -84,7 +84,7 @@ public class LargeScenery : ObjectData {
 	//--------------------------------
 	#region Reading
 
-	/** <summary> Constructs the default object. </summary> */
+	/** <summary> Reads the object. </summary> */
 	public override void Read(BinaryReader reader) {
 		Header.Read(reader);
 
@@ -109,6 +109,43 @@ public class LargeScenery : ObjectData {
 
 		imageDirectory.Read(reader);
 		graphicsData.Read(reader, imageDirectory);
+	}
+	/** <summary> Writes the object. </summary> */
+	public void Write(BinaryWriter writer) {
+		// Write the header
+		Header.Write(writer);
+
+		// Write the 1 string table entry
+		stringTable.Write(writer);
+
+		// Write the group info
+		groupInfo.Write(writer);
+
+		// Write the 3D text
+		if (Header.Flags.HasFlag(LargeSceneryFlags.Text3D)) {
+			for (int i = 0; i < 0x40E; i++) {
+				writer.Write(this.Text3D[i]);
+			}
+		}
+		// Write the tiles
+		for (int i = 0; i < this.Tiles.Count; i++) {
+			this.Tiles[i].Write(writer);
+		}
+		writer.Write((ushort)0xFFFF);
+
+		long imageDirectoryPosition = writer.BaseStream.Position;
+
+		// Write the image directory and graphics data
+		imageDirectory.Write(writer);
+		graphicsData.Write(writer, imageDirectory);
+
+		// Rewrite the image directory after the image addresses are known
+		long finalPosition = writer.BaseStream.Position;
+		writer.BaseStream.Position = imageDirectoryPosition;
+		imageDirectory.Write(writer);
+
+		// Set the position to the end of the file so the file size is known
+		writer.BaseStream.Position = finalPosition;
 	}
 
 	#endregion
@@ -344,6 +381,20 @@ public class LargeSceneryHeader : ObjectTypeHeader {
 		this.Reserved4	= reader.ReadUInt32();
 		this.Reserved5	= reader.ReadUInt32();
 	}
+	/** <summary> Writes the object header. </summary> */
+	public void Write(BinaryWriter writer) {
+		writer.Write(this.Reserved0);
+		writer.Write(this.Reserved1);
+		writer.Write(this.Cursor);
+		writer.Write((byte)this.Flags);
+		writer.Write(this.BuildCost);
+		writer.Write(this.RemoveCost);
+		writer.Write(this.Reserved2);
+		writer.Write(this.Reserved3);
+		writer.Write(this.Scrolling);
+		writer.Write(this.Reserved4);
+		writer.Write(this.Reserved5);
+	}
 
 	#endregion
 }
@@ -365,6 +416,7 @@ public struct LargeSceneryTileHeader {
 	public byte Unknown1;
 	/** <summary> The flags used by the tile. </summary> */
 	public LargeSceneryTileFlags Flags;
+
 	/** <summary> The depth used for drawing tiles. </summary> */
 	public float Depth;
 	/** <summary> The index used for drawing tiles. </summary> */
@@ -382,6 +434,15 @@ public struct LargeSceneryTileHeader {
 		this.Clearance = reader.ReadByte();
 		this.Unknown1 = reader.ReadByte();
 		this.Flags = (LargeSceneryTileFlags)reader.ReadByte();
+	}
+	/** <summary> Writes the tile header. </summary> */
+	public void Write(BinaryWriter writer) {
+		writer.Write(this.Row);
+		writer.Write(this.Column);
+		writer.Write(this.BaseHeight);
+		writer.Write(this.Clearance);
+		writer.Write(this.Unknown1);
+		writer.Write((byte)this.Flags);
 	}
 
 	#endregion

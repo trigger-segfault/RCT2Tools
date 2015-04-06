@@ -69,12 +69,11 @@ public class SceneryGroup : ObjectData {
 	//--------------------------------
 	#region Reading
 
-	/** <summary> Constructs the default object. </summary> */
+	/** <summary> Reads the object. </summary> */
 	public override void Read(BinaryReader reader) {
 		Header.Read(reader);
 
 		stringTable.Read(reader);
-
 
 		// Read Contents
 		byte b = reader.ReadByte();
@@ -96,6 +95,41 @@ public class SceneryGroup : ObjectData {
 
 		imageDirectory.Read(reader);
 		graphicsData.Read(reader, imageDirectory, Palette.SceneryGroupPalette);
+	}
+	/** <summary> Writes the object. </summary> */
+	public void Write(BinaryWriter writer) {
+		// Write the header
+		Header.Write(writer);
+
+		// Write the 1 string table entry
+		stringTable.Write(writer);
+
+		// Write Contents
+		for (int i = 0; i < this.Contents.Count; i++) {
+			writer.Write((uint)0x00000000);
+			for (int j = 0; j < 8; j++) {
+				if (j < this.Contents[i].Length)
+					writer.Write(this.Contents[i][j]);
+				else
+					writer.Write(' ');
+			}
+			writer.Write((uint)0x00000000);
+		}
+		writer.Write((byte)0xFF);
+
+		long imageDirectoryPosition = writer.BaseStream.Position;
+
+		// Write the image directory and graphics data
+		imageDirectory.Write(writer);
+		graphicsData.Write(writer, imageDirectory);
+
+		// Rewrite the image directory after the image addresses are known
+		long finalPosition = writer.BaseStream.Position;
+		writer.BaseStream.Position = imageDirectoryPosition;
+		imageDirectory.Write(writer);
+
+		// Set the position to the end of the file so the file size is known
+		writer.BaseStream.Position = finalPosition;
 	}
 
 	#endregion
@@ -137,12 +171,18 @@ public class SceneryGroupHeader : ObjectTypeHeader {
 	//=========== MEMBERS ============
 	#region Members
 
+	/** <summary> 0x108 bytes of data that are always zero in dat files. </summary> */
+	public byte[] Reserved0;
 	/** <summary> An unknown byte that is never zero. </summary> */
 	public byte Unknown0x108;
+	/** <summary> Always zero in dat files. </summary> */
+	public byte Reserved1;
 	/** <summary> An unknown byte that is most often zero. </summary> */
 	public byte Unknown0x10A;
 	/** <summary> An unknown byte that is most often zero. </summary> */
 	public byte Unknown0x10B;
+	/** <summary> Always zero in dat files. </summary> */
+	public ushort Reserved2;
 
 	#endregion
 	//========= CONSTRUCTORS =========
@@ -150,9 +190,12 @@ public class SceneryGroupHeader : ObjectTypeHeader {
 
 	/** <summary> Constructs the default object header. </summary> */
 	public SceneryGroupHeader() {
+		this.Reserved0		= new byte[0x108];
 		this.Unknown0x108	= 0;
+		this.Reserved1		= 0;
 		this.Unknown0x10A	= 0;
 		this.Unknown0x10B	= 0;
+		this.Reserved2		= 0;
 	}
 
 	#endregion
@@ -183,34 +226,23 @@ public class SceneryGroupHeader : ObjectTypeHeader {
 
 	/** <summary> Reads the object header. </summary> */
 	public override void Read(BinaryReader reader) {
-		reader.ReadBytes(0x108);
-		this.Unknown0x108 = reader.ReadByte();
-		reader.ReadByte();
-		this.Unknown0x10A = reader.ReadByte();
-		this.Unknown0x10B = reader.ReadByte();
-		reader.ReadBytes(2);
+		reader.Read(this.Reserved0, 0, this.Reserved0.Length);
+		this.Unknown0x108	= reader.ReadByte();
+		this.Reserved1		= reader.ReadByte();
+		this.Unknown0x10A	= reader.ReadByte();
+		this.Unknown0x10B	= reader.ReadByte();
+		this.Reserved2		= reader.ReadUInt16();
+	}
+	/** <summary> Writes the object header. </summary> */
+	public void Write(BinaryWriter writer) {
+		writer.Write(this.Reserved0);
+		writer.Write(this.Unknown0x108);
+		writer.Write(this.Reserved1);
+		writer.Write(this.Unknown0x10A);
+		writer.Write(this.Unknown0x10B);
+		writer.Write(this.Reserved2);
 	}
 
 	#endregion
-}
-/** <summary> All flags usable with wall objects. </summary> */
-[Flags]
-public enum SceneryGroupFlags : byte {
-	/** <summary> No flags are set. </summary> */
-	None = 0x00000000,
-	/** <summary> Uses the first remappable color </summary> */
-	Color1 = 0x00000001,
-	/** <summary> A "glass" object: the first image is the "frame" and the second image is the "glass" </summary> */
-	Glass = 0x00000002,
-	/** <summary> Must be on a flat surface. Also, walls can't occupy the same tile </summary> */
-	Flat = 0x00000004,
-	/** <summary> Has a front and a back </summary> */
-	TwoSides = 0x00000008,
-	/** <summary> Special processing for doorways (36 images). </summary> */
-	Door = 0x00000010,
-	/** <summary> Uses the second remappable color </summary> */
-	Color2 = 0x00000040,
-	/** <summary> Uses the third remappable color </summary> */
-	Color3 = 0x00000080
 }
 }
