@@ -1,7 +1,7 @@
 # RCT2 Content Browser
 
 * Author: Robert Jordan
-* Version: v1.1.1.0
+* Version: v1.2.0.0
 
 RCT2 Content Browser is a more advanced program originally designed to replace DatChecker.
 With this you can easily browse and manage all content in your RCT2 directory.
@@ -10,7 +10,7 @@ This makes the tool useful for Studying RCT2 file types as well.
 All variables and flags listed in the info tab have information on them in the source code.
 Please note that not all objects are 100% accurately displayed in the view window.
 
-**[Standalone Download](http://www.mediafire.com/download/nmu7ck6gljd9ke6/RCT2+Content+Browser+v1.1.1.0.zip)**
+**[Standalone Download](http://www.mediafire.com/download/tdnft8271q4jqfo/RCT2+Content+Browser+v1.2.0.0.zip)**
 
 ## Requirements
 
@@ -57,6 +57,8 @@ Change the current image being viewed in image mode or change the current frame 
 
 **Drag Object from List:** Allows you to copy the object and place it in the dropped location.
 
+**Delete Key:** Will delete the selected objects in the last used list if *Allow Deletions* is checked.
+
 ## Settings
 
 **Default Directory:** The default directory to use for RCT2 data. Make sure to use the ObjData folder.
@@ -67,7 +69,19 @@ Change the current image being viewed in image mode or change the current frame 
 
 **Remap Image View:** When in image view, the remap option will be available.
 
+**Allow Deletions:** Enables the delete key, allowing users to delete objects from the list that they no longer want. Objects without a *Custom* source cannot be deleted for safetey reasons.
+
+**Backup Deletions:** All deleted object files will be sent to a folder in the executable directory.
+
+**Extract Images:** Extracts all images and palettes in the object file into a folder in the executable directory.
+
+**Open Directory:** Opens the executable directory making it easier to access extracted images and deleted object files.
+
 **Save:** Saves the settings to *Settings.xml*.
+
+## Other features
+
+**Open With:** Opening a dat file with RCT2 Content Browser will automatically load the object without having to scan for it.
 
 # RCT2 Graphics Extractor
 
