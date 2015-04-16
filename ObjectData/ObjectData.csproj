@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{556C9DBF-1A2E-46FE-9EFA-0E0E54E6549E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RCT2ObjectData</RootNamespace>
+    <AssemblyName>ObjectData</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataObjects\ColorRemapping.cs" />
+    <Compile Include="DataObjects\DrawSettings.cs" />
+    <Compile Include="DataObjects\GraphicsData.cs" />
+    <Compile Include="DataObjects\GroupInfo.cs" />
+    <Compile Include="DataObjects\ImageDirectory.cs" />
+    <Compile Include="DataObjects\ObjectData.cs" />
+    <Compile Include="DataObjects\Palette.cs" />
+    <Compile Include="DataObjects\PaletteImage.cs" />
+    <Compile Include="DataObjects\SpriteFont.cs" />
+    <Compile Include="DataObjects\StringTable.cs" />
+    <Compile Include="DataObjects\Terrain.cs" />
+    <Compile Include="DataObjects\Types\Attraction.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\AttractionFlags.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\CarFlags.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\CarFrames.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\ItemFlags.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\TrackSections.cs" />
+    <Compile Include="DataObjects\Types\LargeScenery.cs" />
+    <Compile Include="DataObjects\Types\ParkEntrance.cs" />
+    <Compile Include="DataObjects\Types\PathAddition.cs" />
+    <Compile Include="DataObjects\Types\PathBanner.cs" />
+    <Compile Include="DataObjects\Types\Pathing.cs" />
+    <Compile Include="DataObjects\Types\SceneryGroup.cs" />
+    <Compile Include="DataObjects\Types\SmallScenery.cs" />
+    <Compile Include="DataObjects\Types\Wall.cs" />
+    <Compile Include="DataObjects\Types\Water.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RemapStrips.rct2imgs" />
+    <None Include="Resources\Terrain.rct2imgs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -79,7 +79,7 @@ public class PathAddition : ObjectData {
 		graphicsData.Read(reader, imageDirectory);
 	}
 	/** <summary> Writes the object. </summary> */
-	public void Write(BinaryWriter writer) {
+	public override void Write(BinaryWriter writer) {
 		// Write the header
 		Header.Write(writer);
 

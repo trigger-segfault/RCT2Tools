@@ -49,13 +49,13 @@ public class GraphicsData {
 	#region Reading
 
 	/** <summary> Reads the graphics data. </summary> */
-	public void Read(BinaryReader reader, ImageDirectory directory, Palette colorPalette = null) {
+	public void Read(BinaryReader reader, ImageDirectory directory, Palette colorPalette = null, int index = 0) {
 		if (colorPalette == null) {
 			colorPalette = Palette.DefaultPalette;
 		}
 		long startPosition = reader.BaseStream.Position;
 
-		for (int i = 0; i < directory.Count; i++) {
+		for (int i = index; i < directory.Count; i++) {
 			ImageEntry entry = directory.Entries[i];
 			if (entry.Flags == ImageFlags.DirectBitmap) {
 				Bitmap image = new Bitmap(entry.Width, entry.Height);
@@ -75,6 +75,7 @@ public class GraphicsData {
 				this.Palettes.Add(null);
 				this.Images.Add(image);
 				this.PaletteImages.Add(paletteImage);
+				reader.BaseStream.Position = startPosition;
 			}
 			else if (entry.Flags == ImageFlags.CompactedBitmap) {
 				Bitmap image = new Bitmap(entry.Width, entry.Height);
@@ -115,6 +116,7 @@ public class GraphicsData {
 				this.Palettes.Add(null);
 				this.Images.Add(image);
 				this.PaletteImages.Add(paletteImage);
+				reader.BaseStream.Position = startPosition;
 			}
 			else if (entry.Flags == ImageFlags.PaletteEntries) {
 				Palette palette = new Palette(entry.Width, entry.XOffset);
@@ -243,13 +245,12 @@ public class GraphicsData {
 							writer.Write(paletteImage.Pixels[k + scanLines[j].Offset, scanLines[j].Row]);
 						}
 						catch (Exception) {
-							Console.WriteLine("Help");
 						}
 					}
 				}
 			}
 			else if (entry.Flags == ImageFlags.PaletteEntries) {
-				Palette palette = new Palette(entry.Width);
+				Palette palette = this.Palettes[i];
 
 				// Write each color
 				for (int j = 0; j < entry.Width; j++) {

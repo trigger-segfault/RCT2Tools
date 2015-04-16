@@ -63,6 +63,16 @@ namespace RCT2GraphicsExtractor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap AboutImage {
+            get {
+                object obj = ResourceManager.GetObject("AboutImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap BoldFont {
             get {
                 object obj = ResourceManager.GetObject("BoldFont", resourceCulture);

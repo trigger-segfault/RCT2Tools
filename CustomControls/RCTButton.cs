@@ -41,6 +41,10 @@ public class RCTButton : Control {
 	ContentAlignment imageAlign = ContentAlignment.MiddleCenter;
 	/** <summary> The alignment for the text. </summary> */
 	ContentAlignment textAlign = ContentAlignment.MiddleCenter;
+	/** <summary> The outline color of the text. </summary> */
+	Color outlineColor = Color.Transparent;
+	/** <summary> The font used for the the text. </summary> */
+	FontType fontType = FontType.Bold;
 
 	/** <summary> True if the control is pressed. </summary> */
 	bool pressed = false;
@@ -182,6 +186,24 @@ public class RCTButton : Control {
 			this.Invalidate();
 		}
 	}
+	[Browsable(true)][Category("Appearance")]
+	[DisplayName("Outline Color")][Description("")]
+	public Color OutlineColor {
+		get { return this.outlineColor; }
+		set {
+			this.outlineColor = value;
+			this.Invalidate();
+		}
+	}
+	[Browsable(true)][Category("Appearance")]
+	[DisplayName("Font Type")][Description("")]
+	public FontType FontType {
+		get { return this.fontType; }
+		set {
+			this.fontType = value;
+			this.Invalidate();
+		}
+	}
 
 	#endregion
 	//--------------------------------
@@ -314,7 +336,13 @@ public class RCTButton : Control {
 			e.Graphics.DrawImage(image, rect.X + point.X, rect.Y + point.Y);
 		}
 
-		SpriteFont.FontBold.DrawAligned(e.Graphics, new Rectangle(2, 3, ClientSize.Width - 4, ClientSize.Height - 4), textAlign, Text, ForeColor);
+		SpriteFont font = SpriteFont.FontBold;
+		switch (this.fontType) {
+		case FontType.Regular: font = SpriteFont.FontRegular; break;
+		case FontType.Bold: font = SpriteFont.FontBold; break;
+		case FontType.Small: font = SpriteFont.FontSmall; break;
+		}
+		font.DrawAligned(e.Graphics, new Rectangle(2, 3, ClientSize.Width - 4, ClientSize.Height - 4), textAlign, Text, ForeColor, outlineColor);
 	}
 	#endregion
 }

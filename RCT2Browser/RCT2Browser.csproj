@@ -134,11 +134,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\WaterSparkle.rct2img" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Trash.png" />
     <None Include="Resources\SortUp.png" />
     <None Include="Resources\SortDown.png" />
     <None Include="Resources\Tabs\TabSettings.png" />

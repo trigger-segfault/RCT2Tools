@@ -168,7 +168,7 @@ public class Attraction : ObjectData {
 		graphicsData.Read(reader, imageDirectory);
 	}
 	/** <summary> Writes the object. </summary> */
-	public void Write(BinaryWriter writer) {
+	public override void Write(BinaryWriter writer) {
 		// Write the attraction and car headers
 		Header.Write(writer);
 

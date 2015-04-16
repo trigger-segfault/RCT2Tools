@@ -34,6 +34,10 @@ public class RCTCheckBox : Control {
 
 	/** <summary> The image for the check. </summary> */
 	Image checkImage = Resource.Check;
+	/** <summary> The outline color of the text. </summary> */
+	Color outlineColor = Color.Transparent;
+	/** <summary> The font used for the the text. </summary> */
+	FontType fontType = FontType.Bold;
 
 	/** <summary> The check state of the checkbox. </summary> */
 	CheckState checkState = CheckState.Unchecked;
@@ -111,14 +115,30 @@ public class RCTCheckBox : Control {
 	//--------------------------------
 	#region Appearance
 
-	[Browsable(true)]
-	[Category("Appearance")]
-	[DisplayName("Check Color")]
-	[Description("")]
+	[Browsable(true)][Category("Appearance")]
+	[DisplayName("Check Color")][Description("")]
 	public Color CheckColor {
 		get { return this.colorCheck; }
 		set {
 			this.colorCheck = value;
+			this.Invalidate();
+		}
+	}
+	[Browsable(true)][Category("Appearance")]
+	[DisplayName("Outline Color")][Description("")]
+	public Color OutlineColor {
+		get { return this.outlineColor; }
+		set {
+			this.outlineColor = value;
+			this.Invalidate();
+		}
+	}
+	[Browsable(true)][Category("Appearance")]
+	[DisplayName("Font Type")][Description("")]
+	public FontType FontType {
+		get { return this.fontType; }
+		set {
+			this.fontType = value;
 			this.Invalidate();
 		}
 	}
@@ -236,7 +256,13 @@ public class RCTCheckBox : Control {
 				imageAttributes
 			);
 		}
-		SpriteFont.FontBold.Draw(e.Graphics, new Point(10 + 5, 1), Text, ForeColor);
+		SpriteFont font = SpriteFont.FontBold;
+		switch (this.fontType) {
+		case FontType.Regular: font = SpriteFont.FontRegular; break;
+		case FontType.Bold: font = SpriteFont.FontBold; break;
+		case FontType.Small: font = SpriteFont.FontSmall; break;
+		}
+		font.Draw(e.Graphics, new Point(10 + 4, 0), Text, ForeColor, outlineColor);
 	}
 
 	#endregion

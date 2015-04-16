@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{158E2B9B-3A6E-4A0D-8A86-97E0FA9FAFFF}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RCT2GroupCreator</RootNamespace>
+    <AssemblyName>RCT2 Group Creator</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorMessageBox.Designer.cs">
+      <DependentUpon>ErrorMessageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GroupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GroupForm.Designer.cs">
+      <DependentUpon>GroupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataObjects\GraphicsData.cs" />
+    <Compile Include="DataObjects\GroupInfo.cs" />
+    <Compile Include="DataObjects\ImageDirectory.cs" />
+    <Compile Include="DataObjects\ObjectData.cs" />
+    <Compile Include="DataObjects\Palette.cs" />
+    <Compile Include="DataObjects\SpriteFont.cs" />
+    <Compile Include="DataObjects\StringTable.cs" />
+    <Compile Include="DataObjects\Terrain.cs" />
+    <Compile Include="DataObjects\Types\Attraction.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\AttractionFlags.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\CarFlags.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\CarFrames.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\ItemFlags.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\TrackSections.cs" />
+    <Compile Include="DataObjects\Types\LargeScenery.cs" />
+    <Compile Include="DataObjects\Types\ParkEntrance.cs" />
+    <Compile Include="DataObjects\Types\PathAddition.cs" />
+    <Compile Include="DataObjects\Types\PathBanner.cs" />
+    <Compile Include="DataObjects\Types\Pathing.cs" />
+    <Compile Include="DataObjects\Types\SceneryGroup.cs" />
+    <Compile Include="DataObjects\Types\SmallScenery.cs" />
+    <Compile Include="DataObjects\Types\Wall.cs" />
+    <Compile Include="DataObjects\Types\Water.cs" />
+    <Compile Include="NamesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NamesForm.Designer.cs">
+      <DependentUpon>NamesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WarningMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WarningMessageBox.Designer.cs">
+      <DependentUpon>WarningMessageBox.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorMessageBox.resx">
+      <DependentUpon>ErrorMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GroupForm.resx">
+      <DependentUpon>GroupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NamesForm.resx">
+      <DependentUpon>NamesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="WarningMessageBox.resx">
+      <DependentUpon>WarningMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Resources\SCGCUST.DAT" />
+    <None Include="Resources\TabBack.rct2img" />
+    <None Include="Resources\TabFront.rct2img" />
+    <None Include="Resources\WaterSparkle.rct2img" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buttons\ButtonBack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buttons\ButtonCorner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buttons\ButtonElevate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buttons\ButtonForward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buttons\ButtonLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buttons\ButtonPaint.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buttons\ButtonRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buttons\ButtonRotate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buttons\ButtonSlope.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CustomControls\CustomControls.csproj">
+      <Project>{b278983b-b66a-4add-84a4-dff9120633f0}</Project>
+      <Name>CustomControls</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ColorPalette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buttons\ButtonNames.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SortDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SortUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LandTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LandTileReal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SlopeNE.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SlopeNW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SlopeSE.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SlopeSW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\InvalidError.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buttons\PaletteButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buttons\PaletteButtonPressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MissingImagesError.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Selector.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Water.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BoldFont.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buttons\ButtonIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buttons\ButtonPlus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Buttons\ButtonMinus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.ico" />
+    <None Include="Resources\AboutImage.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -87,6 +87,12 @@
   <ItemGroup>
     <Content Include="App.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CustomControls\CustomControls.csproj">
+      <Project>{b278983b-b66a-4add-84a4-dff9120633f0}</Project>
+      <Name>CustomControls</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

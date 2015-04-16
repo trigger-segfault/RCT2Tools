@@ -39,6 +39,9 @@
 			this.rctButton1 = new CustomControls.RCTButton();
 			this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this.timerExtract = new System.Windows.Forms.Timer(this.components);
+			this.checkBoxRCT2Images = new CustomControls.RCTCheckBox();
+			this.buttonAbout = new CustomControls.RCTButton();
+			this.folderBrowserDialogOutput = new System.Windows.Forms.FolderBrowserDialog();
 			this.rctStatusBar1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.loadingBar)).BeginInit();
 			this.SuspendLayout();
@@ -49,11 +52,13 @@
 			this.buttonBrowseIn.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
 			this.buttonBrowseIn.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.buttonBrowseIn.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonBrowseIn.FontType = CustomControls.Visuals.FontType.Bold;
 			this.buttonBrowseIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonBrowseIn.Image = null;
 			this.buttonBrowseIn.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.buttonBrowseIn.Location = new System.Drawing.Point(151, 17);
 			this.buttonBrowseIn.Name = "buttonBrowseIn";
+			this.buttonBrowseIn.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonBrowseIn.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
 			this.buttonBrowseIn.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.buttonBrowseIn.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
@@ -71,11 +76,13 @@
 			this.buttonBrowseOut.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
 			this.buttonBrowseOut.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.buttonBrowseOut.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonBrowseOut.FontType = CustomControls.Visuals.FontType.Bold;
 			this.buttonBrowseOut.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonBrowseOut.Image = null;
 			this.buttonBrowseOut.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.buttonBrowseOut.Location = new System.Drawing.Point(151, 45);
 			this.buttonBrowseOut.Name = "buttonBrowseOut";
+			this.buttonBrowseOut.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonBrowseOut.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
 			this.buttonBrowseOut.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.buttonBrowseOut.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
@@ -89,9 +96,11 @@
 			// 
 			// rctLabel1
 			// 
+			this.rctLabel1.FontType = CustomControls.Visuals.FontType.Bold;
 			this.rctLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.rctLabel1.Location = new System.Drawing.Point(44, 20);
 			this.rctLabel1.Name = "rctLabel1";
+			this.rctLabel1.OutlineColor = System.Drawing.Color.Transparent;
 			this.rctLabel1.Size = new System.Drawing.Size(98, 14);
 			this.rctLabel1.TabIndex = 2;
 			this.rctLabel1.Text = "G1.dat Directory:";
@@ -99,9 +108,11 @@
 			// 
 			// rctLabel2
 			// 
+			this.rctLabel2.FontType = CustomControls.Visuals.FontType.Bold;
 			this.rctLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.rctLabel2.Location = new System.Drawing.Point(44, 47);
 			this.rctLabel2.Name = "rctLabel2";
+			this.rctLabel2.OutlineColor = System.Drawing.Color.Transparent;
 			this.rctLabel2.Size = new System.Drawing.Size(98, 14);
 			this.rctLabel2.TabIndex = 3;
 			this.rctLabel2.Text = "Output Directory:";
@@ -114,9 +125,11 @@
 			this.checkBoxDecimal.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
 			this.checkBoxDecimal.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
 			this.checkBoxDecimal.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBoxDecimal.FontType = CustomControls.Visuals.FontType.Bold;
 			this.checkBoxDecimal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.checkBoxDecimal.Location = new System.Drawing.Point(50, 99);
 			this.checkBoxDecimal.Name = "checkBoxDecimal";
+			this.checkBoxDecimal.OutlineColor = System.Drawing.Color.Transparent;
 			this.checkBoxDecimal.Size = new System.Drawing.Size(60, 11);
 			this.checkBoxDecimal.TabIndex = 4;
 			this.checkBoxDecimal.Text = "Decimal";
@@ -129,9 +142,11 @@
 			this.checkBoxHex.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
 			this.checkBoxHex.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
 			this.checkBoxHex.CheckState = System.Windows.Forms.CheckState.Unchecked;
+			this.checkBoxHex.FontType = CustomControls.Visuals.FontType.Bold;
 			this.checkBoxHex.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.checkBoxHex.Location = new System.Drawing.Point(116, 99);
 			this.checkBoxHex.Name = "checkBoxHex";
+			this.checkBoxHex.OutlineColor = System.Drawing.Color.Transparent;
 			this.checkBoxHex.Size = new System.Drawing.Size(50, 11);
 			this.checkBoxHex.TabIndex = 5;
 			this.checkBoxHex.Text = "Hex";
@@ -139,9 +154,11 @@
 			// 
 			// rctLabel3
 			// 
+			this.rctLabel3.FontType = CustomControls.Visuals.FontType.Bold;
 			this.rctLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.rctLabel3.Location = new System.Drawing.Point(44, 77);
 			this.rctLabel3.Name = "rctLabel3";
+			this.rctLabel3.OutlineColor = System.Drawing.Color.Transparent;
 			this.rctLabel3.Size = new System.Drawing.Size(108, 14);
 			this.rctLabel3.TabIndex = 6;
 			this.rctLabel3.Text = "Numbering Format:";
@@ -151,9 +168,11 @@
 			// 
 			this.labelError.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.labelError.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.labelError.FontType = CustomControls.Visuals.FontType.Bold;
 			this.labelError.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
 			this.labelError.Location = new System.Drawing.Point(17, 6);
 			this.labelError.Name = "labelError";
+			this.labelError.OutlineColor = System.Drawing.Color.Transparent;
 			this.labelError.Size = new System.Drawing.Size(230, 14);
 			this.labelError.TabIndex = 7;
 			this.labelError.Text = "Error loading G1.dat";
@@ -166,7 +185,7 @@
 			this.rctStatusBar1.Controls.Add(this.labelError);
 			this.rctStatusBar1.Controls.Add(this.loadingBar);
 			this.rctStatusBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.rctStatusBar1.Location = new System.Drawing.Point(0, 161);
+			this.rctStatusBar1.Location = new System.Drawing.Point(0, 186);
 			this.rctStatusBar1.Name = "rctStatusBar1";
 			this.rctStatusBar1.PanelBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
 			this.rctStatusBar1.PanelBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
@@ -178,9 +197,11 @@
 			// 
 			this.labelComplete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.labelComplete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(243)))), ((int)(((byte)(243)))));
+			this.labelComplete.FontType = CustomControls.Visuals.FontType.Bold;
 			this.labelComplete.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.labelComplete.Location = new System.Drawing.Point(17, 6);
 			this.labelComplete.Name = "labelComplete";
+			this.labelComplete.OutlineColor = System.Drawing.Color.Transparent;
 			this.labelComplete.Size = new System.Drawing.Size(230, 14);
 			this.labelComplete.TabIndex = 7;
 			this.labelComplete.Text = "Extraction Finished";
@@ -201,15 +222,18 @@
 			// 
 			// rctButton1
 			// 
+			this.rctButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.rctButton1.BorderOnHover = false;
 			this.rctButton1.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
 			this.rctButton1.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.rctButton1.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.rctButton1.FontType = CustomControls.Visuals.FontType.Bold;
 			this.rctButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.rctButton1.Image = null;
 			this.rctButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.rctButton1.Location = new System.Drawing.Point(94, 126);
+			this.rctButton1.Location = new System.Drawing.Point(40, 151);
 			this.rctButton1.Name = "rctButton1";
+			this.rctButton1.OutlineColor = System.Drawing.Color.Transparent;
 			this.rctButton1.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
 			this.rctButton1.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.rctButton1.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
@@ -221,16 +245,68 @@
 			this.rctButton1.Toggled = false;
 			this.rctButton1.ButtonPressed += new System.EventHandler(this.Extract);
 			// 
+			// folderBrowserDialog
+			// 
+			this.folderBrowserDialog.Description = "Choose the directory containing g1.dat";
+			this.folderBrowserDialog.ShowNewFolderButton = false;
+			// 
 			// timerExtract
 			// 
 			this.timerExtract.Tick += new System.EventHandler(this.Extracting);
+			// 
+			// checkBoxRCT2Images
+			// 
+			this.checkBoxRCT2Images.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.checkBoxRCT2Images.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.checkBoxRCT2Images.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.checkBoxRCT2Images.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
+			this.checkBoxRCT2Images.CheckState = System.Windows.Forms.CheckState.Unchecked;
+			this.checkBoxRCT2Images.FontType = CustomControls.Visuals.FontType.Bold;
+			this.checkBoxRCT2Images.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.checkBoxRCT2Images.Location = new System.Drawing.Point(50, 125);
+			this.checkBoxRCT2Images.Name = "checkBoxRCT2Images";
+			this.checkBoxRCT2Images.OutlineColor = System.Drawing.Color.Transparent;
+			this.checkBoxRCT2Images.Size = new System.Drawing.Size(130, 11);
+			this.checkBoxRCT2Images.TabIndex = 10;
+			this.checkBoxRCT2Images.Text = "Extract RCT2 Images";
+			this.checkBoxRCT2Images.CheckStateChanged += new System.EventHandler(this.ExtractRCT2Images);
+			// 
+			// buttonAbout
+			// 
+			this.buttonAbout.BorderOnHover = false;
+			this.buttonAbout.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonAbout.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonAbout.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonAbout.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonAbout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonAbout.Image = null;
+			this.buttonAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonAbout.Location = new System.Drawing.Point(145, 151);
+			this.buttonAbout.Name = "buttonAbout";
+			this.buttonAbout.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonAbout.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonAbout.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonAbout.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonAbout.Size = new System.Drawing.Size(80, 22);
+			this.buttonAbout.TabIndex = 11;
+			this.buttonAbout.Text = "About";
+			this.buttonAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonAbout.Toggleable = false;
+			this.buttonAbout.Toggled = false;
+			this.buttonAbout.ButtonPressed += new System.EventHandler(this.About);
+			// 
+			// folderBrowserDialogOutput
+			// 
+			this.folderBrowserDialogOutput.Description = "Choose the output directory";
 			// 
 			// ExtractorForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.ClientSize = new System.Drawing.Size(262, 187);
+			this.ClientSize = new System.Drawing.Size(262, 212);
+			this.Controls.Add(this.buttonAbout);
+			this.Controls.Add(this.checkBoxRCT2Images);
 			this.Controls.Add(this.rctButton1);
 			this.Controls.Add(this.rctStatusBar1);
 			this.Controls.Add(this.rctLabel3);
@@ -242,6 +318,7 @@
 			this.Controls.Add(this.buttonBrowseIn);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.MaximizeBox = false;
 			this.Name = "ExtractorForm";
 			this.Text = "RCT2 Graphics Extractor";
 			this.rctStatusBar1.ResumeLayout(false);
@@ -266,6 +343,9 @@
 		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
 		private System.Windows.Forms.Timer timerExtract;
 		private CustomControls.RCTLabel labelComplete;
+		private CustomControls.RCTCheckBox checkBoxRCT2Images;
+		private CustomControls.RCTButton buttonAbout;
+		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialogOutput;
 	}
 }
 

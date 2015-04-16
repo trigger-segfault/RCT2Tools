@@ -43,9 +43,82 @@ public class GraphicsData {
 	#region Reading
 
 	/** <summary> Reads the graphics data. </summary> */
-	public Bitmap Read(BinaryReader reader, long startPosition, int i, ImageDirectory directory) {
+	public Palette ReadPalette(BinaryReader reader, long startPosition, int i, ImageDirectory directory, Palette colorPalette) {
+		ImageEntry entry = directory.Entries[i];
+		if (entry.Flags == ImageFlags.PaletteEntries) {
+			Palette palette = new Palette(entry.Width);
+			reader.BaseStream.Position = startPosition + entry.StartAddress;
+
+			// Read each color
+			for (int j = 0; j < entry.Width; j++) {
+				// Yes the colors are in the order blue, green, red
+				byte blue = reader.ReadByte();
+				byte green = reader.ReadByte();
+				byte red = reader.ReadByte();
+
+				palette.Colors[j] = Color.FromArgb(red, green, blue);
+			}
+			return palette;
+		}
+		return null;
+	}
+	/** <summary> Reads the graphics data. </summary> */
+	public PaletteImage ReadPaletteImage(BinaryReader reader, long startPosition, int i, ImageDirectory directory, Palette colorPalette) {
+		ImageEntry entry = directory.Entries[i];
+		if (entry.Flags == ImageFlags.DirectBitmap) {
+			PaletteImage paletteImage = new PaletteImage(entry.Width, entry.Height);
+			reader.BaseStream.Position = startPosition + entry.StartAddress;
+
+			// Read each row
+			for (int y = 0; y < entry.Height; y++) {
+				for (int x = 0; x < entry.Width; x++) {
+					byte b = reader.ReadByte();
+					paletteImage.Pixels[x, y] = b;
+				}
+			}
+
+			return paletteImage;
+		}
+		else if (entry.Flags == ImageFlags.CompactedBitmap) {
+			PaletteImage paletteImage = new PaletteImage(entry.Width, entry.Height);
+			uint[] rowOffsets = new uint[entry.Height];
+			reader.BaseStream.Position = startPosition + entry.StartAddress;
+
+			// Read the row offsets
+			for (int j = 0; j < entry.Height; j++) {
+				rowOffsets[j] = reader.ReadUInt16();
+			}
+
+			// Read the scan lines in each row
+			for (int j = 0; j < entry.Height; j++) {
+				reader.BaseStream.Position = startPosition + entry.StartAddress + rowOffsets[j];
+				byte b1 = 0;
+				byte b2 = 0;
+
+				// A MSB of 1 means the last scan line in a row
+				while ((b1 & 0x80) == 0) {
+					// Read the number of bytes of data
+					b1 = reader.ReadByte();
+					// Read the offset from the left edge of the image
+					b2 = reader.ReadByte();
+					for (int k = 0; k < (int)(b1 & 0x7F); k++) {
+						byte b3 = reader.ReadByte();
+						try {
+							paletteImage.Pixels[(int)b2 + k, j] = b3;
+						}
+						catch (Exception) {
+						}
+					}
+				}
+			}
+			
+			return paletteImage;
+		}
+		return null;
+	}
+	/** <summary> Reads the graphics data. </summary> */
+	public Bitmap Read(BinaryReader reader, long startPosition, int i, ImageDirectory directory, Palette colorPalette) {
 		GraphicsData.LastPaletteText = "";
-		Palette colorPalette = Palette.DefaultPalette;
 		if (i >= 23215 && i <= 23216)
 			colorPalette = Palette.ChrisSawyerPalette;
 		else if (i >= 23218 && i <= 23223)

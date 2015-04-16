@@ -97,7 +97,7 @@ public class SceneryGroup : ObjectData {
 		graphicsData.Read(reader, imageDirectory, Palette.SceneryGroupPalette);
 	}
 	/** <summary> Writes the object. </summary> */
-	public void Write(BinaryWriter writer) {
+	public override void Write(BinaryWriter writer) {
 		// Write the header
 		Header.Write(writer);
 

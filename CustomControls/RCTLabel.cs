@@ -20,6 +20,10 @@ public class RCTLabel : Control {
 
 	/** <summary> The alignment for the text. </summary> */
 	ContentAlignment textAlign = ContentAlignment.TopLeft;
+	/** <summary> The outline color of the text. </summary> */
+	Color outlineColor = Color.Transparent;
+	/** <summary> The font used for the the text. </summary> */
+	FontType fontType = FontType.Bold;
 
 	#endregion
 	//========= CONSTRUCTORS =========
@@ -61,6 +65,24 @@ public class RCTLabel : Control {
 			this.Invalidate();
 		}
 	}
+	[Browsable(true)][Category("Appearance")]
+	[DisplayName("Outline Color")][Description("")]
+	public Color OutlineColor {
+		get { return this.outlineColor; }
+		set {
+			this.outlineColor = value;
+			this.Invalidate();
+		}
+	}
+	[Browsable(true)][Category("Appearance")]
+	[DisplayName("Font Type")][Description("")]
+	public FontType FontType {
+		get { return this.fontType; }
+		set {
+			this.fontType = value;
+			this.Invalidate();
+		}
+	}
 
 	#endregion
 	//--------------------------------
@@ -96,7 +118,13 @@ public class RCTLabel : Control {
 
 	/** <summary> Paints the control. </summary> */
 	protected override void OnPaint(PaintEventArgs e) {
-		SpriteFont.FontBold.DrawAligned(e.Graphics, new Rectangle(2, 2, ClientSize.Width - 8, ClientSize.Height - 8), textAlign, Text, ForeColor);
+		SpriteFont font = SpriteFont.FontBold;
+		switch (this.fontType) {
+		case FontType.Regular: font = SpriteFont.FontRegular; break;
+		case FontType.Bold: font = SpriteFont.FontBold; break;
+		case FontType.Small: font = SpriteFont.FontSmall; break;
+		}
+		font.DrawAligned(e.Graphics, new Rectangle(1, 1, ClientSize.Width - 8, ClientSize.Height - 8), textAlign, Text, ForeColor, outlineColor);
 	}
 	#endregion
 }

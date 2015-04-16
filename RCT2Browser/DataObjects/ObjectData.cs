@@ -250,6 +250,10 @@ public class ObjectData {
 	public virtual void Read(BinaryReader reader) {
 		
 	}
+	/** <summary> Writes the object data. </summary> */
+	public virtual void Write(BinaryWriter writer) {
+
+	}
 
 	#endregion
 	//--------------------------------
@@ -552,7 +556,7 @@ public class ObjectData {
 			obj.chunkHeader.Write(writer);
 
 			long chunkStartPosition = writer.BaseStream.Position;
-			(obj as Attraction).Write(writer);
+			obj.Write(writer);
 			// Set the chunk size
 			obj.chunkHeader.ChunkSize = (uint)(writer.BaseStream.Position - chunkStartPosition);
 			// Get the file size

@@ -175,6 +175,7 @@ namespace RCTDataEditor {
 			InitializeComponent();
 
 			Pathing.SetPathSprites();
+			Water.LoadWaterSparkle();
 
 			this.fontBold = new SpriteFont(Resources.BoldFont, ' ', 'z', 10);
 
@@ -293,7 +294,111 @@ namespace RCTDataEditor {
 				this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + frame : (!dialogView ? "frame " + frame : "dialog"));
 			}
 
-			Attraction o;
+			/*ImageDirectory id = new ImageDirectory();
+			GraphicsData gd = new GraphicsData();
+
+			BinaryReader stream = new BinaryReader(new FileStream("C:\\Programs\\Games\\Steam\\steamapps\\common\\Rollercoaster Tycoon 2\\Data\\g1.dat", FileMode.Open, FileAccess.Read));
+
+			id.Read(stream);
+			stream.Close();
+
+			ImageDirectory id2 = new ImageDirectory();
+			GraphicsData gd2 = new GraphicsData();
+			id2.ScanLineLength = id.ScanLineLength;
+			id2.Count = 5;
+
+			ImageEntry entry;
+			PaletteImage paletteImage;
+			Bitmap image;
+
+			entry = new ImageEntry();
+			image = (Bitmap)Bitmap.FromFile("C:\\Users\\Jrob\\My Projects\\C#\\RCT2Tools\\RCT2Browser\\Land.png");
+			paletteImage = this.FromImage(image);
+			entry.Width = (short)image.Width; entry.Height = (short)image.Height; entry.Flags = RCTDataEditor.DataObjects.ImageFlags.CompactedBitmap;
+			entry.XOffset = 0; entry.YOffset = 0;
+			id2.Entries.Add(entry); gd2.PaletteImages.Add(paletteImage);
+
+			entry = new ImageEntry();
+			image = (Bitmap)Bitmap.FromFile("C:\\Users\\Jrob\\My Projects\\C#\\RCT2Tools\\RCT2Browser\\Slope1.png");
+			paletteImage = this.FromImage(image);
+			entry.Width = (short)image.Width; entry.Height = (short)image.Height; entry.Flags = RCTDataEditor.DataObjects.ImageFlags.CompactedBitmap;
+			entry.XOffset = -64; entry.YOffset = -48;
+			id2.Entries.Add(entry); gd2.PaletteImages.Add(paletteImage);
+
+			entry = new ImageEntry();
+			image = (Bitmap)Bitmap.FromFile("C:\\Users\\Jrob\\My Projects\\C#\\RCT2Tools\\RCT2Browser\\Slope2.png");
+			paletteImage = this.FromImage(image);
+			entry.Width = (short)image.Width; entry.Height = (short)image.Height; entry.Flags = RCTDataEditor.DataObjects.ImageFlags.CompactedBitmap;
+			entry.XOffset = 0; entry.YOffset = -48;
+			id2.Entries.Add(entry); gd2.PaletteImages.Add(paletteImage);
+
+			entry = new ImageEntry();
+			image = (Bitmap)Bitmap.FromFile("C:\\Users\\Jrob\\My Projects\\C#\\RCT2Tools\\RCT2Browser\\Slope3.png");
+			paletteImage = this.FromImage(image);
+			entry.Width = (short)image.Width; entry.Height = (short)image.Height; entry.Flags = RCTDataEditor.DataObjects.ImageFlags.CompactedBitmap;
+			entry.XOffset = 0; entry.YOffset = 0;
+			id2.Entries.Add(entry); gd2.PaletteImages.Add(paletteImage);
+
+			entry = new ImageEntry();
+			image = (Bitmap)Bitmap.FromFile("C:\\Users\\Jrob\\My Projects\\C#\\RCT2Tools\\RCT2Browser\\Slope4.png");
+			paletteImage = this.FromImage(image);
+			entry.Width = (short)image.Width; entry.Height = (short)image.Height; entry.Flags = RCTDataEditor.DataObjects.ImageFlags.CompactedBitmap;
+			entry.XOffset = -64; entry.YOffset = 0;
+			id2.Entries.Add(entry); gd2.PaletteImages.Add(paletteImage);
+
+			//stream.Close();
+			BinaryWriter stream2 = new BinaryWriter(new FileStream("Land.rct2imgs", FileMode.OpenOrCreate));
+
+			long imageDirectoryPosition = stream2.BaseStream.Position;
+
+			// Write the image directory and graphics data
+			id2.Write(stream2);
+			gd2.Write(stream2, id2);
+
+			// Rewrite the image directory after the image addresses are known
+			long finalPosition = stream2.BaseStream.Position;
+			stream2.BaseStream.Position = imageDirectoryPosition;
+			id2.Write(stream2);
+
+			stream2.Close();*/
+
+
+			/*Water o;
+
+			o = (Water)ObjectData.ReadObject(this.directory + "\\WTRCYAN.DAT");
+			o.Source = SourceTypes.Custom;
+
+			for (int i = 1; i < 7; i++) {
+				int r = 1;
+				int g = 1;
+				int b = 1;
+				switch (i) {
+				case 1: g = 0; b = 0; break;
+				case 2: b = 0; break;
+				case 3: g = 0; break;
+				case 4: r = 0; b = 0; break;
+				case 5: r = 0; break;
+				case 6: r = 0; g = 0; break;
+				}
+
+				/*o.GraphicsData.Palettes[i] = new Palette(new Color[]{
+					Color.FromArgb(r*0, g*0, b*0), Color.FromArgb(r*20, g*20, b*20), Color.FromArgb(r*40, g*40, b*40), Color.FromArgb(r*60, g*60, b*60), Color.FromArgb(r*80, g*80, b*80),
+					Color.FromArgb(r*100, g*100, b*100), Color.FromArgb(r*120, g*120, b*120), Color.FromArgb(r*140, g*140, b*140), Color.FromArgb(r*160, g*160, b*160), Color.FromArgb(r*180, g*180, b*180),
+					Color.FromArgb(r*200, g*200, b*200), Color.FromArgb(r*220, g*220, b*220), Color.FromArgb(r*240, g*240, b*240), Color.FromArgb(r*250, g*250, b*250), Color.FromArgb(r*255, g*255, b*255)});*/
+
+				/*o.GraphicsData.Palettes[i] = new Palette(new Color[]{
+					Color.FromArgb(r*50, g*50, b*50), Color.FromArgb(r*50, g*50, b*50), Color.FromArgb(r*50, g*50, b*50),
+					Color.FromArgb(r*100, g*100, b*100), Color.FromArgb(r*100, g*100, b*100), Color.FromArgb(r*100, g*100, b*100),
+					Color.FromArgb(r*150, g*150, b*150), Color.FromArgb(r*150, g*150, b*150), Color.FromArgb(r*150, g*150, b*150),
+					Color.FromArgb(r*200, g*200, b*200), Color.FromArgb(r*200, g*200, b*200), Color.FromArgb(r*200, g*200, b*200),
+					Color.FromArgb(r*250, g*250, b*250), Color.FromArgb(r*250, g*250, b*250), Color.FromArgb(r*250, g*250, b*250)});
+			}
+			o.StringTable.Entries[0][Languages.British] = "Water Test";
+			o.StringTable.Entries[0][Languages.American] = "Water Test";
+			o.ObjectHeader.FileName = "WTRTEST";
+			ObjectData.WriteObject("WTRTEST.DAT", o);*/
+				
+				//Attraction o;
 
 			/*o = (Attraction)ObjectData.ReadObject(this.directory + "\\ZLOG.DAT");
 			o.Source = SourceTypes.Custom;
@@ -326,6 +431,32 @@ namespace RCTDataEditor {
 			ObjectData.WriteObject("INTBOB2.DAT", o);*/
 		}
 
+		private PaletteImage FromImage(Bitmap image) {
+			PaletteImage paletteImage = new PaletteImage(image.Width, image.Height);
+
+			Palette palette = Palette.DefaultPalette;
+
+			for (int x = 0; x < image.Width; x++) {
+				for (int y = 0; y < image.Height; y++) {
+					Color imageColor = image.GetPixel(x, y);
+					if (imageColor == Color.FromArgb(0, 0, 0)) {
+						imageColor = Color.FromArgb(0, 0, 0, 0);
+					}
+					int minDelta = GetColorDelta(imageColor, palette.Colors[0]);
+					int minDeltaIndex = 0;
+					for (int i = 0; i < 256; i++) {
+						int delta = GetColorDelta(imageColor, palette.Colors[i]);
+						if (delta < minDelta) {
+							minDelta = delta;
+							minDeltaIndex = i;
+						}
+					}
+					paletteImage.Pixels[x, y] = (byte)minDeltaIndex;
+				}
+			}
+			return paletteImage;
+		}
+
 		private void SavePieces(Attraction o, ulong basePieces, ulong pieces, string name) {
 			o.Source = SourceTypes.Custom;
 			o.ObjectHeader.FileName = name;
@@ -333,6 +464,12 @@ namespace RCTDataEditor {
 			o.StringTable.Entries[0][Languages.American] ="A (" + pieces.ToString("X16") + ")";
 			o.Header.AvailableTrackSections = (TrackSections)(basePieces | pieces);
 			ObjectData.WriteObject(name + ".DAT", o);
+		}
+		private int GetColorDelta(Color imageColor, Color paletteColor) {
+			return Math.Abs(imageColor.R - paletteColor.R) +
+				Math.Abs(imageColor.G - paletteColor.G) +
+				Math.Abs(imageColor.B - paletteColor.B) +
+				Math.Abs(imageColor.A - paletteColor.A) * 4;
 		}
 
 		#endregion

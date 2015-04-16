@@ -30,9 +30,11 @@
 			// 
 			// labelText1
 			// 
+			this.labelText1.FontType = CustomControls.Visuals.FontType.Bold;
 			this.labelText1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.labelText1.Location = new System.Drawing.Point(12, 22);
 			this.labelText1.Name = "labelText1";
+			this.labelText1.OutlineColor = System.Drawing.Color.Transparent;
 			this.labelText1.Size = new System.Drawing.Size(220, 14);
 			this.labelText1.TabIndex = 152;
 			this.labelText1.Text = "Error deleting object file!";
@@ -45,11 +47,13 @@
 			this.rctButton1.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
 			this.rctButton1.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.rctButton1.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.rctButton1.FontType = CustomControls.Visuals.FontType.Bold;
 			this.rctButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.rctButton1.Image = null;
 			this.rctButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.rctButton1.Location = new System.Drawing.Point(92, 76);
 			this.rctButton1.Name = "rctButton1";
+			this.rctButton1.OutlineColor = System.Drawing.Color.Transparent;
 			this.rctButton1.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
 			this.rctButton1.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.rctButton1.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
@@ -63,9 +67,11 @@
 			// 
 			// labelText2
 			// 
+			this.labelText2.FontType = CustomControls.Visuals.FontType.Bold;
 			this.labelText2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.labelText2.Location = new System.Drawing.Point(12, 42);
 			this.labelText2.Name = "labelText2";
+			this.labelText2.OutlineColor = System.Drawing.Color.Transparent;
 			this.labelText2.Size = new System.Drawing.Size(220, 14);
 			this.labelText2.TabIndex = 154;
 			this.labelText2.Text = "You may need to run as administrator.";
@@ -84,6 +90,8 @@
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "ErrorForm";
+			this.ShowIcon = false;
+			this.ShowInTaskbar = false;
 			this.Text = "Error";
 			this.ResumeLayout(false);
 

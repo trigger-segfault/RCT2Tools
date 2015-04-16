@@ -36,11 +36,13 @@
 			this.buttonAbout.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
 			this.buttonAbout.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.buttonAbout.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonAbout.FontType = CustomControls.Visuals.FontType.Bold;
 			this.buttonAbout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonAbout.Image = null;
 			this.buttonAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.buttonAbout.Location = new System.Drawing.Point(50, 75);
 			this.buttonAbout.Name = "buttonAbout";
+			this.buttonAbout.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonAbout.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
 			this.buttonAbout.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.buttonAbout.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
@@ -59,11 +61,13 @@
 			this.rctButton1.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
 			this.rctButton1.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.rctButton1.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.rctButton1.FontType = CustomControls.Visuals.FontType.Bold;
 			this.rctButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.rctButton1.Image = null;
 			this.rctButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.rctButton1.Location = new System.Drawing.Point(131, 75);
 			this.rctButton1.Name = "rctButton1";
+			this.rctButton1.OutlineColor = System.Drawing.Color.Transparent;
 			this.rctButton1.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
 			this.rctButton1.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.rctButton1.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
@@ -77,9 +81,11 @@
 			// 
 			// rctLabel2
 			// 
+			this.rctLabel2.FontType = CustomControls.Visuals.FontType.Bold;
 			this.rctLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.rctLabel2.Location = new System.Drawing.Point(24, 23);
 			this.rctLabel2.Name = "rctLabel2";
+			this.rctLabel2.OutlineColor = System.Drawing.Color.Transparent;
 			this.rctLabel2.Size = new System.Drawing.Size(200, 14);
 			this.rctLabel2.TabIndex = 151;
 			this.rctLabel2.Text = "Delete the following object file?";
@@ -87,9 +93,11 @@
 			// 
 			// labelDeletedObject
 			// 
+			this.labelDeletedObject.FontType = CustomControls.Visuals.FontType.Bold;
 			this.labelDeletedObject.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.labelDeletedObject.Location = new System.Drawing.Point(41, 43);
 			this.labelDeletedObject.Name = "labelDeletedObject";
+			this.labelDeletedObject.OutlineColor = System.Drawing.Color.Transparent;
 			this.labelDeletedObject.Size = new System.Drawing.Size(180, 14);
 			this.labelDeletedObject.TabIndex = 152;
 			this.labelDeletedObject.Text = "1920CAR.DAT";
@@ -109,6 +117,8 @@
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "DeleteMessageBox";
+			this.ShowIcon = false;
+			this.ShowInTaskbar = false;
 			this.Text = "Delete Object";
 			this.ResumeLayout(false);
 
