@@ -32,7 +32,7 @@ public class ParkEntrance : ObjectData {
 		this.Header				= new ParkEntranceHeader();
 	}
 	/** <summary> Constructs the default object. </summary> */
-	public ParkEntrance(ObjectDataHeader objectHeader, ChunkHeader chunkHeader)
+	internal ParkEntrance(ObjectDataHeader objectHeader, ChunkHeader chunkHeader)
 		: base(objectHeader, chunkHeader) {
 		this.Header				= new ParkEntranceHeader();
 	}
@@ -40,119 +40,101 @@ public class ParkEntrance : ObjectData {
 	#endregion
 	//========== PROPERTIES ==========
 	#region Properties
+	//--------------------------------
+	#region Reading
+
+	/** <summary> Gets the number of string table entries in the object. </summary> */
+	protected override int NumStringTableEntries {
+		get { return 1; }
+	}
+	/** <summary> Returns true if the object has a group info section. </summary> */
+	protected override bool HasGroupInfo {
+		get { return false; }
+	}
+
+	#endregion
+	//--------------------------------
+	#region Information
 	
 	/** <summary> Gets the subtype of the object. </summary> */
 	public override ObjectSubtypes Subtype {
-		get {
-			return ObjectSubtypes.Entrance;
-		}
+		get { return ObjectSubtypes.Entrance; }
 	}
 	/** <summary> True if the object can be placed on a slope. </summary> */
 	public override bool CanSlope {
 		get { return false; }
 	}
+	/** <summary> Gets the number of color remaps. </summary> */
+	public override int ColorRemaps {
+		get { return 0; }
+	}
+	/** <summary> Gets if the dialog view has color remaps. </summary> */
+	public override bool HasDialogColorRemaps {
+		get { return false; }
+	}
+	/** <summary> Gets the number of frames in the animation. </summary> */
+	public override int AnimationFrames {
+		get { return 1; }
+	}
 
 	#endregion
-	//========== OVERRIDES ===========
-	#region Overrides
 	//--------------------------------
+	#endregion
+	//=========== READING ============
 	#region Reading
 
-	/** <summary> Reads the object. </summary> */
-	public override void Read(BinaryReader reader) {
+	/** <summary> Reads the object header. </summary> */
+	protected override void ReadHeader(BinaryReader reader) {
 		Header.Read(reader);
-
-		stringTable.Read(reader);
-
-		imageDirectory.Read(reader);
-		graphicsData.Read(reader, imageDirectory);
 	}
 	/** <summary> Writes the object. </summary> */
-	public override void Write(BinaryWriter writer) {
-		// Write the header
+	protected override void WriteHeader(BinaryWriter writer) {
 		Header.Write(writer);
-
-		// Write the 1 string table entry
-		stringTable.Write(writer);
-
-		long imageDirectoryPosition = writer.BaseStream.Position;
-
-		// Write the image directory and graphics data
-		imageDirectory.Write(writer);
-		graphicsData.Write(writer, imageDirectory);
-
-		// Rewrite the image directory after the image addresses are known
-		long finalPosition = writer.BaseStream.Position;
-		writer.BaseStream.Position = imageDirectoryPosition;
-		imageDirectory.Write(writer);
-
-		// Set the position to the end of the file so the file size is known
-		writer.BaseStream.Position = finalPosition;
 	}
 
 	#endregion
-	//--------------------------------
+	//=========== DRAWING ============
 	#region Drawing
 
 	/** <summary> Constructs the default object. </summary> */
-	public override bool Draw(Graphics g, Point position, int rotation = 0, int corner = 0, int slope = -1, int elevation = 0, int frame = 0) {
+	public override bool Draw(PaletteImage p, Point position, DrawSettings drawSettings) {
 		try {
-			int xoffset = ((rotation == 1 || rotation == 2) ? -32 : 32);
-			int yoffset = ((rotation == 2 || rotation == 3) ? -16 : 16);
-			if (rotation >= 2) { xoffset *= -1; yoffset *= -1; }
-			int sideFrame = (rotation < 2 ? 0 : 1);
+			int xoffset = ((drawSettings.Rotation == 1 || drawSettings.Rotation == 2) ? -32 : 32);
+			int yoffset = ((drawSettings.Rotation == 2 || drawSettings.Rotation == 3) ? -16 : 16);
+			if (drawSettings.Rotation >= 2) { xoffset *= -1; yoffset *= -1; }
+			int sideFrame = (drawSettings.Rotation < 2 ? 0 : 1);
 
-			g.DrawImage(graphicsData.Images[rotation * 3 + 1 + sideFrame], new Point(
-				position.X + imageDirectory.entries[rotation * 3 + 1 + sideFrame].XOffset - xoffset,
-				position.Y + imageDirectory.entries[rotation * 3 + 1 + sideFrame].YOffset - yoffset
-			));
-			g.DrawImage(graphicsData.Images[rotation * 3 + 0], new Point(
-				position.X + imageDirectory.entries[rotation * 3 + 0].XOffset,
-				position.Y + imageDirectory.entries[rotation * 3 + 0].YOffset
-			));
-			g.DrawImage(graphicsData.Images[rotation * 3 + 2 - sideFrame], new Point(
-				position.X + imageDirectory.entries[rotation * 3 + 2 - sideFrame].XOffset + xoffset,
-				position.Y + imageDirectory.entries[rotation * 3 + 2 - sideFrame].YOffset + yoffset
-			));
+			graphicsData.paletteImages[drawSettings.Rotation * 3 + 1 + sideFrame].DrawWithOffset(p,
+				Point.Add(position, new Size(-xoffset, -yoffset)), drawSettings.Darkness, false);
+			graphicsData.paletteImages[drawSettings.Rotation * 3 + 0].DrawWithOffset(p,
+				position, drawSettings.Darkness, false);
+			graphicsData.paletteImages[drawSettings.Rotation * 3 + 2 - sideFrame].DrawWithOffset(p,
+				Point.Add(position, new Size(xoffset, yoffset)), drawSettings.Darkness, false);
 		}
 		catch (IndexOutOfRangeException) { return false; }
 		catch (ArgumentOutOfRangeException) { return false; }
 		return true;
 	}
 	/** <summary> Draws the object data in the dialog. </summary> */
-	public override bool DrawDialog(Graphics g, Point position, int rotation = 0) {
+	public override bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		try {
-			int xoffset = ((rotation == 1 || rotation == 2) ? -32 : 32);
-			int yoffset = ((rotation == 2 || rotation == 3) ? -16 : 16);
-			if (rotation >= 2) { xoffset *= -1; yoffset *= -1; }
-			int sideFrame = (rotation < 2 ? 0 : 1);
+			int xoffset = ((drawSettings.Rotation == 1 || drawSettings.Rotation == 2) ? -32 : 32);
+			int yoffset = ((drawSettings.Rotation == 2 || drawSettings.Rotation == 3) ? -16 : 16);
+			if (drawSettings.Rotation >= 2) { xoffset *= -1; yoffset *= -1; }
+			int sideFrame = (drawSettings.Rotation < 2 ? 0 : 1);
 
-			g.DrawImage(graphicsData.Images[rotation * 3 + 1 + sideFrame], new Point(
-				position.X + imageDirectory.entries[rotation * 3 + 1 + sideFrame].XOffset - xoffset + 112 / 2,
-				position.Y + imageDirectory.entries[rotation * 3 + 1 + sideFrame].YOffset - yoffset + 112 / 2 + 20
-			));
-			g.DrawImage(graphicsData.Images[rotation * 3 + 0], new Point(
-				position.X + imageDirectory.entries[rotation * 3 + 0].XOffset + 112 / 2,
-				position.Y + imageDirectory.entries[rotation * 3 + 0].YOffset + 112 / 2 + 20
-			));
-			g.DrawImage(graphicsData.Images[rotation * 3 + 2 - sideFrame], new Point(
-				position.X + imageDirectory.entries[rotation * 3 + 2 - sideFrame].XOffset + xoffset + 112 / 2,
-				position.Y + imageDirectory.entries[rotation * 3 + 2 - sideFrame].YOffset + yoffset + 112 / 2 + 20
-			));
+			graphicsData.paletteImages[drawSettings.Rotation * 3 + 1 + sideFrame].DrawWithOffset(p,
+				Point.Add(position, new Size(-xoffset, -yoffset)), drawSettings.Darkness, false);
+			graphicsData.paletteImages[drawSettings.Rotation * 3 + 0].DrawWithOffset(p,
+				position, drawSettings.Darkness, false);
+			graphicsData.paletteImages[drawSettings.Rotation * 3 + 2 - sideFrame].DrawWithOffset(p,
+				Point.Add(position, new Size(xoffset, yoffset)), drawSettings.Darkness, false);
 		}
 		catch (IndexOutOfRangeException) { return false; }
 		catch (ArgumentOutOfRangeException) { return false; }
 		return true;
 	}
-	/** <summary> Draws a single frame of the object. </summary> */
-	public override bool DrawSingleFrame(Graphics g, Point position, int frame) {
 
-		g.DrawImage(graphicsData.Images[frame], position.X - imageDirectory.entries[frame].Width / 2, position.Y - imageDirectory.entries[frame].Height / 2);
-		return true;
-	}
-	
-	#endregion
-	//--------------------------------
 	#endregion
 }
 /** <summary> The header used for small scenery objects. </summary> */
@@ -184,21 +166,14 @@ public class ParkEntranceHeader : ObjectTypeHeader {
 	#region Properties
 
 	/** <summary> Gets the size of the object type header. </summary> */
-	public override uint HeaderSize {
+	internal override uint HeaderSize {
 		get { return ParkEntrance.HeaderSize; }
 	}
 	/** <summary> Gets the basic subtype of the object. </summary> */
-	public override ObjectSubtypes ObjectSubtype {
+	internal override ObjectSubtypes ObjectSubtype {
 		get {
 			return ObjectSubtypes.Entrance;
 		}
-	}
-
-	/** <summary> Gets the subtype of the object. </summary> */
-	public static ObjectSubtypes ReadSubtype(BinaryReader reader) {
-		ParkEntranceHeader header = new ParkEntranceHeader();
-		header.Read(reader);
-		return ObjectSubtypes.Entrance;
 	}
 
 	#endregion
@@ -206,13 +181,13 @@ public class ParkEntranceHeader : ObjectTypeHeader {
 	#region Reading
 
 	/** <summary> Reads the object header. </summary> */
-	public override void Read(BinaryReader reader) {
+	internal override void Read(BinaryReader reader) {
 		reader.Read(this.Reserved, 0, this.Reserved.Length);
 		this.SignX	= reader.ReadByte();
 		this.SignY	= reader.ReadByte();
 	}
 	/** <summary> Writes the object header. </summary> */
-	public void Write(BinaryWriter writer) {
+	internal override void Write(BinaryWriter writer) {
 		writer.Write(this.Reserved);
 		writer.Write(this.SignX);
 		writer.Write(this.SignY);

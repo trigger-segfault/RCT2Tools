@@ -1,5 +1,4 @@
-﻿using RCTDataEditor.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -22,7 +21,7 @@ public class LargeScenery : ObjectData {
 	#region Settings
 
 	/** <summary> True if large scenery should display the tile grid when drawing. </summary> */
-	public static bool DrawTileGrid = false;
+	//public static bool DrawTileGrid = false;
 
 	#endregion
 	//=========== MEMBERS ============
@@ -46,7 +45,7 @@ public class LargeScenery : ObjectData {
 		this.Tiles	= new List<LargeSceneryTileHeader>();
 	}
 	/** <summary> Constructs the default object. </summary> */
-	public LargeScenery(ObjectDataHeader objectHeader, ChunkHeader chunkHeader)
+	internal LargeScenery(ObjectDataHeader objectHeader, ChunkHeader chunkHeader)
 		: base(objectHeader, chunkHeader) {
 		this.Header	= new LargeSceneryHeader();
 		this.Text3D	= new List<byte>();
@@ -56,7 +55,22 @@ public class LargeScenery : ObjectData {
 	#endregion
 	//========== PROPERTIES ==========
 	#region Properties
-	
+	//--------------------------------
+	#region Reading
+
+	/** <summary> Gets the number of string table entries in the object. </summary> */
+	protected override int NumStringTableEntries {
+		get { return 1; }
+	}
+	/** <summary> Returns true if the object has a group info section. </summary> */
+	protected override bool HasGroupInfo {
+		get { return true; }
+	}
+
+	#endregion
+	//--------------------------------
+	#region Information
+
 	/** <summary> Gets the subtype of the object. </summary> */
 	public override ObjectSubtypes Subtype {
 		get {
@@ -77,20 +91,31 @@ public class LargeScenery : ObjectData {
 	public override int ColorRemaps {
 		get { return (Header.Flags.HasFlag(LargeSceneryFlags.Color2) ? 2 : (Header.Flags.HasFlag(LargeSceneryFlags.Color1) ? 1 : 0)); }
 	}
+	/** <summary> Gets if the dialog view has color remaps. </summary> */
+	public override bool HasDialogColorRemaps {
+		get { return true; }
+	}
+	/** <summary> Gets the number of frames in the animation. </summary> */
+	public override int AnimationFrames {
+		get { return 1; }
+	}
 
 	#endregion
-	//========== OVERRIDES ===========
-	#region Overrides
 	//--------------------------------
+	#endregion
+	//=========== READING ============
 	#region Reading
 
-	/** <summary> Reads the object. </summary> */
-	public override void Read(BinaryReader reader) {
+	/** <summary> Reads the object header. </summary> */
+	protected override void ReadHeader(BinaryReader reader) {
 		Header.Read(reader);
-
-		stringTable.Read(reader);
-		groupInfo.Read(reader);
-
+	}
+	/** <summary> Writes the object. </summary> */
+	protected override void WriteHeader(BinaryWriter writer) {
+		Header.Write(writer);
+	}
+	/** <summary> Reads the object data optional. </summary> */
+	protected override void ReadOptional(BinaryReader reader) {
 		// Read the 3D text
 		if (Header.Flags.HasFlag(LargeSceneryFlags.Text3D)) {
 			for (int i = 0; i < 0x40E; i++) {
@@ -106,21 +131,9 @@ public class LargeScenery : ObjectData {
 			this.Tiles.Add(tile);
 			flag = reader.ReadUInt16();
 		}
-
-		imageDirectory.Read(reader);
-		graphicsData.Read(reader);
 	}
-	/** <summary> Writes the object. </summary> */
-	public override void Write(BinaryWriter writer) {
-		// Write the header
-		Header.Write(writer);
-
-		// Write the 1 string table entry
-		stringTable.Write(writer);
-
-		// Write the group info
-		groupInfo.Write(writer);
-
+	/** <summary> Writes the object data optional. </summary> */
+	protected override void WriteOptional(BinaryWriter writer) {
 		// Write the 3D text
 		if (Header.Flags.HasFlag(LargeSceneryFlags.Text3D)) {
 			for (int i = 0; i < 0x40E; i++) {
@@ -132,37 +145,14 @@ public class LargeScenery : ObjectData {
 			this.Tiles[i].Write(writer);
 		}
 		writer.Write((ushort)0xFFFF);
-
-		long imageDirectoryPosition = writer.BaseStream.Position;
-
-		// Write the image directory and graphics data
-		imageDirectory.Write(writer);
-		graphicsData.Write(writer);
-
-		// Rewrite the image directory after the image addresses are known
-		long finalPosition = writer.BaseStream.Position;
-		writer.BaseStream.Position = imageDirectoryPosition;
-		imageDirectory.Write(writer);
-
-		// Set the position to the end of the file so the file size is known
-		writer.BaseStream.Position = finalPosition;
 	}
-
+	
 	#endregion
-	//--------------------------------
+	//=========== DRAWING ============
 	#region Drawing
 
-	private void DrawFrame(Graphics g, Point position, int frame) {
-
-		graphicsData.PaletteImages[frame].Draw(g, 0, 0,
-			Palette.DefaultPalette,
-			(Header.Flags.HasFlag(LargeSceneryFlags.Color1) || Header.Flags.HasFlag(LargeSceneryFlags.Color2)) ? GraphicsData.ColorRemap1 : -1,
-			(Header.Flags.HasFlag(LargeSceneryFlags.Color2)) ? GraphicsData.ColorRemap2 : -1,
-			-1
-		);
-	}
 	/** <summary> Constructs the default object. </summary> */
-	public override bool Draw(Graphics g, Point position, int rotation = 0, int corner = 0, int slope = -1, int elevation = 0, int frame = 0) {
+	public override bool Draw(PaletteImage p, Point position, DrawSettings drawSettings) {
 		try {
 			LargeSceneryTileHeader[] tiles = new LargeSceneryTileHeader[Tiles.Count];
 			Rectangle bounds = new Rectangle(100, 100, 0, 0);
@@ -171,7 +161,7 @@ public class LargeScenery : ObjectData {
 				tiles[i].Row /= 32;
 				tiles[i].Column /= 32;
 				tiles[i].Index = i;
-				switch (rotation) {
+				switch (drawSettings.Rotation) {
 				case 0: tiles[i].Depth = (float)tiles[i].Row * 1.001f - (float)tiles[i].Column; break;
 				case 1: tiles[i].Depth = (float)tiles[i].Row + (float)tiles[i].Column * 1.001f; break;
 				case 2: tiles[i].Depth = (float)-tiles[i].Row * 1.001f - (float)tiles[i].Column; break;
@@ -198,7 +188,7 @@ public class LargeScenery : ObjectData {
 
 			// Get tht tile corner
 			Point cornerPos = Point.Empty;
-			switch (rotation) {
+			switch (drawSettings.Rotation) {
 			case 0: cornerPos = new Point(bounds.Width - 1, bounds.Y); break;
 			case 1: cornerPos = new Point(bounds.Width - 1, bounds.Height - 1); break;
 			case 2: cornerPos = new Point(bounds.X, bounds.Height - 1); break;
@@ -207,21 +197,21 @@ public class LargeScenery : ObjectData {
 
 			// Draw each tile
 			for (int i = 0; i < tiles.Length; i++) {
-				int rot = (rotation % 2 == 0 ? -1 :  1);
+				int rot = (drawSettings.Rotation % 2 == 0 ? -1 :  1);
 				Point point = new Point(
 					(Math.Abs(tiles[i].Row - cornerPos.X) * rot + Math.Abs(tiles[i].Column - cornerPos.Y) * -rot),
 					(Math.Abs(tiles[i].Row - cornerPos.X) * -1 + Math.Abs(tiles[i].Column - cornerPos.Y) * -1)
 				);
 
-				DrawFrame(g, new Point(
+				DrawFrame(p, new Point(
 					position.X + point.X * 32,
 					position.Y + point.Y * 16
-				), 4 + tiles[i].Index * 4 + (rotation + 3) % 4);
+				), drawSettings, 4 + tiles[i].Index * 4 + (drawSettings.Rotation + 3) % 4);
 			}
 			// Draw the tile overlay info
-			if (DrawTileGrid) {
+			/*if (DrawTileGrid) {
 				for (int i = 0; i < tiles.Length; i++) {
-					int rot = (rotation % 2 == 0 ? -1 :  1);
+					int rot = (drawSettings.Rotation % 2 == 0 ? -1 :  1);
 					Point point = new Point(
 						(Math.Abs(tiles[i].Row - cornerPos.X) * rot + Math.Abs(tiles[i].Column - cornerPos.Y) * -rot),
 						(Math.Abs(tiles[i].Row - cornerPos.X) * -1 + Math.Abs(tiles[i].Column - cornerPos.Y) * -1)
@@ -243,40 +233,35 @@ public class LargeScenery : ObjectData {
 					));
 					font.Dispose();
 				}
-			}
+			}*/
 		}
 		catch (IndexOutOfRangeException) { return false; }
 		catch (ArgumentOutOfRangeException) { return false; }
 		return true;
+	}
+	private void DrawFrame(PaletteImage p, Point position, DrawSettings drawSettings, int frame) {
+
+		graphicsData.paletteImages[frame].DrawWithOffset(p, position, drawSettings.Darkness, false,
+			(Header.Flags.HasFlag(LargeSceneryFlags.Color1) || Header.Flags.HasFlag(LargeSceneryFlags.Color2)) ? drawSettings.Remap1 : RemapColors.None,
+			(Header.Flags.HasFlag(LargeSceneryFlags.Color2)) ? drawSettings.Remap2 : RemapColors.None,
+			RemapColors.None
+		);
 	}
 	/** <summary> Draws the object data in the dialog. </summary> */
-	public override bool DrawDialog(Graphics g, Point position, int rotation = 0) {
+	public override bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		try {
-			DrawFrame(g, new Point(
-				position.X + 112 / 2,
-				position.Y + (112 - 78) / 2
-			), rotation);
+			graphicsData.paletteImages[drawSettings.Rotation].DrawWithOffset(p, Point.Add(position, new Size(dialogSize.Width / 2, (dialogSize.Height - 78) / 2)),
+				drawSettings.Darkness, false,
+				(Header.Flags.HasFlag(LargeSceneryFlags.Color1) || Header.Flags.HasFlag(LargeSceneryFlags.Color2)) ? drawSettings.Remap1 : RemapColors.None,
+				(Header.Flags.HasFlag(LargeSceneryFlags.Color2)) ? drawSettings.Remap2 : RemapColors.None,
+				RemapColors.None
+			);
 		}
 		catch (IndexOutOfRangeException) { return false; }
 		catch (ArgumentOutOfRangeException) { return false; }
-		return true;
-	}
-	/** <summary> Draws a single frame of the object. </summary> */
-	public override bool DrawSingleFrame(Graphics g, Point position, int frame) {
-
-		graphicsData.PaletteImages[frame].Draw(g,
-			position.X - imageDirectory.entries[frame].Width / 2,
-			position.Y - imageDirectory.entries[frame].Height / 2,
-			Palette.DefaultPalette,
-			(Header.Flags.HasFlag(LargeSceneryFlags.Color1) || Header.Flags.HasFlag(LargeSceneryFlags.Color2)) ? GraphicsData.ColorRemap1 : -1,
-			(Header.Flags.HasFlag(LargeSceneryFlags.Color2)) ? GraphicsData.ColorRemap2 : -1,
-			-1
-		);
 		return true;
 	}
 	
-	#endregion
-	//--------------------------------
 	#endregion
 }
 /** <summary> The header used for large scenery objects. </summary> */
@@ -332,11 +317,11 @@ public class LargeSceneryHeader : ObjectTypeHeader {
 	#region Properties
 
 	/** <summary> Gets the size of the object type header. </summary> */
-	public override uint HeaderSize {
+	internal override uint HeaderSize {
 		get { return LargeScenery.HeaderSize; }
 	}
 	/** <summary> Gets the basic subtype of the object. </summary> */
-	public override ObjectSubtypes ObjectSubtype {
+	internal override ObjectSubtypes ObjectSubtype {
 		get {
 			if (Flags.HasFlag(LargeSceneryFlags.Text3D))
 				return ObjectSubtypes.Text3D;
@@ -348,25 +333,12 @@ public class LargeSceneryHeader : ObjectTypeHeader {
 		}
 	}
 
-	/** <summary> Gets the subtype of the object. </summary> */
-	public static ObjectSubtypes ReadSubtype(BinaryReader reader) {
-		LargeSceneryHeader header = new LargeSceneryHeader();
-		header.Read(reader);
-		if (header.Flags.HasFlag(LargeSceneryFlags.Text3D))
-			return ObjectSubtypes.Text3D;
-		if (header.Flags.HasFlag(LargeSceneryFlags.TextScrolling))
-			return ObjectSubtypes.TextScrolling;
-		if (header.Flags.HasFlag(LargeSceneryFlags.Photogenic))
-			return ObjectSubtypes.Photogenic;
-		return ObjectSubtypes.Basic;
-	}
-
 	#endregion
 	//=========== READING ============
 	#region Reading
 
 	/** <summary> Reads the object header. </summary> */
-	public override void Read(BinaryReader reader) {
+	internal override void Read(BinaryReader reader) {
 		this.Reserved0	= reader.ReadUInt16();
 		this.Reserved1	= reader.ReadUInt32();
 		this.Cursor		= reader.ReadByte();
@@ -380,7 +352,7 @@ public class LargeSceneryHeader : ObjectTypeHeader {
 		this.Reserved5	= reader.ReadUInt32();
 	}
 	/** <summary> Writes the object header. </summary> */
-	public void Write(BinaryWriter writer) {
+	internal override void Write(BinaryWriter writer) {
 		writer.Write(this.Reserved0);
 		writer.Write(this.Reserved1);
 		writer.Write(this.Cursor);

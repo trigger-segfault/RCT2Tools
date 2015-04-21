@@ -49,7 +49,22 @@ public class Attraction : ObjectData {
 	#endregion
 	//========== PROPERTIES ==========
 	#region Properties
-	
+	//--------------------------------
+	#region Reading
+
+	/** <summary> Gets the number of string table entries in the object. </summary> */
+	protected override int NumStringTableEntries {
+		get { return 3; }
+	}
+	/** <summary> Returns true if the object has a group info section. </summary> */
+	protected override bool HasGroupInfo {
+		get { return false; }
+	}
+
+	#endregion
+	//--------------------------------
+	#region Information
+
 	/** <summary> Gets the subtype of the object. </summary> */
 	public override ObjectSubtypes Subtype {
 		get {
@@ -68,21 +83,68 @@ public class Attraction : ObjectData {
 			return ObjectSubtypes.Basic;
 		}
 	}
+	/** <summary> True if the object can be placed on a slope. </summary> */
+	public override bool CanSlope {
+		get { return false; }
+	}
+	/** <summary> Gets the number of color remaps. </summary> */
+	public override int ColorRemaps {
+		get {
+			if (Header.RideType == RideTypes.Stall) {
+				return 1;
+			}
+			return (!Header.CarTypeList[0].Flags.HasFlag(CarFlags.NoRemap3) ? 3 :
+				(Header.CarTypeList[0].Flags.HasFlag(CarFlags.Remap2) ? 2 : 1));
+		}
+	}
+	/** <summary> Gets if the dialog view has color remaps. </summary> */
+	public override bool HasDialogColorRemaps {
+		get { return false; }
+	}
+	/** <summary> Gets the number of frames in the animation. </summary> */
+	public override int AnimationFrames {
+		get {
+			if (Header.RideType == RideTypes.Stall) {
+				return 1;
+			}
+			int frameOffset = 1;
+			CarHeader car = Header.CarTypeList[0];
+			if (car.Flags.HasFlag(CarFlags.Spinning)) {
+				if (car.Flags.HasFlag(CarFlags.SpinningIndependantWheels))
+					frameOffset *= (car.LastRotationFrame + 1);
+			}
+			if (car.Flags.HasFlag(CarFlags.Swinging)) {
+				int swingingFrames = 5;
+				if (car.Flags.HasFlag(CarFlags.SwingingMoreFrames))
+					swingingFrames += 2;
+				if (car.Flags.HasFlag(CarFlags.SwingingSlide))
+					swingingFrames += 2;
+				if (car.Flags.HasFlag(CarFlags.SwingingTilting))
+					swingingFrames -= 2;
+				frameOffset *= swingingFrames;
+			}
+			if (car.SpecialFrames != 0)
+				frameOffset *= car.SpecialFrames;
+			return frameOffset;
+		}
+	}
 
 	#endregion
-	//========== OVERRIDES ===========
-	#region Overrides
 	//--------------------------------
+	#endregion
+	//=========== READING ============
 	#region Reading
 
-	/** <summary> Reads the object. </summary> */
-	public override void Read(BinaryReader reader) {
-		// Read the attraction and car headers
+	/** <summary> Reads the object header. </summary> */
+	protected override void ReadHeader(BinaryReader reader) {
 		Header.Read(reader);
-
-		// Read the 3 string table entries
-		stringTable.Read(reader, 3);
-
+	}
+	/** <summary> Writes the object. </summary> */
+	protected override void WriteHeader(BinaryWriter writer) {
+		Header.Write(writer);
+	}
+	/** <summary> Reads the object data optional. </summary> */
+	protected override void ReadOptional(BinaryReader reader) {
 		// Read the 3 byte car color structures
 		byte b = reader.ReadByte();
 		int numStructures = ((b == 0xFF) ? 32 : b);
@@ -102,19 +164,9 @@ public class Attraction : ObjectData {
 				this.RiderPositions[i][j] = reader.ReadByte();
 			}
 		}
-
-		// Read the image directory and graphics data
-		imageDirectory.Read(reader);
-		graphicsData.Read(reader);
 	}
-	/** <summary> Writes the object. </summary> */
-	public override void Write(BinaryWriter writer) {
-		// Write the attraction and car headers
-		Header.Write(writer);
-
-		// Write the 3 string table entries
-		stringTable.Write(writer);
-
+	/** <summary> Writes the object data optional. </summary> */
+	protected override void WriteOptional(BinaryWriter writer) {
 		// Write the number of car color structures
 		if (this.CarColors.Count == 32)
 			writer.Write((byte)0xFF);
@@ -142,35 +194,21 @@ public class Attraction : ObjectData {
 			// Write the rider positions structure
 			writer.Write(this.RiderPositions[i]);
 		}
-
-		long imageDirectoryPosition = writer.BaseStream.Position;
-
-		// Write the image directory and graphics data
-		imageDirectory.Write(writer);
-		graphicsData.Write(writer);
-
-		// Rewrite the image directory after the image addresses are known
-		long finalPosition = writer.BaseStream.Position;
-		writer.BaseStream.Position = imageDirectoryPosition;
-		imageDirectory.Write(writer);
-
-		// Set the position to the end of the file so the file size is known
-		writer.BaseStream.Position = finalPosition;
 	}
-
+	
 	#endregion
-	//--------------------------------
+	//=========== DRAWING ============
 	#region Drawing
 
 	/** <summary> Constructs the default object. </summary> */
 	public override bool Draw(PaletteImage p, Point position, DrawSettings drawSettings) {
 		try {
 			if (Header.RideType == RideTypes.Stall) {
-				graphicsData.paletteImages[3 + drawSettings.Rotation].Draw(p, 0, 0, drawSettings.Darkness, false,
+				graphicsData.paletteImages[3 + drawSettings.Rotation].DrawWithOffset(p, 0, 0, drawSettings.Darkness, false,
 					drawSettings.Remap1, RemapColors.None, RemapColors.None
 				);
 				if ((drawSettings.Rotation == 0 || drawSettings.Rotation == 3) && (Header.TrackType == TrackTypes.Restroom || Header.TrackType == TrackTypes.FirstAid)) {
-					graphicsData.paletteImages[3 + 4 + drawSettings.Rotation / 3].Draw(p, 0, 0, drawSettings.Darkness, false,
+					graphicsData.paletteImages[3 + 4 + drawSettings.Rotation / 3].DrawWithOffset(p, 0, 0, drawSettings.Darkness, false,
 						drawSettings.Remap1,
 						RemapColors.None,
 						RemapColors.None
@@ -204,12 +242,11 @@ public class Attraction : ObjectData {
 					}
 
 					if (i == (int)drawSettings.CurrentCar) {
-						graphicsData.paletteImages[3 + nextCarOffset + drawSettings.Rotation * F + drawSettings.Frame].Draw(g, 0, 0,
-							Palette.DefaultPalette,
+						graphicsData.paletteImages[3 + nextCarOffset + drawSettings.Rotation * F + drawSettings.Frame].DrawWithOffset(p,
+							position, drawSettings.Darkness, false,
 							drawSettings.Remap1,
 							(car.Flags.HasFlag(CarFlags.Remap2) ? drawSettings.Remap2 : RemapColors.None),
-							(!car.Flags.HasFlag(CarFlags.NoRemap3) ? drawSettings.Remap3 : RemapColors.None)
-						);
+							(!car.Flags.HasFlag(CarFlags.NoRemap3) ? drawSettings.Remap3 : RemapColors.None));
 					}
 					else {
 						if (car.SpriteFlags.HasFlag(CarSpriteFlags.Flat))
@@ -253,45 +290,15 @@ public class Attraction : ObjectData {
 		return true;
 	}
 	/** <summary> Draws the object data in the dialog. </summary> */
-	public override bool DrawDialog(Graphics g, Point position, int rotation = 0) {
+	public override bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		try {
-			graphicsData.paletteImages[Header.PreviewIndex].Draw(g, 0, 0, Palette.DefaultPalette, RemapColors.None, RemapColors.None, RemapColors.None);
-		}
-		catch (IndexOutOfRangeException) { return false; }
-		catch (ArgumentOutOfRangeException) { return false; }
-		return true;
-	}
-	/** <summary> Draws a single frame of the object. </summary> */
-	public override bool DrawSingleFrame(Graphics g, Point position, DrawSettings drawSettings) {
-		try {
-			if (Header.RideType == RideTypes.Stall) {
-				graphicsData.paletteImages[drawSettings.Frame].Draw(g,
-					position.X - graphicsData.paletteImages[drawSettings.Frame].Width / 2,
-					position.Y - graphicsData.paletteImages[drawSettings.Frame].Height / 2,
-					Palette.DefaultPalette,
-						drawSettings.Remap1,
-						RemapColors.None,
-						RemapColors.None
-				);
-			}
-			else {
-				graphicsData.paletteImages[drawSettings.Frame].Draw(g,
-					position.X - imageDirectory.entries[drawSettings.Frame].Width / 2,
-					position.Y - imageDirectory.entries[drawSettings.Frame].Height / 2,
-					Palette.DefaultPalette,
-						drawSettings.Remap1,
-						drawSettings.Remap2,
-						drawSettings.Remap3
-				);
-			}
+			graphicsData.paletteImages[Header.PreviewIndex].Draw(p, position, drawSettings.Darkness, false);
 		}
 		catch (IndexOutOfRangeException) { return false; }
 		catch (ArgumentOutOfRangeException) { return false; }
 		return true;
 	}
 	
-	#endregion
-	//--------------------------------
 	#endregion
 }
 /** <summary> The header used for attraction objects. </summary> */
@@ -453,11 +460,11 @@ public class AttractionHeader : ObjectTypeHeader {
 	}
 
 	/** <summary> Gets the size of the object type header. </summary> */
-	public override uint HeaderSize {
+	internal override uint HeaderSize {
 		get { return Attraction.HeaderSize; }
 	}
 	/** <summary> Gets the basic subtype of the object. </summary> */
-	public override ObjectSubtypes ObjectSubtype {
+	internal override ObjectSubtypes ObjectSubtype {
 		get {
 			if (RideType == RideTypes.Stall)
 				return ObjectSubtypes.Stall;
@@ -499,7 +506,7 @@ public class AttractionHeader : ObjectTypeHeader {
 	#region Reading
 
 	/** <summary> Reads the object header. </summary> */
-	public override void Read(BinaryReader reader) {
+	internal override void Read(BinaryReader reader) {
 		long startPosition = reader.BaseStream.Position;
 
 		this.Reserved0x00 = reader.ReadUInt64();
@@ -543,7 +550,7 @@ public class AttractionHeader : ObjectTypeHeader {
 		this.SoldItem2 = (ItemTypes)reader.ReadByte();
 	}
 	/** <summary> Writes the object header. </summary> */
-	public void Write(BinaryWriter writer) {
+	internal override void Write(BinaryWriter writer) {
 		long startPosition = writer.BaseStream.Position;
 
 		writer.Write(this.Reserved0x00);
@@ -744,6 +751,33 @@ public class CarHeader {
 	/** <summary> Gets the total number of riders allowed in the car. </summary> */
 	public int NumberOfRiders {
 		get { return (RiderSettings & 0x7F); }
+	}
+	/** <summary> Gets the number of color remaps. </summary> */
+	public int ColorRemaps {
+		get { return (!Flags.HasFlag(CarFlags.NoRemap3) ? 3 : (Flags.HasFlag(CarFlags.Remap2) ? 2 : 1)); }
+	}
+	/** <summary> Gets the number of frames in the animation. </summary> */
+	public int AnimationFrames {
+		get {
+			int frameOffset = 1;
+			if (Flags.HasFlag(CarFlags.Spinning)) {
+				if (Flags.HasFlag(CarFlags.SpinningIndependantWheels))
+					frameOffset *= (LastRotationFrame + 1);
+			}
+			if (Flags.HasFlag(CarFlags.Swinging)) {
+				int swingingFrames = 5;
+				if (Flags.HasFlag(CarFlags.SwingingMoreFrames))
+					swingingFrames += 2;
+				if (Flags.HasFlag(CarFlags.SwingingSlide))
+					swingingFrames += 2;
+				if (Flags.HasFlag(CarFlags.SwingingTilting))
+					swingingFrames -= 2;
+				frameOffset *= swingingFrames;
+			}
+			if (SpecialFrames != 0)
+				frameOffset *= SpecialFrames;
+			return frameOffset;
+		}
 	}
 
 	#endregion

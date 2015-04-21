@@ -32,7 +32,7 @@ public class PathAddition : ObjectData {
 		this.Header				= new PathAdditionHeader();
 	}
 	/** <summary> Constructs the default object. </summary> */
-	public PathAddition(ObjectDataHeader objectHeader, ChunkHeader chunkHeader)
+	internal PathAddition(ObjectDataHeader objectHeader, ChunkHeader chunkHeader)
 		: base(objectHeader, chunkHeader) {
 		this.Header				= new PathAdditionHeader();
 	}
@@ -40,7 +40,22 @@ public class PathAddition : ObjectData {
 	#endregion
 	//========== PROPERTIES ==========
 	#region Properties
-	
+	//--------------------------------
+	#region Reading
+
+	/** <summary> Gets the number of string table entries in the object. </summary> */
+	protected override int NumStringTableEntries {
+		get { return 1; }
+	}
+	/** <summary> Returns true if the object has a group info section. </summary> */
+	protected override bool HasGroupInfo {
+		get { return true; }
+	}
+
+	#endregion
+	//--------------------------------
+	#region Information
+
 	/** <summary> Gets the subtype of the object. </summary> */
 	public override ObjectSubtypes Subtype {
 		get {
@@ -61,96 +76,66 @@ public class PathAddition : ObjectData {
 	public override bool CanSlope {
 		get { return false; }
 	}
+	/** <summary> Gets the number of color remaps. </summary> */
+	public override int ColorRemaps {
+		get { return (Header.Flags.HasFlag(PathBannerFlags.Color1) ? 1 : 0); }
+	}
+	/** <summary> Gets if the dialog view has color remaps. </summary> */
+	public override bool HasDialogColorRemaps {
+		get { return true; }
+	}
+	/** <summary> Gets the number of frames in the animation. </summary> */
+	public override int AnimationFrames {
+		get { return 1; }
+	}
 
 	#endregion
-	//========== OVERRIDES ===========
-	#region Overrides
 	//--------------------------------
+	#endregion
+	//=========== READING ============
 	#region Reading
 
-	/** <summary> Reads the object. </summary> */
-	public override void Read(BinaryReader reader) {
+	/** <summary> Reads the object header. </summary> */
+	protected override void ReadHeader(BinaryReader reader) {
 		Header.Read(reader);
-
-		stringTable.Read(reader);
-		groupInfo.Read(reader);
-
-		imageDirectory.Read(reader);
-		graphicsData.Read(reader, imageDirectory);
 	}
 	/** <summary> Writes the object. </summary> */
-	public override void Write(BinaryWriter writer) {
-		// Write the header
+	protected override void WriteHeader(BinaryWriter writer) {
 		Header.Write(writer);
-
-		// Write the 1 string table entry
-		stringTable.Write(writer);
-
-		// Write the group info
-		groupInfo.Write(writer);
-
-		long imageDirectoryPosition = writer.BaseStream.Position;
-
-		// Write the image directory and graphics data
-		imageDirectory.Write(writer);
-		graphicsData.Write(writer, imageDirectory);
-
-		// Rewrite the image directory after the image addresses are known
-		long finalPosition = writer.BaseStream.Position;
-		writer.BaseStream.Position = imageDirectoryPosition;
-		imageDirectory.Write(writer);
-
-		// Set the position to the end of the file so the file size is known
-		writer.BaseStream.Position = finalPosition;
 	}
-
+	
 	#endregion
-	//--------------------------------
+	//=========== DRAWING ============
 	#region Drawing
 
 	/** <summary> Constructs the default object. </summary> */
-	public override bool Draw(Graphics g, Point position, int rotation = 0, int corner = 0, int slope = -1, int elevation = 0, int frame = 0) {
+	public override bool Draw(PaletteImage p, Point position, DrawSettings drawSettings) {
 		try {
 			if (Header.Flags.HasFlag(PathAdditionFlags.JumpFountain) || Header.Flags.HasFlag(PathAdditionFlags.JumpSnowball)) {
-				g.DrawImage(graphicsData.Images[1 + 0], new Point(
-					position.X + imageDirectory.entries[1 + 0].XOffset,
-					position.Y + imageDirectory.entries[1 + 0].YOffset
-				));
-				g.DrawImage(graphicsData.Images[1 + 1], new Point(
-					position.X + imageDirectory.entries[1 + 1].XOffset,
-					position.Y + imageDirectory.entries[1 + 1].YOffset
-				));
-				g.DrawImage(graphicsData.Images[1 + 2], new Point(
-					position.X + imageDirectory.entries[1 + 2].XOffset,
-					position.Y + imageDirectory.entries[1 + 2].YOffset
-				));
-				g.DrawImage(graphicsData.Images[1 + 3], new Point(
-					position.X + imageDirectory.entries[1 + 3].XOffset,
-					position.Y + imageDirectory.entries[1 + 3].YOffset
-				));
+				graphicsData.paletteImages[1 + 0].DrawWithOffset(p, position, drawSettings.Darkness, false);
+				graphicsData.paletteImages[1 + 1].DrawWithOffset(p, position, drawSettings.Darkness, false);
+				graphicsData.paletteImages[1 + 2].DrawWithOffset(p, position, drawSettings.Darkness, false);
+				graphicsData.paletteImages[1 + 3].DrawWithOffset(p, position, drawSettings.Darkness, false);
 			}
 			else {
-				Point offset = Point.Empty;
+				Size offset = Size.Empty;
 				if (Header.Subtype == PathAdditionSubtypes.Bench || Header.Subtype == PathAdditionSubtypes.LitterBin) {
-					switch (rotation) {
-					case 0: offset = new Point(16 - 4, 8 + 2); break;
-					case 1: offset = new Point(16 - 4, 24 - 4); break;
-					case 2: offset = new Point(-16 + 4, 24 - 4); break;
-					case 3: offset = new Point(-16 + 4, 8 + 4); break;
+					switch (drawSettings.Rotation) {
+					case 0: offset = new Size(16 - 4, 8 + 2); break;
+					case 1: offset = new Size(16 - 4, 24 - 4); break;
+					case 2: offset = new Size(-16 + 4, 24 - 4); break;
+					case 3: offset = new Size(-16 + 4, 8 + 4); break;
 					}
 				}
 				else {
-					switch (rotation) {
-					case 0: offset = new Point(16, 8); break;
-					case 1: offset = new Point(16, 24); break;
-					case 2: offset = new Point(-16, 24); break;
-					case 3: offset = new Point(-16, 8); break;
+					switch (drawSettings.Rotation) {
+					case 0: offset = new Size(16, 8); break;
+					case 1: offset = new Size(16, 24); break;
+					case 2: offset = new Size(-16, 24); break;
+					case 3: offset = new Size(-16, 8); break;
 					}
 				}
-				g.DrawImage(graphicsData.Images[1 + rotation], new Point(
-					position.X + imageDirectory.entries[1 + rotation].XOffset + offset.X,
-					position.Y + imageDirectory.entries[1 + rotation].YOffset + offset.Y
-				));
+				graphicsData.paletteImages[1 + drawSettings.Rotation].DrawWithOffset(p, Point.Add(position, offset), drawSettings.Darkness, false);
 			}
 		}
 		catch (IndexOutOfRangeException) { return false; }
@@ -158,26 +143,15 @@ public class PathAddition : ObjectData {
 		return true;
 	}
 	/** <summary> Draws the object data in the dialog. </summary> */
-	public override bool DrawDialog(Graphics g, Point position, int rotation = 0) {
+	public override bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		try {
-			g.DrawImage(graphicsData.Images[0], new Point(
-				position.X + imageDirectory.entries[0].XOffset + 112 / 2 - 20,
-				position.Y + imageDirectory.entries[0].YOffset + 112 / 2 - 16
-			));
+			graphicsData.paletteImages[0].DrawWithOffset(p, Point.Add(position, new Size(-20, -16)), drawSettings.Darkness, false);
 		}
 		catch (IndexOutOfRangeException) { return false; }
 		catch (ArgumentOutOfRangeException) { return false; }
 		return true;
 	}
-	/** <summary> Draws a single frame of the object. </summary> */
-	public override bool DrawSingleFrame(Graphics g, Point position, int frame) {
-
-		g.DrawImage(graphicsData.Images[frame], position.X - imageDirectory.entries[frame].Width / 2, position.Y - imageDirectory.entries[frame].Height / 2);
-		return true;
-	}
 	
-	#endregion
-	//--------------------------------
 	#endregion
 }
 /** <summary> The header used for path banner scenery objects. </summary> */
@@ -224,11 +198,11 @@ public class PathAdditionHeader : ObjectTypeHeader {
 	#region Properties
 
 	/** <summary> Gets the size of the object type header. </summary> */
-	public override uint HeaderSize {
+	internal override uint HeaderSize {
 		get { return PathAddition.HeaderSize; }
 	}
 	/** <summary> Gets the basic subtype of the object. </summary> */
-	public override ObjectSubtypes ObjectSubtype {
+	internal override ObjectSubtypes ObjectSubtype {
 		get {
 			if (Flags.HasFlag(PathAdditionFlags.QueueTV))
 				return ObjectSubtypes.QueueTV;
@@ -244,29 +218,12 @@ public class PathAdditionHeader : ObjectTypeHeader {
 		}
 	}
 
-	/** <summary> Gets the subtype of the object. </summary> */
-	public static ObjectSubtypes ReadSubtype(BinaryReader reader) {
-		PathAdditionHeader header = new PathAdditionHeader();
-		header.Read(reader);
-		if (header.Flags.HasFlag(PathAdditionFlags.QueueTV))
-			return ObjectSubtypes.QueueTV;
-		if (header.Subtype.HasFlag(PathAdditionSubtypes.Bench))
-			return ObjectSubtypes.Bench;
-		if (header.Subtype.HasFlag(PathAdditionSubtypes.LitterBin))
-			return ObjectSubtypes.LitterBin;
-		if (header.Subtype.HasFlag(PathAdditionSubtypes.Lamp))
-			return ObjectSubtypes.Lamp;
-		if (header.Subtype.HasFlag(PathAdditionSubtypes.JumpFountain))
-			return ObjectSubtypes.JumpingFountain;
-		return ObjectSubtypes.Basic;
-	}
-
 	#endregion
 	//=========== READING ============
 	#region Reading
 
 	/** <summary> Reads the object header. </summary> */
-	public override void Read(BinaryReader reader) {
+	internal override void Read(BinaryReader reader) {
 		this.Reserved0	= reader.ReadUInt16();
 		this.Reserved1	= reader.ReadUInt32();
 		this.Flags		= (PathAdditionFlags)reader.ReadUInt16();
@@ -277,7 +234,7 @@ public class PathAdditionHeader : ObjectTypeHeader {
 		this.Reserved3	= reader.ReadByte();
 	}
 	/** <summary> Writes the object header. </summary> */
-	public void Write(BinaryWriter writer) {
+	internal override void Write(BinaryWriter writer) {
 		writer.Write(this.Reserved0);
 		writer.Write(this.Reserved1);
 		writer.Write((ushort)this.Flags);

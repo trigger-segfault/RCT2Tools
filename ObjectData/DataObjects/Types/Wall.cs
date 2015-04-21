@@ -40,26 +40,71 @@ public class Wall : ObjectData {
 	#endregion
 	//========== PROPERTIES ==========
 	#region Properties
+	//--------------------------------
+	#region Reading
 
 	/** <summary> Gets the number of string table entries in the object. </summary> */
-	private override int NumStringTableEntries {
+	protected override int NumStringTableEntries {
 		get { return 1; }
 	}
 	/** <summary> Returns true if the object has a group info section. </summary> */
-	private override bool HasGroupInfo {
+	protected override bool HasGroupInfo {
 		get { return true; }
 	}
 
+	#endregion
+	//--------------------------------
+	#region Information
+
+	/** <summary> Gets the subtype of the object. </summary> */
+	public override ObjectSubtypes Subtype {
+		get {
+			if (Header.Flags.HasFlag(WallFlags.Door))
+				return ObjectSubtypes.Door;
+			if (Header.Flags.HasFlag(WallFlags.Glass))
+				return ObjectSubtypes.Glass;
+			if ((Header.Effects & 0x10) != 0x00)
+				return ObjectSubtypes.Animation;
+			if (Header.Scrolling != 0xFF)
+				return ObjectSubtypes.TextScrolling;
+			return ObjectSubtypes.Basic;
+		}
+	}
+	/** <summary> True if the object can be placed on a slope. </summary> */
+	public override bool CanSlope {
+		get { return !Header.Flags.HasFlag(WallFlags.Flat); }
+	}
+	/** <summary> Gets the number of color remaps. </summary> */
+	public override int ColorRemaps {
+		get { return (Header.Flags.HasFlag(WallFlags.Remap3) ? 3 : (Header.Flags.HasFlag(WallFlags.Remap2) ? 2 : (Header.Flags.HasFlag(WallFlags.Remap1) ? 1 : 0))); }
+	}
+	/** <summary> Gets if the dialog view has color remaps. </summary> */
+	public override bool HasDialogColorRemaps {
+		get { return true; }
+	}
+	/** <summary> Gets the number of frames in the animation. </summary> */
+	public override int AnimationFrames {
+		get {
+			if (Header.Flags.HasFlag(WallFlags.Door))
+				return 5;
+			if ((Header.Effects & 0x10) != 0x0)
+				return 8;
+			return 1;
+		}
+	}
+
+	#endregion
+	//--------------------------------
 	#endregion
 	//=========== READING ============
 	#region Reading
 
 	/** <summary> Reads the object header. </summary> */
-	public override void ReadHeader(BinaryReader reader) {
+	protected override void ReadHeader(BinaryReader reader) {
 		Header.Read(reader);
 	}
 	/** <summary> Writes the object. </summary> */
-	public override void WriteHeader(BinaryWriter writer) {
+	protected override void WriteHeader(BinaryWriter writer) {
 		Header.Write(writer);
 	}
 
@@ -96,7 +141,7 @@ public class Wall : ObjectData {
 		return true;
 	}
 	/** <summary> Draws the object data in the dialog. </summary> */
-	public override bool DrawDialog(PaletteImage p, Point position, DrawSettings drawSettings) {
+	public override bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		try {
 			bool flat = Header.Flags.HasFlag(WallFlags.Flat);
 			bool twoSides = Header.Flags.HasFlag(WallFlags.TwoSides);
@@ -137,19 +182,19 @@ public class Wall : ObjectData {
 		else if (drawSettings.Rotation == 2) { offset.Width = 32; offset.Height = 16; }
 		else if (drawSettings.Rotation == 3) { offset.Width = -32; offset.Height = 16; }
 
-		graphicsData.paletteImages[frame].Draw(p, Point.Add(position, offset), drawSettings.Darkness, glass,
-			(Header.Flags.HasFlag(WallFlags.Color1) || Header.Flags.HasFlag(WallFlags.Color2) || Header.Flags.HasFlag(WallFlags.Color3)) ? drawSettings.Remap1 : RemapColors.None,
-			(Header.Flags.HasFlag(WallFlags.Color2) || Header.Flags.HasFlag(WallFlags.Color3)) ? (glass ? drawSettings.Remap1 : drawSettings.Remap2) : RemapColors.None,
-			Header.Flags.HasFlag(WallFlags.Color3) ? drawSettings.Remap3 : RemapColors.None
+		graphicsData.paletteImages[frame].DrawWithOffset(p, Point.Add(position, offset), drawSettings.Darkness, glass,
+			(Header.Flags.HasFlag(WallFlags.Remap1) || Header.Flags.HasFlag(WallFlags.Remap2) || Header.Flags.HasFlag(WallFlags.Remap3)) ? drawSettings.Remap1 : RemapColors.None,
+			(Header.Flags.HasFlag(WallFlags.Remap2) || Header.Flags.HasFlag(WallFlags.Remap3)) ? (glass ? drawSettings.Remap1 : drawSettings.Remap2) : RemapColors.None,
+			Header.Flags.HasFlag(WallFlags.Remap3) ? drawSettings.Remap3 : RemapColors.None
 		);
 	}
 	private void DrawDialogFrame(PaletteImage p, Point position, DrawSettings drawSettings, int frame, bool glass) {
 		Size offset = new Size(16, 16);
 
-		graphicsData.paletteImages[frame].Draw(p, Point.Add(position, offset), drawSettings.Darkness, glass,
-			(Header.Flags.HasFlag(WallFlags.Color1) || Header.Flags.HasFlag(WallFlags.Color2) || Header.Flags.HasFlag(WallFlags.Color3)) ? drawSettings.Remap1 : RemapColors.None,
-			(Header.Flags.HasFlag(WallFlags.Color2) || Header.Flags.HasFlag(WallFlags.Color3)) ? (glass ? drawSettings.Remap1 : drawSettings.Remap2) : RemapColors.None,
-			Header.Flags.HasFlag(WallFlags.Color3) ? drawSettings.Remap3 : RemapColors.None
+		graphicsData.paletteImages[frame].DrawWithOffset(p, Point.Add(position, offset), drawSettings.Darkness, glass,
+			(Header.Flags.HasFlag(WallFlags.Remap1) || Header.Flags.HasFlag(WallFlags.Remap2) || Header.Flags.HasFlag(WallFlags.Remap3)) ? drawSettings.Remap1 : RemapColors.None,
+			(Header.Flags.HasFlag(WallFlags.Remap2) || Header.Flags.HasFlag(WallFlags.Remap3)) ? (glass ? drawSettings.Remap1 : drawSettings.Remap2) : RemapColors.None,
+			Header.Flags.HasFlag(WallFlags.Remap3) ? drawSettings.Remap3 : RemapColors.None
 		);
 	}
 
@@ -202,11 +247,11 @@ public class WallHeader : ObjectTypeHeader {
 	#region Properties
 
 	/** <summary> Gets the size of the object type header. </summary> */
-	public override uint HeaderSize {
+	internal override uint HeaderSize {
 		get { return Wall.HeaderSize; }
 	}
 	/** <summary> Gets the basic subtype of the object. </summary> */
-	public override ObjectSubtypes ObjectSubtype {
+	internal override ObjectSubtypes ObjectSubtype {
 		get {
 			if (Flags.HasFlag(WallFlags.Door))
 				return ObjectSubtypes.Door;
@@ -220,27 +265,12 @@ public class WallHeader : ObjectTypeHeader {
 		}
 	}
 
-	/** <summary> Gets the subtype of the object. </summary> */
-	public static ObjectSubtypes ReadSubtype(BinaryReader reader) {
-		WallHeader header = new WallHeader();
-		header.Read(reader);
-		if (header.Flags.HasFlag(WallFlags.Door))
-			return ObjectSubtypes.Door;
-		if (header.Flags.HasFlag(WallFlags.Glass))
-			return ObjectSubtypes.Glass;
-		if ((header.Effects & 0x10) != 0x00)
-			return ObjectSubtypes.Animation;
-		if (header.Scrolling != 0xFF)
-			return ObjectSubtypes.TextScrolling;
-		return ObjectSubtypes.Basic;
-	}
-
 	#endregion
 	//=========== READING ============
 	#region Reading
 
 	/** <summary> Reads the object header. </summary> */
-	public override void Read(BinaryReader reader) {
+	internal override void Read(BinaryReader reader) {
 		this.Reserved0	= reader.ReadUInt16();
 		this.Reserved1	= reader.ReadUInt32();
 		this.Cursor		= reader.ReadByte();
@@ -252,7 +282,7 @@ public class WallHeader : ObjectTypeHeader {
 		this.Scrolling	= reader.ReadByte();
 	}
 	/** <summary> Writes the object header. </summary> */
-	public void Write(BinaryWriter writer) {
+	internal override void Write(BinaryWriter writer) {
 		writer.Write(this.Reserved0);
 		writer.Write(this.Reserved1);
 		writer.Write(this.Cursor);
@@ -270,20 +300,20 @@ public class WallHeader : ObjectTypeHeader {
 [Flags]
 public enum WallFlags : byte {
 	/** <summary> No flags are set. </summary> */
-	None = 0x00000000,
+	None = 0x00,
 	/** <summary> Uses the first remappable color </summary> */
-	Color1 = 0x00000001,
+	Remap1 = 0x01,
 	/** <summary> A "glass" object: the first image is the "frame" and the second image is the "glass" </summary> */
-	Glass = 0x00000002,
+	Glass = 0x02,
 	/** <summary> Must be on a flat surface. Also, walls can't occupy the same tile </summary> */
-	Flat = 0x00000004,
+	Flat = 0x04,
 	/** <summary> Has a front and a back </summary> */
-	TwoSides = 0x00000008,
+	TwoSides = 0x08,
 	/** <summary> Special processing for doorways (36 images). </summary> */
-	Door = 0x00000010,
+	Door = 0x10,
 	/** <summary> Uses the second remappable color </summary> */
-	Color2 = 0x00000040,
+	Remap2 = 0x40,
 	/** <summary> Uses the third remappable color </summary> */
-	Color3 = 0x00000080
+	Remap3 = 0x80
 }
 }

@@ -35,6 +35,7 @@ public class PaletteImage {
 	/** <summary> Constructs a palette image with the specified dimensions. </summary> */
 	public PaletteImage(int width, int height) {
 		this.pixels			= new byte[width, height];
+		this.entry			= new ImageEntry();
 		this.entry.Flags	= ImageFlags.DirectBitmap;
 		this.entry.Width	= (short)width;
 		this.entry.Height	= (short)height;
@@ -44,6 +45,7 @@ public class PaletteImage {
 	/** <summary> Constructs a palette image with the specified dimensions. </summary> */
 	public PaletteImage(Size size) {
 		this.pixels			= new byte[size.Width, size.Height];
+		this.entry			= new ImageEntry();
 		this.entry.Flags	= ImageFlags.DirectBitmap;
 		this.entry.Width	= (short)size.Width;
 		this.entry.Height	= (short)size.Height;
@@ -53,6 +55,7 @@ public class PaletteImage {
 	/** <summary> Constructs a palette image with the specified dimensions and compression type. </summary> */
 	public PaletteImage(int width, int height, int xOffset, int yOffset, ImageFlags compressionType) {
 		this.pixels			= new byte[width, height];
+		this.entry			= new ImageEntry();
 		this.entry.Flags	= compressionType;
 		this.entry.Width	= (short)width;
 		this.entry.Height	= (short)height;
@@ -62,6 +65,7 @@ public class PaletteImage {
 	/** <summary> Constructs a palette image with the specified dimensions and compression type. </summary> */
 	public PaletteImage(Size size, Point offset, ImageFlags compressionType) {
 		this.pixels			= new byte[size.Width, size.Height];
+		this.entry			= new ImageEntry();
 		this.entry.Flags	= compressionType;
 		this.entry.Width	= (short)size.Width;
 		this.entry.Height	= (short)size.Height;
@@ -263,6 +267,9 @@ public class PaletteImage {
 			else
 				pixel = ColorRemapping.RemapPalettes[(int)remap3].remapIndexes[pixel - 46];
 		}
+		else if (glass && pixel >= 1 && pixel <= 5) {
+			pixel = ColorRemapping.WaterPalettes[pixel - 1].remapIndexes[destination];
+		}
 		if (darkness > 0) {
 			pixel = ColorRemapping.RemapPalettes[darkness - 1].remapIndexes[pixel];
 		}
@@ -308,7 +315,7 @@ public class PaletteImage {
 				Color imageColor = image.GetPixel(x, y);
 				int minDelta = GetColorDelta(imageColor, palette.Colors[0]);
 				int minDeltaIndex = 0;
-				for (int i = 1; i < palette.NumColors; i++) {
+				for (int i = 10; i < palette.NumColors; i++) {
 					int delta = GetColorDelta(imageColor, palette.Colors[i]);
 					if (delta < minDelta) {
 						minDelta = delta;

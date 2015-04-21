@@ -24,7 +24,7 @@ public class SceneryGroup : ObjectData {
 	public SceneryGroupHeader Header;
 
 	/** <summary> The contents of the scenery group. </summary> */
-	public List<string> Contents;
+	public List<SceneryGroupItem> Items;
 
 	#endregion
 	//========= CONSTRUCTORS =========
@@ -32,137 +32,226 @@ public class SceneryGroup : ObjectData {
 
 	/** <summary> Constructs the default object. </summary> */
 	public SceneryGroup() : base() {
-		this.Header		= new SceneryGroupHeader();
-		this.Contents	= new List<string>();
+		this.Header	= new SceneryGroupHeader();
+		this.Items	= new List<SceneryGroupItem>();
 	}
 	/** <summary> Constructs the default object. </summary> */
-	public SceneryGroup(ObjectDataHeader objectHeader, ChunkHeader chunkHeader)
+	internal SceneryGroup(ObjectDataHeader objectHeader, ChunkHeader chunkHeader)
 		: base(objectHeader, chunkHeader) {
-		this.Header		= new SceneryGroupHeader();
-		this.Contents	= new List<string>();
+		this.Header	= new SceneryGroupHeader();
+		this.Items	= new List<SceneryGroupItem>();
 	}
 
 	#endregion
 	//========== PROPERTIES ==========
 	#region Properties
-	
+	//--------------------------------
+	#region Reading
+
+	/** <summary> Gets the number of string table entries in the object. </summary> */
+	protected override int NumStringTableEntries {
+		get { return 1; }
+	}
+	/** <summary> Returns true if the object has a group info section. </summary> */
+	protected override bool HasGroupInfo {
+		get { return false; }
+	}
+
+	#endregion
+	//--------------------------------
+	#region Information
+
 	/** <summary> Gets the subtype of the object. </summary> */
 	public override ObjectSubtypes Subtype {
-		get {
-			return ObjectSubtypes.Group;
-		}
+		get { return ObjectSubtypes.Group; }
 	}
 	/** <summary> True if the object can be placed on a slope. </summary> */
 	public override bool CanSlope {
 		get { return false; }
 	}
+	/** <summary> Gets the number of color remaps. </summary> */
+	public override int ColorRemaps {
+		get { return 0; }
+	}
+	/** <summary> Gets if the dialog view has color remaps. </summary> */
+	public override bool HasDialogColorRemaps {
+		get { return false; }
+	}
 	/** <summary> Gets the number of frames in the animation. </summary> */
 	public override int AnimationFrames {
-		get {
-			return 2;
-		}
+		get { return 2; }
+	}
+	/** <summary> Gets the palette to draw the object with. </summary> */
+	public override Palette GetPalette(DrawSettings drawSettings) {
+		return Palette.SceneryGroupPalette;
 	}
 
 	#endregion
-	//========== OVERRIDES ===========
-	#region Overrides
 	//--------------------------------
+	#endregion
+	//=========== SCENERY ============
+	#region Scenery
+
+	/** <summary> Returns true if the object is a scenery object. </summary> */
+	public bool IsSceneryObject(uint flags) {
+		ObjectTypes type = (ObjectTypes)(flags % 0xF);
+		return type == ObjectTypes.SmallScenery || type == ObjectTypes.LargeScenery || type == ObjectTypes.Wall || type == ObjectTypes.PathBanner || type == ObjectTypes.PathAddition;
+	}
+	/** <summary> Gets the scenery group item at the specified index. </summary> */
+	public SceneryGroupItem Get(int index) {
+		return this.Items[index];
+	}
+	/** <summary> Sets the specified scenery group item at the specified index. </summary> */
+	public bool Set(int index, uint flags, string fileName, uint checksum) {
+		if (IsSceneryObject(flags)) {
+			this.Items[index] = new SceneryGroupItem(flags, fileName, checksum);
+			return true;
+		}
+		return false;
+	}
+	/** <summary> Sets the specified scenery group item at the specified index. </summary> */
+	public bool Set(int index, SceneryGroupItem item) {
+		return Set(index, item.Flags, item.FileName, item.CheckSum);
+	}
+	/** <summary> Sets the specified scenery group item at the specified index. </summary> */
+	public bool Set(int index, ObjectData obj) {
+		return Set(index, obj.ObjectHeader.Flags, obj.ObjectHeader.FileName, obj.ObjectHeader.CheckSum);
+	}
+	/** <summary> Sets the specified scenery group item at the specified index. </summary> */
+	public bool Set(int index, ObjectDataInfo objInfo) {
+		return Set(index, objInfo.Flags, objInfo.FileName, objInfo.CheckSum);
+	}
+	/** <summary> Sets the specified scenery group item at the specified index. </summary> */
+	public bool Set(int index, string path) {
+		ObjectDataHeader obj = ObjectDataHeader.FromFile(path);
+		return Set(index, obj.Flags, obj.FileName, obj.CheckSum);
+	}
+	/** <summary> Adds the specified scenery object to the scenery group. </summary> */
+	public bool Add(uint flags, string fileName, uint checksum) {
+		if (IsSceneryObject(flags)) {
+			this.Items.Add(new SceneryGroupItem(flags, fileName, checksum));
+			return true;
+		}
+		return false;
+	}
+	/** <summary> Adds the specified scenery object to the scenery group. </summary> */
+	public bool Add(SceneryGroupItem item) {
+		return Add(item.Flags, item.FileName, item.CheckSum);
+	}
+	/** <summary> Adds the specified scenery object to the scenery group. </summary> */
+	public bool Add(ObjectData obj) {
+		return Add(obj.ObjectHeader.Flags, obj.ObjectHeader.FileName, obj.ObjectHeader.CheckSum);
+	}
+	/** <summary> Adds the specified scenery object to the scenery group. </summary> */
+	public bool Add(ObjectDataInfo objInfo) {
+		return Add(objInfo.Flags, objInfo.FileName, objInfo.CheckSum);
+	}
+	/** <summary> Adds the specified scenery object to the scenery group. </summary> */
+	public bool Add(string path) {
+		ObjectDataHeader obj = ObjectDataHeader.FromFile(path);
+		return Add(obj.Flags, obj.FileName, obj.CheckSum);
+	}
+	/** <summary> Inserts the specified scenery object to the scenery group at the specified index. </summary> */
+	public bool Insert(int index, uint flags, string fileName, uint checksum) {
+		if (IsSceneryObject(flags)) {
+			this.Items.Insert(index, new SceneryGroupItem(flags, fileName, checksum));
+			return true;
+		}
+		return false;
+	}
+	/** <summary> Inserts the specified scenery object to the scenery group at the specified index. </summary> */
+	public bool Insert(int index, SceneryGroupItem item) {
+		return Insert(index, item.Flags, item.FileName, item.CheckSum);
+	}
+	/** <summary> Inserts the specified scenery object to the scenery group at the specified index. </summary> */
+	public bool Insert(int index, ObjectData obj) {
+		return Insert(index, obj.ObjectHeader.Flags, obj.ObjectHeader.FileName, obj.ObjectHeader.CheckSum);
+	}
+	/** <summary> Inserts the specified scenery object to the scenery group at the specified index. </summary> */
+	public bool Insert(int index, ObjectDataInfo objInfo) {
+		return Insert(index, objInfo.Flags, objInfo.FileName, objInfo.CheckSum);
+	}
+	/** <summary> Inserts the specified scenery object to the scenery group at the specified index. </summary> */
+	public bool Insert(int index, string path) {
+		ObjectDataHeader obj = ObjectDataHeader.FromFile(path);
+		return Insert(index, obj.Flags, obj.FileName, obj.CheckSum);
+	}
+	/** <summary> Removes the scenery group item at the specified index. </summary> */
+	public void RemoveAt(int index) {
+		this.Items.RemoveAt(index);
+	}
+
+	#endregion
+	//=========== READING ============
 	#region Reading
 
-	/** <summary> Reads the object. </summary> */
-	public override void Read(BinaryReader reader) {
+	/** <summary> Reads the object header. </summary> */
+	protected override void ReadHeader(BinaryReader reader) {
 		Header.Read(reader);
-
-		stringTable.Read(reader);
-
+	}
+	/** <summary> Writes the object. </summary> */
+	protected override void WriteHeader(BinaryWriter writer) {
+		Header.Write(writer);
+	}
+	/** <summary> Reads the object data optional. </summary> */
+	protected override void ReadOptional(BinaryReader reader) {
 		// Read Contents
 		byte b = reader.ReadByte();
 
 		while (b != 0xFF) {
 			reader.BaseStream.Position--;
-			uint flag = reader.ReadUInt32();
+			uint flags = reader.ReadUInt32();
 			string fileName = "";
 			for (int i = 0; i < 8; i++) {
 				char c = (char)reader.ReadByte();
 				if (c != ' ')
 					fileName += c;
 			}
-			Contents.Add(fileName);
 			uint checkSum = reader.ReadUInt32();
+			this.Items.Add(new SceneryGroupItem(flags, fileName, checkSum));
 
 			b = reader.ReadByte();
 		}
-
-		imageDirectory.Read(reader);
-		graphicsData.Read(reader, imageDirectory, Palette.SceneryGroupPalette);
 	}
-	/** <summary> Writes the object. </summary> */
-	public override void Write(BinaryWriter writer) {
-		// Write the header
-		Header.Write(writer);
-
-		// Write the 1 string table entry
-		stringTable.Write(writer);
-
+	/** <summary> Writes the object data optional. </summary> */
+	protected override void WriteOptional(BinaryWriter writer) {
 		// Write Contents
-		for (int i = 0; i < this.Contents.Count; i++) {
-			writer.Write((uint)0x00000000);
+		for (int i = 0; i < this.Items.Count; i++) {
+			writer.Write(this.Items[i].Flags);
 			for (int j = 0; j < 8; j++) {
-				if (j < this.Contents[i].Length)
-					writer.Write(this.Contents[i][j]);
+				if (j < this.Items[i].FileName.Length)
+					writer.Write(this.Items[i].FileName[j]);
 				else
 					writer.Write(' ');
 			}
-			writer.Write((uint)0x00000000);
+			writer.Write(this.Items[i].CheckSum);
 		}
 		writer.Write((byte)0xFF);
-
-		long imageDirectoryPosition = writer.BaseStream.Position;
-
-		// Write the image directory and graphics data
-		imageDirectory.Write(writer);
-		graphicsData.Write(writer, imageDirectory);
-
-		// Rewrite the image directory after the image addresses are known
-		long finalPosition = writer.BaseStream.Position;
-		writer.BaseStream.Position = imageDirectoryPosition;
-		imageDirectory.Write(writer);
-
-		// Set the position to the end of the file so the file size is known
-		writer.BaseStream.Position = finalPosition;
 	}
-
+	
 	#endregion
-	//--------------------------------
+	//=========== DRAWING ============
 	#region Drawing
 
 	/** <summary> Constructs the default object. </summary> */
-	public override bool Draw(Graphics g, Point position, int rotation = 0, int corner = 0, int slope = -1, int elevation = 0, int frame = 0) {
+	public override bool Draw(PaletteImage p, Point position, DrawSettings drawSettings) {
 		try {
-			g.DrawImage(graphicsData.Images[frame], position.X - 16, position.Y - 14);
+			graphicsData.paletteImages[drawSettings.Frame].Draw(p, Point.Add(position, new Size(-16, -14)), 0, false, RemapColors.SeaGreen);
 		}
 		catch (IndexOutOfRangeException) { return false; }
 		catch (ArgumentOutOfRangeException) { return false; }
 		return true;
 	}
 	/** <summary> Draws the object data in the dialog. </summary> */
-	public override bool DrawDialog(Graphics g, Point position, int rotation = 0) {
+	public override bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		try {
-			g.DrawImage(graphicsData.Images[1], position.X - 16 + 112 / 2, position.Y - 14 + 112 / 2);
+			graphicsData.paletteImages[drawSettings.Frame].Draw(p, Point.Add(position, new Size(-16, -14)), 0, false, RemapColors.SeaGreen);
 		}
 		catch (IndexOutOfRangeException) { return false; }
 		catch (ArgumentOutOfRangeException) { return false; }
 		return true;
 	}
-	/** <summary> Draws a single frame of the object. </summary> */
-	public override bool DrawSingleFrame(Graphics g, Point position, int frame) {
 
-		g.DrawImage(graphicsData.Images[frame], position.X - imageDirectory.entries[frame].Width / 2, position.Y - imageDirectory.entries[frame].Height / 2);
-		return true;
-	}
-
-	#endregion
-	//--------------------------------
 	#endregion
 }
 /** <summary> The header used for wall objects. </summary> */
@@ -203,21 +292,14 @@ public class SceneryGroupHeader : ObjectTypeHeader {
 	#region Properties
 
 	/** <summary> Gets the size of the object type header. </summary> */
-	public override uint HeaderSize {
+	internal override uint HeaderSize {
 		get { return SceneryGroup.HeaderSize; }
 	}
 	/** <summary> Gets the basic subtype of the object. </summary> */
-	public override ObjectSubtypes ObjectSubtype {
+	internal override ObjectSubtypes ObjectSubtype {
 		get {
 			return ObjectSubtypes.Group;
 		}
-	}
-
-	/** <summary> Gets the subtype of the object. </summary> */
-	public static ObjectSubtypes ReadSubtype(BinaryReader reader) {
-		SceneryGroupHeader header = new SceneryGroupHeader();
-		header.Read(reader);
-		return ObjectSubtypes.Group;
 	}
 
 	#endregion
@@ -225,7 +307,7 @@ public class SceneryGroupHeader : ObjectTypeHeader {
 	#region Reading
 
 	/** <summary> Reads the object header. </summary> */
-	public override void Read(BinaryReader reader) {
+	internal override void Read(BinaryReader reader) {
 		reader.Read(this.Reserved0, 0, this.Reserved0.Length);
 		this.Unknown0x108	= reader.ReadByte();
 		this.Reserved1		= reader.ReadByte();
@@ -234,13 +316,45 @@ public class SceneryGroupHeader : ObjectTypeHeader {
 		this.Reserved2		= reader.ReadUInt16();
 	}
 	/** <summary> Writes the object header. </summary> */
-	public void Write(BinaryWriter writer) {
+	internal override void Write(BinaryWriter writer) {
 		writer.Write(this.Reserved0);
 		writer.Write(this.Unknown0x108);
 		writer.Write(this.Reserved1);
 		writer.Write(this.Unknown0x10A);
 		writer.Write(this.Unknown0x10B);
 		writer.Write(this.Reserved2);
+	}
+
+	#endregion
+}
+/** <summary> The header used for scenery group items. </summary> */
+public class SceneryGroupItem {
+
+	//=========== MEMBERS ============
+	#region Members
+	
+	/** <summary> The flags of the scenery file. </summary> */
+	public uint Flags;
+	/** <summary> The name of the scenery file. </summary> */
+	public string FileName;
+	/** <summary> The checksum of the scenery file. </summary> */
+	public uint CheckSum;
+
+	#endregion
+	//========= CONSTRUCTORS =========
+	#region Constructors
+
+	/** <summary> Constructs the default scenery group item. </summary> */
+	public SceneryGroupItem() {
+		this.Flags = 0x0;
+		this.FileName = "";
+		this.CheckSum = 0x0;
+	}
+	/** <summary> Constructs the default scenery group item. </summary> */
+	public SceneryGroupItem(uint flags, string fileName, uint checksum) {
+		this.Flags = flags;
+		this.FileName = fileName;
+		this.CheckSum = checksum;
 	}
 
 	#endregion

@@ -35,7 +35,7 @@ public class SmallScenery : ObjectData {
 		this.AnimationSequence	= new List<byte>();
 	}
 	/** <summary> Constructs the default object. </summary> */
-	public SmallScenery(ObjectDataHeader objectHeader, ChunkHeader chunkHeader)
+	internal SmallScenery(ObjectDataHeader objectHeader, ChunkHeader chunkHeader)
 		: base(objectHeader, chunkHeader) {
 		this.Header				= new SmallSceneryHeader();
 		this.AnimationSequence	= new List<byte>();
@@ -44,6 +44,21 @@ public class SmallScenery : ObjectData {
 	#endregion
 	//========== PROPERTIES ==========
 	#region Properties
+	//--------------------------------
+	#region Reading
+
+	/** <summary> Gets the number of string table entries in the object. </summary> */
+	protected override int NumStringTableEntries {
+		get { return 1; }
+	}
+	/** <summary> Returns true if the object has a group info section. </summary> */
+	protected override bool HasGroupInfo {
+		get { return true; }
+	}
+
+	#endregion
+	//--------------------------------
+	#region Information
 	
 	/** <summary> Gets the subtype of the object. </summary> */
 	public override ObjectSubtypes Subtype {
@@ -69,20 +84,31 @@ public class SmallScenery : ObjectData {
 	public override int ColorRemaps {
 		get { return (Header.Flags.HasFlag(SmallSceneryFlags.Color2) ? 2 : (Header.Flags.HasFlag(SmallSceneryFlags.Color1) ? 1 : 0)); }
 	}
+	/** <summary> Gets if the dialog view has color remaps. </summary> */
+	public override bool HasDialogColorRemaps {
+		get { return true; }
+	}
+	/** <summary> Gets the number of frames in the animation. </summary> */
+	public override int AnimationFrames {
+		get { return 1; }
+	}
 
 	#endregion
-	//========== OVERRIDES ===========
-	#region Overrides
 	//--------------------------------
+	#endregion
+	//=========== READING ============
 	#region Reading
 
-	/** <summary> Reads the object. </summary> */
-	public override void Read(BinaryReader reader) {
+	/** <summary> Reads the object header. </summary> */
+	protected override void ReadHeader(BinaryReader reader) {
 		Header.Read(reader);
-
-		stringTable.Read(reader);
-		groupInfo.Read(reader);
-
+	}
+	/** <summary> Writes the object. </summary> */
+	protected override void WriteHeader(BinaryWriter writer) {
+		Header.Write(writer);
+	}
+	/** <summary> Reads the object data optional. </summary> */
+	protected override void ReadOptional(BinaryReader reader) {
 		// Animation sequence
 		if (Header.Flags.HasFlag(SmallSceneryFlags.AnimationData)) {
 			byte b = reader.ReadByte();
@@ -92,21 +118,9 @@ public class SmallScenery : ObjectData {
 				b = reader.ReadByte();
 			}
 		}
-
-		imageDirectory.Read(reader);
-		graphicsData.Read(reader, imageDirectory);
 	}
-	/** <summary> Writes the object. </summary> */
-	public override void Write(BinaryWriter writer) {
-		// Write the header
-		Header.Write(writer);
-
-		// Write the 1 string table entry
-		stringTable.Write(writer);
-
-		// Write the group info
-		groupInfo.Write(writer);
-
+	/** <summary> Writes the object data optional. </summary> */
+	protected override void WriteOptional(BinaryWriter writer) {
 		// Animation sequence
 		if (Header.Flags.HasFlag(SmallSceneryFlags.AnimationData)) {
 			for (int i = 0; i < this.AnimationSequence.Count; i++) {
@@ -114,72 +128,14 @@ public class SmallScenery : ObjectData {
 			}
 			writer.Write((byte)0xFF);
 		}
-
-		long imageDirectoryPosition = writer.BaseStream.Position;
-
-		// Write the image directory and graphics data
-		imageDirectory.Write(writer);
-		graphicsData.Write(writer, imageDirectory);
-
-		// Rewrite the image directory after the image addresses are known
-		long finalPosition = writer.BaseStream.Position;
-		writer.BaseStream.Position = imageDirectoryPosition;
-		imageDirectory.Write(writer);
-
-		// Set the position to the end of the file so the file size is known
-		writer.BaseStream.Position = finalPosition;
 	}
-
+	
 	#endregion
-	//--------------------------------
+	//=========== DRAWING ============
 	#region Drawing
 
-	private void DrawFrame(Graphics g, Point position, int frame, int corner, bool glass = false) {
-		bool offset = Header.Flags.HasFlag(SmallSceneryFlags.Offset);
-		bool fullSquare = Header.Flags.HasFlag(SmallSceneryFlags.FullSquare);
-		bool half = Header.Flags.HasFlag(SmallSceneryFlags.HalfSpace);
-		bool threeFourths = Header.Flags.HasFlag(SmallSceneryFlags.ThreeFourthsSpace);
-		int cornerX = 0, cornerY = 0;
-		switch (corner) {
-		case 0: cornerX = -16; cornerY = 0; break;
-		case 1: cornerX = 0; cornerY = -8; break;
-		case 2: cornerX = 16; cornerY = 0; break;
-		case 3: cornerX = 0; cornerY = 8; break;
-		}
-
-		graphicsData.PaletteImages[frame].Draw(g,
-			position.X + (fullSquare ? 0 : cornerX) + (offset ? 0 : 0) + (half ? 0 : 0) + imageDirectory.entries[frame].XOffset,
-			position.Y + (fullSquare ? 0 : cornerY) + (offset ? (!fullSquare ? 13 : 0) + (half ? 11 : 0) + 3 : 16) + (half ? -12 : 0) + imageDirectory.entries[frame].YOffset,
-			Palette.DefaultPalette,
-			(Header.Flags.HasFlag(SmallSceneryFlags.Color1) || Header.Flags.HasFlag(SmallSceneryFlags.Color2)) ? GraphicsData.ColorRemap1 : -1,
-			(Header.Flags.HasFlag(SmallSceneryFlags.Color2) || (Header.Flags.HasFlag(SmallSceneryFlags.Color1) && glass)) ? (glass ? GraphicsData.ColorRemap1 : GraphicsData.ColorRemap2) : -1,
-			-1
-		);
-	}
-	private void DrawDialogFrame(Graphics g, Point position, int frame, int corner, bool glass = false) {
-		bool offset = Header.Flags.HasFlag(SmallSceneryFlags.Offset);
-		bool fullSquare = Header.Flags.HasFlag(SmallSceneryFlags.FullSquare);
-		bool half = Header.Flags.HasFlag(SmallSceneryFlags.HalfSpace);
-		bool threeFourths = Header.Flags.HasFlag(SmallSceneryFlags.ThreeFourthsSpace);
-		int cornerX = 0, cornerY = 0;
-		switch (corner) {
-		case 0: cornerX = -16; cornerY = 0; break;
-		case 1: cornerX = 0; cornerY = -8; break;
-		case 2: cornerX = 16; cornerY = 0; break;
-		case 3: cornerX = 0; cornerY = 8; break;
-		}
-
-		graphicsData.PaletteImages[frame].Draw(g,
-			position.X + (fullSquare ? 0 : cornerX) + (offset ? 0 : 0) + (half ? 0 : 0) + imageDirectory.entries[frame].XOffset + 112 / 2,
-			position.Y + (fullSquare ? 0 : cornerY) + (offset ? (!fullSquare ? 13 : 0) + (half ? 11 : 0) + 3 : 16) + (half ? -12 : 0) + imageDirectory.entries[frame].YOffset + 112 / 2,
-			Palette.DefaultPalette,
-			(Header.Flags.HasFlag(SmallSceneryFlags.Color1) || Header.Flags.HasFlag(SmallSceneryFlags.Color2)) ? GraphicsData.ColorRemap1 : -1,
-			(Header.Flags.HasFlag(SmallSceneryFlags.Color2) || (Header.Flags.HasFlag(SmallSceneryFlags.Color1) && glass)) ? (glass ? GraphicsData.ColorRemap1 : GraphicsData.ColorRemap2) : -1,
-			-1
-		);
-	}
 	/** <summary> Constructs the default object. </summary> */
-	public override bool Draw(Graphics g, Point position, int rotation = 0, int corner = 0, int slope = -1, int elevation = 0, int frame = 0) {
+	public override bool Draw(PaletteImage p, Point position, DrawSettings drawSettings) {
 		try {
 			bool fullSquare = Header.Flags.HasFlag(SmallSceneryFlags.FullSquare);
 			bool drawMain2 = Header.Flags.HasFlag(SmallSceneryFlags.DrawMainTwo);
@@ -193,26 +149,26 @@ public class SmallScenery : ObjectData {
 			int offset = (dialogFrames ? 4 : 0);
 
 			if (spray1) {
-				DrawFrame(g, position, offset + rotation, corner);
-				DrawFrame(g, position, offset + 4 + rotation + frame * 4, corner);
+				DrawFrame(p, position, drawSettings, offset + drawSettings.Rotation, false);
+				DrawFrame(p, position, drawSettings, offset + 4 + drawSettings.Rotation + drawSettings.Frame * 4, false);
 			}
 			else if (spray4) {
-				DrawFrame(g, position, offset + rotation, corner);
-				DrawFrame(g, position, offset + 8 + rotation + frame * 4, corner);
-				DrawFrame(g, position, offset + 4 + rotation, corner);
-				DrawFrame(g, position, offset + 24 + rotation + frame * 4, corner);
+				DrawFrame(p, position, drawSettings, offset + drawSettings.Rotation, false);
+				DrawFrame(p, position, drawSettings, offset + 8 + drawSettings.Rotation + drawSettings.Frame * 4, false);
+				DrawFrame(p, position, drawSettings, offset + 4 + drawSettings.Rotation, false);
+				DrawFrame(p, position, drawSettings, offset + 24 + drawSettings.Rotation + drawSettings.Frame * 4, false);
 			}
 			else if (clock) {
-				DrawFrame(g, position, offset + rotation, corner);
-				DrawFrame(g, position, offset + 68 + (frame / 15 + rotation * 12) % 48, corner);
-				DrawFrame(g, position, offset + 8 + (frame % 60 + rotation * 15) % 60, corner);
+				DrawFrame(p, position, drawSettings, offset + drawSettings.Rotation, false);
+				DrawFrame(p, position, drawSettings, offset + 68 + (drawSettings.Frame / 15 + drawSettings.Rotation * 12) % 48, false);
+				DrawFrame(p, position, drawSettings, offset + 8 + (drawSettings.Frame % 60 + drawSettings.Rotation * 15) % 60, false);
 			}
 			else {
-				DrawFrame(g, position, offset + rotation + frame * 4, corner);
+				DrawFrame(p, position, drawSettings, offset + drawSettings.Rotation + drawSettings.Frame * 4, false);
 				if (drawMain2)
-					DrawFrame(g, position, offset + 4 + rotation + frame * 4, corner);
+					DrawFrame(p, position, drawSettings, offset + 4 + drawSettings.Rotation + drawSettings.Frame * 4, false);
 				else if (glass)
-					DrawFrame(g, position, offset + 4 + rotation + frame * 4, corner, true);
+					DrawFrame(p, position, drawSettings, offset + 4 + drawSettings.Rotation + drawSettings.Frame * 4, true);
 			}
 		}
 		catch (IndexOutOfRangeException) { return false; }
@@ -220,38 +176,62 @@ public class SmallScenery : ObjectData {
 		return true;
 	}
 	/** <summary> Draws the object data in the dialog. </summary> */
-	public override bool DrawDialog(Graphics g, Point position, int rotation = 0) {
+	public override bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		try {
 			bool fullSquare = Header.Flags.HasFlag(SmallSceneryFlags.FullSquare);
 			bool drawDialog2 = Header.Flags.HasFlag(SmallSceneryFlags.DrawDialogTwo);
 			bool glass = Header.Flags.HasFlag(SmallSceneryFlags.Glass);
 
-			DrawDialogFrame(g, position, rotation, -1);
+			DrawDialogFrame(p, position, drawSettings, drawSettings.Rotation, false);
 			if (drawDialog2)
-				DrawDialogFrame(g, position, 4 + rotation, -1);
+				DrawDialogFrame(p, position, drawSettings, 4 + drawSettings.Rotation, false);
 			else if (glass)
-				DrawDialogFrame(g, position, 4 + rotation, -1, true);
+				DrawDialogFrame(p, position, drawSettings, 4 + drawSettings.Rotation, true);
 		}
 		catch (IndexOutOfRangeException) { return false; }
 		catch (ArgumentOutOfRangeException) { return false; }
 		return true;
 	}
-	/** <summary> Draws a single frame of the object. </summary> */
-	public override bool DrawSingleFrame(Graphics g, Point position, int frame) {
 
-		graphicsData.PaletteImages[frame].Draw(g,
-			position.X - imageDirectory.entries[frame].Width / 2,
-			position.Y - imageDirectory.entries[frame].Height / 2,
-			Palette.DefaultPalette,
-			(Header.Flags.HasFlag(SmallSceneryFlags.Color1) || Header.Flags.HasFlag(SmallSceneryFlags.Color2)) ? GraphicsData.ColorRemap1 : -1,
-			(Header.Flags.HasFlag(SmallSceneryFlags.Color2)) ? GraphicsData.ColorRemap2 : -1,
-			-1
+	private void DrawFrame(PaletteImage p, Point position, DrawSettings drawSettings, int frame, bool glass) {
+		bool offset = Header.Flags.HasFlag(SmallSceneryFlags.Offset);
+		bool fullSquare = Header.Flags.HasFlag(SmallSceneryFlags.FullSquare);
+		bool half = Header.Flags.HasFlag(SmallSceneryFlags.HalfSpace);
+		bool threeFourths = Header.Flags.HasFlag(SmallSceneryFlags.ThreeFourthsSpace);
+		int cornerX = 0, cornerY = 0;
+		switch (drawSettings.Corner) {
+		case 0: cornerX = -16; cornerY = 0; break;
+		case 1: cornerX = 0; cornerY = -8; break;
+		case 2: cornerX = 16; cornerY = 0; break;
+		case 3: cornerX = 0; cornerY = 8; break;
+		}
+
+		graphicsData.paletteImages[frame].DrawWithOffset(p,
+			position.X + (fullSquare ? 0 : cornerX) + (offset ? 0 : 0) + (half ? 0 : 0),
+			position.Y + (fullSquare ? 0 : cornerY) + (offset ? (!fullSquare ? 13 : 0) + (half ? 11 : 0) + 3 : 16) + (half ? -12 : 0),
+			drawSettings.Darkness, glass,
+			(Header.Flags.HasFlag(SmallSceneryFlags.Color1) || Header.Flags.HasFlag(SmallSceneryFlags.Color2)) ? drawSettings.Remap1 : RemapColors.None,
+			(Header.Flags.HasFlag(SmallSceneryFlags.Color2) || (Header.Flags.HasFlag(SmallSceneryFlags.Color1) && glass)) ? (glass ? drawSettings.Remap1 : drawSettings.Remap2) : RemapColors.None,
+			RemapColors.None
 		);
-		return true;
 	}
-	
-	#endregion
-	//--------------------------------
+	private void DrawDialogFrame(PaletteImage p, Point position, DrawSettings drawSettings, int frame, bool glass) {
+		bool offset = Header.Flags.HasFlag(SmallSceneryFlags.Offset);
+		bool fullSquare = Header.Flags.HasFlag(SmallSceneryFlags.FullSquare);
+		bool half = Header.Flags.HasFlag(SmallSceneryFlags.HalfSpace);
+		bool threeFourths = Header.Flags.HasFlag(SmallSceneryFlags.ThreeFourthsSpace);
+		int cornerX = 0, cornerY = 0;
+
+		graphicsData.paletteImages[frame].DrawWithOffset(p,
+			position.X + (fullSquare ? 0 : cornerX) + (offset ? 0 : 0) + (half ? 0 : 0),
+			position.Y + (fullSquare ? 0 : cornerY) + (offset ? (!fullSquare ? 13 : 0) + (half ? 11 : 0) + 3 : 16) + (half ? -12 : 0),
+			drawSettings.Darkness, glass,
+			(Header.Flags.HasFlag(SmallSceneryFlags.Color1) || Header.Flags.HasFlag(SmallSceneryFlags.Color2)) ? drawSettings.Remap1 : RemapColors.None,
+			(Header.Flags.HasFlag(SmallSceneryFlags.Color2) || (Header.Flags.HasFlag(SmallSceneryFlags.Color1) && glass)) ? (glass ? drawSettings.Remap1 : drawSettings.Remap2) : RemapColors.None,
+			RemapColors.None
+		);
+	}
+
 	#endregion
 }
 /** <summary> The header used for small scenery objects. </summary> */
@@ -317,11 +297,11 @@ public class SmallSceneryHeader : ObjectTypeHeader {
 	#region Properties
 
 	/** <summary> Gets the size of the object type header. </summary> */
-	public override uint HeaderSize {
+	internal override uint HeaderSize {
 		get { return SmallScenery.HeaderSize; }
 	}
 	/** <summary> Gets the basic subtype of the object. </summary> */
-	public override ObjectSubtypes ObjectSubtype {
+	internal override ObjectSubtypes ObjectSubtype {
 		get {
 			if (Flags.HasFlag(SmallSceneryFlags.FountainSpray1) || Flags.HasFlag(SmallSceneryFlags.FountainSpray4))
 				return ObjectSubtypes.Fountain;
@@ -337,45 +317,28 @@ public class SmallSceneryHeader : ObjectTypeHeader {
 		}
 	}
 
-	/** <summary> Gets the subtype of the object. </summary> */
-	public static ObjectSubtypes ReadSubtype(BinaryReader reader) {
-		SmallSceneryHeader header = new SmallSceneryHeader();
-		header.Read(reader);
-		if (header.Flags.HasFlag(SmallSceneryFlags.FountainSpray1) || header.Flags.HasFlag(SmallSceneryFlags.FountainSpray4))
-			return ObjectSubtypes.Fountain;
-		if (header.Flags.HasFlag(SmallSceneryFlags.Clock))
-			return ObjectSubtypes.Clock;
-		if (header.Flags.HasFlag(SmallSceneryFlags.GardenWither) || header.Flags.HasFlag(SmallSceneryFlags.GardenWater))
-			return ObjectSubtypes.Garden;
-		if (header.Flags.HasFlag(SmallSceneryFlags.Animation) || header.Flags.HasFlag(SmallSceneryFlags.SwampGoo))
-			return ObjectSubtypes.Animation;
-		if (header.Flags.HasFlag(SmallSceneryFlags.Glass))
-			return ObjectSubtypes.Glass;
-		return ObjectSubtypes.Basic;
-	}
-
 	#endregion
 	//=========== READING ============
 	#region Reading
 
 	/** <summary> Reads the object header. </summary> */
-	public override void Read(BinaryReader reader) {
-		MessageRef = reader.ReadUInt16();
-		Fill1 = reader.ReadUInt32();
-		Flags = (SmallSceneryFlags)reader.ReadUInt32();
-		Height = reader.ReadByte();
-		Cursor = reader.ReadByte();
-		BuildCost = reader.ReadInt16();
-		RemoveCost = reader.ReadInt16();
-		GraphicsStart = reader.ReadUInt32();
-		Animation1 = reader.ReadUInt16();
-		Animation2 = reader.ReadUInt16();
-		Animation3 = reader.ReadUInt16();
-		BaseIndex = reader.ReadByte();
-		Fill2 = reader.ReadByte();
+	internal override void Read(BinaryReader reader) {
+		this.MessageRef = reader.ReadUInt16();
+		this.Fill1 = reader.ReadUInt32();
+		this.Flags = (SmallSceneryFlags)reader.ReadUInt32();
+		this.Height = reader.ReadByte();
+		this.Cursor = reader.ReadByte();
+		this.BuildCost = reader.ReadInt16();
+		this.RemoveCost = reader.ReadInt16();
+		this.GraphicsStart = reader.ReadUInt32();
+		this.Animation1 = reader.ReadUInt16();
+		this.Animation2 = reader.ReadUInt16();
+		this.Animation3 = reader.ReadUInt16();
+		this.BaseIndex = reader.ReadByte();
+		this.Fill2 = reader.ReadByte();
 	}
 	/** <summary> Writes the object header. </summary> */
-	public void Write(BinaryWriter writer) {
+	internal override void Write(BinaryWriter writer) {
 		writer.Write(this.MessageRef);
 		writer.Write(this.Fill1);
 		writer.Write((uint)this.Flags);

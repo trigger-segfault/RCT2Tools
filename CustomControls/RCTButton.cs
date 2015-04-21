@@ -344,6 +344,7 @@ public class RCTButton : Control {
 		}
 		font.DrawAligned(e.Graphics, new Rectangle(2, 3, ClientSize.Width - 4, ClientSize.Height - 4), textAlign, Text, ForeColor, outlineColor);
 	}
+
 	#endregion
 }
 }

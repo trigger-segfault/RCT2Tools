@@ -1,6 +1,8 @@
-﻿using System;
+﻿using RCT2ObjectData.Properties;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,26 @@ public class Terrain {
 
 	/** <summary> A collection of all land tile images used for the terrain. </summary> */
 	private static PaletteImage[] LandTiles;
+
+	#endregion
+	//=========== LOADING ============
+	#region Loading
+
+	/** <summary> Loads the terrain resources. </summary> */
+	public static void LoadResources() {
+		/*ImageDirectory imageDirecory = new ImageDirectory();
+		GraphicsData graphicsData = new GraphicsData(imageDirecory);
+
+		BinaryReader reader = new BinaryReader(new MemoryStream(Resources.Terrain));
+		imageDirecory.Read(reader);
+		graphicsData.Read(reader);
+		reader.Close();*/
+
+		GraphicsData graphicsData = GraphicsData.FromBuffer(Resources.Terrain);
+
+		LandTiles = new PaletteImage[5];
+		graphicsData.paletteImages.CopyTo(LandTiles);
+	}
 
 	#endregion
 	//=========== MEMBERS ============

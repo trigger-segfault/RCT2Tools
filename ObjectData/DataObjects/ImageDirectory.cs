@@ -127,14 +127,17 @@ public class ImageDirectory {
 	#endregion
 }
 /** <summary> The image type flags. </summary> */
+[Flags]
 public enum ImageFlags : ushort {
 	/** <summary> No flag selected. </summary> */
-	None = 0,
+	None = 0x00,
 	/** <summary> The bitmap is read directly. </summary> */
-	DirectBitmap = 1,
+	DirectBitmap = 0x01,
 	/** <summary> The bitmap is compacted. </summary> */
-	CompactedBitmap = 5,
+	CompactedBitmap = 0x04,
 	/** <summary> The image is a collection of palette entries. </summary> */
-	PaletteEntries = 8
+	PaletteEntries = 0x08,
+	/** <summary> The flag is only used with land tiles in g1.dat. It's unknown why this flag is used. </summary> */
+	LandTile = 0x10
 }
 }

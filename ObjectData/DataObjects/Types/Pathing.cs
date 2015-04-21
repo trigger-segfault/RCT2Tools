@@ -19,8 +19,6 @@ public class Pathing : ObjectData {
 	/** <summary> The index of each path sprite depending on certain straights and corners connecting. </summary> */
 	public static Dictionary<uint, int> PathSpriteIndexes = new Dictionary<uint, int>();
 
-	public static bool Queue = false;
-	public static uint PathConnections = 0x00000000;
 
 	#endregion
 	//=========== MEMBERS ============
@@ -38,7 +36,7 @@ public class Pathing : ObjectData {
 		this.Header				= new PathingHeader();
 	}
 	/** <summary> Constructs the default object. </summary> */
-	public Pathing(ObjectDataHeader objectHeader, ChunkHeader chunkHeader)
+	internal Pathing(ObjectDataHeader objectHeader, ChunkHeader chunkHeader)
 		: base(objectHeader, chunkHeader) {
 			this.Header				= new PathingHeader();
 	}
@@ -46,65 +44,67 @@ public class Pathing : ObjectData {
 	#endregion
 	//========== PROPERTIES ==========
 	#region Properties
-	
+	//--------------------------------
+	#region Reading
+
+	/** <summary> Gets the number of string table entries in the object. </summary> */
+	protected override int NumStringTableEntries {
+		get { return 1; }
+	}
+	/** <summary> Returns true if the object has a group info section. </summary> */
+	protected override bool HasGroupInfo {
+		get { return false; }
+	}
+
+	#endregion
+	//--------------------------------
+	#region Information
+
 	/** <summary> Gets the subtype of the object. </summary> */
 	public override ObjectSubtypes Subtype {
-		get {
-			return ObjectSubtypes.Basic;
-		}
+		get { return ObjectSubtypes.Basic; }
 	}
 	/** <summary> True if the object can be placed on a slope. </summary> */
 	public override bool CanSlope {
 		get { return true; }
 	}
+	/** <summary> Gets the number of color remaps. </summary> */
+	public override int ColorRemaps {
+		get { return 0; }
+	}
+	/** <summary> Gets if the dialog view has color remaps. </summary> */
+	public override bool HasDialogColorRemaps {
+		get { return false; }
+	}
+	/** <summary> Gets the number of frames in the animation. </summary> */
+	public override int AnimationFrames {
+		get { return 1; }
+	}
 
 	#endregion
-	//========== OVERRIDES ===========
-	#region Overrides
 	//--------------------------------
+	#endregion
+	//=========== READING ============
 	#region Reading
 
-	/** <summary> Reads the object. </summary> */
-	public override void Read(BinaryReader reader) {
+	/** <summary> Reads the object header. </summary> */
+	protected override void ReadHeader(BinaryReader reader) {
 		Header.Read(reader);
-
-		stringTable.Read(reader);
-
-		imageDirectory.Read(reader);
-		graphicsData.Read(reader, imageDirectory);
 	}
 	/** <summary> Writes the object. </summary> */
-	public override void Write(BinaryWriter writer) {
-		// Write the header
+	protected override void WriteHeader(BinaryWriter writer) {
 		Header.Write(writer);
-
-		// Write the 1 string table entry
-		stringTable.Write(writer);
-
-		long imageDirectoryPosition = writer.BaseStream.Position;
-
-		// Write the image directory and graphics data
-		imageDirectory.Write(writer);
-		graphicsData.Write(writer, imageDirectory);
-
-		// Rewrite the image directory after the image addresses are known
-		long finalPosition = writer.BaseStream.Position;
-		writer.BaseStream.Position = imageDirectoryPosition;
-		imageDirectory.Write(writer);
-
-		// Set the position to the end of the file so the file size is known
-		writer.BaseStream.Position = finalPosition;
 	}
-
+	
 	#endregion
-	//--------------------------------
+	//=========== DRAWING ============
 	#region Drawing
 
 	/** <summary> Draws the path railing. </summary> */
-	public void DrawRailing(Graphics g, Point position, int slope, int elevation, bool queue, uint pathConnections) {
-		int offset = (queue ? 51 : 0);
+	public void DrawRailing(PaletteImage p, Point position, DrawSettings drawSettings, uint pathConnections) {
+		int offset = (drawSettings.Queue ? 51 : 0);
 		int connection = 0;
-		if (Pathing.PathSpriteIndexes.ContainsKey(pathConnections) && !(elevation > 0 && !Header.Flags.HasFlag(PathingFlags.OverlayPath))) {
+		if (Pathing.PathSpriteIndexes.ContainsKey(pathConnections) && !(drawSettings.Elevation > 0 && !Header.Flags.HasFlag(PathingFlags.OverlayPath))) {
 			connection = Pathing.PathSpriteIndexes[pathConnections];
 		}
 		else if (Pathing.PathSpriteIndexes.ContainsKey(pathConnections & 0xF)) {
@@ -112,238 +112,150 @@ public class Pathing : ObjectData {
 			connection = Pathing.PathSpriteIndexes[pathConnections & 0xF];
 		}
 
-		if (slope == -1) {
-			if (queue)
+		if (drawSettings.Slope == -1) {
+			if (drawSettings.Queue)
 				offset = 87;
-			else if (elevation > 0)
+			else if (drawSettings.Elevation > 0)
 				offset = 73;
 
-			if (queue || elevation > 0) {
+			if (drawSettings.Queue || drawSettings.Elevation > 0) {
 				if (CheckConnections(pathConnections, "####00#1")) {
-					g.DrawImage(graphicsData.Images[offset + 3], new Point(
-						position.X + imageDirectory.entries[offset + 3].XOffset + 4,
-						position.Y + imageDirectory.entries[offset + 3].YOffset + 2
-					));
+					graphicsData.paletteImages[offset + 3].DrawWithOffset(p, Point.Add(position, new Size(4, 2)), drawSettings.Darkness, false);
 				}
 				if (CheckConnections(pathConnections, "#####001")) {
-					g.DrawImage(graphicsData.Images[offset + 3], new Point(
-						position.X + imageDirectory.entries[offset + 3].XOffset + 32 - 4,
-						position.Y + imageDirectory.entries[offset + 3].YOffset + 16 - 2
-					));
+					graphicsData.paletteImages[offset + 3].DrawWithOffset(p, Point.Add(position, new Size(32 - 4, 16 - 2)), drawSettings.Darkness, false);
 				}
 				if (CheckConnections(pathConnections, "####0#10")) {
-					g.DrawImage(graphicsData.Images[offset + 4], new Point(
-						position.X + imageDirectory.entries[offset + 4].XOffset - 4,
-						position.Y + imageDirectory.entries[offset + 4].YOffset + 2
-					));
+					graphicsData.paletteImages[offset + 4].DrawWithOffset(p, Point.Add(position, new Size(-4, 2)), drawSettings.Darkness, false);
 				}
 				if (CheckConnections(pathConnections, "####001#")) {
-					g.DrawImage(graphicsData.Images[offset + 4], new Point(
-						position.X + imageDirectory.entries[offset + 4].XOffset - 32 + 4,
-						position.Y + imageDirectory.entries[offset + 4].YOffset + 16 - 2
-					));
+					graphicsData.paletteImages[offset + 4].DrawWithOffset(p, Point.Add(position, new Size(-32 + 4, 16 - 2)), drawSettings.Darkness, false);
 				}
 				if (CheckConnections(pathConnections, "#####100")) {
-					g.DrawImage(graphicsData.Images[offset + 5], new Point(
-						position.X + imageDirectory.entries[offset + 5].XOffset + 32 - 4,
-						position.Y + imageDirectory.entries[offset + 5].YOffset + 16 - 2
-					));
+					graphicsData.paletteImages[offset + 5].DrawWithOffset(p, Point.Add(position, new Size(32 - 4, 16 - 2)), drawSettings.Darkness, false);
 				}
 				if (CheckConnections(pathConnections, "####01#0")) {
-					g.DrawImage(graphicsData.Images[offset + 5], new Point(
-						position.X + imageDirectory.entries[offset + 5].XOffset + 4,
-						position.Y + imageDirectory.entries[offset + 5].YOffset + 2
-					));
+					graphicsData.paletteImages[offset + 5].DrawWithOffset(p, Point.Add(position, new Size(4, 2)), drawSettings.Darkness, false);
 				}
 				if (CheckConnections(pathConnections, "####100#")) {
-					g.DrawImage(graphicsData.Images[offset + 2], new Point(
-						position.X + imageDirectory.entries[offset + 2].XOffset - 32 + 4,
-						position.Y + imageDirectory.entries[offset + 2].YOffset + 16 - 2
-					));
+					graphicsData.paletteImages[offset + 2].DrawWithOffset(p, Point.Add(position, new Size(-32 + 4, 16 - 2)), drawSettings.Darkness, false);
 				}
 				if (CheckConnections(pathConnections, "####1#00")) {
-					g.DrawImage(graphicsData.Images[offset + 2], new Point(
-						position.X + imageDirectory.entries[offset + 2].XOffset - 4,
-						position.Y + imageDirectory.entries[offset + 2].YOffset + 2
-					));
+					graphicsData.paletteImages[offset + 2].DrawWithOffset(p, Point.Add(position, new Size(-4, 2)), drawSettings.Darkness, false);
 				}
 
 				if (CheckConnections(pathConnections, "####01#1")) {
-					g.DrawImage(graphicsData.Images[offset + 1], new Point(
-						position.X + imageDirectory.entries[offset + 1].XOffset + 4,
-						position.Y + imageDirectory.entries[offset + 1].YOffset + 2
-					));
+					graphicsData.paletteImages[offset + 1].DrawWithOffset(p, Point.Add(position, new Size(4, 2)), drawSettings.Darkness, false);
 				}
 				if (CheckConnections(pathConnections, "#####101")) {
-					g.DrawImage(graphicsData.Images[offset + 1], new Point(
-						position.X + imageDirectory.entries[offset + 1].XOffset + 32 - 4,
-						position.Y + imageDirectory.entries[offset + 1].YOffset + 16 - 2
-					));
+					graphicsData.paletteImages[offset + 1].DrawWithOffset(p, Point.Add(position, new Size(32 - 4, 16 - 2)), drawSettings.Darkness, false);
 				}
 				if (CheckConnections(pathConnections, "####1#10")) {
-					g.DrawImage(graphicsData.Images[offset + 0], new Point(
-						position.X + imageDirectory.entries[offset + 0].XOffset - 4,
-						position.Y + imageDirectory.entries[offset + 0].YOffset + 2
-					));
+					graphicsData.paletteImages[offset + 0].DrawWithOffset(p, Point.Add(position, new Size(-4, 2)), drawSettings.Darkness, false);
 				}
 				if (CheckConnections(pathConnections, "####101#")) {
-					g.DrawImage(graphicsData.Images[offset + 0], new Point(
-						position.X + imageDirectory.entries[offset + 0].XOffset - 32 + 4,
-						position.Y + imageDirectory.entries[offset + 0].YOffset + 16 - 2
-					));
+					graphicsData.paletteImages[offset + 0].DrawWithOffset(p, Point.Add(position, new Size(-32 + 4, 16 - 2)), drawSettings.Darkness, false);
 				}
 
 				if (CheckConnections(pathConnections, "###0##11")) {
-					g.DrawImage(graphicsData.Images[offset + 11], new Point(
-						position.X + imageDirectory.entries[offset + 11].XOffset,
-						position.Y + imageDirectory.entries[offset + 11].YOffset
-					));
+					graphicsData.paletteImages[offset + 11].DrawWithOffset(p, position, drawSettings.Darkness, false);
 				}
 				if (CheckConnections(pathConnections, "##0##11#")) {
-					g.DrawImage(graphicsData.Images[offset + 12], new Point(
-						position.X + imageDirectory.entries[offset + 12].XOffset,
-						position.Y + imageDirectory.entries[offset + 12].YOffset
-					));
+					graphicsData.paletteImages[offset + 12].DrawWithOffset(p, position, drawSettings.Darkness, false);
 				}
 				if (CheckConnections(pathConnections, "#0##11##")) {
-					g.DrawImage(graphicsData.Images[offset + 13], new Point(
-						position.X + imageDirectory.entries[offset + 13].XOffset,
-						position.Y + imageDirectory.entries[offset + 13].YOffset
-					));
+					graphicsData.paletteImages[offset + 13].DrawWithOffset(p, position, drawSettings.Darkness, false);
 				}
 				if (CheckConnections(pathConnections, "0###1##1")) {
-					g.DrawImage(graphicsData.Images[offset + 10], new Point(
-						position.X + imageDirectory.entries[offset + 10].XOffset,
-						position.Y + imageDirectory.entries[offset + 10].YOffset
-					));
+					graphicsData.paletteImages[offset + 10].DrawWithOffset(p, position, drawSettings.Darkness, false);
 				}
 			}
 		}
 		else {
-			if (queue)
+			if (drawSettings.Queue)
 				offset = 87;
 			else
 				offset = 73;
 
-			switch (slope) {
+			switch (drawSettings.Slope) {
 			case 0:
-				g.DrawImage(graphicsData.Images[offset + 6], new Point(
-					position.X + imageDirectory.entries[offset + 6].XOffset - 4,
-					position.Y + imageDirectory.entries[offset + 6].YOffset + 2
-				));
-				g.DrawImage(graphicsData.Images[offset + 6], new Point(
-					position.X + imageDirectory.entries[offset + 6].XOffset - 32 + 4,
-					position.Y + imageDirectory.entries[offset + 6].YOffset + 16 - 2
-				));
+				graphicsData.paletteImages[offset + 6].DrawWithOffset(p, Point.Add(position, new Size(-4, 2)), drawSettings.Darkness, false);
+				graphicsData.paletteImages[offset + 6].DrawWithOffset(p, Point.Add(position, new Size(-32 + 4, 16 - 2)), drawSettings.Darkness, false);
 				break;
 			case 1:
-				g.DrawImage(graphicsData.Images[offset + 8], new Point(
-					position.X + imageDirectory.entries[offset + 8].XOffset + 4,
-					position.Y + imageDirectory.entries[offset + 8].YOffset + 2
-				));
-				g.DrawImage(graphicsData.Images[offset + 8], new Point(
-					position.X + imageDirectory.entries[offset + 8].XOffset + 32 - 4,
-					position.Y + imageDirectory.entries[offset + 8].YOffset + 16 - 2
-				));
+				graphicsData.paletteImages[offset + 8].DrawWithOffset(p, Point.Add(position, new Size(4, 2)), drawSettings.Darkness, false);
+				graphicsData.paletteImages[offset + 8].DrawWithOffset(p, Point.Add(position, new Size(32 - 4, 16 - 2)), drawSettings.Darkness, false);
 				break;
 			case 2:
-				g.DrawImage(graphicsData.Images[offset + 7], new Point(
-					position.X + imageDirectory.entries[offset + 7].XOffset - 4,
-					position.Y + imageDirectory.entries[offset + 7].YOffset + 2
-				));
-				g.DrawImage(graphicsData.Images[offset + 7], new Point(
-					position.X + imageDirectory.entries[offset + 7].XOffset - 32 + 4,
-					position.Y + imageDirectory.entries[offset + 7].YOffset + 16 - 2
-				));
+				graphicsData.paletteImages[offset + 7].DrawWithOffset(p, Point.Add(position, new Size(-4, 2)), drawSettings.Darkness, false);
+				graphicsData.paletteImages[offset + 7].DrawWithOffset(p, Point.Add(position, new Size(-32 + 4, 16 - 2)), drawSettings.Darkness, false);
 				break;
 			case 3:
-				g.DrawImage(graphicsData.Images[offset + 9], new Point(
-					position.X + imageDirectory.entries[offset + 9].XOffset + 4,
-					position.Y + imageDirectory.entries[offset + 9].YOffset + 2
-				));
-				g.DrawImage(graphicsData.Images[offset + 9], new Point(
-					position.X + imageDirectory.entries[offset + 9].XOffset + 32 - 4,
-					position.Y + imageDirectory.entries[offset + 9].YOffset + 16 - 2
-				));
+				graphicsData.paletteImages[offset + 9].DrawWithOffset(p, Point.Add(position, new Size(4, 2)), drawSettings.Darkness, false);
+				graphicsData.paletteImages[offset + 9].DrawWithOffset(p, Point.Add(position, new Size(32 - 4, 16 - 2)), drawSettings.Darkness, false);
 				break;
 			}
 		}
 	}
 	/** <summary> Draws the path pole supports. </summary> */
-	public void DrawPoleSupport(Graphics g, Point position, int slope, int elevation) {
-		position.Y += elevation * 2;
-		if (slope != -1)
-			position.Y -= elevation / 2;
+	public void DrawPoleSupport(PaletteImage p, Point position, DrawSettings drawSettings) {
+		position.Y += drawSettings.Elevation * 2;
+		if (drawSettings.Slope != -1)
+			position.Y -= drawSettings.Elevation / 2;
 		int offset = 129;
-		while (elevation > 8) {
-			g.DrawImage(graphicsData.Images[offset + 15], new Point(
-				position.X + imageDirectory.entries[offset + 15].XOffset,
-				position.Y + imageDirectory.entries[offset + 15].YOffset
-			));
-			elevation -= 8;
+		while (drawSettings.Elevation > 8) {
+			graphicsData.paletteImages[offset + 15].DrawWithOffset(p,
+				position, drawSettings.Darkness, false);
+			drawSettings.Elevation -= 8;
 			position.Y += 16;
 		}
 		if (Header.Flags.HasFlag(PathingFlags.PoleBase)) {
 			position.Y -= 6;
-			g.DrawImage(graphicsData.Images[offset + 9], new Point(
-				position.X + imageDirectory.entries[offset + 9].XOffset,
-				position.Y + imageDirectory.entries[offset + 9].YOffset
-			));
+			graphicsData.paletteImages[offset + 9].DrawWithOffset(p,
+				position, drawSettings.Darkness, false);
 			int slopeOffset = 17;
-			switch (slope) {
+			switch (drawSettings.Slope) {
 			case 0: slopeOffset = 19; break;
 			case 1: slopeOffset = 25; break;
 			case 2: slopeOffset = 26; break;
 			case 3: slopeOffset = 20; break;
 			}
-			g.DrawImage(graphicsData.Images[offset + slopeOffset], new Point(
-				position.X + imageDirectory.entries[offset + slopeOffset].XOffset,
-				position.Y + imageDirectory.entries[offset + slopeOffset].YOffset + 6
-			));
+			graphicsData.paletteImages[offset + slopeOffset].DrawWithOffset(p,
+				Point.Add(position, new Size(0, 6)), drawSettings.Darkness, false);
 		}
 		else {
-			g.DrawImage(graphicsData.Images[offset + 15], new Point(
-				position.X + imageDirectory.entries[offset + 15].XOffset,
-				position.Y + imageDirectory.entries[offset + 15].YOffset
-			));
+			graphicsData.paletteImages[offset + 15].DrawWithOffset(p,
+				position, drawSettings.Darkness, false);
 		}
 	}
 	/** <summary> Draws the path scaffold supports. </summary> */
-	public void DrawScaffoldSupport(Graphics g, Point position, int rotation, int slope, int elevation) {
+	public void DrawScaffoldSupport(PaletteImage p, Point position, DrawSettings drawSettings, int rotation) {
 		int offset = 109;
 
-		if (slope == -1) {
-			g.DrawImage(graphicsData.Images[offset + (rotation % 2 == 0 ? 46 : 22)], new Point(
-				position.X + imageDirectory.entries[offset + (rotation % 2 == 0 ? 46 : 22)].XOffset + 12,
-				position.Y + imageDirectory.entries[offset + (rotation % 2 == 0 ? 46 : 22)].YOffset + 32 - 6
-			));
+		if (drawSettings.Slope == -1) {
+			graphicsData.paletteImages[offset + (rotation % 2 == 0 ? 46 : 22)].DrawWithOffset(p,
+				Point.Add(position, new Size(12, 32 - 6)), drawSettings.Darkness, false);
 		}
 		else {
 			int offset2 = 0;
-			switch (slope) {
+			switch (drawSettings.Slope) {
 			case 0: offset2 = 5; break;
 			case 1: offset2 = 11; break;
 			case 2: offset2 = 8; break;
 			case 3: offset2 = 2; break;
 			}
-			g.DrawImage(graphicsData.Images[offset + (slope % 2 == 0 ? 24 : 0) + offset2], new Point(
-				position.X + imageDirectory.entries[offset + (slope % 2 == 0 ? 24 : 0) + offset2].XOffset + 12,
-				position.Y + imageDirectory.entries[offset + (slope % 2 == 0 ? 24 : 0) + offset2].YOffset + 32 - 6
-			));
-			g.DrawImage(graphicsData.Images[offset + (slope % 2 == 0 ? 47 : 23)], new Point(
-				position.X + imageDirectory.entries[offset + (slope % 2 == 0 ? 47 : 23)].XOffset + 12,
-				position.Y + imageDirectory.entries[offset + (slope % 2 == 0 ? 47 : 23)].YOffset + 16 - 6
-			));
+			graphicsData.paletteImages[offset + (drawSettings.Slope % 2 == 0 ? 24 : 0) + offset2].DrawWithOffset(p,
+				Point.Add(position, new Size(12, 32 - 6)), drawSettings.Darkness, false);
+			graphicsData.paletteImages[offset + (drawSettings.Slope % 2 == 0 ? 47 : 23)].DrawWithOffset(p,
+				Point.Add(position, new Size(12, 16 - 6)), drawSettings.Darkness, false);
 			offset = 164;
-			g.DrawImage(graphicsData.Images[offset + (slope + 3) % 4], new Point(
-				position.X + imageDirectory.entries[offset + (slope + 3) % 4].XOffset + 12,
-				position.Y + imageDirectory.entries[offset + (slope + 3) % 4].YOffset - 6
-			));
+			graphicsData.paletteImages[offset + (drawSettings.Slope + 3) % 4].DrawWithOffset(p,
+				Point.Add(position, new Size(12, -6)), drawSettings.Darkness, false);
 		}
 	}
 	/** <summary> Draws the path supports. </summary> */
-	public void DrawSupports(Graphics g, Point position, int rotation, int slope, int elevation, bool queue, uint pathConnections) {
-		if (elevation == 0)
+	public void DrawSupports(PaletteImage p, Point position, DrawSettings drawSettings, int rotation, uint pathConnections) {
+		if (drawSettings.Elevation == 0)
 			return;
 
 		int connection = 0;
@@ -352,21 +264,21 @@ public class Pathing : ObjectData {
 		}
 		if (Header.Flags.HasFlag(PathingFlags.PoleSupports)) {
 			if (CheckConnections(pathConnections, "#######0"))
-				DrawPoleSupport(g, Point.Add(position, new Size(12, -6)), slope, elevation);
+				DrawPoleSupport(p, Point.Add(position, new Size(12, -6)), drawSettings);
 			if (CheckConnections(pathConnections, "####0###"))
-				DrawPoleSupport(g, Point.Add(position, new Size(-12, -6)), slope, elevation);
+				DrawPoleSupport(p, Point.Add(position, new Size(-12, -6)), drawSettings);
 			if (CheckConnections(pathConnections, "######0#"))
-				DrawPoleSupport(g, Point.Add(position, new Size(12, 6)), slope, elevation);
+				DrawPoleSupport(p, Point.Add(position, new Size(12, 6)), drawSettings);
 			if (CheckConnections(pathConnections, "#####0##"))
-				DrawPoleSupport(g, Point.Add(position, new Size(-12, 6)), slope, elevation);
+				DrawPoleSupport(p, Point.Add(position, new Size(-12, 6)), drawSettings);
 		}
 		else {
-			DrawScaffoldSupport(g, Point.Add(position, new Size(-12, 6)), rotation, slope, elevation);
+			DrawScaffoldSupport(p, Point.Add(position, new Size(-12, 6)), drawSettings, rotation);
 		}
 	}
 	/** <summary> Draws the elevated path. </summary> */
-	public void DrawElevatedPath(Graphics g, Point position, int rotation, int slope, int elevation, bool queue, uint pathConnections) {
-		if (elevation == 0)
+	public void DrawElevatedPath(PaletteImage p, Point position, DrawSettings drawSettings, int rotation, uint pathConnections) {
+		if (drawSettings.Elevation == 0)
 			return;
 
 		int offset = 109;
@@ -375,82 +287,67 @@ public class Pathing : ObjectData {
 			connection = Pathing.PathSpriteIndexes[pathConnections & 0xF];
 		}
 
-		if (slope == -1) {
+		if (drawSettings.Slope == -1) {
 			if (Header.Flags.HasFlag(PathingFlags.PoleSupports)) {
-				g.DrawImage(graphicsData.Images[offset + connection], new Point(
-					position.X + imageDirectory.entries[offset + connection].XOffset,
-					position.Y + imageDirectory.entries[offset + connection].YOffset
-				));
+				graphicsData.paletteImages[offset + connection].DrawWithOffset(p, position, drawSettings.Darkness, false);
 			}
 			else {
 				offset = 158;
-				g.DrawImage(graphicsData.Images[offset + ((rotation + 1) % 2)], new Point(
-					position.X + imageDirectory.entries[offset + ((rotation + 1) % 2)].XOffset,
-					position.Y + imageDirectory.entries[offset + ((rotation + 1) % 2)].YOffset
-				));
+				graphicsData.paletteImages[offset + ((rotation + 1) % 2)].DrawWithOffset(p, position, drawSettings.Darkness, false);
 			}
 		}
 		else {
 			if (Header.Flags.HasFlag(PathingFlags.PoleSupports)) {
-				g.DrawImage(graphicsData.Images[offset + 16 + (slope + 3) % 4], new Point(
-					position.X + imageDirectory.entries[offset + 16 + (slope + 3) % 4].XOffset,
-					position.Y + imageDirectory.entries[offset + 16 + (slope + 3) % 4].YOffset
-				));
+				graphicsData.paletteImages[offset + 16 + (drawSettings.Slope + 3) % 4].DrawWithOffset(p, position, drawSettings.Darkness, false);
 			}
 			else {
 				offset = 158;
-				g.DrawImage(graphicsData.Images[offset + 2 + (slope + 3) % 4], new Point(
-					position.X + imageDirectory.entries[offset + 2 + (slope + 3) % 4].XOffset,
-					position.Y + imageDirectory.entries[offset + 2 + (slope + 3) % 4].YOffset
-				));
+				graphicsData.paletteImages[offset + 2 + (drawSettings.Slope + 3) % 4].DrawWithOffset(p, position, drawSettings.Darkness, false);
 			}
 		}
 	}
 	/** <summary> Draws the path base. </summary> */
-	public void DrawPath(Graphics g, Point position, int slope, int elevation, bool queue, uint pathConnections) {
-		if (elevation > 0 && !Header.Flags.HasFlag(PathingFlags.OverlayPath))
+	public void DrawPath(PaletteImage p, Point position, DrawSettings drawSettings, uint pathConnections) {
+		if (drawSettings.Elevation > 0 && !Header.Flags.HasFlag(PathingFlags.OverlayPath))
 			return;
 
-		int offset = (queue ? 51 : 0);
+		int offset = (drawSettings.Queue ? 51 : 0);
 
-		if (slope == -1) {
+		if (drawSettings.Slope == -1) {
 			int connection = 0;
 			if (Pathing.PathSpriteIndexes.ContainsKey(pathConnections))
 				connection = Pathing.PathSpriteIndexes[pathConnections];
 			else if (Pathing.PathSpriteIndexes.ContainsKey(pathConnections & 0xF))
 				connection = Pathing.PathSpriteIndexes[pathConnections & 0xF];
 
-			g.DrawImage(graphicsData.Images[offset + connection], new Point(
-				position.X + imageDirectory.entries[offset + connection].XOffset,
-				position.Y + imageDirectory.entries[offset + connection].YOffset
-			));
+			graphicsData.paletteImages[offset + connection].DrawWithOffset(p, position, drawSettings.Darkness, false);
 		}
 		else {
-			g.DrawImage(graphicsData.Images[offset + 16 + (slope + 3) % 4], new Point(
-				position.X + imageDirectory.entries[offset + 16 + (slope + 3) % 4].XOffset,
-				position.Y + imageDirectory.entries[offset + 16 + (slope + 3) % 4].YOffset
-			));
+			graphicsData.paletteImages[offset + 16 + (drawSettings.Slope + 3) % 4].DrawWithOffset(p, position, drawSettings.Darkness, false);
 		}
 	}
 	/** <summary> Draws all 4 parts of the path in order. </summary> */
-	public void DrawPathParts(Graphics g, Point position, int slope, int elevation, bool queue, uint pathConnections, bool[,] connections) {
+	public void DrawPathParts(PaletteImage p, Point position, DrawSettings drawSettings, bool[,] connections) {
 		int[] indexes = { 7, 3, 0, 6, -1, 4, 2, 1, 5 };
+		int slope = drawSettings.Slope;
 		for (int type = 0; type < 4; type++) {
 			for (int i = 0; i < indexes.Length; i++) {
 				if (indexes[i] == -1) {
+					drawSettings.Slope = slope;
 					switch (type) {
-					case 0: DrawSupports(g, position, Math.Max(0, slope), slope, elevation, queue, pathConnections); break;
-					case 1: DrawElevatedPath(g, position, Math.Max(0, slope), slope, elevation, queue, pathConnections); break;
-					case 2: DrawPath(g, position, slope, elevation, queue, pathConnections); break;
-					case 3: DrawRailing(g, position, slope, elevation, queue, pathConnections); break;
+					case 0: DrawSupports(p, position, drawSettings, Math.Max(0, slope), drawSettings.PathConnections); break;
+					case 1: DrawElevatedPath(p, position, drawSettings, Math.Max(0, slope), drawSettings.PathConnections); break;
+					case 2: DrawPath(p, position, drawSettings, drawSettings.PathConnections); break;
+					case 3: DrawRailing(p, position, drawSettings, drawSettings.PathConnections); break;
 					}
+					drawSettings.Slope = -1;
 				}
-				else if ((pathConnections & (1 << indexes[i])) != 0) {
+				else if ((drawSettings.PathConnections & (1 << indexes[i])) != 0) {
 					switch (type) {
-					case 0: DrawSupports(g, GetConnectionPoint(position, indexes[i], slope), Math.Max(0, slope), -1, elevation, queue, ConvertConnections(connections, indexes[i])); break;
-					case 1: DrawElevatedPath(g, GetConnectionPoint(position, indexes[i], slope), Math.Max(0, slope), -1, elevation, queue, ConvertConnections(connections, indexes[i])); break;
-					case 2: DrawPath(g, GetConnectionPoint(position, indexes[i], slope), -1, elevation, queue, ConvertConnections(connections, indexes[i])); break;
-					case 3: DrawRailing(g, GetConnectionPoint(position, indexes[i], slope), -1, elevation, queue, ConvertConnections(connections, indexes[i])); break;
+					case 0: DrawSupports(p, GetConnectionPoint(position, indexes[i], slope), drawSettings, Math.Max(0, slope), ConvertConnections(connections, indexes[i])); break;
+					case 1: DrawElevatedPath(p, GetConnectionPoint(position, indexes[i], slope), drawSettings, Math.Max(0, slope), ConvertConnections(connections, indexes[i])); break;
+					case 2: DrawPath(p, GetConnectionPoint(position, indexes[i], slope), drawSettings, ConvertConnections(connections, indexes[i])); break;
+					case 3: DrawRailing(p, GetConnectionPoint(position, indexes[i], slope), drawSettings, ConvertConnections(connections, indexes[i])); break;
 					}
 				}
 			}
@@ -458,13 +355,12 @@ public class Pathing : ObjectData {
 	}
 
 	/** <summary> Constructs the default object. </summary> */
-	public override bool Draw(Graphics g, Point position, int rotation = 0, int corner = 0, int slope = -1, int elevation = 0, int frame = 0) {
-		position.Y -= elevation * 2;
-		uint pathConnections = Pathing.PathConnections;
-		bool queue = Pathing.Queue;
-		if (queue)
+	public override bool Draw(PaletteImage p, Point position, DrawSettings drawSettings) {
+		position.Y -= drawSettings.Elevation * 2;
+		uint pathConnections = drawSettings.PathConnections;
+		if (drawSettings.Queue)
 			pathConnections &= 0x0000000F;
-		int offset = (queue ? 51 : 0);
+		int offset = (drawSettings.Queue ? 51 : 0);
 
 		bool[,] connections = new bool[5, 5];
 
@@ -474,52 +370,40 @@ public class Pathing : ObjectData {
 			}
 		}
 
-		switch (slope) {
+		switch (drawSettings.Slope) {
 		case 0:
-		case 2: pathConnections = Convert.ToUInt32("1010", 2); break;
+		case 2: drawSettings.PathConnections = Convert.ToByte("1010", 2); break;
 		case 1:
-		case 3: pathConnections = Convert.ToUInt32("0101", 2); break;
+		case 3: drawSettings.PathConnections = Convert.ToByte("0101", 2); break;
 		}
 
 		connections[2, 2] = true;
 
-		connections[3, 2] = (pathConnections & Convert.ToUInt32("00000001", 2)) != 0;
-		connections[2, 3] = (pathConnections & Convert.ToUInt32("00000010", 2)) != 0;
-		connections[1, 2] = (pathConnections & Convert.ToUInt32("00000100", 2)) != 0;
-		connections[2, 1] = (pathConnections & Convert.ToUInt32("00001000", 2)) != 0;
+		connections[3, 2] = (pathConnections & Convert.ToByte("00000001", 2)) != 0;
+		connections[2, 3] = (pathConnections & Convert.ToByte("00000010", 2)) != 0;
+		connections[1, 2] = (pathConnections & Convert.ToByte("00000100", 2)) != 0;
+		connections[2, 1] = (pathConnections & Convert.ToByte("00001000", 2)) != 0;
 
-		connections[3, 3] = (pathConnections & Convert.ToUInt32("00010000", 2)) != 0;
-		connections[1, 3] = (pathConnections & Convert.ToUInt32("00100000", 2)) != 0;
-		connections[1, 1] = (pathConnections & Convert.ToUInt32("01000000", 2)) != 0;
-		connections[3, 1] = (pathConnections & Convert.ToUInt32("10000000", 2)) != 0;
+		connections[3, 3] = (pathConnections & Convert.ToByte("00010000", 2)) != 0;
+		connections[1, 3] = (pathConnections & Convert.ToByte("00100000", 2)) != 0;
+		connections[1, 1] = (pathConnections & Convert.ToByte("01000000", 2)) != 0;
+		connections[3, 1] = (pathConnections & Convert.ToByte("10000000", 2)) != 0;
 
 		try {
-			DrawPathParts(g, position, slope, elevation, queue, pathConnections, connections);
+			DrawPathParts(p, position, drawSettings, connections);
 		}
 		catch (IndexOutOfRangeException) { return false; }
 		catch (ArgumentOutOfRangeException) { return false; }
 		return true;
 	}
 	/** <summary> Draws the object data in the dialog. </summary> */
-	public override bool DrawDialog(Graphics g, Point position, int rotation = 0) {
+	public override bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		try {
-			g.DrawImage(graphicsData.Images[71], new Point(
-				position.X + imageDirectory.entries[71].XOffset + 112 / 2 - 4 - 44,
-				position.Y + imageDirectory.entries[71].YOffset + (112 - 33) / 2
-			));
-			g.DrawImage(graphicsData.Images[72], new Point(
-				position.X + imageDirectory.entries[72].XOffset + 112 / 2 + 4,
-				position.Y + imageDirectory.entries[72].YOffset + (112 - 33) / 2
-			));
+			graphicsData.paletteImages[71].Draw(p, Point.Add(position, new Size(-4 - 44, -16)), 0, false);
+			graphicsData.paletteImages[72].Draw(p, Point.Add(position, new Size(4, -16)), 0, false);
 		}
 		catch (IndexOutOfRangeException) { return false; }
 		catch (ArgumentOutOfRangeException) { return false; }
-		return true;
-	}
-	/** <summary> Draws a single frame of the object. </summary> */
-	public override bool DrawSingleFrame(Graphics g, Point position, int frame) {
-
-		g.DrawImage(graphicsData.Images[frame], position.X - imageDirectory.entries[frame].Width / 2, position.Y - imageDirectory.entries[frame].Height / 2);
 		return true;
 	}
 
@@ -593,8 +477,6 @@ public class Pathing : ObjectData {
 	}
 
 	#endregion
-	//--------------------------------
-	#endregion
 	//========= PATH SPRITES =========
 	#region Path Sprites
 
@@ -664,21 +546,14 @@ public class PathingHeader : ObjectTypeHeader {
 	#region Properties
 
 	/** <summary> Gets the size of the object type header. </summary> */
-	public override uint HeaderSize {
+	internal override uint HeaderSize {
 		get { return Pathing.HeaderSize; }
 	}
 	/** <summary> Gets the basic subtype of the object. </summary> */
-	public override ObjectSubtypes ObjectSubtype {
+	internal override ObjectSubtypes ObjectSubtype {
 		get {
 			return ObjectSubtypes.Basic;
 		}
-	}
-
-	/** <summary> Gets the subtype of the object. </summary> */
-	public static ObjectSubtypes ReadSubtype(BinaryReader reader) {
-		PathingHeader header = new PathingHeader();
-		header.Read(reader);
-		return ObjectSubtypes.Basic;
 	}
 
 	#endregion
@@ -686,13 +561,13 @@ public class PathingHeader : ObjectTypeHeader {
 	#region Reading
 
 	/** <summary> Reads the object header. </summary> */
-	public override void Read(BinaryReader reader) {
+	internal override void Read(BinaryReader reader) {
 		reader.Read(this.Reserved0, 0, this.Reserved0.Length);
 		this.Flags		= (PathingFlags)reader.ReadUInt16();
 		this.Reserved1	= reader.ReadUInt16();
 	}
 	/** <summary> Writes the object header. </summary> */
-	public void Write(BinaryWriter writer) {
+	internal override void Write(BinaryWriter writer) {
 		writer.Write(this.Reserved0);
 		writer.Write((ushort)this.Flags);
 		writer.Write(this.Reserved1);

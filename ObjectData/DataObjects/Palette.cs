@@ -7,46 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace RCT2ObjectData.DataObjects {
-/** <summary> An enumeration for the RCT2 remap colors. </summary> */
-public enum RemapColors : int {
-	None = -1,
-
-	Black = 0,
-	Gray = 1,
-	White = 2,
-	Indigo = 3,
-	SlateBlue = 4,
-	Purple = 5,
-	Blue = 6,
-	LightBlue = 7,
-
-	Frost = 8,
-	Water = 9,
-	LightWater = 10,
-	Green = 11,
-	SeaGreen = 12,
-	DarkOliveGreen = 13,
-	Lime = 14,
-	OliveDrab = 15,
-
-	Olive = 16,
-	Yellow = 17,
-	Gold = 18,
-	Goldenrod = 19,
-	Orange = 20,
-	DarkOrange = 21,
-	LightBrown = 22,
-	Brown = 23,
-
-	Bark = 24,
-	Tan = 25,
-	Maroon = 26,
-	DarkRed = 27,
-	Red = 28,
-	Magenta = 29,
-	Pink = 30,
-	Salmon = 31
-}
 
 /** <summary> A palette used for storing colors. </summary> */
 public class Palette {

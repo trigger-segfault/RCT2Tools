@@ -31,6 +31,15 @@ public class GraphicsData {
 	//========= CONSTRUCTORS =========
 	#region Constructors
 
+	/** <summary> Constructs the default graphics data. </summary> */
+	public GraphicsData() {
+		this.imageDirectory	= new ImageDirectory();
+
+		this.paletteImages	= new List<PaletteImage>();
+		this.palettes		= new List<Palette>();
+		this.numImages		= 0;
+		this.numPalettes	= 0;
+	}
 	/** <summary> Constructs the default graphics data with the specified image directory. </summary> */
 	public GraphicsData(ImageDirectory imageDirectory) {
 		this.imageDirectory	= imageDirectory;
@@ -79,6 +88,20 @@ public class GraphicsData {
 	public PaletteImage GetPaletteImage(int index) {
 		return this.paletteImages[index];
 	}
+	/** <summary> Sets the specified palette image at the specified index. </summary> */
+	public void Set(int index, PaletteImage paletteImage) {
+		if (paletteImage != null) {
+			if (this.paletteImages[index] == null) {
+				this.numImages++;
+				if (this.palettes[index] != null) {
+					this.palettes[index] = null;
+					this.numPalettes--;
+				}
+			}
+			this.paletteImages[index] = paletteImage;
+			this.imageDirectory.entries[index] = paletteImage.entry;
+		}
+	}
 	/** <summary> Returns true if the entry at the specified index is a palette image. </summary> */
 	public bool IsPaletteImage(int index) {
 		return (this.paletteImages[index] != null);
@@ -101,20 +124,6 @@ public class GraphicsData {
 			this.numImages--;
 		}
 	}
-	/** <summary> Sets the specified palette image at the specified index. </summary> */
-	public void Set(int index, PaletteImage paletteImage) {
-		if (paletteImage != null) {
-			if (this.paletteImages[index] == null) {
-				this.numImages++;
-				if (this.palettes[index] != null) {
-					this.palettes[index] = null;
-					this.numPalettes--;
-				}
-			}
-			this.paletteImages[index] = paletteImage;
-			this.imageDirectory.entries[index] = paletteImage.entry;
-		}
-	}
 	/** <summary> Inserts the specified palette image at the specified index. </summary> */
 	public void Insert(int index, PaletteImage paletteImage) {
 		if (paletteImage != null) {
@@ -122,6 +131,12 @@ public class GraphicsData {
 			this.palettes.Insert(index, null);
 			this.imageDirectory.entries.Insert(index, paletteImage.entry);
 			this.numImages++;
+		}
+	}
+	/** <summary> Copies all the palette images to the specified array. </summary> */
+	public void CopyTo(PaletteImage[] array, int destIndex = 0, int srcIndex = 0, int length = 0) {
+		for (int i = 0; i + srcIndex < this.paletteImages.Count && i + destIndex < array.Length && (i < length || length == 0); i++) {
+			array[i + destIndex] = this.paletteImages[i + srcIndex];
 		}
 	}
 
@@ -132,6 +147,20 @@ public class GraphicsData {
 	/** <summary> Gets the palette at the specified index. </summary> */
 	public Palette GetPalette(int index) {
 		return this.palettes[index];
+	}
+	/** <summary> Sets the specified palette at the specified index. </summary> */
+	public void Set(int index, Palette palette) {
+		if (palette != null) {
+			if (this.palettes[index] == null) {
+				this.numPalettes++;
+				if (this.paletteImages[index] != null) {
+					this.paletteImages[index] = null;
+					this.numImages--;
+				}
+			}
+			this.palettes[index] = palette;
+			this.imageDirectory.entries[index] = palette.entry;
+		}
 	}
 	/** <summary> Returns true if the entry at the specified index is a palette. </summary> */
 	public bool IsPalette(int index) {
@@ -154,26 +183,18 @@ public class GraphicsData {
 			this.numPalettes--;
 		}
 	}
-	/** <summary> Sets the specified palette at the specified index. </summary> */
-	public void Set(int index, Palette palette) {
-		if (palette != null) {
-			if (this.palettes[index] == null) {
-				this.numPalettes++;
-				if (this.paletteImages[index] != null) {
-					this.paletteImages[index] = null;
-					this.numImages--;
-				}
-			}
-			this.palettes[index] = palette;
-			this.imageDirectory.entries[index] = palette.entry;
-		}
-	}
 	/** <summary> Inserts the specified palette at the specified index. </summary> */
 	public void Insert(int index, Palette palette) {
 		if (palette != null) {
 			this.palettes.Insert(index, palette);
 			this.imageDirectory.entries.Insert(index, palette.entry);
 			this.numPalettes++;
+		}
+	}
+	/** <summary> Copies all the palette to the specified array. </summary> */
+	public void CopyTo(Palette[] array, int destIndex = 0, int srcIndex = 0, int length = 0) {
+		for (int i = 0; i + srcIndex < this.palettes.Count && i + destIndex < array.Length && (i < length || length == 0); i++) {
+			array[i + destIndex] = this.palettes[i + srcIndex];
 		}
 	}
 
@@ -189,58 +210,66 @@ public class GraphicsData {
 
 		for (int i = 0; i < imageDirectory.NumEntries; i++) {
 			ImageEntry entry = imageDirectory.entries[i];
-			if (entry.Flags == ImageFlags.DirectBitmap) {
-				PaletteImage paletteImage = new PaletteImage(entry);
-				reader.BaseStream.Position = startPosition + entry.StartAddress;
-
-				// Read each row
-				for (int y = 0; y < entry.Height; y++) {
-					for (int x = 0; x < entry.Width; x++) {
-						byte b = reader.ReadByte();
-						paletteImage.Pixels[x, y] = b;
+			if (entry.Flags.HasFlag(ImageFlags.DirectBitmap)) {
+				if (!entry.Flags.HasFlag(ImageFlags.CompactedBitmap)) {
+					if (entry.Flags.HasFlag(ImageFlags.LandTile)) {
+						// Don't know what this flag does, but images can still be read normally.
 					}
+					PaletteImage paletteImage = new PaletteImage(entry);
+					reader.BaseStream.Position = startPosition + entry.StartAddress;
+
+					// Read each row
+					for (int y = 0; y < entry.Height; y++) {
+						for (int x = 0; x < entry.Width; x++) {
+							byte b = reader.ReadByte();
+							paletteImage.Pixels[x, y] = b;
+						}
+					}
+					this.paletteImages.Add(paletteImage);
+					this.palettes.Add(null);
+					this.numImages++;
 				}
-				this.paletteImages.Add(paletteImage);
-				this.palettes.Add(null);
-				this.numImages++;
-			}
-			else if (entry.Flags == ImageFlags.CompactedBitmap) {
-				PaletteImage paletteImage = new PaletteImage(entry);
-				uint[] rowOffsets = new uint[entry.Height];
-				reader.BaseStream.Position = startPosition + entry.StartAddress;
+				else {
+					if (entry.Flags.HasFlag(ImageFlags.LandTile)) {
+						// Don't know what this flag does, but images can still be read normally.
+					}
+					PaletteImage paletteImage = new PaletteImage(entry);
+					uint[] rowOffsets = new uint[entry.Height];
+					reader.BaseStream.Position = startPosition + entry.StartAddress;
 
-				// Read the row offsets
-				for (int j = 0; j < entry.Height; j++) {
-					rowOffsets[j] = reader.ReadUInt16();
-				}
+					// Read the row offsets
+					for (int j = 0; j < entry.Height; j++) {
+						rowOffsets[j] = reader.ReadUInt16();
+					}
 
-				// Read the scan lines in each row
-				for (int j = 0; j < entry.Height; j++) {
-					reader.BaseStream.Position = startPosition + entry.StartAddress + rowOffsets[j];
-					byte b1 = 0;
-					byte b2 = 0;
+					// Read the scan lines in each row
+					for (int j = 0; j < entry.Height; j++) {
+						reader.BaseStream.Position = startPosition + entry.StartAddress + rowOffsets[j];
+						byte b1 = 0;
+						byte b2 = 0;
 
-					// A MSB of 1 means the last scan line in a row
-					while ((b1 & 0x80) == 0) {
-						// Read the number of bytes of data
-						b1 = reader.ReadByte();
-						// Read the offset from the left edge of the image
-						b2 = reader.ReadByte();
-						for (int k = 0; k < (int)(b1 & 0x7F); k++) {
-							byte b3 = reader.ReadByte();
-							try {
-								paletteImage.Pixels[(int)b2 + k, j] = b3;
-							}
-							catch (Exception) {
+						// A MSB of 1 means the last scan line in a row
+						while ((b1 & 0x80) == 0) {
+							// Read the number of bytes of data
+							b1 = reader.ReadByte();
+							// Read the offset from the left edge of the image
+							b2 = reader.ReadByte();
+							for (int k = 0; k < (int)(b1 & 0x7F); k++) {
+								byte b3 = reader.ReadByte();
+								try {
+									paletteImage.Pixels[(int)b2 + k, j] = b3;
+								}
+								catch (Exception) {
+								}
 							}
 						}
 					}
+					this.paletteImages.Add(paletteImage);
+					this.palettes.Add(null);
+					this.numImages++;
 				}
-				this.paletteImages.Add(paletteImage);
-				this.palettes.Add(null);
-				this.numImages++;
 			}
-			else if (entry.Flags == ImageFlags.PaletteEntries) {
+			else if (entry.Flags.HasFlag(ImageFlags.PaletteEntries)) {
 				Palette palette = new Palette(entry);
 				reader.BaseStream.Position = startPosition + entry.StartAddress;
 
@@ -266,104 +295,113 @@ public class GraphicsData {
 		for (int i = 0; i < imageDirectory.NumEntries; i++) {
 			ImageEntry entry = imageDirectory.entries[i];
 			entry.StartAddress = (uint)(writer.BaseStream.Position - startPosition);
+			
+			if (entry.Flags.HasFlag(ImageFlags.DirectBitmap)) {
+				if (!entry.Flags.HasFlag(ImageFlags.CompactedBitmap)) {
+					if (entry.Flags.HasFlag(ImageFlags.LandTile)) {
+						// Don't know what this flag does, but images can still be written normally.
+					}
+					PaletteImage paletteImage = this.paletteImages[i];
 
-			if (entry.Flags == ImageFlags.DirectBitmap) {
-				PaletteImage paletteImage = this.paletteImages[i];
-
-				// Write each row
-				for (int y = 0; y < entry.Height; y++) {
-					// Write each pixel in the row
-					for (int x = 0; x < entry.Width; x++) {
-						writer.Write(paletteImage.Pixels[x, y]);
+					// Write each row
+					for (int y = 0; y < entry.Height; y++) {
+						// Write each pixel in the row
+						for (int x = 0; x < entry.Width; x++) {
+							writer.Write(paletteImage.Pixels[x, y]);
+						}
 					}
 				}
-			}
-			else if (entry.Flags == ImageFlags.CompactedBitmap) {
-				PaletteImage paletteImage = this.paletteImages[i];
+				else {
+					if (entry.Flags.HasFlag(ImageFlags.LandTile)) {
+						// Don't know what this flag does, but images can still be written normally.
+					}
+					PaletteImage paletteImage = this.paletteImages[i];
 
-				List<ScanLine> scanLines = new List<ScanLine>();
-				ushort[] rowOffsets = new ushort[entry.Height];
-				ushort rowOffset = (ushort)(entry.Height * 2);
+					List<ScanLine> scanLines = new List<ScanLine>();
+					ushort[] rowOffsets = new ushort[entry.Height];
+					ushort rowOffset = (ushort)(entry.Height * 2);
 
-				// Write the scan lines in every row and figure out the scan line row offsets
-				for (int y = 0; y < (int)entry.Height; y++) {
-					rowOffsets[y] = rowOffset;
+					// Write the scan lines in every row and figure out the scan line row offsets
+					for (int y = 0; y < (int)entry.Height; y++) {
+						rowOffsets[y] = rowOffset;
 
-					ScanLine scanLine = new ScanLine();
-					scanLine.Row = (short)y;
+						ScanLine scanLine = new ScanLine();
+						scanLine.Row = (short)y;
 
-					// Continue until the next row
-					while ((scanLine.Count & 0x80) == 0x00) {
-						// Reset the scan line count
-						scanLine.Count = 0;
+						// Continue until the next row
+						while ((scanLine.Count & 0x80) == 0x00) {
+							// Reset the scan line count
+							scanLine.Count = 0;
 
-						// Find each scan line and then check if there's another one in the row
-						bool finishedScanLine = false;
-						bool lastScanLine = true;
-						for (int x = 0; x + (int)scanLine.Offset < (int)entry.Width; x++) {
-							if (!finishedScanLine) {
-								if (scanLine.Count == 0) {
-									// If the scan line hasn't started yet, increment the offset
-									if (paletteImage.Pixels[x + scanLine.Offset, y] == 0x00) {
-										scanLine.Offset++;
-										x--;
+							// Find each scan line and then check if there's another one in the row
+							bool finishedScanLine = false;
+							bool lastScanLine = true;
+							for (int x = 0; x + (int)scanLine.Offset < (int)entry.Width; x++) {
+								if (!finishedScanLine) {
+									if (scanLine.Count == 0) {
+										// If the scan line hasn't started yet, increment the offset
+										if (paletteImage.Pixels[x + scanLine.Offset, y] == 0x00) {
+											scanLine.Offset++;
+											x--;
+										}
+										else {
+											scanLine.Count = 1;
+										}
+									}
+									else if (paletteImage.Pixels[x + scanLine.Offset, y] == 0x00 || x == 0x7F) {
+										// If the next pixel is transparent or the scan line is as big as possible, finish the line
+										finishedScanLine = true;
 									}
 									else {
-										scanLine.Count = 1;
+										// Increment the scan line byte count
+										scanLine.Count++;
 									}
 								}
-								else if (paletteImage.Pixels[x + scanLine.Offset, y] == 0x00 || x == 0x7F) {
-									// If the next pixel is transparent or the scan line is as big as possible, finish the line
-									finishedScanLine = true;
-								}
-								else {
-									// Increment the scan line byte count
-									scanLine.Count++;
+								else if (paletteImage.Pixels[x + scanLine.Offset, y] != 0x00) {
+									// There is another scan line after this
+									lastScanLine = false;
+									break;
 								}
 							}
-							else if (paletteImage.Pixels[x + scanLine.Offset, y] != 0x00) {
-								// There is another scan line after this
-								lastScanLine = false;
-								break;
+							// Set the end flag if the scan line is the last in the row
+							if (lastScanLine)
+								scanLine.Count |= 0x80;
+							// If the row has all transparent pixels, set the offset to 0
+							if (scanLine.Count == 0) {
+								scanLine.Offset = 0;
+								scanLine.Count = 0;
 							}
-						}
-						// Set the end flag if the scan line is the last in the row
-						if (lastScanLine)
-							scanLine.Count |= 0x80;
-						// If the row has all transparent pixels, set the offset to 0
-						if (scanLine.Count == 0) {
-							scanLine.Offset = 0;
-							scanLine.Count = 0;
-						}
 
-						rowOffset += (ushort)(2 + (scanLine.Count & 0x7F));
-						scanLines.Add(scanLine);
+							rowOffset += (ushort)(2 + (scanLine.Count & 0x7F));
+							scanLines.Add(scanLine);
 
-						// Increment the scan line count
-						if (!lastScanLine)
-							scanLine.Offset += (byte)(scanLine.Count & 0x7F);
+							// Increment the scan line count
+							if (!lastScanLine)
+								scanLine.Offset += (byte)(scanLine.Count & 0x7F);
+						}
 					}
-				}
 
-				// Write the row offsets
-				for (int j = 0; j < entry.Height; j++) {
-					writer.Write(rowOffsets[j]);
-				}
+					// Write the row offsets
+					for (int j = 0; j < entry.Height; j++) {
+						writer.Write(rowOffsets[j]);
+					}
 
-				// Write the scan lines
-				for (int j = 0; j < scanLines.Count; j++) {
-					writer.Write(scanLines[j].Count);
-					writer.Write(scanLines[j].Offset);
-					for (int k = 0; k < (int)(scanLines[j].Count & 0x7F); k++) {
-						try {
-							writer.Write(paletteImage.Pixels[k + scanLines[j].Offset, scanLines[j].Row]);
-						}
-						catch (Exception) {
+					// Write the scan lines
+					for (int j = 0; j < scanLines.Count; j++) {
+						writer.Write(scanLines[j].Count);
+						writer.Write(scanLines[j].Offset);
+						for (int k = 0; k < (int)(scanLines[j].Count & 0x7F); k++) {
+							try {
+								writer.Write(paletteImage.Pixels[k + scanLines[j].Offset, scanLines[j].Row]);
+							}
+							catch (Exception) {
+
+							}
 						}
 					}
 				}
 			}
-			else if (entry.Flags == ImageFlags.PaletteEntries) {
+			else if (entry.Flags.HasFlag(ImageFlags.PaletteEntries)) {
 				Palette palette = this.palettes[i];
 
 				// Write each color
@@ -375,6 +413,45 @@ public class GraphicsData {
 				}
 			}
 		}
+	}
+
+	#endregion
+	//============ STATIC ============
+	#region Static
+
+	/** <summary> Saves the graphics directory to the specified file path. </summary> */
+	public void Save(string path) {
+		BinaryWriter writer = new BinaryWriter(new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write));
+		long imageDirectoryPosition = writer.BaseStream.Position;
+
+		// Write the image directory and graphics data
+		imageDirectory.Write(writer);
+		Write(writer);
+
+		// Rewrite the image directory after the image addresses are known
+		writer.BaseStream.Position = imageDirectoryPosition;
+		imageDirectory.Write(writer);
+		writer.Close();
+	}
+
+	/** <summary> Returns an object loaded from the specified stream. </summary> */
+	public static GraphicsData FromStream(Stream stream) {
+		GraphicsData graphicsData = new GraphicsData();
+
+		BinaryReader reader = new BinaryReader(stream);
+		graphicsData.imageDirectory.Read(reader);
+		graphicsData.Read(reader);
+		reader.Close();
+
+		return graphicsData;
+	}
+	/** <summary> Returns an object loaded from the specified file path. </summary> */
+	public static GraphicsData FromFile(string path) {
+		return FromStream(new FileStream(path, FileMode.Open, FileAccess.Read));
+	}
+	/** <summary> Returns an object loaded from the specified buffer. </summary> */
+	public static GraphicsData FromBuffer(byte[] buffer) {
+		return FromStream(new MemoryStream(buffer));
 	}
 
 	#endregion

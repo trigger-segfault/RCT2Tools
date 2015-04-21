@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{74D9236D-949E-40CA-84EE-7B6F6411B0C1}</ProjectGuid>
+    <ProjectGuid>{B087FFDA-E9DB-4B43-96B8-119BA589E07B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RCT2PaletteConverter</RootNamespace>
-    <AssemblyName>RCT2PaletteConverter</AssemblyName>
+    <RootNamespace>RCT2MazeGenerator</RootNamespace>
+    <AssemblyName>RCT2MazeGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,9 +31,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>App.ico</ApplicationIcon>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,20 +44,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConverterForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ConverterForm.Designer.cs">
-      <DependentUpon>ConverterForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="MazeEditor.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="MazeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MazeForm.Designer.cs">
+      <DependentUpon>MazeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Resources\GroupInfo.cs" />
-    <EmbeddedResource Include="ConverterForm.resx">
-      <DependentUpon>ConverterForm.cs</DependentUpon>
+    <EmbeddedResource Include="MazeForm.resx">
+      <DependentUpon>MazeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -72,6 +68,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -83,13 +80,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App.ico" />
-    <None Include="Resources\Grass.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CustomControls\CustomControls.csproj">
       <Project>{b278983b-b66a-4add-84a4-dff9120633f0}</Project>
       <Name>CustomControls</Name>
@@ -98,6 +88,9 @@
       <Project>{556c9dbf-1a2e-46fe-9efa-0e0e54e6549e}</Project>
       <Name>ObjectData</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Grass.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -250,6 +250,13 @@ public class ObjectDataHeader {
 		}
 		writer.Write(this.CheckSum);
 	}
+	/** <summary> Saves the object data to the specified file path. </summary> */
+	public static ObjectDataHeader FromFile(string path) {
+		ObjectDataHeader obj = new ObjectDataHeader();
+		BinaryReader reader = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read));
+		obj.Read(reader);
+		return obj;
+	}
 
 	#endregion
 }
@@ -260,16 +267,18 @@ public abstract class ObjectTypeHeader {
 	#region Properties
 
 	/** <summary> Gets the size of the object type header. </summary> */
-	public abstract uint HeaderSize { get; }
+	internal abstract uint HeaderSize { get; }
 	/** <summary> Gets the basic subtype of the object. </summary> */
-	public abstract ObjectSubtypes ObjectSubtype { get; }
+	internal abstract ObjectSubtypes ObjectSubtype { get; }
 
 	#endregion
 	//=========== READING ============
 	#region Reading
 
 	/** <summary> Reads the object type header. </summary> */
-	public abstract void Read(BinaryReader reader);
+	internal abstract void Read(BinaryReader reader);
+	/** <summary> Writes the object type header. </summary> */
+	internal abstract void Write(BinaryWriter writer);
 
 	#endregion
 }
@@ -289,12 +298,12 @@ public class ChunkHeader {
 	#region Reading
 
 	/** <summary> Reads the chunk header. </summary> */
-	public void Read(BinaryReader reader) {
+	internal void Read(BinaryReader reader) {
 		this.Encoding = (ChunkEncoding)reader.ReadByte();
 		this.ChunkSize = reader.ReadUInt32();
 	}
 	/** <summary> Writes the chunk header. </summary> */
-	public void Write(BinaryWriter writer) {
+	internal void Write(BinaryWriter writer) {
 		writer.Write((byte)this.Encoding);
 		writer.Write(this.ChunkSize);
 	}
@@ -346,6 +355,8 @@ public class ObjectData {
 	#endregion
 	//========== PROPERTIES ==========
 	#region Properties
+	//--------------------------------
+	#region Base
 
 	/** <summary> Gets the header of the object. </summary> */
 	public ObjectDataHeader ObjectHeader {
@@ -386,21 +397,57 @@ public class ObjectData {
 	public bool Invalid {
 		get { return (ObjectTypes)(objectHeader.Flags & 0xF) == ObjectTypes.None; }
 	}
+
+	#endregion
+	//--------------------------------
+	#region Reading
+
 	/** <summary> Gets the number of string table entries in the object. </summary> */
-	private virtual int NumStringTableEntries {
+	protected virtual int NumStringTableEntries {
 		get { return 1; }
 	}
 	/** <summary> Returns true if the object has a group info section. </summary> */
-	private virtual bool HasGroupInfo {
+	protected virtual bool HasGroupInfo {
 		get { return false; }
 	}
 
+	#endregion
+	//--------------------------------
+	#region Information
+
+	/** <summary> Gets the subtype of the object. </summary> */
+	public virtual ObjectSubtypes Subtype {
+		get { return ObjectSubtypes.Basic; }
+	}
+	/** <summary> True if the object can be placed on a slope. </summary> */
+	public virtual bool CanSlope {
+		get { return false; }
+	}
+	/** <summary> Gets the number of color remaps. </summary> */
+	public virtual int ColorRemaps {
+		get { return 0; }
+	}
+	/** <summary> Gets if the dialog view has color remaps. </summary> */
+	public virtual bool HasDialogColorRemaps {
+		get { return false; }
+	}
+	/** <summary> Gets the number of frames in the animation. </summary> */
+	public virtual int AnimationFrames {
+		get { return 1; }
+	}
+	/** <summary> Gets the palette to draw the object with. </summary> */
+	public virtual Palette GetPalette(DrawSettings drawSettings) {
+		return Palette.DefaultPalette;
+	}
+
+	#endregion
+	//--------------------------------
 	#endregion
 	//=========== READING ============
 	#region Reading
 
 	/** <summary> Reads the object data. </summary> */
-	private void Read(BinaryReader reader) {
+	protected void Read(BinaryReader reader) {
 		// Read the header
 		ReadHeader(reader);
 
@@ -419,7 +466,7 @@ public class ObjectData {
 		graphicsData.Read(reader);
 	}
 	/** <summary> Writes the object data. </summary> */
-	private void Write(BinaryWriter writer) {
+	protected void Write(BinaryWriter writer) {
 		// Write the header
 		WriteHeader(writer);
 
@@ -447,19 +494,19 @@ public class ObjectData {
 		writer.BaseStream.Position = finalPosition;
 	}
 	/** <summary> Reads the object data header. </summary> */
-	private virtual void ReadHeader(BinaryReader reader) {
+	protected virtual void ReadHeader(BinaryReader reader) {
 		
 	}
 	/** <summary> Reads the object data optional. </summary> */
-	private virtual void ReadOptional(BinaryReader reader) {
+	protected virtual void ReadOptional(BinaryReader reader) {
 
 	}
 	/** <summary> Writes the object data header. </summary> */
-	private virtual void WriteHeader(BinaryWriter writer) {
+	protected virtual void WriteHeader(BinaryWriter writer) {
 
 	}
 	/** <summary> Writes the object data optional. </summary> */
-	private virtual void WriteOptional(BinaryWriter writer) {
+	protected virtual void WriteOptional(BinaryWriter writer) {
 
 	}
 
@@ -472,7 +519,7 @@ public class ObjectData {
 		return false;
 	}
 	/** <summary> Draws the object as it is in the dialog. </summary> */
-	public virtual bool DrawDialog(PaletteImage p, Point position, DrawSettings drawSettings) {
+	public virtual bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		return false;
 	}
 
@@ -480,6 +527,57 @@ public class ObjectData {
 	//============ STATIC ============
 	#region Static
 
+	/** <summary> Saves the object data to the specified file path. </summary> */
+	public void Save(string path) {
+		try {
+			MemoryStream stream = new MemoryStream();
+			BinaryWriter writer = new BinaryWriter(stream);
+
+			this.objectHeader.Write(writer);
+			this.chunkHeader.Write(writer);
+
+			long chunkStartPosition = writer.BaseStream.Position;
+			this.Write(writer);
+			// Set the chunk size
+			this.chunkHeader.ChunkSize = (uint)(writer.BaseStream.Position - chunkStartPosition);
+			// Get the file size
+			uint fileSize = (uint)writer.BaseStream.Position;
+
+			BinaryReader reader = new BinaryReader(stream);
+			reader.BaseStream.Position = 0;
+
+			// Calculate the checksum
+			uint checkSum = 0xF369A75B;
+			checkSum = RotateChecksum(checkSum, reader.ReadByte());
+			reader.ReadBytes(3);
+			for (int i = 0; i < 8; i++)
+				checkSum = RotateChecksum(checkSum, reader.ReadByte());
+			reader.ReadBytes(9);
+			for (int i = 16 + 5; i < (int)fileSize; i++)
+				checkSum = RotateChecksum(checkSum, reader.ReadByte());
+
+			this.objectHeader.CheckSum = checkSum;
+
+			byte[] chunkData = new byte[fileSize - 21];
+			Array.Copy(stream.GetBuffer(), 21, chunkData, 0, fileSize - 21);
+
+			writer.Close();
+			reader.Close();
+
+			writer = new BinaryWriter(new FileStream(path, FileMode.Create));
+
+			byte[] encodedChunkData = WriteChunk(this.chunkHeader, chunkData);
+
+			this.objectHeader.Write(writer);
+			this.chunkHeader.Write(writer);
+			writer.Write(encodedChunkData);
+
+			writer.Close();
+		}
+		catch (System.Exception) {
+
+		}
+	}
 	/** <summary> Returns an object loaded from the specified stream. </summary> */
 	public static ObjectData FromStream(Stream stream) {
 		ObjectData obj = null;
@@ -598,58 +696,6 @@ public class ObjectData {
 		byte[] data = new byte[position];
 		Array.Copy(stream.GetBuffer(), data, position);
 		return data;
-	}
-
-	/** <summary> Writes the object data to the path. </summary> */
-	public static void WriteObject(string path, ObjectData obj) {
-		try {
-			MemoryStream stream = new MemoryStream();
-			BinaryWriter writer = new BinaryWriter(stream);
-			
-			obj.objectHeader.Write(writer);
-			obj.chunkHeader.Write(writer);
-
-			long chunkStartPosition = writer.BaseStream.Position;
-			obj.Write(writer);
-			// Set the chunk size
-			obj.chunkHeader.ChunkSize = (uint)(writer.BaseStream.Position - chunkStartPosition);
-			// Get the file size
-			uint fileSize = (uint)writer.BaseStream.Position;
-
-			BinaryReader reader = new BinaryReader(stream);
-			reader.BaseStream.Position = 0;
-
-			// Calculate the checksum
-			uint checkSum = 0xF369A75B;
-			checkSum = RotateChecksum(checkSum, reader.ReadByte());
-			reader.ReadBytes(3);
-			for (int i = 0; i < 8; i++)
-				checkSum = RotateChecksum(checkSum, reader.ReadByte());
-			reader.ReadBytes(9);
-			for (int i = 16 + 5; i < (int)fileSize; i++)
-				checkSum = RotateChecksum(checkSum, reader.ReadByte());
-
-			obj.objectHeader.CheckSum = checkSum;
-
-			byte[] chunkData = new byte[fileSize - 21];
-			Array.Copy(stream.GetBuffer(), 21, chunkData, 0, fileSize - 21);
-
-			writer.Close();
-			reader.Close();
-
-			writer = new BinaryWriter(new FileStream(path, FileMode.Create));
-
-			byte[] encodedChunkData = WriteChunk(obj.chunkHeader, chunkData);
-
-			obj.objectHeader.Write(writer);
-			obj.chunkHeader.Write(writer);
-			writer.Write(encodedChunkData);
-
-			writer.Close();
-		}
-		catch (System.Exception) {
-
-		}
 	}
 	/** <summary> Reads and decodes the chunk. </summary> */
 	public static byte[] WriteChunk(ChunkHeader header, byte[] data) {

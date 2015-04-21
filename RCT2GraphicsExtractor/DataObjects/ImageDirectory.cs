@@ -121,6 +121,7 @@ public class ImageDirectory {
 	#endregion
 }
 /** <summary> The image type flags. </summary> */
+[Flags]
 public enum ImageFlags : ushort {
 	/** <summary> No flag selected. </summary> */
 	None = 0,

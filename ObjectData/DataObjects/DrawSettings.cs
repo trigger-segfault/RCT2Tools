@@ -15,37 +15,37 @@ public struct DrawSettings {
 	#region General
 
 	/** <summary> The first remap color. </summary> */
-	public RemapColors Remap1 = RemapColors.None;
+	public RemapColors Remap1;
 	/** <summary> The second remap color. </summary> */
-	public RemapColors Remap2 = RemapColors.None;
+	public RemapColors Remap2;
 	/** <summary> The third remap color. </summary> */
-	public RemapColors Remap3 = RemapColors.None;
+	public RemapColors Remap3;
 	/** <summary> The darkness level to draw at. </summary> */
-	public int Darkness = 0;
+	public int Darkness;
 
 	/** <summary> The rotation to draw at. </summary> */
-	public int Rotation = 0;
+	public int Rotation;
 	/** <summary> The slope to draw at. </summary> */
-	public int Slope = -1;
+	public int Slope;
 	/** <summary> The elevation to draw at. </summary> */
-	public int Elevation = 0;
+	public int Elevation;
 	/** <summary> The frame index to draw. </summary> */
-	public int Frame = 0;
+	public int Frame;
 	
 	#endregion
 	//--------------------------------
 	#region Specific
 
 	/** <summary> The current car type to draw. </summary> */
-	public CarTypes CurrentCar = CarTypes.CarType0;
+	public CarTypes CurrentCar;
 	/** <summary> True if riders should be drawn on the attraction. </summary> */
-	public bool DrawRiders = false;
+	public bool DrawRiders;
 	/** <summary> The corner to draw the small scenery in. </summary> */
-	public int Corner = 0;
+	public int Corner;
 	/** <summary> True if the path should be a queue. </summary> */
-	public bool Queue = false;
+	public bool Queue;
 	/** <summary> The connections in the path. </summary> */
-	public byte PathConnections = 0x00;
+	public byte PathConnections;
 
 	#endregion
 	//--------------------------------

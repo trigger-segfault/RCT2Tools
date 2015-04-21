@@ -48,14 +48,16 @@
     <Compile Include="DataObjects\ObjectData.cs" />
     <Compile Include="DataObjects\Palette.cs" />
     <Compile Include="DataObjects\PaletteImage.cs" />
-    <Compile Include="DataObjects\SpriteFont.cs" />
     <Compile Include="DataObjects\StringTable.cs" />
     <Compile Include="DataObjects\Terrain.cs" />
+    <Compile Include="DataObjects\TrackDesign.cs" />
     <Compile Include="DataObjects\Types\Attraction.cs" />
     <Compile Include="DataObjects\Types\AttractionInfo\AttractionFlags.cs" />
     <Compile Include="DataObjects\Types\AttractionInfo\CarFlags.cs" />
     <Compile Include="DataObjects\Types\AttractionInfo\CarFrames.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\EntranceTypes.cs" />
     <Compile Include="DataObjects\Types\AttractionInfo\ItemFlags.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\OperatingModes.cs" />
     <Compile Include="DataObjects\Types\AttractionInfo\TrackSections.cs" />
     <Compile Include="DataObjects\Types\LargeScenery.cs" />
     <Compile Include="DataObjects\Types\ParkEntrance.cs" />
@@ -82,6 +84,7 @@
   <ItemGroup>
     <None Include="Resources\RemapStrips.rct2imgs" />
     <None Include="Resources\Terrain.rct2imgs" />
+    <None Include="Resources\Water.rct2imgs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

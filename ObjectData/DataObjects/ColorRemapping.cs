@@ -10,23 +10,37 @@ namespace RCT2ObjectData.DataObjects {
 
 /** <summary> The data used for color remapping. </summary> */
 public class ColorRemapping {
-	
+
+	//========== CONSTANTS ===========
+	#region Constants
+
+	/** <summary> The color indexes used for general remaps. </summary> */
 	public static RemapPalette[] RemapPalettes = new RemapPalette[32];
+	/** <summary> The color indexes used for glass transparency. </summary> */
 	public static RemapPalette[] GlassPalettes = new RemapPalette[32];
+	/** <summary> The color indexes used for water transparency. </summary> */
+	public static RemapPalette[] WaterPalettes = new RemapPalette[5];
+	/** <summary> The color indexes used for darkness. </summary> */
 	public static RemapPalette[] DarknessPalettes = new RemapPalette[4];
 
-	public static void LoadPalettes() {
-		ImageDirectory imageDirectory = new ImageDirectory();
+	#endregion
+	//=========== LOADING ============
+	#region Loading
+
+	/** <summary> Loads the color remapping resources. </summary> */
+	public static void LoadResources() {
+		/*ImageDirectory imageDirectory = new ImageDirectory();
 		GraphicsData graphicsData = new GraphicsData(imageDirectory);
 
 		BinaryReader reader = new BinaryReader(new MemoryStream(Resources.RemapStrips));
 		imageDirectory.Read(reader);
-		graphicsData.Read(reader);
+		graphicsData.Read(reader);*/
+		GraphicsData graphicsData = GraphicsData.FromBuffer(Resources.RemapStrips);
 
 		for (int i = 0; i < 32; i++) {
 			RemapPalette remaps = new RemapPalette(12);
 			for (int j = 0; j < 12; j++) {
-				remaps.remapIndexes[j] = graphicsData.paletteImages[4915 + i - 4915].Pixels[242 + j, 0];
+				remaps.remapIndexes[j] = graphicsData.paletteImages[4915 + i - 4915].Pixels[243 + j, 0];
 			}
 			RemapPalettes[i] = remaps;
 		}
@@ -37,6 +51,13 @@ public class ColorRemapping {
 			}
 			GlassPalettes[i] = remaps;
 		}
+		for (int i = 0; i < 5; i++) {
+			RemapPalette remaps = new RemapPalette(256);
+			for (int j = 0; j < 256; j++) {
+				remaps.remapIndexes[j] = graphicsData.paletteImages[4947 - 4915].Pixels[j, i];
+			}
+			WaterPalettes[i] = remaps;
+		}
 		for (int i = 0; i < 4; i++) {
 			RemapPalette remaps = new RemapPalette(256);
 			for (int j = 0; j < 256; j++) {
@@ -46,78 +67,9 @@ public class ColorRemapping {
 		}
 	}
 
-	/** <summary> The indexes of the colors when remapping. </summary> */
-	public static byte[,] ColorIndexes = {
-		{0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{3, 4, 5, 6, 7, 8, 9, 10, 11, 11, 11, 11},
-		{0, 0, 0, 1, 1, 2, 3, 4, 4, 5, 6, 6},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{0, 0, 0, 1, 1, 2, 3, 4, 4, 5, 6, 6},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11, 11},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{1, 3, 5, 6, 7, 8, 9, 10, 10, 11, 11, 11},
-		{0, 0, 0, 1, 1, 2, 3, 4, 4, 5, 6, 6},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11, 11},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{0, 0, 0, 1, 1, 2, 3, 4, 5, 6, 7, 7},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{0, 0, 0, 1, 1, 2, 3, 4, 4, 5, 6, 6},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8},
-		{0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{0, 0, 0, 1, 1, 2, 3, 4, 4, 5, 6, 6},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{0, 0, 0, 1, 1, 2, 3, 4, 4, 5, 6, 6},
-		{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
-		{5, 6, 7, 8, 9, 10, 10, 10, 11, 11, 11, 11}
-	};
-		/** <summary> The rows of the colors when remapping. </summary> */
-		public static byte[,] ColorRows = {
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-		{9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9},
-		{12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12},
-		{10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10},
-		{10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10},
-		{10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10},
-		{15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15},
-		{15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15, 15},
-		{7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7},
-		{11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11},
-		{5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},
-		{7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7},
-		{6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6},
-		{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-		{3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-		{3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-		{3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-		{14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
-		{14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14},
-		{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
-		{2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2},
-		{17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17, 17},
-		{8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8},
-		{4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4},
-		{13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13},
-		{13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13, 13},
-		{16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16},
-		{16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16},
-		{4, 4, 4, 4, 4, 4, 4, 13, 4, 13, 13, 13}
-	};
+	#endregion
 }
-
+/** <summary> A palette for translating colors with during remaps. </summary> */
 public class RemapPalette {
 
 	//========== CONSTANTS ===========
@@ -140,5 +92,45 @@ public class RemapPalette {
 	}
 
 	#endregion
+}
+/** <summary> An enumeration for the RCT2 remap colors. </summary> */
+public enum RemapColors : int {
+	None = -1,
+
+	Black = 0,
+	Gray = 1,
+	White = 2,
+	Indigo = 3,
+	SlateBlue = 4,
+	Purple = 5,
+	Blue = 6,
+	LightBlue = 7,
+
+	Frost = 8,
+	Water = 9,
+	LightWater = 10,
+	Green = 11,
+	SeaGreen = 12,
+	DarkOliveGreen = 13,
+	Lime = 14,
+	OliveDrab = 15,
+
+	Olive = 16,
+	Yellow = 17,
+	Gold = 18,
+	Goldenrod = 19,
+	Orange = 20,
+	DarkOrange = 21,
+	LightBrown = 22,
+	Brown = 23,
+
+	Bark = 24,
+	Tan = 25,
+	Maroon = 26,
+	DarkRed = 27,
+	Red = 28,
+	Magenta = 29,
+	Pink = 30,
+	Salmon = 31
 }
 }

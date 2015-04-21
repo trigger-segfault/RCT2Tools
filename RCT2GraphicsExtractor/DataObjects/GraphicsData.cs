@@ -45,7 +45,7 @@ public class GraphicsData {
 	/** <summary> Reads the graphics data. </summary> */
 	public Palette ReadPalette(BinaryReader reader, long startPosition, int i, ImageDirectory directory, Palette colorPalette) {
 		ImageEntry entry = directory.Entries[i];
-		if (entry.Flags == ImageFlags.PaletteEntries) {
+		if (entry.Flags.HasFlag(ImageFlags.PaletteEntries)) {
 			Palette palette = new Palette(entry.Width);
 			reader.BaseStream.Position = startPosition + entry.StartAddress;
 
@@ -65,7 +65,7 @@ public class GraphicsData {
 	/** <summary> Reads the graphics data. </summary> */
 	public PaletteImage ReadPaletteImage(BinaryReader reader, long startPosition, int i, ImageDirectory directory, Palette colorPalette) {
 		ImageEntry entry = directory.Entries[i];
-		if (entry.Flags == ImageFlags.DirectBitmap) {
+		if (entry.Flags.HasFlag(ImageFlags.DirectBitmap) && !entry.Flags.HasFlag(ImageFlags.CompactedBitmap)) {
 			PaletteImage paletteImage = new PaletteImage(entry.Width, entry.Height);
 			reader.BaseStream.Position = startPosition + entry.StartAddress;
 
@@ -79,7 +79,7 @@ public class GraphicsData {
 
 			return paletteImage;
 		}
-		else if (entry.Flags == ImageFlags.CompactedBitmap) {
+		else if (entry.Flags.HasFlag(ImageFlags.CompactedBitmap)) {
 			PaletteImage paletteImage = new PaletteImage(entry.Width, entry.Height);
 			uint[] rowOffsets = new uint[entry.Height];
 			reader.BaseStream.Position = startPosition + entry.StartAddress;
@@ -125,7 +125,7 @@ public class GraphicsData {
 			colorPalette = Palette.LogoPalette;
 
 		ImageEntry entry = directory.Entries[i];
-		if (entry.Flags == ImageFlags.DirectBitmap) {
+		if (entry.Flags.HasFlag(ImageFlags.DirectBitmap) && !entry.Flags.HasFlag(ImageFlags.CompactedBitmap)) {
 			Bitmap image = new Bitmap(entry.Width, entry.Height);
 			reader.BaseStream.Position = startPosition + entry.StartAddress;
 
@@ -139,7 +139,7 @@ public class GraphicsData {
 
 			return image;
 		}
-		else if (entry.Flags == ImageFlags.CompactedBitmap) {
+		else if (entry.Flags.HasFlag(ImageFlags.CompactedBitmap)) {
 			Bitmap image = new Bitmap(entry.Width, entry.Height);
 			uint[] rowOffsets = new uint[entry.Height];
 			reader.BaseStream.Position = startPosition + entry.StartAddress;
@@ -175,7 +175,7 @@ public class GraphicsData {
 
 			return image;
 		}
-		else if (entry.Flags == ImageFlags.PaletteEntries) {
+		else if (entry.Flags.HasFlag(ImageFlags.PaletteEntries)) {
 			Bitmap image = new Bitmap(16 * 10, 16 * 10);
 			reader.BaseStream.Position = startPosition + entry.StartAddress;
 
