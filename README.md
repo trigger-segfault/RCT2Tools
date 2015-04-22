@@ -188,3 +188,10 @@ Your DPI setting may need to be at 100% percent.
 ## Settings
 
 **Extract RCT2 Images:** Also extracts images in the format used by RCT2. Only useful for programmers.
+
+# RCT2 Maze Generator
+
+* Authors: Robert Jordan, Lewis Fox
+* Version: v0.0.1.2
+
+RCT2 Maze Generator allows you to edit and procedurally generate mazes that can be loaded into RCT2. It is a work in progress, and is not completely funcitonal yet. 
