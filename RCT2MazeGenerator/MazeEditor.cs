@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RCT2PaletteConverter {
+namespace RCT2MazeGenerator {
 public class MazeEditor : Control {
 
 	//========== CONSTANTS ===========
@@ -25,6 +25,8 @@ public class MazeEditor : Control {
 	public static Color PathColor = Color.FromArgb(91, 63, 31);
 	public static Color GridColor = Color.FromArgb(100, 23, 35, 35);
 	public static Color GrassOutlineColor = Color.FromArgb(200, 35, 63, 23);
+	public static Color RestrictColor = Color.FromArgb(150, 199, 0, 0);
+	public static Color GenerateColor = Color.FromArgb(180, 71, 175, 39);
 
 	public static Color[] WallColors = new Color[]{
 		Color.FromArgb(23, 35, 35), // Brick Walls
@@ -43,23 +45,18 @@ public class MazeEditor : Control {
 	private int pathWidth;
 	private int wallWidth;
 
-	private int wallStyle;
+	private WallStyles wallStyle;
 
 	private bool drawGrid;
 
 	private MazeWallTypes hoverType;
 	private Point hoverPoint;
 
-	public int placeMode;
+	private Point generatePoint;
+
+	public PlaceModes placeMode;
 	private Point placePoint;
 	private MazeBuildingDirections placeDirection;
-
-
-	[Browsable(true)]
-	[Category("Action")]
-	[DisplayName("MazeEdited")]
-	[Description("")]
-	public event EventHandler MazeEdited;
 
 	#endregion
 	//========= CONSTRUCTORS =========
@@ -73,12 +70,13 @@ public class MazeEditor : Control {
 
 		this.pathWidth = 16;
 		this.wallWidth = 3;
-		this.wallStyle = 1;
+		this.wallStyle = WallStyles.Hedges;
 		this.drawGrid = true;
 
 		this.hoverType = MazeWallTypes.None;
 		this.hoverPoint = Point.Empty;
-		this.placeMode = 1;
+		this.generatePoint = Point.Empty;
+		this.placeMode = PlaceModes.Walls;
 		this.placePoint = Point.Empty;
 		this.placeDirection = MazeBuildingDirections.None;
 	}
@@ -101,7 +99,7 @@ public class MazeEditor : Control {
 
 	/** <summary> Resizes the maze to the new specified size. </summary> */
 	public void ResizeMaze(Size newSize) {
-		MazeBlock[,] newBlocks = new MazeBlock[Math.Max(1, newSize.Width), Math.Max(1, newSize.Height)];
+		MazeBlock[,] newBlocks = new MazeBlock[Math.Max(1, Math.Min(255, newSize.Width)), Math.Max(1, Math.Min(255, newSize.Height))];
 		for (int x = 0; x < newBlocks.GetLength(0); x++) {
 			for (int y = 0; y < newBlocks.GetLength(1); y++) {
 				if (x < this.blocks.GetLength(0) && y < this.blocks.GetLength(1))
@@ -111,6 +109,20 @@ public class MazeEditor : Control {
 			}
 		}
 		this.blocks = newBlocks;
+		this.Width = this.blocks.GetLength(0) * (this.pathWidth * 2 + this.wallWidth * 4);
+		this.Height = this.blocks.GetLength(1) * (this.pathWidth * 2 + this.wallWidth * 4);
+		for (int x = 0; x < this.blocks.GetLength(0); x++) {
+			MazeBlock block = this.blocks[x, 0];
+			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.NorthLeft | MazeWalls.NorthRight);
+			block = this.blocks[x, this.blocks.GetLength(1) - 1];
+			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.SouthLeft | MazeWalls.SouthRight);
+		}
+		for (int y = 0; y < this.blocks.GetLength(1); y++) {
+			MazeBlock block = this.blocks[0, y];
+			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.WestTop | MazeWalls.WestBottom);
+			block = this.blocks[this.blocks.GetLength(0) - 1, y];
+			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.EastTop | MazeWalls.EastBottom);
+		}
 		this.Invalidate();
 	}
 	/** <summary> Translates the maze by the specified distance. </summary> */
@@ -118,40 +130,93 @@ public class MazeEditor : Control {
 		MazeBlock[,] newBlocks = new MazeBlock[this.blocks.GetLength(0), this.blocks.GetLength(1)];
 		for (int x = 0; x < newBlocks.GetLength(0); x++) {
 			for (int y = 0; y < newBlocks.GetLength(1); y++) {
-				if (x - distance.X < this.blocks.GetLength(0) && y - distance.Y < this.blocks.GetLength(1))
+				if (x - distance.X >= 0 && x - distance.X < this.blocks.GetLength(0) &&
+					y - distance.Y >= 0 && y - distance.Y < this.blocks.GetLength(1))
 					newBlocks[x, y] = this.blocks[x - distance.X, y - distance.Y];
 				else
 					newBlocks[x, y] = new MazeBlock();
 			}
 		}
 		this.blocks = newBlocks;
+		for (int x = 0; x < this.blocks.GetLength(0); x++) {
+			MazeBlock block = this.blocks[x, 0];
+			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.NorthLeft | MazeWalls.NorthRight);
+			block = this.blocks[x, this.blocks.GetLength(1) - 1];
+			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.SouthLeft | MazeWalls.SouthRight);
+		}
+		for (int y = 0; y < this.blocks.GetLength(1); y++) {
+			MazeBlock block = this.blocks[0, y];
+			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.WestTop | MazeWalls.WestBottom);
+			block = this.blocks[this.blocks.GetLength(0) - 1, y];
+			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.EastTop | MazeWalls.EastBottom);
+		}
 		this.Invalidate();
 	}
 	/** <summary> Loads the specified maze into the editor. </summary> */
 	public void LoadMaze(TrackDesign maze) {
 		if (maze.TrackType == TrackTypes.HedgeMaze) {
+			// Flip the maze (mazes are saved flipped verticaly)
 			for (int x = 0; x < this.blocks.GetLength(0); x++) {
 				for (int y = 0; y < this.blocks.GetLength(1); y++) {
 					this.blocks[x, y] = new MazeBlock();
 				}
 			}
 
-			Point offset = Point.Empty;
+			Point min = Point.Empty;
+			Point max = Point.Empty;
 			for (int i = 0; i < maze.MazeTiles.Count; i++) {
 				MazeTile tile = maze.MazeTiles[i];
-				if (tile.X < 0 && -tile.X > offset.X)
-					offset.X = -tile.X;
-				if (tile.Y < 0 && -tile.Y > offset.Y)
-					offset.Y = -tile.Y;
+				if (tile.X < min.X) min.X = tile.X;
+				if (tile.Y < min.Y) min.Y = tile.Y;
+				if (tile.X > max.X) max.X = tile.X;
+				if (tile.Y > max.Y) max.Y = tile.Y;
 			}
+			Size newSize = new Size(-min.X + max.X + 1, -min.Y + max.Y + 1);
+			ResizeMaze(newSize);
 
 			for (int i = 0; i < maze.MazeTiles.Count; i++) {
 				MazeTile tile = maze.MazeTiles[i];
-				this.blocks[tile.X + offset.X, tile.Y + offset.Y] = new MazeBlock(tile.Walls, false);
+				this.blocks[tile.X + -min.X, -tile.Y + max.Y] = new MazeBlock(FlipWalls(tile.Walls), false);
 			}
-			this.wallStyle = (int)maze.TrackSupportColors[0];
+			this.wallStyle = (WallStyles)maze.TrackSupportColors[0];
 			this.Invalidate();
 		}
+	}
+	/** <summary> Saves the editor to the specified maze. </summary> */
+	public void SaveMaze(TrackDesign maze) {
+
+
+	}
+	private MazeWalls FlipWalls(MazeWalls walls) {
+		MazeWalls newWalls = MazeWalls.None;
+		if ((walls & (MazeWalls)0xFF00) == MazeWalls.Entrance || (walls & (MazeWalls)0xFF00) == MazeWalls.Exit) {
+			if		(walls == MazeWalls.EntranceNorth) newWalls = MazeWalls.EntranceSouth;
+			else if (walls == MazeWalls.EntranceSouth) newWalls = MazeWalls.EntranceNorth;
+			else if (walls == MazeWalls.ExitNorth) newWalls = MazeWalls.ExitSouth;
+			else if (walls == MazeWalls.ExitSouth) newWalls = MazeWalls.ExitNorth;
+			else newWalls = walls;
+		}
+		else {
+			// The only flags that will be the same
+			newWalls |= walls & (MazeWalls.WestMiddle | MazeWalls.EastMiddle);
+
+			// Sides
+			newWalls |= SwapFlag(walls, MazeWalls.WestTop, MazeWalls.WestBottom);
+			newWalls |= SwapFlag(walls, MazeWalls.EastTop, MazeWalls.EastBottom);
+
+			// Bases
+			newWalls |= SwapFlag(walls, MazeWalls.NorthLeft, MazeWalls.SouthLeft);
+			newWalls |= SwapFlag(walls, MazeWalls.NorthMiddle, MazeWalls.SouthMiddle);
+			newWalls |= SwapFlag(walls, MazeWalls.NorthRight, MazeWalls.SouthRight);
+
+			// Quadrants
+			newWalls |= SwapFlag(walls, MazeWalls.Quadrant4, MazeWalls.Quadrant3);
+			newWalls |= SwapFlag(walls, MazeWalls.Quadrant1, MazeWalls.Quadrant2);
+		}
+		return newWalls;
+	}
+	private MazeWalls SwapFlag(MazeWalls walls, MazeWalls flag1, MazeWalls flag2) {
+		return (walls.HasFlag(flag1) ? flag2 : MazeWalls.None) | (walls.HasFlag(flag2) ? flag1 : MazeWalls.None);
 	}
 
 	/** <summary> Gets the maze block at the specified position. Returns empty if one doesn't exist. </summary> */
@@ -186,12 +251,178 @@ public class MazeEditor : Control {
 	public void SetBlockSolid(Point point, bool solid) {
 		if (point.X >= 0 && point.X < this.blocks.GetLength(0) &&
 			point.Y >= 0 && point.Y < this.blocks.GetLength(1)) {
-			this.blocks[point.X, point.Y].Empty = !solid;
+			this.blocks[point.X, point.Y].Empty = false;
 			this.blocks[point.X, point.Y].Walls = MazeWalls.All;
-			SetQuadrantSolid(new Point(point.X * 2, point.Y * 2), true);
-			SetQuadrantSolid(new Point(point.X * 2 + 1, point.Y * 2), true);
-			SetQuadrantSolid(new Point(point.X * 2, point.Y * 2 + 1), true);
-			SetQuadrantSolid(new Point(point.X * 2 + 1, point.Y * 2 + 1), true);
+			SetQuadrantSolid(new Point(point.X * 2, point.Y * 2), true, true);
+			SetQuadrantSolid(new Point(point.X * 2 + 1, point.Y * 2), true, true);
+			SetQuadrantSolid(new Point(point.X * 2, point.Y * 2 + 1), true, true);
+			SetQuadrantSolid(new Point(point.X * 2 + 1, point.Y * 2 + 1), true, true);
+			this.blocks[point.X, point.Y].Walls = MazeWalls.All;
+			this.blocks[point.X, point.Y].Restrictions = MazeWalls.None;
+			this.blocks[point.X, point.Y].Empty = !solid;
+
+			if (solid) {
+				MazeBuildingDirections buildingDirection = MazeBuildingDirections.None;
+
+				if (GetBlock(new Point(point.X - 1, point.Y)).BuildingDirection == MazeBuildingDirections.West && GetBlock(new Point(point.X - 1, point.Y)).IsEntrance)
+					buildingDirection = MazeBuildingDirections.West;
+				if (GetBlock(new Point(point.X, point.Y - 1)).BuildingDirection == MazeBuildingDirections.North && GetBlock(new Point(point.X, point.Y - 1)).IsEntrance)
+					buildingDirection = MazeBuildingDirections.North;
+				if (GetBlock(new Point(point.X + 1, point.Y)).BuildingDirection == MazeBuildingDirections.East && GetBlock(new Point(point.X + 1, point.Y )).IsEntrance)
+					buildingDirection = MazeBuildingDirections.East;
+				if (GetBlock(new Point(point.X, point.Y + 1)).BuildingDirection == MazeBuildingDirections.South && GetBlock(new Point(point.X, point.Y + 1)).IsEntrance)
+					buildingDirection = MazeBuildingDirections.South;
+
+				switch (buildingDirection) {
+				case MazeBuildingDirections.North:
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.NorthLeft | MazeWalls.NorthMiddle | MazeWalls.NorthRight | MazeWalls.Quadrant4 | MazeWalls.Quadrant1);
+					break;
+				case MazeBuildingDirections.South:
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.SouthLeft | MazeWalls.SouthMiddle | MazeWalls.SouthRight | MazeWalls.Quadrant3 | MazeWalls.Quadrant2);
+					break;
+				case MazeBuildingDirections.West:
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.WestTop | MazeWalls.WestMiddle | MazeWalls.WestBottom | MazeWalls.Quadrant4 | MazeWalls.Quadrant3);
+					break;
+				case MazeBuildingDirections.East:
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.EastTop | MazeWalls.EastMiddle | MazeWalls.EastBottom | MazeWalls.Quadrant1 | MazeWalls.Quadrant2);
+					break;
+				}
+
+				if (GetBlock(new Point(point.X - 1, point.Y)).BuildingDirection == MazeBuildingDirections.West && GetBlock(new Point(point.X - 1, point.Y)).IsExit)
+					buildingDirection = MazeBuildingDirections.West;
+				if (GetBlock(new Point(point.X, point.Y - 1)).BuildingDirection == MazeBuildingDirections.North && GetBlock(new Point(point.X, point.Y - 1)).IsExit)
+					buildingDirection = MazeBuildingDirections.North;
+				if (GetBlock(new Point(point.X + 1, point.Y)).BuildingDirection == MazeBuildingDirections.East && GetBlock(new Point(point.X + 1, point.Y)).IsExit)
+					buildingDirection = MazeBuildingDirections.East;
+				if (GetBlock(new Point(point.X, point.Y + 1)).BuildingDirection == MazeBuildingDirections.South && GetBlock(new Point(point.X, point.Y + 1)).IsExit)
+					buildingDirection = MazeBuildingDirections.South;
+
+				switch (buildingDirection) {
+				case MazeBuildingDirections.North:
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.NorthLeft | MazeWalls.NorthMiddle | MazeWalls.NorthRight | MazeWalls.Quadrant4 | MazeWalls.Quadrant1);
+					break;
+				case MazeBuildingDirections.South:
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.SouthLeft | MazeWalls.SouthMiddle | MazeWalls.SouthRight | MazeWalls.Quadrant3 | MazeWalls.Quadrant2);
+					break;
+				case MazeBuildingDirections.West:
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.WestTop | MazeWalls.WestMiddle | MazeWalls.WestBottom | MazeWalls.Quadrant4 | MazeWalls.Quadrant3);
+					break;
+				case MazeBuildingDirections.East:
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.EastTop | MazeWalls.EastMiddle | MazeWalls.EastBottom | MazeWalls.Quadrant1 | MazeWalls.Quadrant2);
+					break;
+				}
+			}
+		}
+	}
+	/** <summary> Gets if the specified quadrant is restricted from generation. </summary> */
+	public bool IsRestricted(Point point) {
+		MazeBlock block = GetNormalBlock(new Point(point.X / 2, point.Y / 2));
+		if (point.Y % 2 == 0) {
+			if (point.X % 2 == 0)
+				return block.Restrictions.HasFlag(MazeWalls.Quadrant4);
+			else
+				return block.Restrictions.HasFlag(MazeWalls.Quadrant1);
+		}
+		else {
+			if (point.X % 2 == 0)
+				return block.Restrictions.HasFlag(MazeWalls.Quadrant3);
+			else
+				return block.Restrictions.HasFlag(MazeWalls.Quadrant2);
+		}
+	}
+	/** <summary> Sets the restriction from the generator using this quadrant. </summary> */
+	public void SetRestricted(Point point, bool restrict) {
+		MazeBlock block = GetNormalBlock(new Point(point.X / 2, point.Y / 2));
+		if (point.Y % 2 == 0) {
+			if (point.X % 2 == 0) {
+				if (restrict) block.Restrictions |= MazeWalls.Quadrant4;
+				else block.Restrictions &= ~MazeWalls.Quadrant4;
+			}
+			else {
+				if (restrict) block.Restrictions |= MazeWalls.Quadrant1;
+				else block.Restrictions &= ~MazeWalls.Quadrant1;
+			}
+		}
+		else {
+			if (point.X % 2 == 0) {
+				if (restrict) block.Restrictions |= MazeWalls.Quadrant3;
+				else block.Restrictions &= ~MazeWalls.Quadrant3;
+			}
+			else {
+				if (restrict) block.Restrictions |= MazeWalls.Quadrant2;
+				else block.Restrictions &= ~MazeWalls.Quadrant2;
+			}
+		}
+	}
+
+	/** <summary> Sets the position of the entrance. </summary> */
+	public void SetEntrance(Point point) {
+		if (point.X >= 0 && point.X < this.blocks.GetLength(0) &&
+			point.Y >= 0 && point.Y < this.blocks.GetLength(1)) {
+			for (int x = 0; x < this.blocks.GetLength(0); x++) {
+				for (int y = 0; y < this.blocks.GetLength(1); y++) {
+					MazeBlock block = this.blocks[x, y];
+					if (block.IsEntrance) {
+						SetBlockSolid(new Point(x, y), false);
+					}
+				}
+			}
+			SetBlockSolid(placePoint, true);
+			GetBlock(placePoint).Walls = MazeWalls.Entrance | (MazeWalls)placeDirection;
+			MazeBlock sideBlock;
+			switch (placeDirection) {
+			case MazeBuildingDirections.North:
+				sideBlock = GetNormalBlock(new Point(placePoint.X, placePoint.Y + 1));
+				sideBlock.Walls &= ~(MazeWalls.NorthLeft | MazeWalls.NorthMiddle | MazeWalls.NorthRight | MazeWalls.Quadrant4 | MazeWalls.Quadrant1);
+				break;
+			case MazeBuildingDirections.South:
+				sideBlock = GetNormalBlock(new Point(placePoint.X, placePoint.Y - 1));
+				sideBlock.Walls &= ~(MazeWalls.SouthLeft | MazeWalls.SouthMiddle | MazeWalls.SouthRight | MazeWalls.Quadrant3 | MazeWalls.Quadrant2);
+				break;
+			case MazeBuildingDirections.West:
+				sideBlock = GetNormalBlock(new Point(placePoint.X + 1, placePoint.Y));
+				sideBlock.Walls &= ~(MazeWalls.WestTop | MazeWalls.WestMiddle | MazeWalls.WestBottom | MazeWalls.Quadrant4 | MazeWalls.Quadrant3);
+				break;
+			case MazeBuildingDirections.East:
+				sideBlock = GetNormalBlock(new Point(placePoint.X - 1, placePoint.Y));
+				sideBlock.Walls &= ~(MazeWalls.EastTop | MazeWalls.EastMiddle | MazeWalls.EastBottom | MazeWalls.Quadrant1 | MazeWalls.Quadrant2);
+				break;
+			}
+		}
+	}
+	/** <summary> Sets the position of the exit. </summary> */
+	public void SetExit(Point point) {
+		if (point.X >= 0 && point.X < this.blocks.GetLength(0) &&
+			point.Y >= 0 && point.Y < this.blocks.GetLength(1)) {
+			for (int x = 0; x < this.blocks.GetLength(0); x++) {
+				for (int y = 0; y < this.blocks.GetLength(1); y++) {
+					MazeBlock block = this.blocks[x, y];
+					if (block.IsExit) {
+						SetBlockSolid(new Point(x, y), false);
+					}
+				}
+			}
+			SetBlockSolid(placePoint, true);
+			GetBlock(placePoint).Walls = MazeWalls.Exit | (MazeWalls)placeDirection;
+			MazeBlock sideBlock;
+			switch (placeDirection) {
+			case MazeBuildingDirections.North:
+				sideBlock = GetNormalBlock(new Point(placePoint.X, placePoint.Y + 1));
+				sideBlock.Walls &= ~(MazeWalls.NorthLeft | MazeWalls.NorthMiddle | MazeWalls.NorthRight | MazeWalls.Quadrant4 | MazeWalls.Quadrant1);
+				break;
+			case MazeBuildingDirections.South:
+				sideBlock = GetNormalBlock(new Point(placePoint.X, placePoint.Y - 1));
+				sideBlock.Walls &= ~(MazeWalls.SouthLeft | MazeWalls.SouthMiddle | MazeWalls.SouthRight | MazeWalls.Quadrant3 | MazeWalls.Quadrant2);
+				break;
+			case MazeBuildingDirections.West:
+				sideBlock = GetNormalBlock(new Point(placePoint.X + 1, placePoint.Y));
+				sideBlock.Walls &= ~(MazeWalls.WestTop | MazeWalls.WestMiddle | MazeWalls.WestBottom | MazeWalls.Quadrant4 | MazeWalls.Quadrant3);
+				break;
+			case MazeBuildingDirections.East:
+				sideBlock = GetNormalBlock(new Point(placePoint.X - 1, placePoint.Y));
+				sideBlock.Walls &= ~(MazeWalls.EastTop | MazeWalls.EastMiddle | MazeWalls.EastBottom | MazeWalls.Quadrant1 | MazeWalls.Quadrant2);
+				break;
+			}
 		}
 	}
 
@@ -336,7 +567,7 @@ public class MazeEditor : Control {
 		}
 	}
 	/** <summary> Sets if the specified quadrant is solid. </summary> */
-	public void SetQuadrantSolid(Point point, bool solid) {
+	public void SetQuadrantSolid(Point point, bool solid, bool surroundingWalls = false) {
 		if (point.X < 0 || point.X >= this.blocks.GetLength(0) * 2 || point.Y < 0 || point.Y >= this.blocks.GetLength(1) * 2)
 			return;
 
@@ -358,7 +589,7 @@ public class MazeEditor : Control {
 			}
 		}
 		else if (point.Y % 2 == 1 && GetBlock(new Point(point.X / 2, point.Y / 2 + 1)).BuildingDirection != MazeBuildingDirections.South) {
-			if (point.X % 2 == 0&& GetBlock(new Point(point.X / 2 - 1, point.Y / 2)).BuildingDirection != MazeBuildingDirections.West) {
+			if (point.X % 2 == 0 && GetBlock(new Point(point.X / 2 - 1, point.Y / 2)).BuildingDirection != MazeBuildingDirections.West) {
 				if (solid) block.Walls |= MazeWalls.Quadrant3;
 				else block.Walls &= ~MazeWalls.Quadrant3;
 			}
@@ -370,7 +601,7 @@ public class MazeEditor : Control {
 				valid = false;
 			}
 		}
-		if (solid && valid) {
+		if (solid && (valid || surroundingWalls)) {
 			SetWallXSolid(point, true); SetWallXSolid(Point.Add(point, new Size(0, -1)), true);
 			SetWallYSolid(point, true); SetWallYSolid(Point.Add(point, new Size(-1, 0)), true);
 		}
@@ -385,12 +616,29 @@ public class MazeEditor : Control {
 		get { return this.blocks; }
 	}
 
+	public PlaceModes PlaceMode {
+		get { return this.placeMode; }
+		set {
+			this.placeMode = value;
+			this.Invalidate();
+		}
+	}
+
+	[Browsable(true)][Category("Appearance")]
+	[DisplayName("Wall Style")][Description("")]
+	public WallStyles WallStyle {
+		get { return this.wallStyle; }
+		set {
+			this.wallStyle = value;
+			this.Invalidate();
+		}
+	}
 	[Browsable(true)][Category("Behavior")]
 	[DisplayName("Maze Size")][Description("")]
 	public Size MazeSize {
 		get { return new Size(this.blocks.GetLength(0), this.blocks.GetLength(1)); }
 		set {
-			MazeBlock[,] newBlocks = new MazeBlock[Math.Max(1, value.Width), Math.Max(1, value.Height)];
+			MazeBlock[,] newBlocks = new MazeBlock[Math.Max(1, Math.Min(255, value.Width)), Math.Max(1, Math.Min(255, value.Height))];
 			for (int x = 0; x < newBlocks.GetLength(0); x++) {
 				for (int y = 0; y < newBlocks.GetLength(1); y++) {
 					if (x < this.blocks.GetLength(0) && y < this.blocks.GetLength(1))
@@ -400,6 +648,8 @@ public class MazeEditor : Control {
 				}
 			}
 			this.blocks = newBlocks;
+			this.Width = this.blocks.GetLength(0) * (this.pathWidth * 2 + this.wallWidth * 4);
+			this.Height = this.blocks.GetLength(1) * (this.pathWidth * 2 + this.wallWidth * 4);
 			this.Invalidate();
 		}
 	}
@@ -410,7 +660,7 @@ public class MazeEditor : Control {
 	
 	/** <summary> Called when the mouse button is down. </summary> */
 	protected override void OnMouseDown(MouseEventArgs e) {
-		if (placeMode == 0) {
+		if (placeMode == PlaceModes.Walls) {
 			if (hoverType != MazeWallTypes.None) {
 				bool addWall = (e.Button == MouseButtons.Right);
 				if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right) {
@@ -421,44 +671,45 @@ public class MazeEditor : Control {
 					}
 				}
 			}
-			if (e.Button == MouseButtons.Middle) {
-				Point point = new Point(e.X / (this.pathWidth * 2 + this.wallWidth * 4),
-										e.Y / (this.pathWidth * 2 + this.wallWidth * 4));
-				SetBlockSolid(point, GetBlock(point).Empty);
+		}
+		else if (placeMode == PlaceModes.Tiles) {
+			Point point = new Point(e.X / (this.pathWidth * 2 + this.wallWidth * 4),
+									e.Y / (this.pathWidth * 2 + this.wallWidth * 4));
+			if (e.Button == MouseButtons.Left && GetBlock(point).Empty) {
+				SetBlockSolid(point, true);
+			}
+			else if (e.Button == MouseButtons.Right) {
+				SetBlockSolid(point, false);
 			}
 		}
-		else if (placeMode != 0 && placeDirection != MazeBuildingDirections.None && e.Button == MouseButtons.Left) {
-			for (int x = 0; x < this.blocks.GetLength(0); x++) {
-				for (int y = 0; y < this.blocks.GetLength(1); y++) {
-					MazeBlock block = this.blocks[x, y];
-					if ((placeMode == 1 && block.IsEntrance) || (placeMode == 2 && block.IsExit)) {
-						SetBlockSolid(new Point(x, y), false);
-						SetBlockSolid(new Point(x, y), true);
-						SetBlockSolid(new Point(x, y), false);
-					}
+		else if (placeMode == PlaceModes.Entrance || placeMode == PlaceModes.Exit) {
+			Point point = new Point(e.X / (this.pathWidth * 2 + this.wallWidth * 4),
+									e.Y / (this.pathWidth * 2 + this.wallWidth * 4));
+			if (placeDirection != MazeBuildingDirections.None && e.Button == MouseButtons.Left) {
+				if (placeMode == PlaceModes.Entrance)
+					SetEntrance(point);
+				if (placeMode == PlaceModes.Exit)
+					SetExit(point);
+			}
+			else if (e.Button == MouseButtons.Right) {
+				if (GetBlock(point).IsBuilding) {
+					SetBlockSolid(point, false);
 				}
 			}
-			SetBlockSolid(placePoint, true);
-			GetBlock(placePoint).Walls = (placeMode == 1 ? MazeWalls.EntranceDirection : MazeWalls.ExitDirection) | (MazeWalls)placeDirection;
-			Point placeDir2 = placePoint;
-			MazeBlock sideBlock;
-			switch (placeDirection) {
-			case MazeBuildingDirections.North:
-				sideBlock = GetNormalBlock(new Point(placeDir2.X, placeDir2.Y + 1));
-				sideBlock.Walls &= ~(MazeWalls.NorthLeft | MazeWalls.NorthMiddle | MazeWalls.NorthRight | MazeWalls.Quadrant4 | MazeWalls.Quadrant1);
-				break;
-			case MazeBuildingDirections.South:
-				sideBlock = GetNormalBlock(new Point(placeDir2.X, placeDir2.Y - 1));
-				sideBlock.Walls &= ~(MazeWalls.SouthLeft | MazeWalls.SouthMiddle | MazeWalls.SouthRight | MazeWalls.Quadrant3 | MazeWalls.Quadrant2);
-				break;
-			case MazeBuildingDirections.West:
-				sideBlock = GetNormalBlock(new Point(placeDir2.X + 1, placeDir2.Y));
-				sideBlock.Walls &= ~(MazeWalls.WestTop | MazeWalls.WestMiddle | MazeWalls.WestBottom | MazeWalls.Quadrant4 | MazeWalls.Quadrant3);
-				break;
-			case MazeBuildingDirections.East:
-				sideBlock = GetNormalBlock(new Point(placeDir2.X - 1, placeDir2.Y));
-				sideBlock.Walls &= ~(MazeWalls.EastTop | MazeWalls.EastMiddle | MazeWalls.EastBottom | MazeWalls.Quadrant1 | MazeWalls.Quadrant2);
-				break;
+		}
+		else if (placeMode == PlaceModes.Generate) {
+			if (IsNormalBlock(new Point(generatePoint.X / 2, generatePoint.Y / 2))) {
+				if (IsQuadrantSolid(generatePoint) && !IsRestricted(generatePoint)) {
+					// StartGeneration(generatePoint);
+				}
+			}
+		}
+		else if (placeMode == PlaceModes.Restrict) {
+			if (e.Button == MouseButtons.Left) {
+				SetRestricted(this.generatePoint, true);
+			}
+			else if (e.Button == MouseButtons.Right) {
+				SetRestricted(this.generatePoint, false);
 			}
 		}
 		base.OnMouseDown(e);
@@ -492,6 +743,10 @@ public class MazeEditor : Control {
 			(this.hoverType == MazeWallTypes.WallY && !IsNormalBlock(new Point((this.hoverPoint.X + 1) / 2, this.hoverPoint.Y / 2))))) {
 			this.hoverType = MazeWallTypes.None;
 		}
+
+		this.generatePoint = new Point(e.X / (this.pathWidth + this.wallWidth * 2),
+									   e.Y / (this.pathWidth + this.wallWidth * 2));
+
 		int TW = this.pathWidth * 2 + this.wallWidth * 4;
 		int HW = this.pathWidth + this.wallWidth * 2;
 		this.placePoint = new Point(e.X / (this.pathWidth * 2 + this.wallWidth * 4),
@@ -520,7 +775,11 @@ public class MazeEditor : Control {
 	}
 	/** <summary> Called when the mouse leaves the control. </summary> */
 	protected override void OnMouseLeave(EventArgs e) {
-		
+		this.placePoint = new Point(-1, -1);
+		this.generatePoint = new Point(-1, -1);
+		this.hoverPoint = new Point(-1, -1);
+		this.hoverType = MazeWallTypes.None;
+		this.Invalidate();
 		base.OnMouseLeave(e);
 	}
 	/** <summary> Paints the control. </summary> */
@@ -533,6 +792,7 @@ public class MazeEditor : Control {
 		int WO2 = P * 2 + W * 3;
 		int PO = P + W * 3;
 		int TW = P * 2 + W * 4;
+		int HW = P + W * 2;
 
 		for (int x = 0; x < this.blocks.GetLength(0); x++) {
 			for (int y = 0; y < this.blocks.GetLength(1); y++) {
@@ -574,7 +834,7 @@ public class MazeEditor : Control {
 					g.FillRectangle(b, new Rectangle(pos, new Size(P * 2 + W * 4, P * 2 + W * 4)));
 					b.Dispose();
 
-					b = new SolidBrush(WallColors[wallStyle]);
+					b = new SolidBrush(WallColors[(int)wallStyle]);
 					if (block.Walls.HasFlag(MazeWalls.Quadrant1))
 						g.FillRectangle(b, new Rectangle(pos.X + PO, pos.Y + W, P, P));
 					if (block.Walls.HasFlag(MazeWalls.Quadrant2))
@@ -631,11 +891,23 @@ public class MazeEditor : Control {
 						g.FillRectangle(b, new Rectangle(pos.X + WO, pos.Y + WO2, W * 2, W));
 
 					b.Dispose();
+
+					b = new SolidBrush(RestrictColor);
+					if (block.Restrictions.HasFlag(MazeWalls.Quadrant1))
+						g.FillRectangle(b, new Rectangle(pos.X + HW, pos.Y, HW, HW));
+					if (block.Restrictions.HasFlag(MazeWalls.Quadrant2))
+						g.FillRectangle(b, new Rectangle(pos.X + HW, pos.Y + HW, HW, HW));
+					if (block.Restrictions.HasFlag(MazeWalls.Quadrant3))
+						g.FillRectangle(b, new Rectangle(pos.X, pos.Y + HW, HW, HW));
+					if (block.Restrictions.HasFlag(MazeWalls.Quadrant4))
+						g.FillRectangle(b, new Rectangle(pos.X, pos.Y, HW, HW));
+
+					b.Dispose();
 				}
 			}
 		}
 
-		if (placeMode == 0) {
+		if (placeMode == PlaceModes.Walls) {
 			if (hoverType != MazeWallTypes.None) {
 				int PW2 = (pathWidth + wallWidth * 2);
 				int W2 =  wallWidth * 2;
@@ -652,6 +924,27 @@ public class MazeEditor : Control {
 					break;
 				}
 				b.Dispose();
+			}
+		}
+		else if (placeMode == PlaceModes.Tiles) {
+			Brush b = new SolidBrush(HighlightColor);
+			g.FillRectangle(b, new Rectangle(placePoint.X * TW, placePoint.Y * TW, TW, TW));
+			b.Dispose();
+		}
+		else if (placeMode == PlaceModes.Restrict) {
+			if (IsNormalBlock(new Point(generatePoint.X / 2, generatePoint.Y / 2))) {
+				Brush b = new SolidBrush(RestrictColor);
+				g.FillRectangle(b, new Rectangle(generatePoint.X * HW, generatePoint.Y * HW, HW, HW));
+				b.Dispose();
+			}
+		}
+		else if (placeMode == PlaceModes.Generate) {
+			if (IsNormalBlock(new Point(generatePoint.X / 2, generatePoint.Y / 2))) {
+				if (IsQuadrantSolid(generatePoint) && !IsRestricted(generatePoint)) {
+					Brush b = new SolidBrush(GenerateColor);
+					g.FillRectangle(b, new Rectangle(generatePoint.X * HW, generatePoint.Y * HW, HW, HW));
+					b.Dispose();
+				}
 			}
 		}
 
@@ -691,7 +984,7 @@ public class MazeEditor : Control {
 			b.Dispose();
 		}
 
-		if (placeMode != 0) {
+		if (placeMode == PlaceModes.Entrance || placeMode == PlaceModes.Exit) {
 			int alpha = 100;
 			Point pos = new Point(placePoint.X * (P * 2 + W * 4),
 								  placePoint.Y * (P * 2 + W * 4));
@@ -699,7 +992,7 @@ public class MazeEditor : Control {
 			Brush b = new SolidBrush(NewColor(BuildingColor, alpha));
 			g.FillRectangle(b, new Rectangle(pos, new Size(P * 2 + W * 4, P * 2 + W * 4)));
 			b.Dispose();
-			if (placeMode == 1) {
+			if (placeMode == PlaceModes.Entrance) {
 				b = new SolidBrush(NewColor(BuildingColor2, alpha));
 				g.FillRectangle(b, new Rectangle(pos.X + W + P /2, pos.Y + W + P /2, P + W*2, P + W*2));
 				b.Dispose();
@@ -734,6 +1027,8 @@ public class MazeBlock {
 
 	/** <summary> The walls which are set on the maze tile. </summary> */
 	public MazeWalls Walls;
+	/** <summary> The quadrants that are restricted from generation. </summary> */
+	public MazeWalls Restrictions;
 	/** <summary> True if this block does not show up on the grid. </summary> */
 	public bool Empty;
 
@@ -744,11 +1039,13 @@ public class MazeBlock {
 	/** <summary> Constructs the default maze block. </summary> */
 	public MazeBlock() {
 		this.Walls = MazeWalls.All;
+		this.Restrictions = MazeWalls.None;
 		this.Empty = true;
 	}
 	/** <summary> Constructs the default maze block. </summary> */
 	public MazeBlock(MazeWalls walls, bool empty = false) {
 		this.Walls = walls;
+		this.Restrictions = MazeWalls.None;
 		this.Empty = empty;
 	}
 
@@ -797,7 +1094,18 @@ public enum MazeWallTypes {
 	WallY = 2,
 	Quadrant = 3
 }
-public class MazeEventArgs : EventArgs {
-
+public enum WallStyles {
+	BrickWalls = 0,
+	Hedges = 1,
+	IceBlocks = 2,
+	WoodenFences = 3
+}
+public enum PlaceModes {
+	Walls = 0,
+	Tiles = 1,
+	Entrance = 2,
+	Exit = 3,
+	Generate = 4,
+	Restrict = 5
 }
 }

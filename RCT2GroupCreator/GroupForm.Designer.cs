@@ -25,11 +25,17 @@ namespace RCT2GroupCreator {
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GroupForm));
 			this.splitContainerSideView = new System.Windows.Forms.SplitContainer();
+			this.buttonNextObject = new CustomControls.RCTButton();
+			this.buttonPreviousObject = new CustomControls.RCTButton();
+			this.rctButton3 = new CustomControls.RCTButton();
+			this.rctButton2 = new CustomControls.RCTButton();
+			this.rctButton1 = new CustomControls.RCTButton();
 			this.rctPanel3 = new CustomControls.RCTPanel();
+			this.iconView = new System.Windows.Forms.PictureBox();
 			this.rctPanel4 = new CustomControls.RCTPanel();
+			this.buttonNames = new CustomControls.RCTButton();
 			this.buttonBrowse = new CustomControls.RCTButton();
 			this.buttonSave = new CustomControls.RCTButton();
 			this.buttonAbout = new CustomControls.RCTButton();
@@ -37,6 +43,7 @@ namespace RCT2GroupCreator {
 			this.buttonSaveAs = new CustomControls.RCTButton();
 			this.buttonOpen = new CustomControls.RCTButton();
 			this.rctPanel1 = new CustomControls.RCTPanel();
+			this.objectView = new System.Windows.Forms.PictureBox();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.rctPanel2 = new CustomControls.RCTPanel();
 			this.tabGroupScenery = new System.Windows.Forms.ListView();
@@ -46,8 +53,8 @@ namespace RCT2GroupCreator {
 			this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader56 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.imageListFlags = new System.Windows.Forms.ImageList(this.components);
-			this.timerLoadObjects = new System.Windows.Forms.Timer(this.components);
+			this.imageListFlags = new System.Windows.Forms.ImageList();
+			this.timerLoadObjects = new System.Windows.Forms.Timer();
 			this.objDataBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this.splitContainerStatusBar = new System.Windows.Forms.SplitContainer();
 			this.statusBar = new CustomControls.RCTStatusBar();
@@ -59,20 +66,14 @@ namespace RCT2GroupCreator {
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialogIcon = new System.Windows.Forms.OpenFileDialog();
 			this.openFileDialogScenery = new System.Windows.Forms.OpenFileDialog();
-			this.buttonNextObject = new CustomControls.RCTButton();
-			this.buttonPreviousObject = new CustomControls.RCTButton();
-			this.rctButton3 = new CustomControls.RCTButton();
-			this.rctButton2 = new CustomControls.RCTButton();
-			this.rctButton1 = new CustomControls.RCTButton();
-			this.iconView = new System.Windows.Forms.PictureBox();
-			this.buttonNames = new CustomControls.RCTButton();
-			this.objectView = new System.Windows.Forms.PictureBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerSideView)).BeginInit();
 			this.splitContainerSideView.Panel1.SuspendLayout();
 			this.splitContainerSideView.Panel2.SuspendLayout();
 			this.splitContainerSideView.SuspendLayout();
 			this.rctPanel3.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.iconView)).BeginInit();
 			this.rctPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.objectView)).BeginInit();
 			this.panel1.SuspendLayout();
 			this.rctPanel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerStatusBar)).BeginInit();
@@ -80,8 +81,6 @@ namespace RCT2GroupCreator {
 			this.splitContainerStatusBar.Panel2.SuspendLayout();
 			this.splitContainerStatusBar.SuspendLayout();
 			this.statusBar.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.iconView)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.objectView)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// splitContainerSideView
@@ -118,6 +117,121 @@ namespace RCT2GroupCreator {
 			this.splitContainerSideView.SplitterWidth = 1;
 			this.splitContainerSideView.TabIndex = 123;
 			// 
+			// buttonNextObject
+			// 
+			this.buttonNextObject.BorderOnHover = true;
+			this.buttonNextObject.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonNextObject.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonNextObject.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonNextObject.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonNextObject.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonNextObject.Image = global::RCT2GroupCreator.Properties.Resources.ButtonRight;
+			this.buttonNextObject.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonNextObject.Location = new System.Drawing.Point(34, 266);
+			this.buttonNextObject.Name = "buttonNextObject";
+			this.buttonNextObject.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonNextObject.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonNextObject.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonNextObject.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonNextObject.Size = new System.Drawing.Size(20, 24);
+			this.buttonNextObject.TabIndex = 148;
+			this.buttonNextObject.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonNextObject.Toggleable = false;
+			this.buttonNextObject.Toggled = false;
+			this.buttonNextObject.ButtonPressed += new System.EventHandler(this.NextObject);
+			// 
+			// buttonPreviousObject
+			// 
+			this.buttonPreviousObject.BorderOnHover = true;
+			this.buttonPreviousObject.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonPreviousObject.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonPreviousObject.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonPreviousObject.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonPreviousObject.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonPreviousObject.Image = global::RCT2GroupCreator.Properties.Resources.ButtonLeft;
+			this.buttonPreviousObject.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonPreviousObject.Location = new System.Drawing.Point(13, 266);
+			this.buttonPreviousObject.Name = "buttonPreviousObject";
+			this.buttonPreviousObject.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonPreviousObject.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonPreviousObject.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonPreviousObject.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonPreviousObject.Size = new System.Drawing.Size(20, 24);
+			this.buttonPreviousObject.TabIndex = 147;
+			this.buttonPreviousObject.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonPreviousObject.Toggleable = false;
+			this.buttonPreviousObject.Toggled = false;
+			this.buttonPreviousObject.ButtonPressed += new System.EventHandler(this.PreviousObject);
+			// 
+			// rctButton3
+			// 
+			this.rctButton3.BorderOnHover = true;
+			this.rctButton3.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.rctButton3.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.rctButton3.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.rctButton3.FontType = CustomControls.Visuals.FontType.Bold;
+			this.rctButton3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.rctButton3.Image = global::RCT2GroupCreator.Properties.Resources.ButtonMinus;
+			this.rctButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.rctButton3.Location = new System.Drawing.Point(100, 266);
+			this.rctButton3.Name = "rctButton3";
+			this.rctButton3.OutlineColor = System.Drawing.Color.Transparent;
+			this.rctButton3.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.rctButton3.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.rctButton3.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.rctButton3.Size = new System.Drawing.Size(24, 24);
+			this.rctButton3.TabIndex = 146;
+			this.rctButton3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.rctButton3.Toggleable = false;
+			this.rctButton3.Toggled = false;
+			this.rctButton3.ButtonPressed += new System.EventHandler(this.RemoveScenery);
+			// 
+			// rctButton2
+			// 
+			this.rctButton2.BorderOnHover = true;
+			this.rctButton2.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.rctButton2.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.rctButton2.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.rctButton2.FontType = CustomControls.Visuals.FontType.Bold;
+			this.rctButton2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.rctButton2.Image = global::RCT2GroupCreator.Properties.Resources.ButtonPlus;
+			this.rctButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.rctButton2.Location = new System.Drawing.Point(75, 266);
+			this.rctButton2.Name = "rctButton2";
+			this.rctButton2.OutlineColor = System.Drawing.Color.Transparent;
+			this.rctButton2.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.rctButton2.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.rctButton2.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.rctButton2.Size = new System.Drawing.Size(24, 24);
+			this.rctButton2.TabIndex = 145;
+			this.rctButton2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.rctButton2.Toggleable = false;
+			this.rctButton2.Toggled = false;
+			this.rctButton2.ButtonPressed += new System.EventHandler(this.AddScenery);
+			// 
+			// rctButton1
+			// 
+			this.rctButton1.BorderOnHover = true;
+			this.rctButton1.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.rctButton1.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.rctButton1.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.rctButton1.FontType = CustomControls.Visuals.FontType.Bold;
+			this.rctButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.rctButton1.Image = global::RCT2GroupCreator.Properties.Resources.ButtonIcon;
+			this.rctButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.rctButton1.Location = new System.Drawing.Point(169, 266);
+			this.rctButton1.Name = "rctButton1";
+			this.rctButton1.OutlineColor = System.Drawing.Color.Transparent;
+			this.rctButton1.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.rctButton1.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.rctButton1.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.rctButton1.Size = new System.Drawing.Size(24, 24);
+			this.rctButton1.TabIndex = 144;
+			this.rctButton1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.rctButton1.Toggleable = false;
+			this.rctButton1.Toggled = false;
+			this.rctButton1.ButtonPressed += new System.EventHandler(this.ChangeTabIcon);
+			// 
 			// rctPanel3
 			// 
 			this.rctPanel3.Controls.Add(this.iconView);
@@ -131,6 +245,16 @@ namespace RCT2GroupCreator {
 			this.rctPanel3.Size = new System.Drawing.Size(48, 48);
 			this.rctPanel3.TabIndex = 142;
 			// 
+			// iconView
+			// 
+			this.iconView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
+			this.iconView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.iconView.Location = new System.Drawing.Point(1, 1);
+			this.iconView.Name = "iconView";
+			this.iconView.Size = new System.Drawing.Size(46, 46);
+			this.iconView.TabIndex = 0;
+			this.iconView.TabStop = false;
+			// 
 			// rctPanel4
 			// 
 			this.rctPanel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
@@ -141,6 +265,29 @@ namespace RCT2GroupCreator {
 			this.rctPanel4.PanelBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.rctPanel4.Size = new System.Drawing.Size(48, 48);
 			this.rctPanel4.TabIndex = 143;
+			// 
+			// buttonNames
+			// 
+			this.buttonNames.BorderOnHover = true;
+			this.buttonNames.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonNames.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonNames.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonNames.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonNames.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonNames.Image = global::RCT2GroupCreator.Properties.Resources.ButtonNames;
+			this.buttonNames.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonNames.Location = new System.Drawing.Point(144, 266);
+			this.buttonNames.Name = "buttonNames";
+			this.buttonNames.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonNames.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonNames.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonNames.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonNames.Size = new System.Drawing.Size(24, 24);
+			this.buttonNames.TabIndex = 143;
+			this.buttonNames.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonNames.Toggleable = false;
+			this.buttonNames.Toggled = false;
+			this.buttonNames.ButtonPressed += new System.EventHandler(this.ChangeNames);
 			// 
 			// buttonBrowse
 			// 
@@ -304,6 +451,18 @@ namespace RCT2GroupCreator {
 			this.rctPanel1.PanelBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
 			this.rctPanel1.Size = new System.Drawing.Size(192, 256);
 			this.rctPanel1.TabIndex = 141;
+			// 
+			// objectView
+			// 
+			this.objectView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.objectView.Cursor = System.Windows.Forms.Cursors.Default;
+			this.objectView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.objectView.Location = new System.Drawing.Point(1, 1);
+			this.objectView.Margin = new System.Windows.Forms.Padding(0);
+			this.objectView.Name = "objectView";
+			this.objectView.Size = new System.Drawing.Size(190, 254);
+			this.objectView.TabIndex = 9;
+			this.objectView.TabStop = false;
 			// 
 			// panel1
 			// 
@@ -529,166 +688,6 @@ namespace RCT2GroupCreator {
 			this.openFileDialogScenery.Filter = "RCT2 Object Files|*.DAT";
 			this.openFileDialogScenery.Multiselect = true;
 			// 
-			// buttonNextObject
-			// 
-			this.buttonNextObject.BorderOnHover = true;
-			this.buttonNextObject.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonNextObject.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonNextObject.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonNextObject.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonNextObject.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonNextObject.Image = global::RCT2GroupCreator.Properties.Resources.ButtonRight;
-			this.buttonNextObject.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonNextObject.Location = new System.Drawing.Point(34, 266);
-			this.buttonNextObject.Name = "buttonNextObject";
-			this.buttonNextObject.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonNextObject.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonNextObject.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonNextObject.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonNextObject.Size = new System.Drawing.Size(20, 24);
-			this.buttonNextObject.TabIndex = 148;
-			this.buttonNextObject.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonNextObject.Toggleable = false;
-			this.buttonNextObject.Toggled = false;
-			this.buttonNextObject.ButtonPressed += new System.EventHandler(this.NextObject);
-			// 
-			// buttonPreviousObject
-			// 
-			this.buttonPreviousObject.BorderOnHover = true;
-			this.buttonPreviousObject.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonPreviousObject.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonPreviousObject.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonPreviousObject.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonPreviousObject.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonPreviousObject.Image = global::RCT2GroupCreator.Properties.Resources.ButtonLeft;
-			this.buttonPreviousObject.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonPreviousObject.Location = new System.Drawing.Point(13, 266);
-			this.buttonPreviousObject.Name = "buttonPreviousObject";
-			this.buttonPreviousObject.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonPreviousObject.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonPreviousObject.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonPreviousObject.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonPreviousObject.Size = new System.Drawing.Size(20, 24);
-			this.buttonPreviousObject.TabIndex = 147;
-			this.buttonPreviousObject.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonPreviousObject.Toggleable = false;
-			this.buttonPreviousObject.Toggled = false;
-			this.buttonPreviousObject.ButtonPressed += new System.EventHandler(this.PreviousObject);
-			// 
-			// rctButton3
-			// 
-			this.rctButton3.BorderOnHover = true;
-			this.rctButton3.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.rctButton3.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.rctButton3.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.rctButton3.FontType = CustomControls.Visuals.FontType.Bold;
-			this.rctButton3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctButton3.Image = global::RCT2GroupCreator.Properties.Resources.ButtonMinus;
-			this.rctButton3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.rctButton3.Location = new System.Drawing.Point(100, 266);
-			this.rctButton3.Name = "rctButton3";
-			this.rctButton3.OutlineColor = System.Drawing.Color.Transparent;
-			this.rctButton3.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.rctButton3.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.rctButton3.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.rctButton3.Size = new System.Drawing.Size(24, 24);
-			this.rctButton3.TabIndex = 146;
-			this.rctButton3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.rctButton3.Toggleable = false;
-			this.rctButton3.Toggled = false;
-			this.rctButton3.ButtonPressed += new System.EventHandler(this.RemoveScenery);
-			// 
-			// rctButton2
-			// 
-			this.rctButton2.BorderOnHover = true;
-			this.rctButton2.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.rctButton2.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.rctButton2.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.rctButton2.FontType = CustomControls.Visuals.FontType.Bold;
-			this.rctButton2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctButton2.Image = global::RCT2GroupCreator.Properties.Resources.ButtonPlus;
-			this.rctButton2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.rctButton2.Location = new System.Drawing.Point(75, 266);
-			this.rctButton2.Name = "rctButton2";
-			this.rctButton2.OutlineColor = System.Drawing.Color.Transparent;
-			this.rctButton2.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.rctButton2.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.rctButton2.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.rctButton2.Size = new System.Drawing.Size(24, 24);
-			this.rctButton2.TabIndex = 145;
-			this.rctButton2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.rctButton2.Toggleable = false;
-			this.rctButton2.Toggled = false;
-			this.rctButton2.ButtonPressed += new System.EventHandler(this.AddScenery);
-			// 
-			// rctButton1
-			// 
-			this.rctButton1.BorderOnHover = true;
-			this.rctButton1.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.rctButton1.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.rctButton1.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.rctButton1.FontType = CustomControls.Visuals.FontType.Bold;
-			this.rctButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctButton1.Image = global::RCT2GroupCreator.Properties.Resources.ButtonIcon;
-			this.rctButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.rctButton1.Location = new System.Drawing.Point(169, 266);
-			this.rctButton1.Name = "rctButton1";
-			this.rctButton1.OutlineColor = System.Drawing.Color.Transparent;
-			this.rctButton1.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.rctButton1.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.rctButton1.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.rctButton1.Size = new System.Drawing.Size(24, 24);
-			this.rctButton1.TabIndex = 144;
-			this.rctButton1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.rctButton1.Toggleable = false;
-			this.rctButton1.Toggled = false;
-			this.rctButton1.ButtonPressed += new System.EventHandler(this.ChangeTabIcon);
-			// 
-			// iconView
-			// 
-			this.iconView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
-			this.iconView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.iconView.Location = new System.Drawing.Point(1, 1);
-			this.iconView.Name = "iconView";
-			this.iconView.Size = new System.Drawing.Size(46, 46);
-			this.iconView.TabIndex = 0;
-			this.iconView.TabStop = false;
-			// 
-			// buttonNames
-			// 
-			this.buttonNames.BorderOnHover = true;
-			this.buttonNames.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonNames.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonNames.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonNames.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonNames.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonNames.Image = global::RCT2GroupCreator.Properties.Resources.ButtonNames;
-			this.buttonNames.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonNames.Location = new System.Drawing.Point(144, 266);
-			this.buttonNames.Name = "buttonNames";
-			this.buttonNames.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonNames.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonNames.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonNames.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonNames.Size = new System.Drawing.Size(24, 24);
-			this.buttonNames.TabIndex = 143;
-			this.buttonNames.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonNames.Toggleable = false;
-			this.buttonNames.Toggled = false;
-			this.buttonNames.ButtonPressed += new System.EventHandler(this.ChangeNames);
-			// 
-			// objectView
-			// 
-			this.objectView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.objectView.Cursor = System.Windows.Forms.Cursors.Default;
-			this.objectView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.objectView.Location = new System.Drawing.Point(1, 1);
-			this.objectView.Margin = new System.Windows.Forms.Padding(0);
-			this.objectView.Name = "objectView";
-			this.objectView.Size = new System.Drawing.Size(190, 254);
-			this.objectView.TabIndex = 9;
-			this.objectView.TabStop = false;
-			// 
 			// GroupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -707,7 +706,9 @@ namespace RCT2GroupCreator {
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerSideView)).EndInit();
 			this.splitContainerSideView.ResumeLayout(false);
 			this.rctPanel3.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.iconView)).EndInit();
 			this.rctPanel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.objectView)).EndInit();
 			this.panel1.ResumeLayout(false);
 			this.rctPanel2.ResumeLayout(false);
 			this.splitContainerStatusBar.Panel1.ResumeLayout(false);
@@ -715,8 +716,6 @@ namespace RCT2GroupCreator {
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerStatusBar)).EndInit();
 			this.splitContainerStatusBar.ResumeLayout(false);
 			this.statusBar.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.iconView)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.objectView)).EndInit();
 			this.ResumeLayout(false);
 
 		}

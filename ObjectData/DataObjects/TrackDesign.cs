@@ -542,6 +542,12 @@ public class MazeTile {
 					Walls == MazeWalls.ExitSouth);
 		}
 	}
+	/** <summary> True if the exit is on this tile. </summary> */
+	public bool IsBuilding {
+		get {
+			return (IsEntrance || IsExit);
+		}
+	}
 	/** <summary> Gets the direction the building on this tile is facing. </summary> */
 	public MazeBuildingDirections BuildingDirection {
 		get {
@@ -621,8 +627,9 @@ public enum MazeWalls : ushort {
 	BuildingNorth = 0x00001,
 	BuildingEast = 0x0000,
 
-	EntranceDirection = 0x0800,
-	ExitDirection = 0x8000
+	Entrance = 0x0800,
+	Exit = 0x8000,
+	Building = 0x8800
 }
 /** <summary> The directions an entrance/exit can face. </summary> */
 public enum MazeBuildingDirections {
