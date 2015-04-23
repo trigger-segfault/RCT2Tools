@@ -838,7 +838,7 @@ public class MazeEditor : Control {
 			if (hoverType != MazeWallTypes.None) {
 				bool addWall = (e.Button == MouseButtons.Right);
 				if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right) {
-					if (e.Button == MouseButtons.Left && wallsMakeTiles) {
+					if (/*e.Button == MouseButtons.Left && */wallsMakeTiles) {
 						if (GetBlock(new Point(hoverPoint.X / 2, hoverPoint.Y / 2)).Empty) {
 							SetBlockSolid(new Point(hoverPoint.X / 2, hoverPoint.Y / 2), true);
 						}
@@ -851,14 +851,14 @@ public class MazeEditor : Control {
 							SetBlockSolid(new Point(hoverPoint.X / 2 + 1, hoverPoint.Y / 2), true);
 						}
 					}
-					if (!GetBlock(new Point(hoverPoint.X / 2, hoverPoint.Y / 2)).Empty || e.Button == MouseButtons.Left || wallsMakeTiles) {
+					//if (!GetBlock(new Point(hoverPoint.X / 2, hoverPoint.Y / 2)).Empty || e.Button == MouseButtons.Left || wallsMakeTiles) {
 						switch (hoverType) {
 						case MazeWallTypes.WallX: SetWallXSolid(hoverPoint, addWall); break;
 						case MazeWallTypes.WallY: SetWallYSolid(hoverPoint, addWall); break;
 						case MazeWallTypes.Quadrant: SetQuadrantSolid(hoverPoint, addWall); break;
 						}
 						OnMazeChanged(new EventArgs());
-					}
+					//}
 				}
 			}
 		}
