@@ -35,6 +35,8 @@ public class MazeEditor : Control {
 		Color.FromArgb(203, 175, 111) // Wood Fences
 	};
 
+	public static Size MaxMazeSize = new Size(125, 125);
+
 	#endregion
 	//=========== MEMBERS ============
 	#region Members
@@ -57,6 +59,10 @@ public class MazeEditor : Control {
 	public PlaceModes placeMode;
 	private Point placePoint;
 	private MazeBuildingDirections placeDirection;
+
+	[Browsable(true)][Category("Action")]
+	[DisplayName("MazeChanged")][Description("")]
+	public event EventHandler MazeChanged;
 
 	#endregion
 	//========= CONSTRUCTORS =========
@@ -99,7 +105,7 @@ public class MazeEditor : Control {
 
 	/** <summary> Resizes the maze to the new specified size. </summary> */
 	public void ResizeMaze(Size newSize) {
-		MazeBlock[,] newBlocks = new MazeBlock[Math.Max(1, Math.Min(255, newSize.Width)), Math.Max(1, Math.Min(255, newSize.Height))];
+		MazeBlock[,] newBlocks = new MazeBlock[Math.Max(1, Math.Min(MaxMazeSize.Width, newSize.Width)), Math.Max(1, Math.Min(MaxMazeSize.Height, newSize.Height))];
 		for (int x = 0; x < newBlocks.GetLength(0); x++) {
 			for (int y = 0; y < newBlocks.GetLength(1); y++) {
 				if (x < this.blocks.GetLength(0) && y < this.blocks.GetLength(1))
@@ -123,6 +129,7 @@ public class MazeEditor : Control {
 			block = this.blocks[this.blocks.GetLength(0) - 1, y];
 			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.EastTop | MazeWalls.EastBottom);
 		}
+		OnMazeChanged(new EventArgs());
 		this.Invalidate();
 	}
 	/** <summary> Translates the maze by the specified distance. </summary> */
@@ -150,6 +157,7 @@ public class MazeEditor : Control {
 			block = this.blocks[this.blocks.GetLength(0) - 1, y];
 			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.EastTop | MazeWalls.EastBottom);
 		}
+		OnMazeChanged(new EventArgs());
 		this.Invalidate();
 	}
 	/** <summary> Loads the specified maze into the editor. </summary> */
@@ -176,7 +184,7 @@ public class MazeEditor : Control {
 
 			for (int i = 0; i < maze.MazeTiles.Count; i++) {
 				MazeTile tile = maze.MazeTiles[i];
-				this.blocks[tile.X + -min.X, -tile.Y + max.Y] = new MazeBlock(FlipWalls(tile.Walls), false);
+				this.blocks[tile.X - min.X, -tile.Y + max.Y] = new MazeBlock(FlipWalls(tile.Walls), false);
 			}
 			this.wallStyle = (WallStyles)maze.TrackSupportColors[0];
 			this.Invalidate();
@@ -184,8 +192,52 @@ public class MazeEditor : Control {
 	}
 	/** <summary> Saves the editor to the specified maze. </summary> */
 	public void SaveMaze(TrackDesign maze) {
+		Point min = Point.Empty;
+		Point max = Point.Empty;
+		for (int x = 0; x < this.blocks.GetLength(0); x++) {
+			for (int y = 0; y < this.blocks.GetLength(1); y++) {
+				MazeBlock block = this.blocks[x, y];
+				if (!block.Empty) {
+					if (x < min.X) min.X = x;
+					if (y < min.Y) min.Y = y;
+					if (x > max.X) max.X = x;
+					if (y > max.Y) max.Y = y;
+				}
+			}
+		}
+		Size mazeSize = new Size(-min.X + max.X + 1, -min.Y + max.Y + 1);
+		Point center = new Point(mazeSize.Width / 2, mazeSize.Height / 2);
 
+		maze.TrackSupportColors[0] = (RemapColors)this.wallStyle;
+		maze.RideMapWidth = (byte)mazeSize.Width;
+		maze.RideMapHeight = (byte)mazeSize.Height;
+		maze.MazeTiles.Clear();
 
+		for (int x = 0; x < this.blocks.GetLength(0); x++) {
+			for (int y = this.blocks.GetLength(1) - 1; y >= 0; y--) {
+				MazeBlock block = this.blocks[x, y];
+				if (!block.Empty && !block.IsBuilding) {
+					maze.MazeTiles.Add(new MazeTile(x - min.X - center.X, -y + max.Y - center.Y, FlipWalls(block.Walls)));
+				}
+			}
+		}
+
+		for (int x = 0; x < this.blocks.GetLength(0); x++) {
+			for (int y = this.blocks.GetLength(1) - 1; y >= 0; y--) {
+				MazeBlock block = this.blocks[x, y];
+				if (block.IsEntrance) {
+					maze.MazeTiles.Add(new MazeTile(x - min.X - center.X, -y + max.Y - center.Y, FlipWalls(block.Walls)));
+				}
+			}
+		}
+		for (int x = 0; x < this.blocks.GetLength(0); x++) {
+			for (int y = this.blocks.GetLength(1) - 1; y >= 0; y--) {
+				MazeBlock block = this.blocks[x, y];
+				if (block.IsExit) {
+					maze.MazeTiles.Add(new MazeTile(x - min.X - center.X, -y + max.Y - center.Y, FlipWalls(block.Walls)));
+				}
+			}
+		}
 	}
 	private MazeWalls FlipWalls(MazeWalls walls) {
 		MazeWalls newWalls = MazeWalls.None;
@@ -638,7 +690,7 @@ public class MazeEditor : Control {
 	public Size MazeSize {
 		get { return new Size(this.blocks.GetLength(0), this.blocks.GetLength(1)); }
 		set {
-			MazeBlock[,] newBlocks = new MazeBlock[Math.Max(1, Math.Min(255, value.Width)), Math.Max(1, Math.Min(255, value.Height))];
+			MazeBlock[,] newBlocks = new MazeBlock[Math.Max(1, Math.Min(MaxMazeSize.Width, value.Width)), Math.Max(1, Math.Min(MaxMazeSize.Height, value.Height))];
 			for (int x = 0; x < newBlocks.GetLength(0); x++) {
 				for (int y = 0; y < newBlocks.GetLength(1); y++) {
 					if (x < this.blocks.GetLength(0) && y < this.blocks.GetLength(1))
@@ -657,7 +709,12 @@ public class MazeEditor : Control {
 	#endregion
 	//============ EVENTS ============
 	#region Events
-	
+
+	/** <summary> Raises the MazeChanged event. </summary> */
+	protected void OnMazeChanged(EventArgs e) {
+		if (this.MazeChanged != null)
+			this.MazeChanged(this, e);
+	}
 	/** <summary> Called when the mouse button is down. </summary> */
 	protected override void OnMouseDown(MouseEventArgs e) {
 		if (placeMode == PlaceModes.Walls) {
@@ -669,6 +726,7 @@ public class MazeEditor : Control {
 					case MazeWallTypes.WallY: SetWallYSolid(hoverPoint, addWall); break;
 					case MazeWallTypes.Quadrant: SetQuadrantSolid(hoverPoint, addWall); break;
 					}
+					OnMazeChanged(new EventArgs());
 				}
 			}
 		}
@@ -677,9 +735,11 @@ public class MazeEditor : Control {
 									e.Y / (this.pathWidth * 2 + this.wallWidth * 4));
 			if (e.Button == MouseButtons.Left && GetBlock(point).Empty) {
 				SetBlockSolid(point, true);
+				OnMazeChanged(new EventArgs());
 			}
 			else if (e.Button == MouseButtons.Right) {
 				SetBlockSolid(point, false);
+				OnMazeChanged(new EventArgs());
 			}
 		}
 		else if (placeMode == PlaceModes.Entrance || placeMode == PlaceModes.Exit) {
@@ -688,12 +748,15 @@ public class MazeEditor : Control {
 			if (placeDirection != MazeBuildingDirections.None && e.Button == MouseButtons.Left) {
 				if (placeMode == PlaceModes.Entrance)
 					SetEntrance(point);
+					OnMazeChanged(new EventArgs());
 				if (placeMode == PlaceModes.Exit)
 					SetExit(point);
+					OnMazeChanged(new EventArgs());
 			}
 			else if (e.Button == MouseButtons.Right) {
 				if (GetBlock(point).IsBuilding) {
 					SetBlockSolid(point, false);
+					OnMazeChanged(new EventArgs());
 				}
 			}
 		}

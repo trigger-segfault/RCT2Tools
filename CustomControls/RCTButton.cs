@@ -260,8 +260,6 @@ public class RCTButton : Control {
 	protected void OnButtonPressed(EventArgs e) {
 		if (this.ButtonPressed != null)
 			this.ButtonPressed(this, e);
-		//else
-		//	Console.WriteLine("null");
 	}
 	/** <summary> Called when the mouse button is down. </summary> */ 
 	protected override void OnMouseDown(MouseEventArgs e) {

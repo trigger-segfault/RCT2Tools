@@ -60,8 +60,10 @@
 			this.buttonResizeMinusY = new CustomControls.RCTButton();
 			this.rctPanel1 = new CustomControls.RCTPanel();
 			this.rctPanel4 = new CustomControls.RCTPanel();
-			this.mazeEditor1 = new RCT2MazeGenerator.MazeEditor();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.mazeEditor1 = new RCT2MazeGenerator.MazeEditor();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -166,6 +168,7 @@
 			this.buttonSave.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.buttonSave.Toggleable = false;
 			this.buttonSave.Toggled = false;
+			this.buttonSave.ButtonPressed += new System.EventHandler(this.Save);
 			// 
 			// buttonPlaceModeGenerate
 			// 
@@ -251,6 +254,7 @@
 			this.buttonNew.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.buttonNew.Toggleable = false;
 			this.buttonNew.Toggled = false;
+			this.buttonNew.ButtonPressed += new System.EventHandler(this.New);
 			// 
 			// buttonSaveAs
 			// 
@@ -275,6 +279,7 @@
 			this.buttonSaveAs.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.buttonSaveAs.Toggleable = false;
 			this.buttonSaveAs.Toggled = false;
+			this.buttonSaveAs.ButtonPressed += new System.EventHandler(this.SaveAs);
 			// 
 			// buttonStyleWoodenFences
 			// 
@@ -322,6 +327,7 @@
 			this.buttonOpen.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.buttonOpen.Toggleable = false;
 			this.buttonOpen.Toggled = false;
+			this.buttonOpen.ButtonPressed += new System.EventHandler(this.Open);
 			// 
 			// buttonStyleIceBlocks
 			// 
@@ -819,6 +825,26 @@
 			this.rctPanel4.Size = new System.Drawing.Size(443, 444);
 			this.rctPanel4.TabIndex = 0;
 			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.BackgroundImage = global::RCT2MazeGenerator.Properties.Resources.Grass;
+			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(443, 444);
+			this.pictureBox1.TabIndex = 1;
+			this.pictureBox1.TabStop = false;
+			// 
+			// saveFileDialog
+			// 
+			this.saveFileDialog.DefaultExt = "TD6";
+			this.saveFileDialog.Filter = "RCT Track Designs|*.TD6";
+			// 
+			// openFileDialog
+			// 
+			this.openFileDialog.DefaultExt = "TD6";
+			this.openFileDialog.Filter = "RCT Track Designs|*.TD6";
+			// 
 			// mazeEditor1
 			// 
 			this.mazeEditor1.BackgroundImage = global::RCT2MazeGenerator.Properties.Resources.Grass;
@@ -830,16 +856,7 @@
 			this.mazeEditor1.TabIndex = 2;
 			this.mazeEditor1.Text = "mazeEditor2";
 			this.mazeEditor1.WallStyle = RCT2MazeGenerator.WallStyles.Hedges;
-			// 
-			// pictureBox1
-			// 
-			this.pictureBox1.BackgroundImage = global::RCT2MazeGenerator.Properties.Resources.Grass;
-			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(443, 444);
-			this.pictureBox1.TabIndex = 1;
-			this.pictureBox1.TabStop = false;
+			this.mazeEditor1.MazeChanged += new System.EventHandler(this.MazeChanged);
 			// 
 			// MazeForm
 			// 
@@ -905,6 +922,8 @@
 		private CustomControls.RCTButton buttonOpen;
 		private CustomControls.RCTPanel rctPanel4;
 		private MazeEditor mazeEditor1;
+		private System.Windows.Forms.SaveFileDialog saveFileDialog;
+		private System.Windows.Forms.OpenFileDialog openFileDialog;
 	}
 }
 

@@ -216,12 +216,26 @@ public class TrackDesign {
 		// Read the track data
 
 		if (this.TrackType == TrackTypes.HedgeMaze) {
+			byte b = 0;
 			MazeTile mazeTile = new MazeTile();
 			mazeTile.Read(reader);
-			while (!mazeTile.IsEnd) {
+			//bool entrance = false; bool exit = false;
+			while (!mazeTile.IsEnd){// || !entrance || !exit) {
+				/*if (mazeTile.IsEnd) {
+					reader.BaseStream.Position--;
+				}*/
 				this.MazeTiles.Add(mazeTile);
 				mazeTile = new MazeTile();
 				mazeTile.Read(reader);
+				//if (mazeTile.IsEntrance) entrance = true;
+				//if (mazeTile.IsExit) exit = true;
+
+				/*if (mazeTile.IsEnd) {
+					b = reader.ReadByte();
+					if (b == 0xFF) {
+						Console.WriteLine("0xFF");
+					}
+				}*/
 			}
 		}
 		else {
@@ -299,6 +313,8 @@ public class TrackDesign {
 			for (int i = 0; i < this.MazeTiles.Count; i++) {
 				this.MazeTiles[i].Write(writer);
 			}
+			writer.Write((uint)0);
+			//new MazeTile(0, 0, MazeWalls.None).Write(writer);
 			writer.Write((byte)0xFF);
 
 			writer.Write((uint)0);
@@ -312,12 +328,17 @@ public class TrackDesign {
 
 		//writer.Write((byte)0xFF);
 
-		/*if (writer.BaseStream.Position < 19235) {
+		if (writer.BaseStream.Position < 19235) {
 			while (writer.BaseStream.Position < 19235) {
+				if (writer.BaseStream.Position == 8165) {
+					for (int i = 0; i < 55; i++) {
+						writer.Write((byte)0xFF);
+					}
+				}
 				writer.Write((byte)0x00);
 			}
 		}
-		else */if (writer.BaseStream.Position < 24735) {
+		else if (writer.BaseStream.Position < 24735) {
 			while (writer.BaseStream.Position < 24735) {
 				if (writer.BaseStream.Position == 8165) {
 					for (int i = 0; i < 55; i++) {
@@ -335,7 +356,7 @@ public class TrackDesign {
 		byte[] data = ReadChunk(reader);
 
 		uint CheckSum = reader.ReadUInt32();
-		//Console.WriteLine(CheckSum);
+		Console.WriteLine(CheckSum);
 
 		reader.Close();
 		reader = new BinaryReader(new MemoryStream(data));
@@ -382,7 +403,7 @@ public class TrackDesign {
 			writer.Close();
 		}
 		catch (System.Exception) {
-
+			Console.WriteLine("HELP");
 		}
 	}
 	/** <summary> Reads and decodes the chunk. </summary> */
