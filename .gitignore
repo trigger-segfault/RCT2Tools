@@ -21,6 +21,26 @@ $RECYCLE.BIN/
 bin
 obj
 
+# Icon Resources from my File System
+C#.ico
+Content.ico
+Data.ico
+Effects.ico
+Executable.ico
+Folder.ico
+Fonts.ico
+Game.ico
+Gears.ico
+Images.ico
+Languages.ico
+Music.ico
+Project.ico
+Resources.ico
+Sounds.ico
+Sources.ico
+Videos.ico
+Windows.ico
+
 # =========================
 # Operating System Files
 # =========================
