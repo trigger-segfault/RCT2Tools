@@ -147,6 +147,10 @@ namespace RCT2MazeGenerator {
 		private void ShowGrid(object sender, EventArgs e) {
 			this.mazeEditor1.ShowGrid = !this.mazeEditor1.ShowGrid;
 		}
+		/** <summary> Changes the walls make tiles setting. </summary> */
+		private void WallsMakeTiles(object sender, EventArgs e) {
+			this.mazeEditor1.WallsMakeTiles = (this.rctCheckBox1.CheckState == CheckState.Checked);
+		}
 
 		/** <summary> Sets the maze changed value to true. </summary> */
 		private void MazeChanged(object sender, EventArgs e) {
