@@ -103,6 +103,16 @@ namespace RCT2MazeGenerator.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ButtonGrid {
+            get {
+                object obj = ResourceManager.GetObject("ButtonGrid", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ButtonHedges {
             get {
                 object obj = ResourceManager.GetObject("ButtonHedges", resourceCulture);
@@ -186,6 +196,26 @@ namespace RCT2MazeGenerator.Properties {
         internal static System.Drawing.Bitmap ButtonWoodenFences {
             get {
                 object obj = ResourceManager.GetObject("ButtonWoodenFences", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ButtonZoomIn {
+            get {
+                object obj = ResourceManager.GetObject("ButtonZoomIn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ButtonZoomOut {
+            get {
+                object obj = ResourceManager.GetObject("ButtonZoomOut", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

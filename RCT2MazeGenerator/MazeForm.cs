@@ -44,6 +44,7 @@ namespace RCT2MazeGenerator {
 			//maze.Save("Untitled.TD6");
 			mazeEditor1.LoadMaze(maze);
 			mazeEditor1.ResizeMaze(new Size(10, 10));
+			changed = false;
 			UpdateMazeSize();
 		}
 
@@ -134,6 +135,18 @@ namespace RCT2MazeGenerator {
 		private void WallStyleWoodenFences(object sender, EventArgs e) {
 			mazeEditor1.WallStyle = WallStyles.WoodenFences;
 		}
+		/** <summary> Zooms the maze view. </summary> */
+		private void ZoomIn(object sender, EventArgs e) {
+			mazeEditor1.ZoomIn();
+		}
+		/** <summary> Zooms the maze view. </summary> */
+		private void ZoomOut(object sender, EventArgs e) {
+			mazeEditor1.ZoomOut();
+		}
+		/** <summary> Changes the grid in the maze view. </summary> */
+		private void ShowGrid(object sender, EventArgs e) {
+			this.mazeEditor1.ShowGrid = !this.mazeEditor1.ShowGrid;
+		}
 
 		/** <summary> Sets the maze changed value to true. </summary> */
 		private void MazeChanged(object sender, EventArgs e) {
@@ -199,6 +212,7 @@ namespace RCT2MazeGenerator {
 				maze.TrackType = TrackTypes.HedgeMaze;
 				mazeEditor1.LoadMaze(maze);
 				mazeEditor1.ResizeMaze(new Size(10, 10));
+				changed = false;
 				fileName = "";
 			}
 		}
@@ -218,8 +232,10 @@ namespace RCT2MazeGenerator {
 						TrackDesign newMaze = TrackDesign.ReadTrackDesign(openFileDialog.FileName);
 						if (newMaze.TrackType == TrackTypes.HedgeMaze) {
 							fileName = openFileDialog.FileName;
+							changed = false;
 							this.maze = newMaze;
 							this.mazeEditor1.LoadMaze(newMaze);
+							UpdateMazeSize();
 						}
 						else {
 							ErrorMessageBox.Show(this, "Failed to load maze.", "The track design is not a maze.");
@@ -237,8 +253,15 @@ namespace RCT2MazeGenerator {
 				SaveAs(null, null);
 			}
 			else {
-				this.mazeEditor1.SaveMaze(maze);
-				maze.Save(fileName);
+				string[] errors = this.mazeEditor1.MazeErrors;
+				if (errors.Length == 0) {
+					this.mazeEditor1.SaveMaze(maze);
+					maze.Save(fileName);
+					changed = false;
+				}
+				else {
+					ErrorMessageBox.Show(this, errors[0], errors.Length >= 2 ? errors[1] : "");
+				}
 			}
 		}
 		/** <summary> Saves as the maze design. </summary> */
@@ -251,10 +274,17 @@ namespace RCT2MazeGenerator {
 				saveFileDialog.InitialDirectory = Path.GetDirectoryName(fileName);
 				saveFileDialog.FileName = Path.GetFileNameWithoutExtension(fileName);
 			}
-			if (saveFileDialog.ShowDialog(this) == DialogResult.OK) {
-				fileName = saveFileDialog.FileName;
-				this.mazeEditor1.SaveMaze(maze);
-				maze.Save(fileName);
+			string[] errors = this.mazeEditor1.MazeErrors;
+			if (errors.Length == 0) {
+				if (saveFileDialog.ShowDialog(this) == DialogResult.OK) {
+					fileName = saveFileDialog.FileName;
+					this.mazeEditor1.SaveMaze(maze);
+					maze.Save(fileName);
+					changed = false;
+				}
+			}
+			else {
+				ErrorMessageBox.Show(this, errors[0], errors.Length >= 2 ? errors[1] : "");
 			}
 		}
 

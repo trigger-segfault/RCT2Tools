@@ -25,6 +25,8 @@
 		private void InitializeComponent() {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MazeForm));
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.buttonPlaceModeRestrict = new CustomControls.RCTButton();
 			this.buttonSave = new CustomControls.RCTButton();
 			this.buttonPlaceModeGenerate = new CustomControls.RCTButton();
@@ -32,13 +34,7 @@
 			this.rctLabel7 = new CustomControls.RCTLabel();
 			this.buttonNew = new CustomControls.RCTButton();
 			this.buttonSaveAs = new CustomControls.RCTButton();
-			this.buttonStyleWoodenFences = new CustomControls.RCTButton();
 			this.buttonOpen = new CustomControls.RCTButton();
-			this.buttonStyleIceBlocks = new CustomControls.RCTButton();
-			this.buttonStyleHedges = new CustomControls.RCTButton();
-			this.buttonStyleBrickWalls = new CustomControls.RCTButton();
-			this.labelStatus2 = new CustomControls.RCTLabel();
-			this.labelStatus1 = new CustomControls.RCTLabel();
 			this.labelMazeSize = new CustomControls.RCTLabel();
 			this.buttonPlaceModeTiles = new CustomControls.RCTButton();
 			this.buttonPlaceModeWalls = new CustomControls.RCTButton();
@@ -49,20 +45,26 @@
 			this.rctLabel2 = new CustomControls.RCTLabel();
 			this.rctLabel1 = new CustomControls.RCTLabel();
 			this.rctPanel3 = new CustomControls.RCTPanel();
+			this.rctPanel2 = new CustomControls.RCTPanel();
+			this.rctPanel1 = new CustomControls.RCTPanel();
+			this.rctPanel4 = new CustomControls.RCTPanel();
+			this.rctLabel5 = new CustomControls.RCTLabel();
+			this.buttonGrid = new CustomControls.RCTButton();
+			this.buttonZoomOut = new CustomControls.RCTButton();
+			this.buttonZoomIn = new CustomControls.RCTButton();
+			this.buttonStyleWoodenFences = new CustomControls.RCTButton();
+			this.buttonStyleIceBlocks = new CustomControls.RCTButton();
+			this.buttonStyleHedges = new CustomControls.RCTButton();
+			this.buttonStyleBrickWalls = new CustomControls.RCTButton();
 			this.buttonTranslateMinusX = new CustomControls.RCTButton();
 			this.buttonTranslatePlusX = new CustomControls.RCTButton();
 			this.buttonTranslatePlusY = new CustomControls.RCTButton();
 			this.buttonTranslateMinusY = new CustomControls.RCTButton();
-			this.rctPanel2 = new CustomControls.RCTPanel();
 			this.buttonResizeMinusX = new CustomControls.RCTButton();
 			this.buttonResizePlusX = new CustomControls.RCTButton();
 			this.buttonResizePlusY = new CustomControls.RCTButton();
 			this.buttonResizeMinusY = new CustomControls.RCTButton();
-			this.rctPanel1 = new CustomControls.RCTPanel();
-			this.rctPanel4 = new CustomControls.RCTPanel();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
-			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.mazeEditor1 = new RCT2MazeGenerator.MazeEditor();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
@@ -86,6 +88,10 @@
 			// 
 			// splitContainer1.Panel1
 			// 
+			this.splitContainer1.Panel1.Controls.Add(this.buttonGrid);
+			this.splitContainer1.Panel1.Controls.Add(this.buttonZoomOut);
+			this.splitContainer1.Panel1.Controls.Add(this.buttonZoomIn);
+			this.splitContainer1.Panel1.Controls.Add(this.rctLabel5);
 			this.splitContainer1.Panel1.Controls.Add(this.buttonPlaceModeRestrict);
 			this.splitContainer1.Panel1.Controls.Add(this.buttonSave);
 			this.splitContainer1.Panel1.Controls.Add(this.buttonPlaceModeGenerate);
@@ -98,8 +104,6 @@
 			this.splitContainer1.Panel1.Controls.Add(this.buttonStyleIceBlocks);
 			this.splitContainer1.Panel1.Controls.Add(this.buttonStyleHedges);
 			this.splitContainer1.Panel1.Controls.Add(this.buttonStyleBrickWalls);
-			this.splitContainer1.Panel1.Controls.Add(this.labelStatus2);
-			this.splitContainer1.Panel1.Controls.Add(this.labelStatus1);
 			this.splitContainer1.Panel1.Controls.Add(this.labelMazeSize);
 			this.splitContainer1.Panel1.Controls.Add(this.buttonPlaceModeTiles);
 			this.splitContainer1.Panel1.Controls.Add(this.buttonPlaceModeWalls);
@@ -116,10 +120,20 @@
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.rctPanel1);
 			this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(3);
-			this.splitContainer1.Size = new System.Drawing.Size(665, 452);
+			this.splitContainer1.Size = new System.Drawing.Size(662, 448);
 			this.splitContainer1.SplitterDistance = 210;
 			this.splitContainer1.TabIndex = 1;
 			this.splitContainer1.TabStop = false;
+			// 
+			// saveFileDialog
+			// 
+			this.saveFileDialog.DefaultExt = "TD6";
+			this.saveFileDialog.Filter = "RCT Track Designs|*.TD6";
+			// 
+			// openFileDialog
+			// 
+			this.openFileDialog.DefaultExt = "TD6";
+			this.openFileDialog.Filter = "RCT Track Designs|*.TD6";
 			// 
 			// buttonPlaceModeRestrict
 			// 
@@ -156,7 +170,7 @@
 			this.buttonSave.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonSave.Image = null;
 			this.buttonSave.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonSave.Location = new System.Drawing.Point(78, 399);
+			this.buttonSave.Location = new System.Drawing.Point(78, 395);
 			this.buttonSave.Name = "buttonSave";
 			this.buttonSave.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonSave.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -205,7 +219,7 @@
 			this.buttonAbout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonAbout.Image = null;
 			this.buttonAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonAbout.Location = new System.Drawing.Point(144, 424);
+			this.buttonAbout.Location = new System.Drawing.Point(144, 420);
 			this.buttonAbout.Name = "buttonAbout";
 			this.buttonAbout.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonAbout.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -242,7 +256,7 @@
 			this.buttonNew.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonNew.Image = null;
 			this.buttonNew.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonNew.Location = new System.Drawing.Point(12, 399);
+			this.buttonNew.Location = new System.Drawing.Point(12, 395);
 			this.buttonNew.Name = "buttonNew";
 			this.buttonNew.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonNew.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -267,7 +281,7 @@
 			this.buttonSaveAs.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonSaveAs.Image = null;
 			this.buttonSaveAs.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonSaveAs.Location = new System.Drawing.Point(78, 424);
+			this.buttonSaveAs.Location = new System.Drawing.Point(78, 420);
 			this.buttonSaveAs.Name = "buttonSaveAs";
 			this.buttonSaveAs.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonSaveAs.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -281,29 +295,6 @@
 			this.buttonSaveAs.Toggled = false;
 			this.buttonSaveAs.ButtonPressed += new System.EventHandler(this.SaveAs);
 			// 
-			// buttonStyleWoodenFences
-			// 
-			this.buttonStyleWoodenFences.BorderOnHover = false;
-			this.buttonStyleWoodenFences.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonStyleWoodenFences.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonStyleWoodenFences.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonStyleWoodenFences.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonStyleWoodenFences.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonStyleWoodenFences.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonWoodenFences;
-			this.buttonStyleWoodenFences.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonStyleWoodenFences.Location = new System.Drawing.Point(134, 270);
-			this.buttonStyleWoodenFences.Name = "buttonStyleWoodenFences";
-			this.buttonStyleWoodenFences.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonStyleWoodenFences.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonStyleWoodenFences.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonStyleWoodenFences.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonStyleWoodenFences.Size = new System.Drawing.Size(32, 32);
-			this.buttonStyleWoodenFences.TabIndex = 18;
-			this.buttonStyleWoodenFences.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonStyleWoodenFences.Toggleable = false;
-			this.buttonStyleWoodenFences.Toggled = false;
-			this.buttonStyleWoodenFences.ButtonPressed += new System.EventHandler(this.WallStyleWoodenFences);
-			// 
 			// buttonOpen
 			// 
 			this.buttonOpen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -315,7 +306,7 @@
 			this.buttonOpen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonOpen.Image = null;
 			this.buttonOpen.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonOpen.Location = new System.Drawing.Point(12, 424);
+			this.buttonOpen.Location = new System.Drawing.Point(12, 420);
 			this.buttonOpen.Name = "buttonOpen";
 			this.buttonOpen.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonOpen.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -329,104 +320,11 @@
 			this.buttonOpen.Toggled = false;
 			this.buttonOpen.ButtonPressed += new System.EventHandler(this.Open);
 			// 
-			// buttonStyleIceBlocks
-			// 
-			this.buttonStyleIceBlocks.BorderOnHover = false;
-			this.buttonStyleIceBlocks.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonStyleIceBlocks.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonStyleIceBlocks.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonStyleIceBlocks.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonStyleIceBlocks.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonStyleIceBlocks.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonIceBlocks;
-			this.buttonStyleIceBlocks.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonStyleIceBlocks.Location = new System.Drawing.Point(96, 270);
-			this.buttonStyleIceBlocks.Name = "buttonStyleIceBlocks";
-			this.buttonStyleIceBlocks.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonStyleIceBlocks.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonStyleIceBlocks.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonStyleIceBlocks.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonStyleIceBlocks.Size = new System.Drawing.Size(32, 32);
-			this.buttonStyleIceBlocks.TabIndex = 17;
-			this.buttonStyleIceBlocks.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonStyleIceBlocks.Toggleable = false;
-			this.buttonStyleIceBlocks.Toggled = false;
-			this.buttonStyleIceBlocks.ButtonPressed += new System.EventHandler(this.WallStyleIceBlocks);
-			// 
-			// buttonStyleHedges
-			// 
-			this.buttonStyleHedges.BorderOnHover = false;
-			this.buttonStyleHedges.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonStyleHedges.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonStyleHedges.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonStyleHedges.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonStyleHedges.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonStyleHedges.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonHedges;
-			this.buttonStyleHedges.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonStyleHedges.Location = new System.Drawing.Point(58, 270);
-			this.buttonStyleHedges.Name = "buttonStyleHedges";
-			this.buttonStyleHedges.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonStyleHedges.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonStyleHedges.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonStyleHedges.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonStyleHedges.Size = new System.Drawing.Size(32, 32);
-			this.buttonStyleHedges.TabIndex = 16;
-			this.buttonStyleHedges.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonStyleHedges.Toggleable = false;
-			this.buttonStyleHedges.Toggled = false;
-			this.buttonStyleHedges.ButtonPressed += new System.EventHandler(this.WallStyleHedges);
-			// 
-			// buttonStyleBrickWalls
-			// 
-			this.buttonStyleBrickWalls.BorderOnHover = false;
-			this.buttonStyleBrickWalls.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonStyleBrickWalls.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonStyleBrickWalls.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonStyleBrickWalls.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonStyleBrickWalls.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonStyleBrickWalls.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonBrickWalls;
-			this.buttonStyleBrickWalls.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonStyleBrickWalls.Location = new System.Drawing.Point(20, 270);
-			this.buttonStyleBrickWalls.Name = "buttonStyleBrickWalls";
-			this.buttonStyleBrickWalls.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonStyleBrickWalls.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonStyleBrickWalls.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonStyleBrickWalls.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonStyleBrickWalls.Size = new System.Drawing.Size(32, 32);
-			this.buttonStyleBrickWalls.TabIndex = 15;
-			this.buttonStyleBrickWalls.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonStyleBrickWalls.Toggleable = false;
-			this.buttonStyleBrickWalls.Toggled = false;
-			this.buttonStyleBrickWalls.ButtonPressed += new System.EventHandler(this.WallStyleBrickWalls);
-			// 
-			// labelStatus2
-			// 
-			this.labelStatus2.FontType = CustomControls.Visuals.FontType.Bold;
-			this.labelStatus2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.labelStatus2.Location = new System.Drawing.Point(12, 357);
-			this.labelStatus2.Name = "labelStatus2";
-			this.labelStatus2.OutlineColor = System.Drawing.Color.Transparent;
-			this.labelStatus2.Size = new System.Drawing.Size(180, 14);
-			this.labelStatus2.TabIndex = 14;
-			this.labelStatus2.Text = "Exit needs to be connected";
-			this.labelStatus2.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-			// 
-			// labelStatus1
-			// 
-			this.labelStatus1.FontType = CustomControls.Visuals.FontType.Bold;
-			this.labelStatus1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.labelStatus1.Location = new System.Drawing.Point(12, 337);
-			this.labelStatus1.Name = "labelStatus1";
-			this.labelStatus1.OutlineColor = System.Drawing.Color.Transparent;
-			this.labelStatus1.Size = new System.Drawing.Size(180, 14);
-			this.labelStatus1.TabIndex = 13;
-			this.labelStatus1.Text = "No Entrance";
-			this.labelStatus1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-			// 
 			// labelMazeSize
 			// 
 			this.labelMazeSize.FontType = CustomControls.Visuals.FontType.Bold;
 			this.labelMazeSize.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.labelMazeSize.Location = new System.Drawing.Point(12, 317);
+			this.labelMazeSize.Location = new System.Drawing.Point(11, 358);
 			this.labelMazeSize.Name = "labelMazeSize";
 			this.labelMazeSize.OutlineColor = System.Drawing.Color.Transparent;
 			this.labelMazeSize.Size = new System.Drawing.Size(180, 14);
@@ -595,6 +493,225 @@
 			this.rctPanel3.Size = new System.Drawing.Size(84, 84);
 			this.rctPanel3.TabIndex = 4;
 			// 
+			// rctPanel2
+			// 
+			this.rctPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.rctPanel2.Controls.Add(this.buttonResizeMinusX);
+			this.rctPanel2.Controls.Add(this.buttonResizePlusX);
+			this.rctPanel2.Controls.Add(this.buttonResizePlusY);
+			this.rctPanel2.Controls.Add(this.buttonResizeMinusY);
+			this.rctPanel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.rctPanel2.Location = new System.Drawing.Point(12, 154);
+			this.rctPanel2.Name = "rctPanel2";
+			this.rctPanel2.Padding = new System.Windows.Forms.Padding(3);
+			this.rctPanel2.PanelBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.rctPanel2.PanelBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.rctPanel2.PanelBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.rctPanel2.Size = new System.Drawing.Size(84, 84);
+			this.rctPanel2.TabIndex = 3;
+			// 
+			// rctPanel1
+			// 
+			this.rctPanel1.Controls.Add(this.rctPanel4);
+			this.rctPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.rctPanel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.rctPanel1.Location = new System.Drawing.Point(3, 3);
+			this.rctPanel1.Name = "rctPanel1";
+			this.rctPanel1.Padding = new System.Windows.Forms.Padding(1);
+			this.rctPanel1.PanelBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.rctPanel1.PanelBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.rctPanel1.PanelBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.rctPanel1.Size = new System.Drawing.Size(442, 442);
+			this.rctPanel1.TabIndex = 0;
+			// 
+			// rctPanel4
+			// 
+			this.rctPanel4.AutoScroll = true;
+			this.rctPanel4.Controls.Add(this.mazeEditor1);
+			this.rctPanel4.Controls.Add(this.pictureBox1);
+			this.rctPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.rctPanel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.rctPanel4.Location = new System.Drawing.Point(1, 1);
+			this.rctPanel4.Name = "rctPanel4";
+			this.rctPanel4.PanelBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.rctPanel4.PanelBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.rctPanel4.PanelBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.rctPanel4.Size = new System.Drawing.Size(440, 440);
+			this.rctPanel4.TabIndex = 0;
+			// 
+			// rctLabel5
+			// 
+			this.rctLabel5.FontType = CustomControls.Visuals.FontType.Bold;
+			this.rctLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.rctLabel5.Location = new System.Drawing.Point(12, 322);
+			this.rctLabel5.Name = "rctLabel5";
+			this.rctLabel5.OutlineColor = System.Drawing.Color.Transparent;
+			this.rctLabel5.Size = new System.Drawing.Size(180, 14);
+			this.rctLabel5.TabIndex = 149;
+			this.rctLabel5.Text = "View:";
+			this.rctLabel5.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+			// 
+			// buttonGrid
+			// 
+			this.buttonGrid.BorderOnHover = false;
+			this.buttonGrid.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonGrid.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonGrid.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonGrid.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonGrid.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonGrid.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonGrid;
+			this.buttonGrid.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonGrid.Location = new System.Drawing.Point(134, 312);
+			this.buttonGrid.Name = "buttonGrid";
+			this.buttonGrid.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonGrid.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonGrid.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonGrid.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonGrid.Size = new System.Drawing.Size(32, 32);
+			this.buttonGrid.TabIndex = 150;
+			this.buttonGrid.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonGrid.Toggleable = false;
+			this.buttonGrid.Toggled = false;
+			this.buttonGrid.ButtonPressed += new System.EventHandler(this.ShowGrid);
+			// 
+			// buttonZoomOut
+			// 
+			this.buttonZoomOut.BorderOnHover = false;
+			this.buttonZoomOut.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonZoomOut.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonZoomOut.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonZoomOut.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonZoomOut.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonZoomOut.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonZoomOut;
+			this.buttonZoomOut.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonZoomOut.Location = new System.Drawing.Point(58, 312);
+			this.buttonZoomOut.Name = "buttonZoomOut";
+			this.buttonZoomOut.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonZoomOut.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonZoomOut.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonZoomOut.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonZoomOut.Size = new System.Drawing.Size(32, 32);
+			this.buttonZoomOut.TabIndex = 148;
+			this.buttonZoomOut.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonZoomOut.Toggleable = false;
+			this.buttonZoomOut.Toggled = false;
+			this.buttonZoomOut.ButtonPressed += new System.EventHandler(this.ZoomOut);
+			// 
+			// buttonZoomIn
+			// 
+			this.buttonZoomIn.BorderOnHover = false;
+			this.buttonZoomIn.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonZoomIn.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonZoomIn.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonZoomIn.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonZoomIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonZoomIn.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonZoomIn;
+			this.buttonZoomIn.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonZoomIn.Location = new System.Drawing.Point(96, 312);
+			this.buttonZoomIn.Name = "buttonZoomIn";
+			this.buttonZoomIn.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonZoomIn.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonZoomIn.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonZoomIn.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonZoomIn.Size = new System.Drawing.Size(32, 32);
+			this.buttonZoomIn.TabIndex = 147;
+			this.buttonZoomIn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonZoomIn.Toggleable = false;
+			this.buttonZoomIn.Toggled = false;
+			this.buttonZoomIn.ButtonPressed += new System.EventHandler(this.ZoomIn);
+			// 
+			// buttonStyleWoodenFences
+			// 
+			this.buttonStyleWoodenFences.BorderOnHover = false;
+			this.buttonStyleWoodenFences.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonStyleWoodenFences.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonStyleWoodenFences.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonStyleWoodenFences.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonStyleWoodenFences.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonStyleWoodenFences.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonWoodenFences;
+			this.buttonStyleWoodenFences.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonStyleWoodenFences.Location = new System.Drawing.Point(134, 270);
+			this.buttonStyleWoodenFences.Name = "buttonStyleWoodenFences";
+			this.buttonStyleWoodenFences.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonStyleWoodenFences.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonStyleWoodenFences.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonStyleWoodenFences.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonStyleWoodenFences.Size = new System.Drawing.Size(32, 32);
+			this.buttonStyleWoodenFences.TabIndex = 18;
+			this.buttonStyleWoodenFences.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonStyleWoodenFences.Toggleable = false;
+			this.buttonStyleWoodenFences.Toggled = false;
+			this.buttonStyleWoodenFences.ButtonPressed += new System.EventHandler(this.WallStyleWoodenFences);
+			// 
+			// buttonStyleIceBlocks
+			// 
+			this.buttonStyleIceBlocks.BorderOnHover = false;
+			this.buttonStyleIceBlocks.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonStyleIceBlocks.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonStyleIceBlocks.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonStyleIceBlocks.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonStyleIceBlocks.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonStyleIceBlocks.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonIceBlocks;
+			this.buttonStyleIceBlocks.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonStyleIceBlocks.Location = new System.Drawing.Point(96, 270);
+			this.buttonStyleIceBlocks.Name = "buttonStyleIceBlocks";
+			this.buttonStyleIceBlocks.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonStyleIceBlocks.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonStyleIceBlocks.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonStyleIceBlocks.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonStyleIceBlocks.Size = new System.Drawing.Size(32, 32);
+			this.buttonStyleIceBlocks.TabIndex = 17;
+			this.buttonStyleIceBlocks.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonStyleIceBlocks.Toggleable = false;
+			this.buttonStyleIceBlocks.Toggled = false;
+			this.buttonStyleIceBlocks.ButtonPressed += new System.EventHandler(this.WallStyleIceBlocks);
+			// 
+			// buttonStyleHedges
+			// 
+			this.buttonStyleHedges.BorderOnHover = false;
+			this.buttonStyleHedges.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonStyleHedges.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonStyleHedges.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonStyleHedges.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonStyleHedges.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonStyleHedges.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonHedges;
+			this.buttonStyleHedges.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonStyleHedges.Location = new System.Drawing.Point(58, 270);
+			this.buttonStyleHedges.Name = "buttonStyleHedges";
+			this.buttonStyleHedges.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonStyleHedges.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonStyleHedges.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonStyleHedges.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonStyleHedges.Size = new System.Drawing.Size(32, 32);
+			this.buttonStyleHedges.TabIndex = 16;
+			this.buttonStyleHedges.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonStyleHedges.Toggleable = false;
+			this.buttonStyleHedges.Toggled = false;
+			this.buttonStyleHedges.ButtonPressed += new System.EventHandler(this.WallStyleHedges);
+			// 
+			// buttonStyleBrickWalls
+			// 
+			this.buttonStyleBrickWalls.BorderOnHover = false;
+			this.buttonStyleBrickWalls.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonStyleBrickWalls.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonStyleBrickWalls.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonStyleBrickWalls.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonStyleBrickWalls.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonStyleBrickWalls.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonBrickWalls;
+			this.buttonStyleBrickWalls.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonStyleBrickWalls.Location = new System.Drawing.Point(20, 270);
+			this.buttonStyleBrickWalls.Name = "buttonStyleBrickWalls";
+			this.buttonStyleBrickWalls.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonStyleBrickWalls.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonStyleBrickWalls.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonStyleBrickWalls.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonStyleBrickWalls.Size = new System.Drawing.Size(32, 32);
+			this.buttonStyleBrickWalls.TabIndex = 15;
+			this.buttonStyleBrickWalls.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonStyleBrickWalls.Toggleable = false;
+			this.buttonStyleBrickWalls.Toggled = false;
+			this.buttonStyleBrickWalls.ButtonPressed += new System.EventHandler(this.WallStyleBrickWalls);
+			// 
 			// buttonTranslateMinusX
 			// 
 			this.buttonTranslateMinusX.BorderOnHover = false;
@@ -686,23 +803,6 @@
 			this.buttonTranslateMinusY.Toggleable = false;
 			this.buttonTranslateMinusY.Toggled = false;
 			this.buttonTranslateMinusY.ButtonPressed += new System.EventHandler(this.TranslateMazeMinusY);
-			// 
-			// rctPanel2
-			// 
-			this.rctPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.rctPanel2.Controls.Add(this.buttonResizeMinusX);
-			this.rctPanel2.Controls.Add(this.buttonResizePlusX);
-			this.rctPanel2.Controls.Add(this.buttonResizePlusY);
-			this.rctPanel2.Controls.Add(this.buttonResizeMinusY);
-			this.rctPanel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctPanel2.Location = new System.Drawing.Point(12, 154);
-			this.rctPanel2.Name = "rctPanel2";
-			this.rctPanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.rctPanel2.PanelBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.rctPanel2.PanelBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.rctPanel2.PanelBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.rctPanel2.Size = new System.Drawing.Size(84, 84);
-			this.rctPanel2.TabIndex = 3;
 			// 
 			// buttonResizeMinusX
 			// 
@@ -796,54 +896,15 @@
 			this.buttonResizeMinusY.Toggled = false;
 			this.buttonResizeMinusY.ButtonPressed += new System.EventHandler(this.ResizeMazeMinusY);
 			// 
-			// rctPanel1
-			// 
-			this.rctPanel1.Controls.Add(this.rctPanel4);
-			this.rctPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.rctPanel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctPanel1.Location = new System.Drawing.Point(3, 3);
-			this.rctPanel1.Name = "rctPanel1";
-			this.rctPanel1.Padding = new System.Windows.Forms.Padding(1);
-			this.rctPanel1.PanelBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.rctPanel1.PanelBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.rctPanel1.PanelBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.rctPanel1.Size = new System.Drawing.Size(445, 446);
-			this.rctPanel1.TabIndex = 0;
-			// 
-			// rctPanel4
-			// 
-			this.rctPanel4.AutoScroll = true;
-			this.rctPanel4.Controls.Add(this.mazeEditor1);
-			this.rctPanel4.Controls.Add(this.pictureBox1);
-			this.rctPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.rctPanel4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctPanel4.Location = new System.Drawing.Point(1, 1);
-			this.rctPanel4.Name = "rctPanel4";
-			this.rctPanel4.PanelBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.rctPanel4.PanelBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.rctPanel4.PanelBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.rctPanel4.Size = new System.Drawing.Size(443, 444);
-			this.rctPanel4.TabIndex = 0;
-			// 
 			// pictureBox1
 			// 
 			this.pictureBox1.BackgroundImage = global::RCT2MazeGenerator.Properties.Resources.Grass;
 			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
 			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(443, 444);
+			this.pictureBox1.Size = new System.Drawing.Size(440, 440);
 			this.pictureBox1.TabIndex = 1;
 			this.pictureBox1.TabStop = false;
-			// 
-			// saveFileDialog
-			// 
-			this.saveFileDialog.DefaultExt = "TD6";
-			this.saveFileDialog.Filter = "RCT Track Designs|*.TD6";
-			// 
-			// openFileDialog
-			// 
-			this.openFileDialog.DefaultExt = "TD6";
-			this.openFileDialog.Filter = "RCT Track Designs|*.TD6";
 			// 
 			// mazeEditor1
 			// 
@@ -852,6 +913,7 @@
 			this.mazeEditor1.MazeSize = new System.Drawing.Size(10, 10);
 			this.mazeEditor1.Name = "mazeEditor1";
 			this.mazeEditor1.PlaceMode = RCT2MazeGenerator.PlaceModes.Walls;
+			this.mazeEditor1.ShowGrid = true;
 			this.mazeEditor1.Size = new System.Drawing.Size(440, 440);
 			this.mazeEditor1.TabIndex = 2;
 			this.mazeEditor1.Text = "mazeEditor2";
@@ -863,10 +925,10 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.ClientSize = new System.Drawing.Size(665, 452);
+			this.ClientSize = new System.Drawing.Size(662, 448);
 			this.Controls.Add(this.splitContainer1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.MinimumSize = new System.Drawing.Size(550, 490);
+			this.MinimumSize = new System.Drawing.Size(550, 476);
 			this.Name = "MazeForm";
 			this.Text = "RCT2 Maze Generator";
 			this.splitContainer1.Panel1.ResumeLayout(false);
@@ -900,8 +962,6 @@
 		private CustomControls.RCTButton buttonTranslatePlusX;
 		private CustomControls.RCTButton buttonTranslatePlusY;
 		private CustomControls.RCTButton buttonTranslateMinusY;
-		private CustomControls.RCTLabel labelStatus2;
-		private CustomControls.RCTLabel labelStatus1;
 		private CustomControls.RCTLabel labelMazeSize;
 		private CustomControls.RCTButton buttonPlaceModeTiles;
 		private CustomControls.RCTButton buttonPlaceModeWalls;
@@ -924,6 +984,10 @@
 		private MazeEditor mazeEditor1;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog;
 		private System.Windows.Forms.OpenFileDialog openFileDialog;
+		private CustomControls.RCTButton buttonZoomIn;
+		private CustomControls.RCTButton buttonZoomOut;
+		private CustomControls.RCTLabel rctLabel5;
+		private CustomControls.RCTButton buttonGrid;
 	}
 }
 

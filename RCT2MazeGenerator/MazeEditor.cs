@@ -35,7 +35,7 @@ public class MazeEditor : Control {
 		Color.FromArgb(203, 175, 111) // Wood Fences
 	};
 
-	public static Size MaxMazeSize = new Size(125, 125);
+	public static Size MaxMazeSize = new Size(127, 127);
 
 	#endregion
 	//=========== MEMBERS ============
@@ -56,9 +56,11 @@ public class MazeEditor : Control {
 
 	private Point generatePoint;
 
-	public PlaceModes placeMode;
+	private PlaceModes placeMode;
 	private Point placePoint;
 	private MazeBuildingDirections placeDirection;
+
+	private int zoom;
 
 	[Browsable(true)][Category("Action")]
 	[DisplayName("MazeChanged")][Description("")]
@@ -85,6 +87,8 @@ public class MazeEditor : Control {
 		this.placeMode = PlaceModes.Walls;
 		this.placePoint = Point.Empty;
 		this.placeDirection = MazeBuildingDirections.None;
+
+		this.zoom = 2;
 	}
 
 	#endregion
@@ -206,7 +210,16 @@ public class MazeEditor : Control {
 			}
 		}
 		Size mazeSize = new Size(-min.X + max.X + 1, -min.Y + max.Y + 1);
-		Point center = new Point(mazeSize.Width / 2, mazeSize.Height / 2);
+		Point center = Point.Empty;// new Point(mazeSize.Width / 2, mazeSize.Height / 2);
+		// Set the center to the entrance to avoid it being an invalid tile
+		for (int x = 0; x < this.blocks.GetLength(0); x++) {
+			for (int y = this.blocks.GetLength(1) - 1; y >= 0; y--) {
+				MazeBlock block = this.blocks[x, y];
+				if (block.IsEntrance) {
+					center = new Point(x, mazeSize.Height - y - 1);
+				}
+			}
+		}
 
 		maze.TrackSupportColors[0] = (RemapColors)this.wallStyle;
 		maze.RideMapWidth = (byte)mazeSize.Width;
@@ -269,6 +282,37 @@ public class MazeEditor : Control {
 	}
 	private MazeWalls SwapFlag(MazeWalls walls, MazeWalls flag1, MazeWalls flag2) {
 		return (walls.HasFlag(flag1) ? flag2 : MazeWalls.None) | (walls.HasFlag(flag2) ? flag1 : MazeWalls.None);
+	}
+
+	/** <summary> Zooms in the editor view. </summary> */
+	public void ZoomIn() {
+		zoom = Math.Min(5, zoom + 1);
+		switch (zoom) {
+		case 0: this.wallWidth = 1; this.pathWidth = 5; break;
+		case 1: this.wallWidth = 2; this.pathWidth = 10; break;
+		case 2: this.wallWidth = 3; this.pathWidth = 16; break;
+		case 3: this.wallWidth = 4; this.pathWidth = 22; break;
+		case 4: this.wallWidth = 5; this.pathWidth = 28; break;
+		case 5: this.wallWidth = 6; this.pathWidth = 34; break;
+		}
+		this.Width = this.blocks.GetLength(0) * (this.pathWidth * 2 + this.wallWidth * 4);
+		this.Height = this.blocks.GetLength(1) * (this.pathWidth * 2 + this.wallWidth * 4);
+		this.Invalidate();
+	}
+	/** <summary> Zooms out the editor view. </summary> */
+	public void ZoomOut() {
+		zoom = Math.Max(0, zoom - 1);
+		switch (zoom) {
+		case 0: this.wallWidth = 1; this.pathWidth = 5; break;
+		case 1: this.wallWidth = 2; this.pathWidth = 10; break;
+		case 2: this.wallWidth = 3; this.pathWidth = 16; break;
+		case 3: this.wallWidth = 4; this.pathWidth = 22; break;
+		case 4: this.wallWidth = 5; this.pathWidth = 28; break;
+		case 5: this.wallWidth = 6; this.pathWidth = 34; break;
+		}
+		this.Width = this.blocks.GetLength(0) * (this.pathWidth * 2 + this.wallWidth * 4);
+		this.Height = this.blocks.GetLength(1) * (this.pathWidth * 2 + this.wallWidth * 4);
+		this.Invalidate();
 	}
 
 	/** <summary> Gets the maze block at the specified position. Returns empty if one doesn't exist. </summary> */
@@ -662,6 +706,69 @@ public class MazeEditor : Control {
 	#endregion
 	//========== PROPERTIES ==========
 	#region Properties
+
+	[Browsable(true)][Category("Appearance")]
+	[DisplayName("Show Grid")][Description("")]
+	public bool ShowGrid {
+		get { return this.drawGrid; }
+		set {
+			this.drawGrid = value;
+			this.Invalidate();
+		}
+	}
+
+	public string[] MazeErrors {
+		get {
+			string entranceMessage = "";
+			string exitMessage = "";
+			int entranceError = 2;
+			int exitError = 2;
+			for (int x = 0; x < this.blocks.GetLength(0); x++) {
+				for (int y = 0; y < this.blocks.GetLength(1); y++) {
+					MazeBlock block = this.blocks[x, y];
+					if (block.IsEntrance) {
+						entranceError = 0;
+						switch (block.BuildingDirection) {
+						case MazeBuildingDirections.North: if (GetNormalBlock(new Point(x, y + 1)).Empty) entranceError = 1; break;
+						case MazeBuildingDirections.East: if (GetNormalBlock(new Point(x - 1, y)).Empty) entranceError = 1; break;
+						case MazeBuildingDirections.South: if (GetNormalBlock(new Point(x, y - 1)).Empty) entranceError = 1; break;
+						case MazeBuildingDirections.West: if (GetNormalBlock(new Point(x + 1, y)).Empty) entranceError = 1; break;
+						}
+					}
+					else if (block.IsExit) {
+						exitError = 0;
+						switch (block.BuildingDirection) {
+						case MazeBuildingDirections.North: if (GetNormalBlock(new Point(x, y + 1)).Empty) exitError = 1; break;
+						case MazeBuildingDirections.East: if (GetNormalBlock(new Point(x - 1, y)).Empty) exitError = 1; break;
+						case MazeBuildingDirections.South: if (GetNormalBlock(new Point(x, y - 1)).Empty) exitError = 1; break;
+						case MazeBuildingDirections.West: if (GetNormalBlock(new Point(x + 1, y)).Empty) exitError = 1; break;
+						}
+					}
+				}
+			}
+			if (entranceError == 1)
+				entranceMessage = "Entrance needs to be connected to maze.";
+			else if (entranceError == 2)
+				entranceMessage = "No entrance in maze.";
+			if (exitError == 1)
+				exitMessage = "Exit needs to be connected to maze.";
+			else if (exitError == 2)
+				exitMessage = "No exit in maze.";
+
+			if (entranceError != 0) {
+				if (exitError != 0)
+					return new string[] { entranceMessage, exitMessage };
+				else
+					return new string[] { entranceMessage };
+			}
+			else if (exitError != 0) {
+				return new string[] { exitMessage };
+			}
+			else {
+				return new string[0];
+			}
+		}
+	}
 
 	/** <summary> Gets the maze blocks. </summary> */
 	public MazeBlock[,] Blocks {
