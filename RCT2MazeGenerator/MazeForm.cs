@@ -184,7 +184,7 @@ namespace RCT2MazeGenerator {
 			newMaze.Nausea = 0;
 
 			newMaze.VehicleColorScheme = 8;
-			newMaze.Unknown0x48 = 1;
+			newMaze.Unknown0x48 = 0x1C;
 			newMaze.Unknown0x5E = 31;
 
 			newMaze.RideMapWidth = 10;
