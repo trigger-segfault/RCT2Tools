@@ -191,9 +191,9 @@ namespace RCT2MazeGenerator {
 			newMaze.RideMapHeight = 10;
 
 			for (int i = 0; i < 4; i++) {
-				newMaze.TrackRailColors[0] = RemapColors.Gray;
-				newMaze.TrackSpineColors[0] = RemapColors.Gray;
-				newMaze.TrackSupportColors[0] = RemapColors.Gray;
+				newMaze.TrackRailColors[i] = RemapColors.Gray;
+				newMaze.TrackSpineColors[i] = RemapColors.Gray;
+				newMaze.TrackSupportColors[i] = RemapColors.Gray;
 			}
 			newMaze.TrackSupportColors[0] = (RemapColors)WallStyles.Hedges;
 
