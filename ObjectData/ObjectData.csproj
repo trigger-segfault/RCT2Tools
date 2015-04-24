@@ -57,8 +57,9 @@
     <Compile Include="DataObjects\Types\AttractionInfo\CarFrames.cs" />
     <Compile Include="DataObjects\Types\AttractionInfo\EntranceTypes.cs" />
     <Compile Include="DataObjects\Types\AttractionInfo\ItemFlags.cs" />
-    <Compile Include="DataObjects\Types\AttractionInfo\OperatingModes.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\TrackDesignFlags.cs" />
     <Compile Include="DataObjects\Types\AttractionInfo\TrackSections.cs" />
+    <Compile Include="DataObjects\Types\AttractionInfo\TrackPieces.cs" />
     <Compile Include="DataObjects\Types\LargeScenery.cs" />
     <Compile Include="DataObjects\Types\ParkEntrance.cs" />
     <Compile Include="DataObjects\Types\PathAddition.cs" />

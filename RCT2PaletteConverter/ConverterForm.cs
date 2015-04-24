@@ -28,7 +28,7 @@ namespace RCT2PaletteConverter {
 		public ConverterForm() {
 			InitializeComponent();
 
-			TrackDesign track = TrackDesign.ReadTrackDesign(MazePath);
+			TrackDesign track = TrackDesign.FromFile(MazePath);
 			//track.Save(MazePath2);
 			//Save("");
 			//track.ChainLiftSpeed = 0;

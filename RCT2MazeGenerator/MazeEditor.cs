@@ -40,6 +40,29 @@ public class MazeEditor : Control {
 	#endregion
 	//=========== MEMBERS ============
 	#region Members
+	//--------------------------------
+	#region Generation
+	
+	/** <summary> True if the generator is running. </summary> */
+	private bool generating;
+	/** <summary> The starting position of the generation. </summary> */
+	private Point genStart;
+	/** <summary> The current position of the generation. </summary> */
+	private Point genPoint;
+	/** <summary> The tiles of the generation. </summary> */
+	private byte[,] genVisited;
+	/** <summary> True if the generation can use filled tiles. </summary> */
+	private bool genUseFilled;
+	/** <summary> True if the current generation point is a pre-filled one. </summary> */
+	private bool genFilledPoint;
+
+	private Stack<Point> genStack;
+
+	private Random genRandom;
+
+	#endregion
+	//--------------------------------
+	#region Settings
 
 	/** <summary> The grid for the maze. </summary> */
 	private MazeBlock[,] blocks;
@@ -56,6 +79,8 @@ public class MazeEditor : Control {
 
 	private Point generatePoint;
 
+	private bool generationFast;
+
 	private PlaceModes placeMode;
 	private Point placePoint;
 	private MazeBuildingDirections placeDirection;
@@ -68,6 +93,17 @@ public class MazeEditor : Control {
 	[DisplayName("MazeChanged")][Description("")]
 	public event EventHandler MazeChanged;
 
+
+	[Browsable(true)][Category("Action")]
+	[DisplayName("GenerationStarted")][Description("")]
+	public event EventHandler GenerationStarted;
+
+	[Browsable(true)][Category("Action")]
+	[DisplayName("GenerationFinished")][Description("")]
+	public event EventHandler GenerationFinished;
+	
+	#endregion
+	//--------------------------------
 	#endregion
 	//========= CONSTRUCTORS =========
 	#region Constructors
@@ -93,6 +129,16 @@ public class MazeEditor : Control {
 		this.wallsMakeTiles = true;
 
 		this.zoom = 2;
+
+		this.generationFast = true;
+
+		this.genFilledPoint = false;
+		this.genStack = new Stack<Point>();
+		this.genStart = Point.Empty;
+		this.genPoint = Point.Empty;
+		this.genVisited = null;
+		this.genRandom = new Random();
+		this.genUseFilled = true;
 	}
 
 	#endregion
@@ -113,89 +159,95 @@ public class MazeEditor : Control {
 
 	/** <summary> Resizes the maze to the new specified size. </summary> */
 	public void ResizeMaze(Size newSize) {
-		MazeBlock[,] newBlocks = new MazeBlock[Math.Max(1, Math.Min(MaxMazeSize.Width, newSize.Width)), Math.Max(1, Math.Min(MaxMazeSize.Height, newSize.Height))];
-		for (int x = 0; x < newBlocks.GetLength(0); x++) {
-			for (int y = 0; y < newBlocks.GetLength(1); y++) {
-				if (x < this.blocks.GetLength(0) && y < this.blocks.GetLength(1))
-					newBlocks[x, y] = this.blocks[x, y];
-				else
-					newBlocks[x, y] = new MazeBlock();
+		if (!this.generating) {
+			MazeBlock[,] newBlocks = new MazeBlock[Math.Max(1, Math.Min(MaxMazeSize.Width, newSize.Width)), Math.Max(1, Math.Min(MaxMazeSize.Height, newSize.Height))];
+			for (int x = 0; x < newBlocks.GetLength(0); x++) {
+				for (int y = 0; y < newBlocks.GetLength(1); y++) {
+					if (x < this.blocks.GetLength(0) && y < this.blocks.GetLength(1))
+						newBlocks[x, y] = this.blocks[x, y];
+					else
+						newBlocks[x, y] = new MazeBlock();
+				}
 			}
+			this.blocks = newBlocks;
+			this.Width = this.blocks.GetLength(0) * (this.pathWidth * 2 + this.wallWidth * 4);
+			this.Height = this.blocks.GetLength(1) * (this.pathWidth * 2 + this.wallWidth * 4);
+			for (int x = 0; x < this.blocks.GetLength(0); x++) {
+				MazeBlock block = this.blocks[x, 0];
+				if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.NorthLeft | MazeWalls.NorthRight);
+				block = this.blocks[x, this.blocks.GetLength(1) - 1];
+				if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.SouthLeft | MazeWalls.SouthRight);
+			}
+			for (int y = 0; y < this.blocks.GetLength(1); y++) {
+				MazeBlock block = this.blocks[0, y];
+				if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.WestTop | MazeWalls.WestBottom);
+				block = this.blocks[this.blocks.GetLength(0) - 1, y];
+				if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.EastTop | MazeWalls.EastBottom);
+			}
+			OnMazeChanged(new EventArgs());
+			this.Invalidate();
 		}
-		this.blocks = newBlocks;
-		this.Width = this.blocks.GetLength(0) * (this.pathWidth * 2 + this.wallWidth * 4);
-		this.Height = this.blocks.GetLength(1) * (this.pathWidth * 2 + this.wallWidth * 4);
-		for (int x = 0; x < this.blocks.GetLength(0); x++) {
-			MazeBlock block = this.blocks[x, 0];
-			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.NorthLeft | MazeWalls.NorthRight);
-			block = this.blocks[x, this.blocks.GetLength(1) - 1];
-			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.SouthLeft | MazeWalls.SouthRight);
-		}
-		for (int y = 0; y < this.blocks.GetLength(1); y++) {
-			MazeBlock block = this.blocks[0, y];
-			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.WestTop | MazeWalls.WestBottom);
-			block = this.blocks[this.blocks.GetLength(0) - 1, y];
-			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.EastTop | MazeWalls.EastBottom);
-		}
-		OnMazeChanged(new EventArgs());
-		this.Invalidate();
 	}
 	/** <summary> Translates the maze by the specified distance. </summary> */
 	public void TranslateMaze(Point distance) {
-		MazeBlock[,] newBlocks = new MazeBlock[this.blocks.GetLength(0), this.blocks.GetLength(1)];
-		for (int x = 0; x < newBlocks.GetLength(0); x++) {
-			for (int y = 0; y < newBlocks.GetLength(1); y++) {
-				if (x - distance.X >= 0 && x - distance.X < this.blocks.GetLength(0) &&
+		if (!this.generating) {
+			MazeBlock[,] newBlocks = new MazeBlock[this.blocks.GetLength(0), this.blocks.GetLength(1)];
+			for (int x = 0; x < newBlocks.GetLength(0); x++) {
+				for (int y = 0; y < newBlocks.GetLength(1); y++) {
+					if (x - distance.X >= 0 && x - distance.X < this.blocks.GetLength(0) &&
 					y - distance.Y >= 0 && y - distance.Y < this.blocks.GetLength(1))
-					newBlocks[x, y] = this.blocks[x - distance.X, y - distance.Y];
-				else
-					newBlocks[x, y] = new MazeBlock();
+						newBlocks[x, y] = this.blocks[x - distance.X, y - distance.Y];
+					else
+						newBlocks[x, y] = new MazeBlock();
+				}
 			}
+			this.blocks = newBlocks;
+			for (int x = 0; x < this.blocks.GetLength(0); x++) {
+				MazeBlock block = this.blocks[x, 0];
+				if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.NorthLeft | MazeWalls.NorthRight);
+				block = this.blocks[x, this.blocks.GetLength(1) - 1];
+				if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.SouthLeft | MazeWalls.SouthRight);
+			}
+			for (int y = 0; y < this.blocks.GetLength(1); y++) {
+				MazeBlock block = this.blocks[0, y];
+				if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.WestTop | MazeWalls.WestBottom);
+				block = this.blocks[this.blocks.GetLength(0) - 1, y];
+				if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.EastTop | MazeWalls.EastBottom);
+			}
+			OnMazeChanged(new EventArgs());
+			this.Invalidate();
 		}
-		this.blocks = newBlocks;
-		for (int x = 0; x < this.blocks.GetLength(0); x++) {
-			MazeBlock block = this.blocks[x, 0];
-			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.NorthLeft | MazeWalls.NorthRight);
-			block = this.blocks[x, this.blocks.GetLength(1) - 1];
-			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.SouthLeft | MazeWalls.SouthRight);
-		}
-		for (int y = 0; y < this.blocks.GetLength(1); y++) {
-			MazeBlock block = this.blocks[0, y];
-			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.WestTop | MazeWalls.WestBottom);
-			block = this.blocks[this.blocks.GetLength(0) - 1, y];
-			if (!block.IsBuilding && !block.Empty) block.Walls |= (MazeWalls.EastTop | MazeWalls.EastBottom);
-		}
-		OnMazeChanged(new EventArgs());
-		this.Invalidate();
 	}
 	/** <summary> Loads the specified maze into the editor. </summary> */
 	public void LoadMaze(TrackDesign maze) {
-		if (maze.TrackType == TrackTypes.HedgeMaze) {
-			// Flip the maze (mazes are saved flipped verticaly)
-			for (int x = 0; x < this.blocks.GetLength(0); x++) {
-				for (int y = 0; y < this.blocks.GetLength(1); y++) {
-					this.blocks[x, y] = new MazeBlock();
+		if (!this.generating) {
+			if (maze.TrackType == TrackTypes.HedgeMaze) {
+				// Flip the maze (mazes are saved flipped verticaly)
+				for (int x = 0; x < this.blocks.GetLength(0); x++) {
+					for (int y = 0; y < this.blocks.GetLength(1); y++) {
+						this.blocks[x, y] = new MazeBlock();
+					}
 				}
-			}
 
-			Point min = Point.Empty;
-			Point max = Point.Empty;
-			for (int i = 0; i < maze.MazeTiles.Count; i++) {
-				MazeTile tile = maze.MazeTiles[i];
-				if (tile.X < min.X) min.X = tile.X;
-				if (tile.Y < min.Y) min.Y = tile.Y;
-				if (tile.X > max.X) max.X = tile.X;
-				if (tile.Y > max.Y) max.Y = tile.Y;
-			}
-			Size newSize = new Size(-min.X + max.X + 1, -min.Y + max.Y + 1);
-			ResizeMaze(newSize);
+				Point min = Point.Empty;
+				Point max = Point.Empty;
+				for (int i = 0; i < maze.MazeTiles.Count; i++) {
+					MazeTile tile = maze.MazeTiles[i];
+					if (tile.X < min.X) min.X = tile.X;
+					if (tile.Y < min.Y) min.Y = tile.Y;
+					if (tile.X > max.X) max.X = tile.X;
+					if (tile.Y > max.Y) max.Y = tile.Y;
+				}
+				Size newSize = new Size(-min.X + max.X + 1, -min.Y + max.Y + 1);
+				ResizeMaze(newSize);
 
-			for (int i = 0; i < maze.MazeTiles.Count; i++) {
-				MazeTile tile = maze.MazeTiles[i];
-				this.blocks[tile.X - min.X, -tile.Y + max.Y] = new MazeBlock(FlipWalls(tile.Walls), false);
+				for (int i = 0; i < maze.MazeTiles.Count; i++) {
+					MazeTile tile = maze.MazeTiles[i];
+					this.blocks[tile.X - min.X, -tile.Y + max.Y] = new MazeBlock(FlipWalls(tile.Walls), false);
+				}
+				this.wallStyle = (WallStyles)maze.TrackSupportColors[0];
+				this.Invalidate();
 			}
-			this.wallStyle = (WallStyles)maze.TrackSupportColors[0];
-			this.Invalidate();
 		}
 	}
 	/** <summary> Saves the editor to the specified maze. </summary> */
@@ -708,9 +760,138 @@ public class MazeEditor : Control {
 	}
 
 	#endregion
+	//========== GENERATION ==========
+	#region Generation
+
+	/** <summary> Starts maze generation. </summary> */
+	public void StartGeneration(Point start) {
+		if (!this.generating) {
+			this.generating = true;
+			this.genStart = start;
+			this.genPoint = start;
+			this.genFilledPoint = !IsQuadrantSolid(start);
+			this.genVisited = new byte[this.blocks.GetLength(0) * 2, this.blocks.GetLength(1) * 2];
+			for (int x = 0; x < this.blocks.GetLength(0) * 2; x++) {
+				for (int y = 0; y < this.blocks.GetLength(1) * 2; y++) {
+					this.genVisited[x, y] = (byte)(IsQuadrantSolid(new Point(x, y)) ? 1 : 0);
+				}
+			}
+			this.genVisited[start.X, start.Y] = (byte)(this.genFilledPoint ? 3 : 2);
+			this.genStack.Push(start);
+			OnGenerationStarted(new EventArgs());
+			Console.WriteLine("Started");
+		}
+	}
+	/** <summary> Continues maze generation. </summary> */
+	public void ContinueGeneration() {
+		if (this.generating) {
+			// The amount of steps before taking a break from generating to update the editor
+			int steps = 1;
+			if (generationFast)
+				steps = 50;
+
+			for (int i = 0; i < steps && genStack.Count > 0; i++) {
+				GenerationChooseDirection();
+			}
+			if (genStack.Count == 0)
+				EndGeneration();
+			//Console.WriteLine("Update");
+			this.Invalidate();
+		}
+	}
+	/** <summary> Cancels/Ends maze generation. </summary> */
+	public void EndGeneration() {
+		if (this.generating) {
+			this.generating = false;
+			this.genVisited = null;
+			this.genStack.Clear();
+			OnGenerationFinished(new EventArgs());
+			Console.WriteLine("Finished");
+		}
+	}
+	private bool GenerationIsValidDirection(Point point, int direction) {
+		if (point.X >= 0 && point.X < this.blocks.GetLength(0) * 2 &&
+			point.Y >= 0 && point.Y < this.blocks.GetLength(1) * 2) {
+			if (!GetNormalBlock(new Point(point.X / 2, point.Y / 2)).Empty && this.genVisited[point.X, point.Y] <= 1 && !IsRestricted(point)) {
+				if (IsQuadrantSolid(point)) {
+					return true;
+				}
+				else if (this.genUseFilled) {
+					if (this.genFilledPoint) {
+						switch (direction) {
+						case 0: return !IsWallXSolid(new Point(point.X, point.Y));
+						case 1: return !IsWallYSolid(new Point(point.X - 1, point.Y));
+						case 2: return !IsWallXSolid(new Point(point.X, point.Y - 1));
+						case 3: return !IsWallYSolid(new Point(point.X, point.Y));
+						}
+					}
+					else {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	private void GenerationChooseDirection() {
+		bool[] directions = new bool[]{false, false, false, false};
+		Point[] dirPoints = new Point[]{
+			new Point(genPoint.X, genPoint.Y - 1),
+			new Point(genPoint.X + 1, genPoint.Y),
+			new Point(genPoint.X, genPoint.Y + 1),
+			new Point(genPoint.X - 1, genPoint.Y)
+		};
+		int numDirections = 0;
+
+		for (int i = 0; i < 4; i++) {
+			if (GenerationIsValidDirection(dirPoints[i], i)) {
+				directions[i] = true;
+				numDirections++;
+			}
+		}
+
+		if (numDirections != 0) {
+			int dir = genRandom.Next(numDirections);
+			int dirIndex = 0;
+			for (int i = 0; i < 4; i++) {
+				if (directions[i]) {
+					if (dir == dirIndex) {
+						this.genFilledPoint = !IsQuadrantSolid(dirPoints[i]);
+						this.genVisited[dirPoints[i].X, dirPoints[i].Y] = (byte)(this.genFilledPoint ? 3 : 2);
+						this.genStack.Push(dirPoints[i]);
+						this.genPoint = dirPoints[i];
+						switch (i) {
+						case 0: SetWallXSolid(new Point(dirPoints[i].X, dirPoints[i].Y), false); break;
+						case 1: SetWallYSolid(new Point(dirPoints[i].X - 1, dirPoints[i].Y), false); break;
+						case 2: SetWallXSolid(new Point(dirPoints[i].X, dirPoints[i].Y - 1), false); break;
+						case 3: SetWallYSolid(new Point(dirPoints[i].X, dirPoints[i].Y), false); break;
+						}
+						return;
+					}
+					else {
+						dirIndex++;
+					}
+				}
+			}
+		}
+		this.genPoint = this.genStack.Pop();
+		this.genFilledPoint = (this.genVisited[genPoint.X, genPoint.Y] == 3);
+	}
+
+	#endregion
 	//========== PROPERTIES ==========
 	#region Properties
 
+	public bool IsGenerating {
+		get { return this.generating; }
+	}
+
+	[Browsable(true)][Category("Behavior")]
+	[DisplayName("Fast Generation")][Description("")]
+	public bool FastGeneration {
+		get { return this.generationFast; }
+		set { this.generationFast = value; }
+	}
 	[Browsable(true)][Category("Appearance")]
 	[DisplayName("Show Grid")][Description("")]
 	public bool ShowGrid {
@@ -832,79 +1013,92 @@ public class MazeEditor : Control {
 		if (this.MazeChanged != null)
 			this.MazeChanged(this, e);
 	}
+	/** <summary> Raises the GenerationStarted event. </summary> */
+	protected void OnGenerationStarted(EventArgs e) {
+		if (this.GenerationStarted != null)
+			this.GenerationStarted(this, e);
+	}
+	/** <summary> Raises the GenerationFinished event. </summary> */
+	protected void OnGenerationFinished(EventArgs e) {
+		if (this.GenerationFinished != null)
+			this.GenerationFinished(this, e);
+	}
 	/** <summary> Called when the mouse button is down. </summary> */
 	protected override void OnMouseDown(MouseEventArgs e) {
-		if (placeMode == PlaceModes.Walls) {
-			if (hoverType != MazeWallTypes.None) {
-				bool addWall = (e.Button == MouseButtons.Right);
-				if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right) {
-					if (/*e.Button == MouseButtons.Left && */wallsMakeTiles) {
-						if (GetBlock(new Point(hoverPoint.X / 2, hoverPoint.Y / 2)).Empty) {
-							SetBlockSolid(new Point(hoverPoint.X / 2, hoverPoint.Y / 2), true);
-						}
-						else if (hoverType == MazeWallTypes.WallX && hoverPoint.Y % 2 == 1 &&
+		if (!this.generating) {
+
+			if (placeMode == PlaceModes.Walls) {
+				if (hoverType != MazeWallTypes.None) {
+					bool addWall = (e.Button == MouseButtons.Right);
+					if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right) {
+						if (/*e.Button == MouseButtons.Left && */wallsMakeTiles) {
+							if (GetBlock(new Point(hoverPoint.X / 2, hoverPoint.Y / 2)).Empty) {
+								SetBlockSolid(new Point(hoverPoint.X / 2, hoverPoint.Y / 2), true);
+							}
+							else if (hoverType == MazeWallTypes.WallX && hoverPoint.Y % 2 == 1 &&
 							GetBlock(new Point(hoverPoint.X / 2, hoverPoint.Y / 2 + 1)).Empty) {
-							SetBlockSolid(new Point(hoverPoint.X / 2, hoverPoint.Y / 2 + 1), true);
-						}
-						else if (hoverType == MazeWallTypes.WallY && hoverPoint.X % 2 == 1 &&
+								SetBlockSolid(new Point(hoverPoint.X / 2, hoverPoint.Y / 2 + 1), true);
+							}
+							else if (hoverType == MazeWallTypes.WallY && hoverPoint.X % 2 == 1 &&
 							GetBlock(new Point(hoverPoint.X / 2 + 1, hoverPoint.Y / 2)).Empty) {
-							SetBlockSolid(new Point(hoverPoint.X / 2 + 1, hoverPoint.Y / 2), true);
+								SetBlockSolid(new Point(hoverPoint.X / 2 + 1, hoverPoint.Y / 2), true);
+							}
 						}
-					}
-					//if (!GetBlock(new Point(hoverPoint.X / 2, hoverPoint.Y / 2)).Empty || e.Button == MouseButtons.Left || wallsMakeTiles) {
+						//if (!GetBlock(new Point(hoverPoint.X / 2, hoverPoint.Y / 2)).Empty || e.Button == MouseButtons.Left || wallsMakeTiles) {
 						switch (hoverType) {
 						case MazeWallTypes.WallX: SetWallXSolid(hoverPoint, addWall); break;
 						case MazeWallTypes.WallY: SetWallYSolid(hoverPoint, addWall); break;
 						case MazeWallTypes.Quadrant: SetQuadrantSolid(hoverPoint, addWall); break;
 						}
 						OnMazeChanged(new EventArgs());
-					//}
+						//}
+					}
 				}
 			}
-		}
-		else if (placeMode == PlaceModes.Tiles) {
-			Point point = new Point(e.X / (this.pathWidth * 2 + this.wallWidth * 4),
-									e.Y / (this.pathWidth * 2 + this.wallWidth * 4));
-			if (e.Button == MouseButtons.Left && GetBlock(point).Empty) {
-				SetBlockSolid(point, true);
-				OnMazeChanged(new EventArgs());
-			}
-			else if (e.Button == MouseButtons.Right) {
-				SetBlockSolid(point, false);
-				OnMazeChanged(new EventArgs());
-			}
-		}
-		else if (placeMode == PlaceModes.Entrance || placeMode == PlaceModes.Exit) {
-			Point point = new Point(e.X / (this.pathWidth * 2 + this.wallWidth * 4),
-									e.Y / (this.pathWidth * 2 + this.wallWidth * 4));
-			if (placeDirection != MazeBuildingDirections.None && e.Button == MouseButtons.Left) {
-				if (placeMode == PlaceModes.Entrance)
-					SetEntrance(point);
+			else if (placeMode == PlaceModes.Tiles) {
+				Point point = new Point(e.X / (this.pathWidth * 2 + this.wallWidth * 4),
+										e.Y / (this.pathWidth * 2 + this.wallWidth * 4));
+				if (e.Button == MouseButtons.Left && GetBlock(point).Empty) {
+					SetBlockSolid(point, true);
 					OnMazeChanged(new EventArgs());
-				if (placeMode == PlaceModes.Exit)
-					SetExit(point);
-					OnMazeChanged(new EventArgs());
-			}
-			else if (e.Button == MouseButtons.Right) {
-				if (GetBlock(point).IsBuilding) {
+				}
+				else if (e.Button == MouseButtons.Right) {
 					SetBlockSolid(point, false);
 					OnMazeChanged(new EventArgs());
 				}
 			}
-		}
-		else if (placeMode == PlaceModes.Generate) {
-			if (IsNormalBlock(new Point(generatePoint.X / 2, generatePoint.Y / 2))) {
-				if (IsQuadrantSolid(generatePoint) && !IsRestricted(generatePoint)) {
-					// StartGeneration(generatePoint);
+			else if (placeMode == PlaceModes.Entrance || placeMode == PlaceModes.Exit) {
+				Point point = new Point(e.X / (this.pathWidth * 2 + this.wallWidth * 4),
+										e.Y / (this.pathWidth * 2 + this.wallWidth * 4));
+				if (placeDirection != MazeBuildingDirections.None && e.Button == MouseButtons.Left) {
+					if (placeMode == PlaceModes.Entrance)
+						SetEntrance(point);
+					OnMazeChanged(new EventArgs());
+					if (placeMode == PlaceModes.Exit)
+						SetExit(point);
+					OnMazeChanged(new EventArgs());
+				}
+				else if (e.Button == MouseButtons.Right) {
+					if (GetBlock(point).IsBuilding) {
+						SetBlockSolid(point, false);
+						OnMazeChanged(new EventArgs());
+					}
 				}
 			}
-		}
-		else if (placeMode == PlaceModes.Restrict) {
-			if (e.Button == MouseButtons.Left) {
-				SetRestricted(this.generatePoint, true);
+			else if (placeMode == PlaceModes.Generate) {
+				if (IsNormalBlock(new Point(generatePoint.X / 2, generatePoint.Y / 2))) {
+					if ((IsQuadrantSolid(generatePoint) || genUseFilled) && !IsRestricted(generatePoint)) {
+						StartGeneration(generatePoint);
+					}
+				}
 			}
-			else if (e.Button == MouseButtons.Right) {
-				SetRestricted(this.generatePoint, false);
+			else if (placeMode == PlaceModes.Restrict) {
+				if (e.Button == MouseButtons.Left) {
+					SetRestricted(this.generatePoint, true);
+				}
+				else if (e.Button == MouseButtons.Right) {
+					SetRestricted(this.generatePoint, false);
+				}
 			}
 		}
 		base.OnMouseDown(e);
@@ -1144,12 +1338,20 @@ public class MazeEditor : Control {
 		}
 		else if (placeMode == PlaceModes.Generate) {
 			if (IsNormalBlock(new Point(generatePoint.X / 2, generatePoint.Y / 2))) {
-				if (IsQuadrantSolid(generatePoint) && !IsRestricted(generatePoint)) {
+				if ((IsQuadrantSolid(generatePoint) || genUseFilled) && !IsRestricted(generatePoint)) {
 					Brush b = new SolidBrush(GenerateColor);
 					g.FillRectangle(b, new Rectangle(generatePoint.X * HW, generatePoint.Y * HW, HW, HW));
 					b.Dispose();
 				}
 			}
+		}
+		if (this.generating) {
+			Brush b = new SolidBrush(HighlightColor);
+			g.FillRectangle(b, new Rectangle(genPoint.X * HW, genPoint.Y * HW, HW, HW));
+			b.Dispose();
+			b = new SolidBrush(GenerateColor);
+			g.FillRectangle(b, new Rectangle(genStart.X * HW, genStart.Y * HW, HW, HW));
+			b.Dispose();
 		}
 
 		if (drawGrid) {

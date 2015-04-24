@@ -23,6 +23,7 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MazeForm));
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
@@ -65,8 +66,10 @@
 			this.buttonResizePlusY = new CustomControls.RCTButton();
 			this.buttonResizeMinusY = new CustomControls.RCTButton();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
-			this.rctCheckBox1 = new CustomControls.RCTCheckBox();
+			this.checkBoxWallsMakeTiles = new CustomControls.RCTCheckBox();
+			this.timerGenerator = new System.Windows.Forms.Timer(this.components);
 			this.mazeEditor1 = new RCT2MazeGenerator.MazeEditor();
+			this.checkBoxFastGeneration = new CustomControls.RCTCheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -89,7 +92,8 @@
 			// 
 			// splitContainer1.Panel1
 			// 
-			this.splitContainer1.Panel1.Controls.Add(this.rctCheckBox1);
+			this.splitContainer1.Panel1.Controls.Add(this.checkBoxFastGeneration);
+			this.splitContainer1.Panel1.Controls.Add(this.checkBoxWallsMakeTiles);
 			this.splitContainer1.Panel1.Controls.Add(this.buttonGrid);
 			this.splitContainer1.Panel1.Controls.Add(this.buttonZoomOut);
 			this.splitContainer1.Panel1.Controls.Add(this.buttonZoomIn);
@@ -122,7 +126,7 @@
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.rctPanel1);
 			this.splitContainer1.Panel2.Padding = new System.Windows.Forms.Padding(3);
-			this.splitContainer1.Size = new System.Drawing.Size(662, 458);
+			this.splitContainer1.Size = new System.Drawing.Size(662, 480);
 			this.splitContainer1.SplitterDistance = 210;
 			this.splitContainer1.TabIndex = 1;
 			this.splitContainer1.TabStop = false;
@@ -172,7 +176,7 @@
 			this.buttonSave.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonSave.Image = null;
 			this.buttonSave.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonSave.Location = new System.Drawing.Point(78, 405);
+			this.buttonSave.Location = new System.Drawing.Point(78, 427);
 			this.buttonSave.Name = "buttonSave";
 			this.buttonSave.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonSave.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -221,7 +225,7 @@
 			this.buttonAbout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonAbout.Image = null;
 			this.buttonAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonAbout.Location = new System.Drawing.Point(144, 430);
+			this.buttonAbout.Location = new System.Drawing.Point(144, 452);
 			this.buttonAbout.Name = "buttonAbout";
 			this.buttonAbout.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonAbout.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -239,7 +243,7 @@
 			// 
 			this.rctLabel7.FontType = CustomControls.Visuals.FontType.Bold;
 			this.rctLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctLabel7.Location = new System.Drawing.Point(12, 274);
+			this.rctLabel7.Location = new System.Drawing.Point(12, 295);
 			this.rctLabel7.Name = "rctLabel7";
 			this.rctLabel7.OutlineColor = System.Drawing.Color.Transparent;
 			this.rctLabel7.Size = new System.Drawing.Size(75, 14);
@@ -258,7 +262,7 @@
 			this.buttonNew.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonNew.Image = null;
 			this.buttonNew.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonNew.Location = new System.Drawing.Point(12, 405);
+			this.buttonNew.Location = new System.Drawing.Point(12, 427);
 			this.buttonNew.Name = "buttonNew";
 			this.buttonNew.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonNew.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -283,7 +287,7 @@
 			this.buttonSaveAs.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonSaveAs.Image = null;
 			this.buttonSaveAs.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonSaveAs.Location = new System.Drawing.Point(78, 430);
+			this.buttonSaveAs.Location = new System.Drawing.Point(78, 452);
 			this.buttonSaveAs.Name = "buttonSaveAs";
 			this.buttonSaveAs.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonSaveAs.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -308,7 +312,7 @@
 			this.buttonOpen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonOpen.Image = null;
 			this.buttonOpen.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonOpen.Location = new System.Drawing.Point(12, 430);
+			this.buttonOpen.Location = new System.Drawing.Point(12, 452);
 			this.buttonOpen.Name = "buttonOpen";
 			this.buttonOpen.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonOpen.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -326,7 +330,7 @@
 			// 
 			this.labelMazeSize.FontType = CustomControls.Visuals.FontType.Bold;
 			this.labelMazeSize.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.labelMazeSize.Location = new System.Drawing.Point(11, 382);
+			this.labelMazeSize.Location = new System.Drawing.Point(11, 403);
 			this.labelMazeSize.Name = "labelMazeSize";
 			this.labelMazeSize.OutlineColor = System.Drawing.Color.Transparent;
 			this.labelMazeSize.Size = new System.Drawing.Size(180, 14);
@@ -458,7 +462,7 @@
 			// 
 			this.rctLabel2.FontType = CustomControls.Visuals.FontType.Bold;
 			this.rctLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctLabel2.Location = new System.Drawing.Point(112, 158);
+			this.rctLabel2.Location = new System.Drawing.Point(112, 179);
 			this.rctLabel2.Name = "rctLabel2";
 			this.rctLabel2.OutlineColor = System.Drawing.Color.Transparent;
 			this.rctLabel2.Size = new System.Drawing.Size(75, 14);
@@ -470,7 +474,7 @@
 			// 
 			this.rctLabel1.FontType = CustomControls.Visuals.FontType.Bold;
 			this.rctLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctLabel1.Location = new System.Drawing.Point(12, 158);
+			this.rctLabel1.Location = new System.Drawing.Point(12, 179);
 			this.rctLabel1.Name = "rctLabel1";
 			this.rctLabel1.OutlineColor = System.Drawing.Color.Transparent;
 			this.rctLabel1.Size = new System.Drawing.Size(75, 14);
@@ -486,7 +490,7 @@
 			this.rctPanel3.Controls.Add(this.buttonTranslatePlusY);
 			this.rctPanel3.Controls.Add(this.buttonTranslateMinusY);
 			this.rctPanel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctPanel3.Location = new System.Drawing.Point(112, 178);
+			this.rctPanel3.Location = new System.Drawing.Point(112, 199);
 			this.rctPanel3.Name = "rctPanel3";
 			this.rctPanel3.Padding = new System.Windows.Forms.Padding(3);
 			this.rctPanel3.PanelBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
@@ -503,7 +507,7 @@
 			this.rctPanel2.Controls.Add(this.buttonResizePlusY);
 			this.rctPanel2.Controls.Add(this.buttonResizeMinusY);
 			this.rctPanel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctPanel2.Location = new System.Drawing.Point(12, 178);
+			this.rctPanel2.Location = new System.Drawing.Point(12, 199);
 			this.rctPanel2.Name = "rctPanel2";
 			this.rctPanel2.Padding = new System.Windows.Forms.Padding(3);
 			this.rctPanel2.PanelBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
@@ -523,7 +527,7 @@
 			this.rctPanel1.PanelBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
 			this.rctPanel1.PanelBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.rctPanel1.PanelBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.rctPanel1.Size = new System.Drawing.Size(442, 452);
+			this.rctPanel1.Size = new System.Drawing.Size(442, 474);
 			this.rctPanel1.TabIndex = 0;
 			// 
 			// rctPanel4
@@ -538,14 +542,14 @@
 			this.rctPanel4.PanelBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
 			this.rctPanel4.PanelBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.rctPanel4.PanelBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.rctPanel4.Size = new System.Drawing.Size(440, 450);
+			this.rctPanel4.Size = new System.Drawing.Size(440, 472);
 			this.rctPanel4.TabIndex = 0;
 			// 
 			// rctLabel5
 			// 
 			this.rctLabel5.FontType = CustomControls.Visuals.FontType.Bold;
 			this.rctLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctLabel5.Location = new System.Drawing.Point(12, 346);
+			this.rctLabel5.Location = new System.Drawing.Point(12, 367);
 			this.rctLabel5.Name = "rctLabel5";
 			this.rctLabel5.OutlineColor = System.Drawing.Color.Transparent;
 			this.rctLabel5.Size = new System.Drawing.Size(180, 14);
@@ -563,7 +567,7 @@
 			this.buttonGrid.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonGrid.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonGrid;
 			this.buttonGrid.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonGrid.Location = new System.Drawing.Point(134, 336);
+			this.buttonGrid.Location = new System.Drawing.Point(134, 357);
 			this.buttonGrid.Name = "buttonGrid";
 			this.buttonGrid.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonGrid.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -586,7 +590,7 @@
 			this.buttonZoomOut.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonZoomOut.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonZoomOut;
 			this.buttonZoomOut.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonZoomOut.Location = new System.Drawing.Point(58, 336);
+			this.buttonZoomOut.Location = new System.Drawing.Point(58, 357);
 			this.buttonZoomOut.Name = "buttonZoomOut";
 			this.buttonZoomOut.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonZoomOut.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -609,7 +613,7 @@
 			this.buttonZoomIn.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonZoomIn.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonZoomIn;
 			this.buttonZoomIn.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonZoomIn.Location = new System.Drawing.Point(96, 336);
+			this.buttonZoomIn.Location = new System.Drawing.Point(96, 357);
 			this.buttonZoomIn.Name = "buttonZoomIn";
 			this.buttonZoomIn.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonZoomIn.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -632,7 +636,7 @@
 			this.buttonStyleWoodenFences.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonStyleWoodenFences.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonWoodenFences;
 			this.buttonStyleWoodenFences.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonStyleWoodenFences.Location = new System.Drawing.Point(134, 294);
+			this.buttonStyleWoodenFences.Location = new System.Drawing.Point(134, 315);
 			this.buttonStyleWoodenFences.Name = "buttonStyleWoodenFences";
 			this.buttonStyleWoodenFences.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonStyleWoodenFences.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -655,7 +659,7 @@
 			this.buttonStyleIceBlocks.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonStyleIceBlocks.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonIceBlocks;
 			this.buttonStyleIceBlocks.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonStyleIceBlocks.Location = new System.Drawing.Point(96, 294);
+			this.buttonStyleIceBlocks.Location = new System.Drawing.Point(96, 315);
 			this.buttonStyleIceBlocks.Name = "buttonStyleIceBlocks";
 			this.buttonStyleIceBlocks.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonStyleIceBlocks.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -678,7 +682,7 @@
 			this.buttonStyleHedges.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonStyleHedges.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonHedges;
 			this.buttonStyleHedges.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonStyleHedges.Location = new System.Drawing.Point(58, 294);
+			this.buttonStyleHedges.Location = new System.Drawing.Point(58, 315);
 			this.buttonStyleHedges.Name = "buttonStyleHedges";
 			this.buttonStyleHedges.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonStyleHedges.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -701,7 +705,7 @@
 			this.buttonStyleBrickWalls.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonStyleBrickWalls.Image = global::RCT2MazeGenerator.Properties.Resources.ButtonBrickWalls;
 			this.buttonStyleBrickWalls.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonStyleBrickWalls.Location = new System.Drawing.Point(20, 294);
+			this.buttonStyleBrickWalls.Location = new System.Drawing.Point(20, 315);
 			this.buttonStyleBrickWalls.Name = "buttonStyleBrickWalls";
 			this.buttonStyleBrickWalls.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonStyleBrickWalls.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -904,26 +908,30 @@
 			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
 			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(440, 450);
+			this.pictureBox1.Size = new System.Drawing.Size(440, 472);
 			this.pictureBox1.TabIndex = 1;
 			this.pictureBox1.TabStop = false;
 			// 
-			// rctCheckBox1
+			// checkBoxWallsMakeTiles
 			// 
-			this.rctCheckBox1.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.rctCheckBox1.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.rctCheckBox1.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.rctCheckBox1.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
-			this.rctCheckBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.rctCheckBox1.FontType = CustomControls.Visuals.FontType.Bold;
-			this.rctCheckBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctCheckBox1.Location = new System.Drawing.Point(20, 88);
-			this.rctCheckBox1.Name = "rctCheckBox1";
-			this.rctCheckBox1.OutlineColor = System.Drawing.Color.Transparent;
-			this.rctCheckBox1.Size = new System.Drawing.Size(110, 11);
-			this.rctCheckBox1.TabIndex = 151;
-			this.rctCheckBox1.Text = "Walls make tiles";
-			this.rctCheckBox1.CheckStateChanged += new System.EventHandler(this.WallsMakeTiles);
+			this.checkBoxWallsMakeTiles.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.checkBoxWallsMakeTiles.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.checkBoxWallsMakeTiles.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.checkBoxWallsMakeTiles.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
+			this.checkBoxWallsMakeTiles.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBoxWallsMakeTiles.FontType = CustomControls.Visuals.FontType.Bold;
+			this.checkBoxWallsMakeTiles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.checkBoxWallsMakeTiles.Location = new System.Drawing.Point(20, 88);
+			this.checkBoxWallsMakeTiles.Name = "checkBoxWallsMakeTiles";
+			this.checkBoxWallsMakeTiles.OutlineColor = System.Drawing.Color.Transparent;
+			this.checkBoxWallsMakeTiles.Size = new System.Drawing.Size(110, 11);
+			this.checkBoxWallsMakeTiles.TabIndex = 151;
+			this.checkBoxWallsMakeTiles.Text = "Walls make tiles";
+			this.checkBoxWallsMakeTiles.CheckStateChanged += new System.EventHandler(this.WallsMakeTiles);
+			// 
+			// timerGenerator
+			// 
+			this.timerGenerator.Tick += new System.EventHandler(this.ContinueGeneration);
 			// 
 			// mazeEditor1
 			// 
@@ -939,16 +947,35 @@
 			this.mazeEditor1.WallsMakeTiles = true;
 			this.mazeEditor1.WallStyle = RCT2MazeGenerator.WallStyles.Hedges;
 			this.mazeEditor1.MazeChanged += new System.EventHandler(this.MazeChanged);
+			this.mazeEditor1.GenerationStarted += new System.EventHandler(this.GenerationStarted);
+			this.mazeEditor1.GenerationFinished += new System.EventHandler(this.GenerationFinished);
+			// 
+			// checkBoxFastGeneration
+			// 
+			this.checkBoxFastGeneration.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.checkBoxFastGeneration.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.checkBoxFastGeneration.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.checkBoxFastGeneration.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
+			this.checkBoxFastGeneration.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBoxFastGeneration.FontType = CustomControls.Visuals.FontType.Bold;
+			this.checkBoxFastGeneration.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.checkBoxFastGeneration.Location = new System.Drawing.Point(20, 159);
+			this.checkBoxFastGeneration.Name = "checkBoxFastGeneration";
+			this.checkBoxFastGeneration.OutlineColor = System.Drawing.Color.Transparent;
+			this.checkBoxFastGeneration.Size = new System.Drawing.Size(110, 11);
+			this.checkBoxFastGeneration.TabIndex = 152;
+			this.checkBoxFastGeneration.Text = "Fast generation";
+			this.checkBoxFastGeneration.CheckStateChanged += new System.EventHandler(this.FastGeneration);
 			// 
 			// MazeForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.ClientSize = new System.Drawing.Size(662, 458);
+			this.ClientSize = new System.Drawing.Size(662, 480);
 			this.Controls.Add(this.splitContainer1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.MinimumSize = new System.Drawing.Size(550, 496);
+			this.MinimumSize = new System.Drawing.Size(550, 518);
 			this.Name = "MazeForm";
 			this.Text = "RCT2 Maze Generator";
 			this.splitContainer1.Panel1.ResumeLayout(false);
@@ -1008,7 +1035,9 @@
 		private CustomControls.RCTButton buttonZoomOut;
 		private CustomControls.RCTLabel rctLabel5;
 		private CustomControls.RCTButton buttonGrid;
-		private CustomControls.RCTCheckBox rctCheckBox1;
+		private CustomControls.RCTCheckBox checkBoxWallsMakeTiles;
+		private System.Windows.Forms.Timer timerGenerator;
+		private CustomControls.RCTCheckBox checkBoxFastGeneration;
 	}
 }
 

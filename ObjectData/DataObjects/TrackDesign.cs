@@ -31,7 +31,7 @@ public class TrackDesign {
 	public EntranceTypes EntranceType;
 
 	public byte AirTime;
-	public byte DepartureControlFlags;
+	public DepartureControlFlags DepartureControlFlags;
 	public byte NumberOfTrains;
 	public byte CarsPerTrain;
 	public byte MinimumWaitTime;
@@ -72,6 +72,7 @@ public class TrackDesign {
 	public byte CircuitsChainLiftSpeed;
 
 	public List<MazeTile> MazeTiles;
+	public List<TrackPiece> TrackPieces;
 
 	#endregion
 	//========= CONSTRUCTORS =========
@@ -85,14 +86,16 @@ public class TrackDesign {
 		this.OperatingMode = OperatingModes.NormalMode;
 		this.VehicleColorScheme = 0;
 		this.VehicleColorSpecifiers = new RemapColors[64];
+
 		this.Unknown0x48 = 0;
+
 		this.EntranceType = EntranceTypes.Normal;
 		this.AirTime = 0;
-		this.DepartureControlFlags = 0;
+		this.DepartureControlFlags = DepartureControlFlags.UseMaximumTime | DepartureControlFlags.FullLoad;
 		this.NumberOfTrains = 0;
 		this.CarsPerTrain = 0;
-		this.MinimumWaitTime = 0;
-		this.MaximumWaitTime = 0;
+		this.MinimumWaitTime = 10;
+		this.MaximumWaitTime = 60;
 		this.PoweredSpeedLapsMaxPeople = 0;
 		this.MaximumSpeed = 0;
 		this.AverageSpeed = 0;
@@ -129,6 +132,7 @@ public class TrackDesign {
 		this.CircuitsChainLiftSpeed = 0;
 
 		this.MazeTiles = new List<MazeTile>();
+		this.TrackPieces = new List<TrackPiece>();
 	}
 
 	#endregion
@@ -156,6 +160,7 @@ public class TrackDesign {
 	//=========== READING ============
 	#region Reading
 
+	/** <summary> Reads the track design. </summary> */
 	public void Read(BinaryReader reader) {
 		this.TrackType = (TrackTypes)reader.ReadByte();
 		this.Unknown0x01 = reader.ReadByte();
@@ -168,7 +173,7 @@ public class TrackDesign {
 		this.Unknown0x48 = reader.ReadByte();
 		this.EntranceType = (EntranceTypes)reader.ReadByte();
 		this.AirTime = reader.ReadByte();
-		this.DepartureControlFlags = reader.ReadByte();
+		this.DepartureControlFlags = (DepartureControlFlags)reader.ReadByte();
 		this.NumberOfTrains = reader.ReadByte();
 		this.CarsPerTrain = reader.ReadByte();
 		this.MinimumWaitTime = reader.ReadByte();
@@ -216,41 +221,33 @@ public class TrackDesign {
 		// Read the track data
 
 		if (this.TrackType == TrackTypes.HedgeMaze) {
-			byte b = 0;
 			MazeTile mazeTile = new MazeTile();
 			mazeTile.Read(reader);
-			//bool entrance = false; bool exit = false;
-			while (!mazeTile.IsEnd){// || !entrance || !exit) {
-				/*if (mazeTile.IsEnd) {
-					reader.BaseStream.Position--;
-				}*/
+			// Read the maze tiles until an empty one is read.
+			while (!mazeTile.IsEnd) {
 				this.MazeTiles.Add(mazeTile);
 				mazeTile = new MazeTile();
 				mazeTile.Read(reader);
-				//if (mazeTile.IsEntrance) entrance = true;
-				//if (mazeTile.IsExit) exit = true;
-
-				/*if (mazeTile.IsEnd) {
-					b = reader.ReadByte();
-					if (b == 0xFF) {
-						Console.WriteLine("0xFF");
-					}
-				}*/
 			}
 		}
 		else {
 			byte b = reader.ReadByte();
+			// Read the track pieces until byte 0xFF.
 			while (b != 0xFF) {
 				reader.BaseStream.Position--;
+				TrackPiece trackPiece = new TrackPiece();
+				trackPiece.Read(reader);
+				this.TrackPieces.Add(trackPiece);
+
 				b = reader.ReadByte();
 			}
-
 		}
 
 		while (reader.BaseStream.Position < reader.BaseStream.Length) {
 			reader.ReadByte();
 		}
 	}
+	/** <summary> Writes the track design. </summary> */
 	public void Write(BinaryWriter writer) {
 		writer.Write((byte)this.TrackType);
 		writer.Write(this.Unknown0x01);
@@ -263,7 +260,7 @@ public class TrackDesign {
 		writer.Write(this.Unknown0x48);
 		writer.Write((byte)this.EntranceType);
 		writer.Write(this.AirTime);
-		writer.Write(this.DepartureControlFlags);
+		writer.Write((byte)this.DepartureControlFlags);
 		writer.Write(this.NumberOfTrains);
 		writer.Write(this.CarsPerTrain);
 		writer.Write(this.MinimumWaitTime);
@@ -313,46 +310,37 @@ public class TrackDesign {
 			for (int i = 0; i < this.MazeTiles.Count; i++) {
 				this.MazeTiles[i].Write(writer);
 			}
-			writer.Write((uint)0);
 			//new MazeTile(0, 0, MazeWalls.None).Write(writer);
-			writer.Write((byte)0xFF);
-
+			// Write the entrances
 			writer.Write((uint)0);
 		}
 		else {
-			// Write track segments
+			// Write track pieces
+			for (int i = 0; i < this.TrackPieces.Count; i++) {
+				this.TrackPieces[i].Write(writer);
+			}
 			writer.Write((byte)0xFF);
 
 			// Write entrance/exits
 		}
 
-		//writer.Write((byte)0xFF);
+		// No scenery
+		writer.Write((byte)0xFF);
 
 		if (writer.BaseStream.Position < 19235) {
 			while (writer.BaseStream.Position < 19235) {
-				if (writer.BaseStream.Position == 8165) {
-					for (int i = 0; i < 55; i++) {
-						writer.Write((byte)0xFF);
-					}
-				}
 				writer.Write((byte)0x00);
 			}
 		}
 		else if (writer.BaseStream.Position < 24735) {
 			while (writer.BaseStream.Position < 24735) {
-				if (writer.BaseStream.Position == 8165) {
-					for (int i = 0; i < 55; i++) {
-						writer.Write((byte)0xFF);
-					}
-				}
 				writer.Write((byte)0x00);
 			}
 		}
 	}
-
-	public static TrackDesign ReadTrackDesign(string path) {
-		BinaryReader reader = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read), Encoding.Unicode);
-
+	/** <summary> Returns an object loaded from the specified stream. </summary> */
+	public static TrackDesign FromStream(Stream stream) {
+		BinaryReader reader = new BinaryReader(stream, Encoding.Unicode);
 		byte[] data = ReadChunk(reader);
 
 		uint CheckSum = reader.ReadUInt32();
@@ -365,6 +353,14 @@ public class TrackDesign {
 		reader.Close();
 
 		return trackDesign;
+	}
+	/** <summary> Returns an object loaded from the specified buffer. </summary> */
+	public static TrackDesign FromBuffer(byte[] buffer) {
+		return FromStream(new MemoryStream(buffer));
+	}
+	/** <summary> Returns an object loaded from the specified file path. </summary> */
+	public static TrackDesign FromFile(string path) {
+		return FromStream(new FileStream(path, FileMode.Open, FileAccess.Read));
 	}
 	/** <summary> Saves the track design to the specified file path. </summary> */
 	public void Save(string path) {
@@ -405,6 +401,47 @@ public class TrackDesign {
 		catch (System.Exception) {
 			Console.WriteLine("HELP");
 		}
+	}
+	/** <summary> Reads and decodes the track design chunk. </summary> */
+	public static byte[] ReadChunk(BinaryReader reader) {
+		uint chunkPosition = 0;
+		uint position = 0;
+		long startPos = reader.BaseStream.Position;
+
+		MemoryStream stream = new MemoryStream();
+		BinaryWriter writer = new BinaryWriter(stream);
+
+		//http://tid.rctspace.com/RLE.html
+
+		// While the end of the uncompressed chunk has not been reached
+		while ((long)chunkPosition + 4 < reader.BaseStream.Length) {
+			// Read the next byte
+			byte b = reader.ReadByte();
+
+			// If the MSB is 0, copy the next (b + 1) bytes
+			if ((b & 0x80) == 0) {
+				uint length = (uint)(b + 1);
+				chunkPosition += length + 1;
+				position += length;
+				//Console.WriteLine("Copy: " + b + " " + length + " Position: " + chunkPosition);
+				writer.Write(reader.ReadBytes((int)length));
+			}
+
+			// Else the MSB is 1, repeat the following byte (-b + 1) times
+			else {
+				byte copyByte = reader.ReadByte();
+				uint length = (uint)((byte)(-(sbyte)b) + 1);
+				chunkPosition += 2;
+				position += length;
+				//Console.WriteLine("Repeat: " + b + " " + length + " " + copyByte + " Position: " + chunkPosition);
+				for (var i = 0; i < length; i++)
+					writer.Write(copyByte);
+			}
+		}
+
+		byte[] data = new byte[position];
+		Array.Copy(stream.GetBuffer(), data, position);
+		return data;
 	}
 	/** <summary> Reads and decodes the chunk. </summary> */
 	public static byte[] WriteChunk(byte[] data) {
@@ -462,56 +499,60 @@ public class TrackDesign {
 		Array.Copy(stream.GetBuffer(), data2, chunkPosition);
 		return data2;
 	}
+	/** <summary> Rotates the checksum. </summary> */
 	private static uint RotateChecksum(uint checksum, byte data) {
 		checksum = (checksum & 0xFFFFFF00) | ((checksum + (uint)data) & 0x000000FF);
 		checksum = (checksum << 3) | (checksum >> (32 - 3));
 		return checksum;
 	}
 
-	/** <summary> Reads and decodes the track design chunk. </summary> */
-	public static byte[] ReadChunk(BinaryReader reader) {
-		uint chunkPosition = 0;
-		uint position = 0;
-		long startPos = reader.BaseStream.Position;
 
-		MemoryStream stream = new MemoryStream();
-		BinaryWriter writer = new BinaryWriter(stream);
+	#endregion
+}
+/** <summary> A single track piece in a track design. </summary> */
+public class TrackPiece {
+	
+	//=========== MEMBERS ============
+	#region Members
 
-		//http://tid.rctspace.com/RLE.html
+	/** <summary> The type of track piece. </summary> */
+	public TrackSegments Segment;
+	/** <summary> The qualifier for the track piece. </summary> */
+	public TrackQualifiers Qualifier;
 
-		// While the end of the uncompressed chunk has not been reached
-		while ((long)chunkPosition + 4 < reader.BaseStream.Length) {
-			// Read the next byte
-			byte b = reader.ReadByte();
+	#endregion
+	//========= CONSTRUCTORS =========
+	#region Constructors
 
-			// If the MSB is 0, copy the next (b + 1) bytes
-			if ((b & 0x80) == 0) {
-				uint length = (uint)(b + 1);
-				chunkPosition += length + 1;
-				position += length;
-				//Console.WriteLine("Copy: " + b + " " + length + " Position: " + chunkPosition);
-				writer.Write(reader.ReadBytes((int)length));
-			}
+	/** <summary> Constructs the default track piece. </summary> */
+	public TrackPiece() {
+		this.Segment = TrackSegments.Flat;
+		this.Qualifier = TrackQualifiers.None;
+	}
+	/** <summary> Constructs the default track piece. </summary> */
+	public TrackPiece(TrackSegments segment, TrackQualifiers qualifier) {
+		this.Segment = segment;
+		this.Qualifier = qualifier;
+	}
 
-			// Else the MSB is 1, repeat the following byte (-b + 1) times
-			else {
-				byte copyByte = reader.ReadByte();
-				uint length = (uint)((byte)(-(sbyte)b) + 1);
-				chunkPosition += 2;
-				position += length;
-				//Console.WriteLine("Repeat: " + b + " " + length + " " + copyByte + " Position: " + chunkPosition);
-				for (var i = 0; i < length; i++)
-					writer.Write(copyByte);
-			}
-		}
+	#endregion
+	//=========== READING ============
+	#region Reading
 
-		byte[] data = new byte[position];
-		Array.Copy(stream.GetBuffer(), data, position);
-		return data;
+	/** <summary> Reads the track piece. </summary> */
+	public void Read(BinaryReader reader) {
+		this.Segment = (TrackSegments)reader.ReadSByte();
+		this.Qualifier = (TrackQualifiers)reader.ReadSByte();
+	}
+	/** <summary> Writes the track piece. </summary> */
+	public void Write(BinaryWriter writer) {
+		writer.Write((byte)this.Segment);
+		writer.Write((byte)this.Qualifier);
 	}
 
 	#endregion
 }
+/** <summary> A single tile in a maze. </summary> */
 public class MazeTile {
 	
 	//=========== MEMBERS ============

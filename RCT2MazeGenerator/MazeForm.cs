@@ -149,12 +149,27 @@ namespace RCT2MazeGenerator {
 		}
 		/** <summary> Changes the walls make tiles setting. </summary> */
 		private void WallsMakeTiles(object sender, EventArgs e) {
-			this.mazeEditor1.WallsMakeTiles = (this.rctCheckBox1.CheckState == CheckState.Checked);
+			this.mazeEditor1.WallsMakeTiles = (this.checkBoxWallsMakeTiles.CheckState == CheckState.Checked);
 		}
 
 		/** <summary> Sets the maze changed value to true. </summary> */
 		private void MazeChanged(object sender, EventArgs e) {
 			this.changed = true;
+		}
+		/** <summary> Changes the fast generation setting. </summary> */
+		private void FastGeneration(object sender, EventArgs e) {
+			this.mazeEditor1.FastGeneration = (this.checkBoxFastGeneration.CheckState == CheckState.Checked);
+		}
+
+		private void GenerationStarted(object sender, EventArgs e) {
+			this.mazeEditor1.ContinueGeneration();
+			this.timerGenerator.Start();
+		}
+		private void ContinueGeneration(object sender, EventArgs e) {
+			this.mazeEditor1.ContinueGeneration();
+		}
+		private void GenerationFinished(object sender, EventArgs e) {
+			this.timerGenerator.Stop();
 		}
 
 		#endregion
@@ -175,9 +190,9 @@ namespace RCT2MazeGenerator {
 			newMaze.ChainLiftSpeed = 5;
 			newMaze.NumberOfCircuits = 1;
 
-			newMaze.MaximumWaitTime = 60;
 			newMaze.MinimumWaitTime = 10;
-			newMaze.DepartureControlFlags = 0x43;
+			newMaze.MaximumWaitTime = 60;
+			newMaze.DepartureControlFlags = DepartureControlFlags.UseMaximumTime | DepartureControlFlags.FullLoad;
 
 			newMaze.Excitement = 12;
 			newMaze.Intensity = 6;
@@ -233,7 +248,7 @@ namespace RCT2MazeGenerator {
 			if (!changed || WarningMessageBox.Show(this, "Maze has been changed.", "Are you sure you want to continue?") == DialogResult.Yes) {
 				if (openFileDialog.ShowDialog(this) == DialogResult.OK) {
 					try {
-						TrackDesign newMaze = TrackDesign.ReadTrackDesign(openFileDialog.FileName);
+						TrackDesign newMaze = TrackDesign.FromFile(openFileDialog.FileName);
 						if (newMaze.TrackType == TrackTypes.HedgeMaze) {
 							fileName = openFileDialog.FileName;
 							changed = false;
@@ -294,5 +309,6 @@ namespace RCT2MazeGenerator {
 
 
 		#endregion
+
 	}
 }
