@@ -204,6 +204,97 @@ public class GraphicsData {
 	//=========== READING ============
 	#region Reading
 
+	/** <summary> Returns true if the specified read index is a palette image. </summary> */
+	public bool IsReadIndexPaletteImage(int index) {
+		return imageDirectory.entries[index].Flags.HasFlag(ImageFlags.DirectBitmap);
+	}
+
+	/** <summary> Reads the palette image from the graphics data. </summary> */
+	public PaletteImage ReadPaletteImage(BinaryReader reader, long startPosition, int index) {
+
+		int i = index;
+		ImageEntry entry = imageDirectory.entries[i];
+		if (entry.Flags.HasFlag(ImageFlags.DirectBitmap)) {
+			if (!entry.Flags.HasFlag(ImageFlags.CompactedBitmap)) {
+				if (entry.Flags.HasFlag(ImageFlags.LandTile)) {
+					// Don't know what this flag does, but images can still be read normally.
+				}
+				PaletteImage paletteImage = new PaletteImage(entry);
+				reader.BaseStream.Position = startPosition + entry.StartAddress;
+
+				// Read each row
+				for (int y = 0; y < entry.Height; y++) {
+					for (int x = 0; x < entry.Width; x++) {
+						byte b = reader.ReadByte();
+						paletteImage.Pixels[x, y] = b;
+					}
+				}
+				return paletteImage;
+			}
+			else {
+				if (entry.Flags.HasFlag(ImageFlags.LandTile)) {
+					// Don't know what this flag does, but images can still be read normally.
+				}
+				PaletteImage paletteImage = new PaletteImage(entry);
+				uint[] rowOffsets = new uint[entry.Height];
+				reader.BaseStream.Position = startPosition + entry.StartAddress;
+
+				// Read the row offsets
+				for (int j = 0; j < entry.Height; j++) {
+					rowOffsets[j] = reader.ReadUInt16();
+				}
+
+				// Read the scan lines in each row
+				for (int j = 0; j < entry.Height; j++) {
+					reader.BaseStream.Position = startPosition + entry.StartAddress + rowOffsets[j];
+					byte b1 = 0;
+					byte b2 = 0;
+
+					// A MSB of 1 means the last scan line in a row
+					while ((b1 & 0x80) == 0) {
+						// Read the number of bytes of data
+						b1 = reader.ReadByte();
+						// Read the offset from the left edge of the image
+						b2 = reader.ReadByte();
+						for (int k = 0; k < (int)(b1 & 0x7F); k++) {
+							byte b3 = reader.ReadByte();
+							paletteImage.Pixels[(int)b2 + k, j] = b3;
+						}
+					}
+				}
+				return paletteImage;
+			}
+		}
+		else if (entry.Flags.HasFlag(ImageFlags.PaletteEntries)) {
+			
+		}
+		return null;
+	}
+	/** <summary> Reads the palette from the graphics data. </summary> */
+	public Palette ReadPalette(BinaryReader reader, long startPosition, int index) {
+
+		int i = index;
+		ImageEntry entry = imageDirectory.entries[i];
+		if (entry.Flags.HasFlag(ImageFlags.DirectBitmap)) {
+			
+		}
+		else if (entry.Flags.HasFlag(ImageFlags.PaletteEntries)) {
+			Palette palette = new Palette(entry);
+			reader.BaseStream.Position = startPosition + entry.StartAddress;
+
+			// Read each color
+			for (int j = 0; j < entry.Width; j++) {
+				// Yes, the colors are in the order blue, green, red
+				byte blue = reader.ReadByte();
+				byte green = reader.ReadByte();
+				byte red = reader.ReadByte();
+
+				palette.Colors[j] = Color.FromArgb(red, green, blue);
+			}
+			return palette;
+		}
+		return null;
+	}
 	/** <summary> Reads the graphics data. </summary> */
 	public void Read(BinaryReader reader) {
 		long startPosition = reader.BaseStream.Position;
@@ -256,11 +347,7 @@ public class GraphicsData {
 							b2 = reader.ReadByte();
 							for (int k = 0; k < (int)(b1 & 0x7F); k++) {
 								byte b3 = reader.ReadByte();
-								try {
-									paletteImage.Pixels[(int)b2 + k, j] = b3;
-								}
-								catch (Exception) {
-								}
+								paletteImage.Pixels[(int)b2 + k, j] = b3;
 							}
 						}
 					}

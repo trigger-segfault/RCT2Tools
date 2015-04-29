@@ -1,7 +1,8 @@
 ﻿using CustomControls;
+using RCT2ObjectData.DataObjects;
+using RCT2ObjectData.DataObjects.Types;
+using RCT2ObjectData.DataObjects.Types.AttractionInfo;
 using RCTDataEditor.DataObjects;
-using RCTDataEditor.DataObjects.Types;
-using RCTDataEditor.DataObjects.Types.AttractionInfo;
 using RCTDataEditor.FileIO;
 using RCTDataEditor.Properties;
 using System;
@@ -78,6 +79,8 @@ namespace RCTDataEditor {
 		bool allowDeletion = false;
 		/** <summary> True if files are backed up after being deleted. </summary> */
 		bool backupDeletion = true;
+		/** <summary> True if only a handful of object images are loaded. </summary> */
+		bool quickLoad = false;
 
 		#endregion
 		//--------------------------------
@@ -85,22 +88,25 @@ namespace RCTDataEditor {
 
 		/** <summary> The current object being viewed. </summary> */
 		ObjectData objectData;
+		/** <summary> The draw settings. </summary> */
+		DrawSettings drawSettings;
+
 		/** <summary> The index of the object in the file directory. </summary> */
 		int objectIndex = 0;
 		/** <summary> The rotation of the object view. </summary> */
-		int rotation = 0;
+		//int rotation = 0;
 		/** <summary> The slope of the object view. </summary> */
-		int slope = -1;
+		//int slope = -1;
 		/** <summary> The corner of the object view. </summary> */
-		int corner = 0;
+		//int corner = 0;
 		/** <summary> The elevation of the object view. </summary> */
-		int elevation = 0;
+		//int elevation = 0;
 		/** <summary> The connections of the current path. </summary> */
-		uint pathConnections = 0x00000000;
+		//uint pathConnections = 0x00000000;
 		/** <summary> True if the queue path is being drawn. </summary> */
-		bool queue = false;
+		//bool queue = false;
 		/** <summary> The frame of the object view. </summary> */
-		int frame = 0;
+		//int frame = 0;
 		/** <summary> True if only viewing a dialog image. </summary> */
 		bool dialogView = false;
 		/** <summary> True if only viewing a single image. </summary> */
@@ -109,6 +115,9 @@ namespace RCTDataEditor {
 		int colorRemap = 0;
 		/** <summary> The image to draw the object to. </summary> */
 		Image objectImage;
+		PaletteImage objectPaletteImage = new PaletteImage(new Size(190, 254));
+
+		Terrain terrain = new Terrain();
 
 		#endregion
 		//--------------------------------
@@ -175,7 +184,9 @@ namespace RCTDataEditor {
 			InitializeComponent();
 
 			Pathing.SetPathSprites();
-			Water.LoadWaterSparkle();
+			Water.LoadResources();
+			Terrain.LoadResources();
+			ColorRemapping.LoadResources();
 
 			this.fontBold = new SpriteFont(Resources.BoldFont, ' ', 'z', 10);
 
@@ -186,6 +197,15 @@ namespace RCTDataEditor {
 			this.currentList = "";
 
 			this.objectImage = new Bitmap(190, 254);
+
+			this.terrain.Slope = -1;
+			this.terrain.Origin = new Point(8, 8);
+			this.terrain.Size = new Size(13, 13);
+
+			this.drawSettings.Remap1 = RemapColors.Maroon;
+			this.drawSettings.Remap2 = RemapColors.Gold;
+			this.drawSettings.Remap3 = RemapColors.Bark;
+			this.drawSettings.Slope = -1;
 
 			this.defaultDirectory = "";
 			string[] possibleDirectories = {
@@ -243,9 +263,9 @@ namespace RCTDataEditor {
 				imageList.ColorDepth = ColorDepth.Depth24Bit;
 				imageList.TransparentColor = Color.Transparent;
 				imageList.ImageSize = new Size(12, 12);
-				imageList.Images.Add("PaletteButton", paleteButtonImage.CreateImage(Palette.DefaultPalette, i, -1, -1));
-				imageList.Images.Add("PaletteButtonPressed", paleteButtonPressedImage.CreateImage(Palette.DefaultPalette, i, -1, -1));
-				imageList.Images.Add("PaletteButtonPressed2", paleteButtonPressedImage.CreateImage(Palette.DefaultPalette, i, -1, -1));
+				imageList.Images.Add("PaletteButton", paleteButtonImage.CreateImage(Palette.DefaultPalette, (RemapColors)i, RemapColors.None, RemapColors.None));
+				imageList.Images.Add("PaletteButtonPressed", paleteButtonPressedImage.CreateImage(Palette.DefaultPalette, (RemapColors)i, RemapColors.None, RemapColors.None));
+				imageList.Images.Add("PaletteButtonPressed2", paleteButtonPressedImage.CreateImage(Palette.DefaultPalette, (RemapColors)i, RemapColors.None, RemapColors.None));
 
 				Button button = new Button();
 
@@ -273,14 +293,14 @@ namespace RCTDataEditor {
 				this.paletteButtons[i] = button;
 				this.paletteImageLists[i] = imageList;
 			}
-			this.buttonRemap1.ImageList = this.paletteImageLists[GraphicsData.ColorRemap1];
-			this.buttonRemap2.ImageList = this.paletteImageLists[GraphicsData.ColorRemap2];
-			this.buttonRemap3.ImageList = this.paletteImageLists[GraphicsData.ColorRemap3];
+			this.buttonRemap1.ImageList = this.paletteImageLists[(int)drawSettings.Remap1];
+			this.buttonRemap2.ImageList = this.paletteImageLists[(int)drawSettings.Remap2];
+			this.buttonRemap3.ImageList = this.paletteImageLists[(int)drawSettings.Remap3];
 			#endregion
 
 			if (args.Length > 0) {
 				this.directory = Path.GetDirectoryName(args[0]);
-				this.objectData = ObjectData.ReadObject(args[0]);
+				this.objectData = ObjectData.FromFile(args[0]);
 				this.UpdateImages();
 				this.UpdateColorRemap();
 				this.UpdateInfo();
@@ -291,7 +311,7 @@ namespace RCTDataEditor {
 
 				this.tabInfo.ToggleTab();
 
-				this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + frame : (!dialogView ? "frame " + frame : "dialog"));
+				this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + drawSettings.Frame : (!dialogView ? "frame " + drawSettings.Frame : "dialog"));
 			}
 
 			ImageDirectory id = new ImageDirectory();
@@ -299,137 +319,6 @@ namespace RCTDataEditor {
 
 			BinaryReader stream = new BinaryReader(new FileStream("C:\\Programs\\Games\\Steam\\steamapps\\common\\Rollercoaster Tycoon 2\\Data\\g1.dat", FileMode.Open, FileAccess.Read));
 
-			id.Read(stream);
-			gd.Read(stream, id);
-			stream.Close();
-
-			/*ImageDirectory id2 = new ImageDirectory();
-			GraphicsData gd2 = new GraphicsData();
-			id2.ScanLineLength = id.ScanLineLength;
-			id2.Count = 5;
-
-			ImageEntry entry;
-			PaletteImage paletteImage;
-			Bitmap image;
-
-			entry = new ImageEntry();
-			image = (Bitmap)Bitmap.FromFile("C:\\Users\\Jrob\\My Projects\\C#\\RCT2Tools\\RCT2Browser\\Land.png");
-			paletteImage = this.FromImage(image);
-			entry.Width = (short)image.Width; entry.Height = (short)image.Height; entry.Flags = RCTDataEditor.DataObjects.ImageFlags.CompactedBitmap;
-			entry.XOffset = 0; entry.YOffset = 0;
-			id2.Entries.Add(entry); gd2.PaletteImages.Add(paletteImage);
-
-			entry = new ImageEntry();
-			image = (Bitmap)Bitmap.FromFile("C:\\Users\\Jrob\\My Projects\\C#\\RCT2Tools\\RCT2Browser\\Slope1.png");
-			paletteImage = this.FromImage(image);
-			entry.Width = (short)image.Width; entry.Height = (short)image.Height; entry.Flags = RCTDataEditor.DataObjects.ImageFlags.CompactedBitmap;
-			entry.XOffset = -64; entry.YOffset = -48;
-			id2.Entries.Add(entry); gd2.PaletteImages.Add(paletteImage);
-
-			entry = new ImageEntry();
-			image = (Bitmap)Bitmap.FromFile("C:\\Users\\Jrob\\My Projects\\C#\\RCT2Tools\\RCT2Browser\\Slope2.png");
-			paletteImage = this.FromImage(image);
-			entry.Width = (short)image.Width; entry.Height = (short)image.Height; entry.Flags = RCTDataEditor.DataObjects.ImageFlags.CompactedBitmap;
-			entry.XOffset = 0; entry.YOffset = -48;
-			id2.Entries.Add(entry); gd2.PaletteImages.Add(paletteImage);
-
-			entry = new ImageEntry();
-			image = (Bitmap)Bitmap.FromFile("C:\\Users\\Jrob\\My Projects\\C#\\RCT2Tools\\RCT2Browser\\Slope3.png");
-			paletteImage = this.FromImage(image);
-			entry.Width = (short)image.Width; entry.Height = (short)image.Height; entry.Flags = RCTDataEditor.DataObjects.ImageFlags.CompactedBitmap;
-			entry.XOffset = 0; entry.YOffset = 0;
-			id2.Entries.Add(entry); gd2.PaletteImages.Add(paletteImage);
-
-			entry = new ImageEntry();
-			image = (Bitmap)Bitmap.FromFile("C:\\Users\\Jrob\\My Projects\\C#\\RCT2Tools\\RCT2Browser\\Slope4.png");
-			paletteImage = this.FromImage(image);
-			entry.Width = (short)image.Width; entry.Height = (short)image.Height; entry.Flags = RCTDataEditor.DataObjects.ImageFlags.CompactedBitmap;
-			entry.XOffset = -64; entry.YOffset = 0;
-			id2.Entries.Add(entry); gd2.PaletteImages.Add(paletteImage);
-
-			//stream.Close();
-			BinaryWriter stream2 = new BinaryWriter(new FileStream("Land.rct2imgs", FileMode.OpenOrCreate));
-
-			long imageDirectoryPosition = stream2.BaseStream.Position;
-
-			// Write the image directory and graphics data
-			id2.Write(stream2);
-			gd2.Write(stream2, id2);
-
-			// Rewrite the image directory after the image addresses are known
-			long finalPosition = stream2.BaseStream.Position;
-			stream2.BaseStream.Position = imageDirectoryPosition;
-			id2.Write(stream2);
-
-			stream2.Close();*/
-
-
-			/*Water o;
-
-			o = (Water)ObjectData.ReadObject(this.directory + "\\WTRCYAN.DAT");
-			o.Source = SourceTypes.Custom;
-
-			for (int i = 1; i < 7; i++) {
-				int r = 1;
-				int g = 1;
-				int b = 1;
-				switch (i) {
-				case 1: g = 0; b = 0; break;
-				case 2: b = 0; break;
-				case 3: g = 0; break;
-				case 4: r = 0; b = 0; break;
-				case 5: r = 0; break;
-				case 6: r = 0; g = 0; break;
-				}
-
-				/*o.GraphicsData.Palettes[i] = new Palette(new Color[]{
-					Color.FromArgb(r*0, g*0, b*0), Color.FromArgb(r*20, g*20, b*20), Color.FromArgb(r*40, g*40, b*40), Color.FromArgb(r*60, g*60, b*60), Color.FromArgb(r*80, g*80, b*80),
-					Color.FromArgb(r*100, g*100, b*100), Color.FromArgb(r*120, g*120, b*120), Color.FromArgb(r*140, g*140, b*140), Color.FromArgb(r*160, g*160, b*160), Color.FromArgb(r*180, g*180, b*180),
-					Color.FromArgb(r*200, g*200, b*200), Color.FromArgb(r*220, g*220, b*220), Color.FromArgb(r*240, g*240, b*240), Color.FromArgb(r*250, g*250, b*250), Color.FromArgb(r*255, g*255, b*255)});*/
-
-				/*o.GraphicsData.Palettes[i] = new Palette(new Color[]{
-					Color.FromArgb(r*50, g*50, b*50), Color.FromArgb(r*50, g*50, b*50), Color.FromArgb(r*50, g*50, b*50),
-					Color.FromArgb(r*100, g*100, b*100), Color.FromArgb(r*100, g*100, b*100), Color.FromArgb(r*100, g*100, b*100),
-					Color.FromArgb(r*150, g*150, b*150), Color.FromArgb(r*150, g*150, b*150), Color.FromArgb(r*150, g*150, b*150),
-					Color.FromArgb(r*200, g*200, b*200), Color.FromArgb(r*200, g*200, b*200), Color.FromArgb(r*200, g*200, b*200),
-					Color.FromArgb(r*250, g*250, b*250), Color.FromArgb(r*250, g*250, b*250), Color.FromArgb(r*250, g*250, b*250)});
-			}
-			o.StringTable.Entries[0][Languages.British] = "Water Test";
-			o.StringTable.Entries[0][Languages.American] = "Water Test";
-			o.ObjectHeader.FileName = "WTRTEST";
-			ObjectData.WriteObject("WTRTEST.DAT", o);*/
-				
-				//Attraction o;
-
-			/*o = (Attraction)ObjectData.ReadObject(this.directory + "\\ZLOG.DAT");
-			o.Source = SourceTypes.Custom;
-			o.Header.Flags &= ~(AttractionFlags.DisableShuttleMode);
-			o.StringTable.Entries[0][Languages.British] = "ALog2";
-			o.StringTable.Entries[0][Languages.American] = "ALog2";
-			o.ObjectHeader.FileName = "ZLOG2";
-			ObjectData.WriteObject("ZLOG2.DAT", o);*/
-			/*o = (Attraction)ObjectData.ReadObject(this.directory + "\\ARRX.DAT");
-			o.Source = SourceTypes.Custom;
-			o.Header.CarTypeList[0].Flags &= ~CarFlags.Invertable2;
-			o.StringTable.Entries[0][Languages.British] = "AMulti3";
-			o.StringTable.Entries[0][Languages.American] = "AMulti3";
-			o.ObjectHeader.FileName = "ARRX3";
-			ObjectData.WriteObject("ARRX3.DAT", o);*/
-			/*o = (Attraction)ObjectData.ReadObject(this.directory + "\\DING1.DAT");
-			o.Source = SourceTypes.Custom;
-			o.Header.CarTypeList[0].Flags |= CarFlags.SwingingMoreFrames;
-			o.Header.CarTypeList[0].CarBehavior = CarBehaviors.Default;
-			o.StringTable.Entries[0][Languages.British] = "ADing2";
-			o.StringTable.Entries[0][Languages.American] = "ADing2";
-			o.ObjectHeader.FileName = "DING12";
-			ObjectData.WriteObject("DING12.DAT", o);
-			o = (Attraction)ObjectData.ReadObject(this.directory + "\\INTBOB.DAT");
-			o.Source = SourceTypes.Custom;
-			o.Header.CarTypeList[0].Flags &= ~CarFlags.SwingingMoreFrames;
-			o.StringTable.Entries[0][Languages.British] = "ATurns2";
-			o.StringTable.Entries[0][Languages.American] = "ATurns2";
-			o.ObjectHeader.FileName = "INTBOB2";
-			ObjectData.WriteObject("INTBOB2.DAT", o);*/
 		}
 
 		private PaletteImage FromImage(Bitmap image) {
@@ -459,12 +348,12 @@ namespace RCTDataEditor {
 		}
 
 		private void SavePieces(Attraction o, ulong basePieces, ulong pieces, string name) {
-			o.Source = SourceTypes.Custom;
+			/*o.Source = SourceTypes.Custom;
 			o.ObjectHeader.FileName = name;
 			o.StringTable.Entries[0][Languages.British] = "A (" + pieces.ToString("X16") + ")";
 			o.StringTable.Entries[0][Languages.American] ="A (" + pieces.ToString("X16") + ")";
 			o.Header.AvailableTrackSections = (TrackSections)(basePieces | pieces);
-			ObjectData.WriteObject(name + ".DAT", o);
+			ObjectData.WriteObject(name + ".DAT", o);*/
 		}
 		private int GetColorDelta(Color imageColor, Color paletteColor) {
 			return Math.Abs(imageColor.R - paletteColor.R) +
@@ -483,7 +372,7 @@ namespace RCTDataEditor {
 		}
 		/** <summary> Called to load the settings file. </summary> */
 		private void LoadSettings(object sender, EventArgs e) {
-			string pathToSettings = Path.Combine(Path.GetDirectoryName (Assembly.GetEntryAssembly().Location), "Settings.xml");
+			string pathToSettings = Path.Combine(Path.GetDirectoryName (Assembly.GetEntryAssembly().Location), "Settings - Content Browser.xml");
 			if (File.Exists(pathToSettings)) {
 				XmlDocument doc = new XmlDocument();
 				doc.Load(pathToSettings);
@@ -496,7 +385,7 @@ namespace RCTDataEditor {
 				if (element.Count != 0) this.objectsPerTick = Int32.Parse(element[0].InnerText);
 
 				element = doc.GetElementsByTagName("QuickLoad");
-				if (element.Count != 0) Attraction.QuickLoad = Boolean.Parse(element[0].InnerText);
+				if (element.Count != 0) this.quickLoad = Boolean.Parse(element[0].InnerText);
 
 				element = doc.GetElementsByTagName("RemapImage");
 				if (element.Count != 0) this.remapImageView = Boolean.Parse(element[0].InnerText);
@@ -509,7 +398,7 @@ namespace RCTDataEditor {
 
 				this.textBoxDirectory.Text = this.defaultDirectory;
 				this.numericUpDownObjectsPerTick.Value = this.objectsPerTick;
-				this.checkBoxQuickLoad.CheckState = (Attraction.QuickLoad ? CheckState.Checked : CheckState.Unchecked);
+				this.checkBoxQuickLoad.CheckState = (this.quickLoad ? CheckState.Checked : CheckState.Unchecked);
 				this.checkBoxRemapImage.CheckState = (this.remapImageView ? CheckState.Checked : CheckState.Unchecked);
 				this.checkBoxAllowDeletions.CheckState = (this.allowDeletion ? CheckState.Checked : CheckState.Unchecked);
 				this.checkBoxBackupDeletions.CheckState = (this.backupDeletion ? CheckState.Checked : CheckState.Unchecked);
@@ -536,7 +425,7 @@ namespace RCTDataEditor {
 
 			element = doc.CreateElement("QuickLoad");
 			settings.AppendChild(element);
-			element.AppendChild(doc.CreateTextNode(Attraction.QuickLoad.ToString()));
+			element.AppendChild(doc.CreateTextNode(this.quickLoad.ToString()));
 
 			element = doc.CreateElement("RemapImage");
 			settings.AppendChild(element);
@@ -550,7 +439,7 @@ namespace RCTDataEditor {
 			settings.AppendChild(element);
 			element.AppendChild(doc.CreateTextNode(this.backupDeletion.ToString()));
 
-			doc.Save(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Settings.xml"));
+			doc.Save(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Settings - Content Browser.xml"));
 		}
 		/** <summary> Called when the browse default button is pressed. </summary> */
 		private void BrowseDefaultDirectory(object sender, EventArgs e) {
@@ -569,7 +458,7 @@ namespace RCTDataEditor {
 			int count = 0;
 			for (int i = fileIndex; i < files.Length && count < objectsPerTick; i++, fileIndex++, count++) {
 				if (files[i].EndsWith(".DAT", true, CultureInfo.DefaultThreadCurrentCulture)) {
-					ObjectDataInfo info = ObjectData.ReadObjectInfo(files[i], true);
+					ObjectDataInfo info = ObjectDataInfo.FromFile(files[i], true);
 					if (!info.Invalid) {
 						
 						ListViewItem item = new ListViewItem();
@@ -795,10 +684,10 @@ namespace RCTDataEditor {
 			if (e.Item.Selected && ((sender as ListView).SelectedItems.Count == 0 || (sender as ListView).SelectedItems[0] == e.Item)) {
 				currentList = name;
 				objectIndex = e.ItemIndex;
-				objectData = ObjectData.ReadObject(Path.Combine(directory, e.Item.SubItems[2].Text));
-				this.frame = 0;
-				Attraction.CurrentCar = 0;
-				Attraction.CarRotationFrame = 0;
+				objectData = ObjectData.FromFile(Path.Combine(directory, e.Item.SubItems[2].Text), this.quickLoad);
+				drawSettings.Frame = 0;
+				drawSettings.CurrentCar = 0;
+				drawSettings.Rotation = 0;
 				this.UpdateImages(); this.UpdateInfo(); this.UpdateColorRemap();
 				this.labelCurrentObject.Text = (objectData != null ? objectData.ObjectHeader.FileName + ".DAT" : "");
 				if (objectData == null) {
@@ -809,17 +698,23 @@ namespace RCTDataEditor {
 					this.labelImageOffset.Text = "";
 				}
 				else {
-					this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + frame : (!dialogView ? "frame " + frame : "dialog"));
+					this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + drawSettings.Frame : (!dialogView ? "frame " + drawSettings.Frame : "dialog"));
 
-					if (this.imageView && objectData.ImageDirectory.Entries.Count > 0) {
-						this.labelImageSize.Text = "Image Size:  " + objectData.ImageDirectory.Entries[0].Width + ", " + objectData.ImageDirectory.Entries[frame].Height + "";
-						this.labelImageOffset.Text = "Image Offset:  " + objectData.ImageDirectory.Entries[0].XOffset + ", " + objectData.ImageDirectory.Entries[frame].YOffset + "";
+					if (this.imageView && objectData.ImageDirectory.NumEntries > 0) {
+						if (objectData.GraphicsData.IsPaletteImage(drawSettings.Frame)) {
+							this.labelImageSize.Text = "Image Size:  " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Width + ", " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Height + "";
+							this.labelImageOffset.Text = "Image Offset:  " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).XOffset + ", " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).YOffset + "";
+						}
+						else {
+							this.labelImageOffset.Text = "Num Colors:  " + objectData.GraphicsData.GetPalette(drawSettings.Frame).NumColors + "";
+							this.labelImageSize.Text = "Palette Offset:  " + objectData.GraphicsData.GetPalette(drawSettings.Frame).Offset + "";
+						}
 					}
 
-					if (this.imageView && objectData.ImageDirectory.Count > 1) {
+					if (this.imageView && objectData.ImageDirectory.NumEntries > 1) {
 						this.scrollBarImage.Enabled = true;
 						this.scrollBarImage.Visible = true;
-						this.scrollBarImage.Maximum = objectData.ImageDirectory.Count - 1;
+						this.scrollBarImage.Maximum = objectData.ImageDirectory.NumEntries - 1;
 						this.scrollBarImage.Value = 0;
 					}
 					else {
@@ -880,9 +775,9 @@ namespace RCTDataEditor {
 			int index = Int32.Parse(name) - 1;
 			(Controls.Find("buttonRemap" + colorRemap, true)[0] as Button).ImageList = paletteImageLists[index];
 			switch (colorRemap) {
-			case 1: GraphicsData.ColorRemap1 = index; break;
-			case 2: GraphicsData.ColorRemap2 = index; break;
-			case 3: GraphicsData.ColorRemap3 = index; break;
+			case 1: drawSettings.Remap1 = (RemapColors)index; break;
+			case 2: drawSettings.Remap2 = (RemapColors)index; break;
+			case 3: drawSettings.Remap3 = (RemapColors)index; break;
 			}
 
 			panelColorPalette.Visible = false;
@@ -971,12 +866,15 @@ namespace RCTDataEditor {
 		}
 		/** <summary> Changes the quick load setting. </summary> */
 		private void QuickLoadAttractions(object sender, EventArgs e) {
-			Attraction.QuickLoad = (sender as RCTCheckBox).CheckState == CheckState.Checked;
+			this.quickLoad = (sender as RCTCheckBox).CheckState == CheckState.Checked;
 		}
 		/** <summary> Changes the remap image view setting. </summary> */
 		private void RemapImageView(object sender, EventArgs e) {
 			this.remapImageView = (sender as RCTCheckBox).CheckState == CheckState.Checked;
 			this.UpdateColorRemap();
+			if (this.imageView) {
+				this.UpdateImages();
+			}
 		}
 		/** <summary> Changes the allow deletions setting. </summary> */
 		private void AllowDeletions(object sender, EventArgs e) {
@@ -989,13 +887,13 @@ namespace RCTDataEditor {
 		/** <summary> Changes the dialog view. </summary> */
 		private void DialogView(object sender, EventArgs e) {
 			this.dialogView = (sender as RCTCheckBox).CheckState == CheckState.Checked;
-			this.frame = 0;
+			drawSettings.Frame = 0;
 			if (this.checkBoxImageView.CheckState == CheckState.Checked) {
 				this.imageView = false;
 				this.checkBoxImageView.CheckState = CheckState.Unchecked;
 			}
 			if (objectData != null && !objectData.Invalid) {
-				this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + frame : (!dialogView ? "frame " + frame : "dialog"));
+				this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + drawSettings.Frame : (!dialogView ? "frame " + drawSettings.Frame : "dialog"));
 				this.UpdateImages();
 			}
 			this.scrollBarImage.Enabled = false;
@@ -1007,18 +905,18 @@ namespace RCTDataEditor {
 		/** <summary> Changes the frame view. </summary> */
 		private void FrameView(object sender, EventArgs e) {
 			this.imageView = (sender as RCTCheckBox).CheckState == CheckState.Checked;
-			this.frame = 0;
+			drawSettings.Frame = 0;
 			if (this.checkBoxDialogView.CheckState == CheckState.Checked) {
 				this.dialogView = false;
 				this.checkBoxDialogView.CheckState = CheckState.Unchecked;
 			}
 			if (objectData != null && !objectData.Invalid) {
-				this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + frame : (!dialogView ? "frame " + frame : "dialog"));
+				this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + drawSettings.Frame : (!dialogView ? "frame " + drawSettings.Frame : "dialog"));
 				this.UpdateImages();
-				if (this.imageView && objectData.ImageDirectory.Count > 1) {
+				if (this.imageView && objectData.ImageDirectory.NumEntries > 1) {
 					this.scrollBarImage.Enabled = true;
 					this.scrollBarImage.Visible = true;
-					this.scrollBarImage.Maximum = objectData.ImageDirectory.Count - 1;
+					this.scrollBarImage.Maximum = objectData.ImageDirectory.NumEntries - 1;
 					this.scrollBarImage.Value = 0;
 				}
 				else {
@@ -1026,8 +924,14 @@ namespace RCTDataEditor {
 					this.scrollBarImage.Visible = false;
 				}
 				if (this.imageView) {
-					this.labelImageSize.Text = "Image Size:  " + objectData.ImageDirectory.Entries[frame].Width + ", " + objectData.ImageDirectory.Entries[frame].Height + "";
-					this.labelImageOffset.Text = "Image Offset:  " + objectData.ImageDirectory.Entries[frame].XOffset + ", " + objectData.ImageDirectory.Entries[frame].YOffset + "";
+					if (objectData.GraphicsData.IsPaletteImage(drawSettings.Frame)) {
+						this.labelImageSize.Text = "Image Size:  " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Width + ", " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Height + "";
+						this.labelImageOffset.Text = "Image Offset:  " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).XOffset + ", " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).YOffset + "";
+					}
+					else {
+						this.labelImageOffset.Text = "Num Colors:  " + objectData.GraphicsData.GetPalette(drawSettings.Frame).NumColors + "";
+						this.labelImageSize.Text = "Palette Offset:  " + objectData.GraphicsData.GetPalette(drawSettings.Frame).Offset + "";
+					}
 				}
 				else {
 					this.labelImageSize.Text = "";
@@ -1045,71 +949,82 @@ namespace RCTDataEditor {
 
 		/** <summary> Rotates the object. </summary> */
 		private void RotateObject(object sender, EventArgs e) {
-			this.rotation++;
-			if (rotation > 3) rotation = 0;
+			drawSettings.Rotation++;
+			if (objectData is Attraction) {
+				Attraction a = objectData as Attraction;
+				if (a.Header.RideType != RideTypes.Stall) {
+					if (drawSettings.Rotation > a.Header.CarTypeList[(int)drawSettings.CurrentCar].LastRotationFrame)
+						drawSettings.Rotation = 0;
+				}
+				else if (drawSettings.Rotation > 3) {
+					drawSettings.Rotation = 0;
+				}
+			}
+			else if (drawSettings.Rotation > 3) {
+				drawSettings.Rotation = 0;
+			}
 
 			bool validQueueConnection = true;
 			do {
-				this.pathConnections += 1;
-				if (this.pathConnections >= 256)
-					this.pathConnections = 0;
-				if ((this.pathConnections & 0x0F) == this.pathConnections)
+				if (drawSettings.PathConnections < 255)
+					drawSettings.PathConnections += 1;
+				else
+					drawSettings.PathConnections = 0;
+				if ((drawSettings.PathConnections & 0x0F) == drawSettings.PathConnections)
 					validQueueConnection = true;
 				int dirCount = 0;
 				for (int i = 0; i < 4; i++) {
-					if ((this.pathConnections & (1 << i)) != 0)
+					if ((drawSettings.PathConnections & (1 << i)) != 0)
 						dirCount++;
 				}
 				if (dirCount > 2)
 					validQueueConnection = false;
-			} while (!Pathing.PathSpriteIndexes.ContainsKey(this.pathConnections) || (this.queue && !validQueueConnection));
-			Pathing.PathConnections = this.pathConnections;
-			if (objectData is Attraction) {
+			} while (!Pathing.PathSpriteIndexes.ContainsKey(drawSettings.PathConnections) || (drawSettings.Queue && !validQueueConnection));
+			/*if (objectData is Attraction) {
 				Attraction.CarRotationFrame = (Attraction.CarRotationFrame + 1) % (objectData as Attraction).RotationFrames;
-			}
+			}*/
 			this.UpdateImages();
 		}
 		/** <summary> Rotates the slope. </summary> */
 		private void RotateSlope(object sender, EventArgs e) {
-			this.slope++;
-			if (slope > 3) slope = -1;
+			drawSettings.Slope++;
+			if (drawSettings.Slope > 3) drawSettings.Slope = -1;
 			this.UpdateImages();
 		}
 		/** <summary> Rotates the corner. </summary> */
 		private void RotateCorner(object sender, EventArgs e) {
-			this.corner++;
-			if (corner > 3) corner = 0;
-			this.queue = !this.queue;
-			Pathing.Queue = this.queue;
-			if (this.queue) {
+			drawSettings.Corner++;
+			if (drawSettings.Corner > 3) drawSettings.Corner = 0;
+			drawSettings.Queue = !drawSettings.Queue;
+			if (drawSettings.Queue) {
 				bool validQueueConnection = false;
-				if ((this.pathConnections & 0x0F) == this.pathConnections)
+				if ((drawSettings.PathConnections & 0x0F) == drawSettings.PathConnections)
 					validQueueConnection = true;
 				int dirCount = 0;
 				for (int i = 0; i < 4; i++) {
-					if ((this.pathConnections & (1 << i)) != 0)
+					if ((drawSettings.PathConnections & (1 << i)) != 0)
 						dirCount++;
 				}
 				if (dirCount > 2)
 					validQueueConnection = false;
-				while (!Pathing.PathSpriteIndexes.ContainsKey(this.pathConnections) || (this.queue && !validQueueConnection)) {
-					this.pathConnections += 1;
-					if (this.pathConnections >= 256)
-						this.pathConnections = 0;
-					if ((this.pathConnections & 0x0F) == this.pathConnections)
+				while (!Pathing.PathSpriteIndexes.ContainsKey(drawSettings.PathConnections) || (drawSettings.Queue && !validQueueConnection)) {
+					if (drawSettings.PathConnections < 255)
+						drawSettings.PathConnections += 1;
+					else
+						drawSettings.PathConnections = 0;
+					if ((drawSettings.PathConnections & 0x0F) == drawSettings.PathConnections)
 						validQueueConnection = true;
 					dirCount = 0;
 					for (int i = 0; i < 4; i++) {
-						if ((this.pathConnections & (1 << i)) != 0)
+						if ((drawSettings.PathConnections & (1 << i)) != 0)
 							dirCount++;
 					}
 					if (dirCount > 2)
 						validQueueConnection = false;
 				}
-				Pathing.PathConnections = this.pathConnections;
 			}
 			if (objectData is Attraction) {
-				Attraction.CurrentCar = (Attraction.CurrentCar + 1) % (objectData as Attraction).Header.CarCount;
+				drawSettings.CurrentCar = (CarTypes)(((int)drawSettings.CurrentCar + 1) % (objectData as Attraction).Header.CarCount);
 				this.UpdateColorRemap();
 			}
 
@@ -1117,10 +1032,10 @@ namespace RCTDataEditor {
 		}
 		/** <summary> Changes the elevation. </summary> */
 		private void ChangeElevation(object sender, EventArgs e) {
-			if (this.elevation == 16)
-				this.elevation = 0;
+			if (drawSettings.Elevation == 16)
+				drawSettings.Elevation = 0;
 			else
-				this.elevation = 16;
+				drawSettings.Elevation = 16;
 
 			this.UpdateImages();
 		}
@@ -1132,8 +1047,8 @@ namespace RCTDataEditor {
 					list.SelectedItems[0].Selected = false;
 				}
 				objectIndex--;
-				Attraction.CurrentCar = 0;
-				Attraction.CarRotationFrame = 0;
+				drawSettings.CurrentCar = CarTypes.CarType0;
+				drawSettings.Rotation = 0;
 				if (objectIndex < 0)
 					objectIndex = list.Items.Count - 1;
 				list.Items[objectIndex].Selected = true;
@@ -1148,8 +1063,8 @@ namespace RCTDataEditor {
 					list.SelectedItems[0].Selected = false;
 				}
 				objectIndex++;
-				Attraction.CurrentCar = 0;
-				Attraction.CarRotationFrame = 0;
+				drawSettings.CurrentCar = CarTypes.CarType0;
+				drawSettings.Rotation = 0;
 				if (objectIndex >= list.Items.Count)
 					objectIndex = 0;
 				list.Items[objectIndex].Selected = true;
@@ -1159,38 +1074,59 @@ namespace RCTDataEditor {
 		/** <summary> Switches to the previous object. </summary> */
 		private void PreviousFrame(object sender, EventArgs e) {
 			if (objectData != null && !objectData.Invalid) {
-				if (frame > 0)
-					frame--;
-				this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + frame : (!dialogView ? "frame " + frame : "dialog"));
+				if (drawSettings.Frame > 0)
+					drawSettings.Frame--;
+				this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + drawSettings.Frame : (!dialogView ? "frame " + drawSettings.Frame : "dialog"));
 				this.UpdateImages();
 				if (imageView) {
-					this.scrollBarImage.Value = frame;
-					this.labelImageSize.Text = "Image Size:  " + objectData.ImageDirectory.Entries[frame].Width + ", " + objectData.ImageDirectory.Entries[frame].Height + "";
-					this.labelImageOffset.Text = "Image Offset:  " + objectData.ImageDirectory.Entries[frame].XOffset + ", " + objectData.ImageDirectory.Entries[frame].YOffset + "";
+					this.scrollBarImage.Value = drawSettings.Frame;
+					if (objectData.GraphicsData.IsPaletteImage(drawSettings.Frame)) {
+						this.labelImageSize.Text = "Image Size:  " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Width + ", " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Height + "";
+						this.labelImageOffset.Text = "Image Offset:  " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).XOffset + ", " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).YOffset + "";
+					}
+					else {
+						this.labelImageOffset.Text = "Num Colors:  " + objectData.GraphicsData.GetPalette(drawSettings.Frame).NumColors + "";
+						this.labelImageSize.Text = "Palette Offset:  " + objectData.GraphicsData.GetPalette(drawSettings.Frame).Offset + "";
+					}
 				}
 			}
 		}
 		/** <summary> Switches to the next object. </summary> */
 		private void NextFrame(object sender, EventArgs e) {
 			if (objectData != null && !objectData.Invalid) {
-				if (frame + 1 < (imageView ? objectData.GraphicsData.Images.Count : objectData.AnimationFrames))
-					frame++;
-				this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + frame : (!dialogView ? "frame " + frame : "dialog"));
+				int animFrames = objectData.AnimationFrames;
+				if (objectData is Attraction && (objectData as Attraction).Header.RideType != RideTypes.Stall)
+					animFrames = (objectData as Attraction).Header.CarTypeList[(int)drawSettings.CurrentCar].AnimationFrames;
+				if (drawSettings.Frame + 1 < (imageView ? objectData.ImageDirectory.NumEntries : animFrames))
+					drawSettings.Frame++;
+				this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + drawSettings.Frame : (!dialogView ? "frame " + drawSettings.Frame : "dialog"));
 				this.UpdateImages();
 				if (imageView) {
-					this.scrollBarImage.Value = frame;
-					this.labelImageSize.Text = "Image Size:  " + objectData.ImageDirectory.Entries[frame].Width + ", " + objectData.ImageDirectory.Entries[frame].Height + "";
-					this.labelImageOffset.Text = "Image Offset:  " + objectData.ImageDirectory.Entries[frame].XOffset + ", " + objectData.ImageDirectory.Entries[frame].YOffset + "";
+					this.scrollBarImage.Value = drawSettings.Frame;
+					if (objectData.GraphicsData.IsPaletteImage(drawSettings.Frame)) {
+						this.labelImageSize.Text = "Image Size:  " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Width + ", " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Height + "";
+						this.labelImageOffset.Text = "Image Offset:  " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).XOffset + ", " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).YOffset + "";
+					}
+					else {
+						this.labelImageOffset.Text = "Num Colors:  " + objectData.GraphicsData.GetPalette(drawSettings.Frame).NumColors + "";
+						this.labelImageSize.Text = "Palette Offset:  " + objectData.GraphicsData.GetPalette(drawSettings.Frame).Offset + "";
+					}
 				}
 			}
 		}
 		/** <summary> Scrolls the list of frame images. </summary> */
 		private void ScrollImages(object sender, EventArgs e) {
-			this.frame = (sender as HScrollBar).Value;
+			drawSettings.Frame = (sender as HScrollBar).Value;
 			this.UpdateImages();
-			this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + "image " + frame;
-			this.labelImageSize.Text = "Image Size:  " + objectData.ImageDirectory.Entries[frame].Width + ", " + objectData.ImageDirectory.Entries[frame].Height + "";
-			this.labelImageOffset.Text = "Image Offset:  " + objectData.ImageDirectory.Entries[frame].XOffset + ", " + objectData.ImageDirectory.Entries[frame].YOffset + "";
+			this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + "image " + drawSettings.Frame;
+			if (objectData.GraphicsData.IsPaletteImage(drawSettings.Frame)) {
+				this.labelImageSize.Text = "Image Size:  " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Width + ", " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Height + "";
+				this.labelImageOffset.Text = "Image Offset:  " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).XOffset + ", " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).YOffset + "";
+			}
+			else {
+				this.labelImageOffset.Text = "Num Colors:  " + objectData.GraphicsData.GetPalette(drawSettings.Frame).NumColors + "";
+				this.labelImageSize.Text = "Palette Offset:  " + objectData.GraphicsData.GetPalette(drawSettings.Frame).Offset + "";
+			}
 		}
 		/** <summary> Extracts the images to the executable directory. </summary> */
 		private void ExtractImages(object sender, EventArgs e) {
@@ -1213,13 +1149,13 @@ namespace RCTDataEditor {
 		private void ExtractingImages(object sender, EventArgs e) {
 			string directory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Extracted Images", extractObject.ObjectHeader.FileName);
 			string paletteDirectory = Path.Combine(directory, "Palettes");
-			for (int i = 0; i < 100 && extractIndex < extractObject.GraphicsData.Images.Count; i++, extractIndex++) {
-				if (extractObject.GraphicsData.Palettes[extractIndex] != null) {
+			for (int i = 0; i < 100 && extractIndex < extractObject.ImageDirectory.NumEntries; i++, extractIndex++) {
+				if (extractObject.GraphicsData.IsPalette(extractIndex)) {
 					if (!Directory.Exists(paletteDirectory))
 						Directory.CreateDirectory(paletteDirectory);
-					extractObject.GraphicsData.Images[extractIndex].Save(Path.Combine(paletteDirectory, extractIndex.ToString() + ".png"), ImageFormat.Png);
+					objectData.GraphicsData.GetPalette(extractIndex).CreateImage(new Size(10, 10)).Save(Path.Combine(paletteDirectory, extractIndex.ToString() + ".png"), ImageFormat.Png);
 
-					Palette palette = extractObject.GraphicsData.Palettes[extractIndex];
+					Palette palette = objectData.GraphicsData.GetPalette(extractIndex);
 					string paletteText = "Colors: " + palette.Colors.Length.ToString() + "\r\nOffset: " + palette.Offset.ToString();
 
 					// Write each color
@@ -1241,16 +1177,16 @@ namespace RCTDataEditor {
 					writer.Close();
 				}
 				else {
-					objectData.GraphicsData.Images[extractIndex].Save(Path.Combine(directory, extractIndex.ToString() + ".png"), ImageFormat.Png);
+					objectData.GraphicsData.GetPaletteImage(extractIndex).CreateImage(objectData is SceneryGroup ? Palette.SceneryGroupPalette : Palette.DefaultPalette).Save(Path.Combine(directory, extractIndex.ToString() + ".png"), ImageFormat.Png);
 				}
 			}
-			if (extractIndex == extractObject.GraphicsData.Images.Count) {
+			if (extractIndex == extractObject.ImageDirectory.NumEntries) {
 				labelScanProgress.Text = "Finished - Took " + Math.Round((DateTime.Now - this.extractStart).TotalSeconds) + " seconds";
 				this.timerExtract.Stop();
 				extractObject = null;
 			}
 			else {
-				this.labelScanProgress.Text = "Extracting - " + Math.Round((double)extractIndex / (double)extractObject.GraphicsData.Images.Count * 100.0) + "%";
+				this.labelScanProgress.Text = "Extracting - " + Math.Round((double)extractIndex / (double)extractObject.ImageDirectory.NumEntries * 100.0) + "%";
 			}
 		}
 		/** <summary> Opens the directory where images are extracted to. </summary> */
@@ -1634,8 +1570,8 @@ namespace RCTDataEditor {
 				AddInfoItem("header", "Unknown0x10B", "0x" + obj.Header.Unknown0x10B.ToString("X"));
 
 				SetOptionalName("Scenery Items");
-				for (int i = 0; i < obj.Contents.Count; i++) {
-					AddInfoItem("optional", obj.Contents[i] + ".DAT");
+				for (int i = 0; i < obj.Items.Count; i++) {
+					AddInfoItem("optional", obj.Items[i].FileName + ".DAT");
 				}
 			}
 			else if (objectData is Pathing) {
@@ -1644,16 +1580,6 @@ namespace RCTDataEditor {
 			}
 			else if (objectData is Water) {
 				Water obj = (Water)objectData;
-				/*string nonZeroStr = "None";
-				if (obj.Header.NonZeroBytes.Count > 0) {
-					nonZeroStr = "";
-					for (int i = 0; i < obj.Header.NonZeroBytes.Count; i++) {
-						if (i != 0)
-							nonZeroStr += ", ";
-						nonZeroStr += "[0x" + obj.Header.BytePositions[i].ToString("X") + ": 0x" + obj.Header.NonZeroBytes[i].ToString("X") + "]";
-					}
-				}
-				AddInfoItem("header", "Non-Zero Bytes", nonZeroStr);*/
 			}
 			else if (objectData is ParkEntrance) {
 				ParkEntrance obj = (ParkEntrance)objectData;
@@ -1681,19 +1607,22 @@ namespace RCTDataEditor {
 				);
 			}
 			else if (imageView) {
-				if (objectData.GraphicsData.Images.Count > 0) {
+				if (objectData.ImageDirectory.NumEntries > 0) {
 
-					Rectangle rect = new Rectangle(
-						this.objectView.Width / 2 - this.objectData.ImageDirectory.Entries[frame].Width / 2 - 1,
-						this.objectView.Height / 2 - this.objectData.ImageDirectory.Entries[frame].Height / 2 - 1,
-						this.objectData.ImageDirectory.Entries[frame].Width,
-						this.objectData.ImageDirectory.Entries[frame].Height
-					);
+					Rectangle rect;
 
-					if (objectData.GraphicsData.Palettes[frame] != null) {
+					if (this.objectData.GraphicsData.IsPaletteImage(drawSettings.Frame)) {
 						rect = new Rectangle(
-							this.objectView.Width / 2 - 128 / 2 - 1,
-							this.objectView.Height / 2 - 128 / 2 - 1,
+							this.objectView.Width / 2 - (this.objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Width + 2) / 2 - 1,
+							this.objectView.Height / 2 - (this.objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Height + 2) / 2 - 1,
+							this.objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Width,
+							this.objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Height
+						);
+					}
+					else {
+						rect = new Rectangle(
+							this.objectView.Width / 2 - (128 + 2) / 2 - 1,
+							this.objectView.Height / 2 - (128 + 2) / 2 - 1,
 							128,
 							128
 						);
@@ -1711,12 +1640,24 @@ namespace RCTDataEditor {
 					g.FillRectangle(brush, new Rectangle(rect.X, rect.Y + rect.Height, rect.Width + 1, 1));
 					g.FillRectangle(brush, new Rectangle(rect.X + rect.Width, rect.Y, 1, rect.Height + 1));
 					brush.Dispose();
+
+					RemapColors remap1 = ((this.imageView && !this.remapImageView) ? RemapColors.None : drawSettings.Remap1);
+					RemapColors remap2 = ((this.imageView && !this.remapImageView) ? RemapColors.None : drawSettings.Remap2);
+					RemapColors remap3 = ((this.imageView && !this.remapImageView) ? RemapColors.None : drawSettings.Remap3);
+					if (objectData.GraphicsData.IsPaletteImage(drawSettings.Frame))
+						objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Draw(g, rect.Location, objectData.GetPalette(drawSettings), remap1, remap2, remap3);
+					else
+						objectData.GraphicsData.GetPalette(drawSettings.Frame).Draw(g, rect.Location, new Size(8, 8));
 				}
-				error = !objectData.DrawSingleFrame(g, new Point(this.objectView.Width / 2 - 1, this.objectView.Height / 2 - 1), frame);
+				/*if (objectData.GraphicsData.IsPaletteImage(drawSettings.Frame))
+					objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Draw(g, new Point(this.objectView.Width / 2 - 1, this.objectView.Height / 2 - 1), objectData.GetPalette(drawSettings));
+				else
+					objectData.GraphicsData.GetPalette(drawSettings.Frame).Draw(g, new Point(this.objectView.Width / 2 - 1, this.objectView.Height / 2 - 1), new Size(8, 8));
+				*/
 			}
 			else if (dialogView) {
 
-				Rectangle rect = new Rectangle(
+				/*Rectangle rect = new Rectangle(
 					0,
 					0,
 					192,
@@ -1733,11 +1674,37 @@ namespace RCTDataEditor {
 				brush.Dispose();
 				brush = new SolidBrush(Color.FromArgb(99, 155, 119));
 				g.FillRectangle(brush, dialogRect);
-				brush.Dispose();
+				brush.Dispose();*/
 
-				error = !objectData.DrawDialog(g, dialogRect.Location, rotation);
+				for (int x = 0; x < 190; x++) {
+					for (int y = 0; y < 254; y++) {
+						if (x >= 40 && x < 40 + 112 && y >= 72 && y < 72 + 112) {
+							objectPaletteImage.Pixels[x, y] = 149;
+						}
+					}
+				}
 
-				brush = new SolidBrush(Color.FromArgb(79, 135, 95));
+				error = !objectData.DrawDialog(objectPaletteImage, new Point(40, 72), new Size(112, 112), drawSettings);
+				
+				for (int x = 0; x < 190; x++) {
+					for (int y = 0; y < 254; y++) {
+						if (x >= 40 && x < 40 + 112 && y >= 72 && y < 72 + 112) {
+							
+						}
+						else if ((x == 39 && y >= 71 && y < 71 + 114) || (y == 71 && x >= 39 && x < 39 + 114))
+							objectPaletteImage.Pixels[x, y] = 146;
+						else if ((x == 39 + 113 && y >= 72 && y < 71 + 114) || (y == 71 + 113 && x >= 40 && x < 39 + 114))
+							objectPaletteImage.Pixels[x, y] = 150;
+						else
+							objectPaletteImage.Pixels[x, y] = 148;
+					}
+				}
+				if (!error) {
+					objectPaletteImage.Draw(g, Point.Empty, objectData.GetPalette(drawSettings));
+				}
+
+
+				/*brush = new SolidBrush(Color.FromArgb(79, 135, 95));
 				g.FillRectangle(brush, new Rectangle(0, 0, dialogRect.X, rect.Height));
 				g.FillRectangle(brush, new Rectangle(dialogRect.Right, 0, dialogRect.X, rect.Height));
 				g.FillRectangle(brush, new Rectangle(0, 0, rect.Width, dialogRect.Y));
@@ -1750,7 +1717,7 @@ namespace RCTDataEditor {
 				brush = new SolidBrush(Color.FromArgb(123, 175, 139));
 				g.FillRectangle(brush, new Rectangle(dialogRect.X, dialogRect.Bottom, dialogRect.Width + 1, 1));
 				g.FillRectangle(brush, new Rectangle(dialogRect.Right, dialogRect.Y, 1, dialogRect.Height + 1));
-				brush.Dispose();
+				brush.Dispose();*/
 
 				/*SolidBrush brush = new SolidBrush(Color.FromArgb(79, 135, 95));
 				g.FillRectangle(brush, new Rectangle(0, 0, 192, 256));
@@ -1777,13 +1744,17 @@ namespace RCTDataEditor {
 				brush.Dispose();*/
 			}
 			else {
-				int slopeLevel = 4 + (slope % 2 == 0 ? 4 : 0);
+				terrain.Slope = objectData.CanSlope ? drawSettings.Slope : -1;
+				terrain.Draw(objectPaletteImage, new Point(63, 191), 0);
+				/*int slopeLevel = 4 + (slope % 2 == 0 ? 4 : 0);
 				if (slope == -1 || !objectData.CanSlope)
 					Terrain.DrawTerrain(g, 5, 8, 65, 1);
 				else
-					Terrain.DrawSlopedTerrain(g, slope, slopeLevel, 5, 8, 65, 1);
-
-				error = !objectData.Draw(g, new Point(96, 192), rotation, corner, slope, elevation, frame);
+					Terrain.DrawSlopedTerrain(g, slope, slopeLevel, 5, 8, 65, 1);*/
+				error = !objectData.Draw(objectPaletteImage, new Point(96, 191), drawSettings);
+				if (!error) {
+					objectPaletteImage.Draw(g, Point.Empty, objectData.GetPalette(drawSettings));
+				}
 			}
 			if (error) {
 				g.Clear(Color.Transparent);
@@ -1800,14 +1771,14 @@ namespace RCTDataEditor {
 		private void UpdateColorRemap() {
 			this.panelColorPalette.Visible = false;
 
-			if (!this.dialogView && (!this.imageView || this.remapImageView)) {
-				GraphicsData.DisableRemap = false;
+			if (objectData != null && (!this.dialogView || objectData.HasDialogColorRemaps) && (!this.imageView || this.remapImageView)) {
+				//GraphicsData.DisableRemap = false;
 				this.buttonRemap1.Visible = (objectData != null && objectData.ColorRemaps >= 1);
 				this.buttonRemap2.Visible = (objectData != null && objectData.ColorRemaps >= 2);
 				this.buttonRemap3.Visible = (objectData != null && objectData.ColorRemaps == 3);
 			}
 			else {
-				GraphicsData.DisableRemap = true;
+				//GraphicsData.DisableRemap = true;
 				this.buttonRemap1.Visible = false;
 				this.buttonRemap2.Visible = false;
 				this.buttonRemap3.Visible = false;

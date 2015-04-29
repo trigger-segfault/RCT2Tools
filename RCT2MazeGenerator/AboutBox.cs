@@ -30,6 +30,10 @@ namespace RCT2MazeGenerator {
 		private void OpenGitHubPage(object sender, EventArgs e) {
 			System.Diagnostics.Process.Start("https://github.com/trigger-death/RCT2Tools");
 		}
+		/** <summary> Opens the website page of the tools. </summary> */
+		private void OpenWebsitePage(object sender, EventArgs e) {
+			System.Diagnostics.Process.Start("http://trigger-death.github.io/RCT2Tools/");
+		}
 
 		#endregion
 		//========== PROPERTIES ==========

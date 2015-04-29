@@ -125,6 +125,8 @@ public class Attraction : ObjectData {
 			}
 			if (car.SpecialFrames != 0)
 				frameOffset *= car.SpecialFrames;
+			if (car.Flags.HasFlag(CarFlags.Animation))
+				frameOffset *= 4;
 			return frameOffset;
 		}
 	}
@@ -204,11 +206,11 @@ public class Attraction : ObjectData {
 	public override bool Draw(PaletteImage p, Point position, DrawSettings drawSettings) {
 		try {
 			if (Header.RideType == RideTypes.Stall) {
-				graphicsData.paletteImages[3 + drawSettings.Rotation].DrawWithOffset(p, 0, 0, drawSettings.Darkness, false,
+				graphicsData.paletteImages[3 + drawSettings.Rotation].DrawWithOffset(p, position, drawSettings.Darkness, false,
 					drawSettings.Remap1, RemapColors.None, RemapColors.None
 				);
 				if ((drawSettings.Rotation == 0 || drawSettings.Rotation == 3) && (Header.TrackType == TrackTypes.Restroom || Header.TrackType == TrackTypes.FirstAid)) {
-					graphicsData.paletteImages[3 + 4 + drawSettings.Rotation / 3].DrawWithOffset(p, 0, 0, drawSettings.Darkness, false,
+					graphicsData.paletteImages[3 + 4 + drawSettings.Rotation / 3].DrawWithOffset(p, position, drawSettings.Darkness, false,
 						drawSettings.Remap1,
 						RemapColors.None,
 						RemapColors.None
@@ -223,6 +225,9 @@ public class Attraction : ObjectData {
 					int R = car.LastRotationFrame + 1; // number of rotation frames
 					int F = 1; // Number of frames per rotation
 					int P = car.RiderSprites; // number of rider sprites
+					int A = 1; // number of animation frames
+					if (car.Flags.HasFlag(CarFlags.Animation))
+						A = 4;
 					if (car.Flags.HasFlag(CarFlags.Spinning)) {
 						if (car.Flags.HasFlag(CarFlags.SpinningIndependantWheels))
 							F *= (car.LastRotationFrame + 1);
@@ -242,7 +247,7 @@ public class Attraction : ObjectData {
 					}
 
 					if (i == (int)drawSettings.CurrentCar) {
-						graphicsData.paletteImages[3 + nextCarOffset + drawSettings.Rotation * F + drawSettings.Frame].DrawWithOffset(p,
+						graphicsData.paletteImages[3 + nextCarOffset + drawSettings.Rotation * F * A + drawSettings.Frame].DrawWithOffset(p,
 							position, drawSettings.Darkness, false,
 							drawSettings.Remap1,
 							(car.Flags.HasFlag(CarFlags.Remap2) ? drawSettings.Remap2 : RemapColors.None),
@@ -278,7 +283,7 @@ public class Attraction : ObjectData {
 						if (car.SpriteFlags.HasFlag(CarSpriteFlags.RestraintAnimation))
 							C += ((4 * F) * 3);
 
-						C *= (P + 1);
+						C *= (P + 1 * A);
 						nextCarOffset += C;
 					}
 				}
@@ -776,6 +781,8 @@ public class CarHeader {
 			}
 			if (SpecialFrames != 0)
 				frameOffset *= SpecialFrames;
+			if (Flags.HasFlag(CarFlags.Animation))
+				frameOffset *= 4;
 			return frameOffset;
 		}
 	}

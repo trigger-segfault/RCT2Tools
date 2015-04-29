@@ -1,4 +1,4 @@
-﻿namespace RCTDataEditor {
+﻿namespace RCT2WaterCreator {
 	partial class AboutBox {
 		/// <summary>
 		/// Required designer variable.
@@ -22,13 +22,61 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.rctLabel4 = new CustomControls.RCTLabel();
-			this.rctLabel2 = new CustomControls.RCTLabel();
-			this.rctLabel3 = new CustomControls.RCTLabel();
-			this.labelVersion = new CustomControls.RCTLabel();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.rctLabel1 = new CustomControls.RCTLabel();
+			this.labelCopyright = new CustomControls.RCTLabel();
+			this.labelVersion = new CustomControls.RCTLabel();
+			this.rctLabel4 = new CustomControls.RCTLabel();
+			this.labelTitle = new CustomControls.RCTLabel();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
+			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Image = global::RCT2WaterCreator.Properties.Resources.AboutImage;
+			this.pictureBox1.Location = new System.Drawing.Point(160, 0);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(160, 160);
+			this.pictureBox1.TabIndex = 5;
+			this.pictureBox1.TabStop = false;
+			// 
+			// rctLabel1
+			// 
+			this.rctLabel1.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.rctLabel1.FontType = CustomControls.Visuals.FontType.Bold;
+			this.rctLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.rctLabel1.Location = new System.Drawing.Point(12, 189);
+			this.rctLabel1.Name = "rctLabel1";
+			this.rctLabel1.OutlineColor = System.Drawing.Color.Transparent;
+			this.rctLabel1.Size = new System.Drawing.Size(290, 14);
+			this.rctLabel1.TabIndex = 8;
+			this.rctLabel1.Text = "Website:   http://trigger-death.github.io/RCT2Tools/";
+			this.rctLabel1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+			this.rctLabel1.Click += new System.EventHandler(this.OpenWebsitePage);
+			// 
+			// labelCopyright
+			// 
+			this.labelCopyright.FontType = CustomControls.Visuals.FontType.Bold;
+			this.labelCopyright.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(119)))), ((int)(((byte)(187)))), ((int)(((byte)(239)))));
+			this.labelCopyright.Location = new System.Drawing.Point(0, 93);
+			this.labelCopyright.Name = "labelCopyright";
+			this.labelCopyright.OutlineColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.labelCopyright.Size = new System.Drawing.Size(160, 14);
+			this.labelCopyright.TabIndex = 7;
+			this.labelCopyright.Text = "© Robert Jordan 2015";
+			this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			// 
+			// labelVersion
+			// 
+			this.labelVersion.FontType = CustomControls.Visuals.FontType.Bold;
+			this.labelVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(119)))), ((int)(((byte)(187)))), ((int)(((byte)(239)))));
+			this.labelVersion.Location = new System.Drawing.Point(0, 73);
+			this.labelVersion.Name = "labelVersion";
+			this.labelVersion.OutlineColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.labelVersion.Size = new System.Drawing.Size(160, 14);
+			this.labelVersion.TabIndex = 6;
+			this.labelVersion.Text = "Version 1.0.0.0";
+			this.labelVersion.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// rctLabel4
 			// 
@@ -44,62 +92,30 @@
 			this.rctLabel4.TextAlign = System.Drawing.ContentAlignment.TopLeft;
 			this.rctLabel4.Click += new System.EventHandler(this.OpenGitHubPage);
 			// 
-			// rctLabel2
+			// labelTitle
 			// 
-			this.rctLabel2.FontType = CustomControls.Visuals.FontType.Bold;
-			this.rctLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(119)))), ((int)(((byte)(187)))), ((int)(((byte)(239)))));
-			this.rctLabel2.Location = new System.Drawing.Point(25, 53);
-			this.rctLabel2.Name = "rctLabel2";
-			this.rctLabel2.OutlineColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctLabel2.Size = new System.Drawing.Size(140, 14);
-			this.rctLabel2.TabIndex = 3;
-			this.rctLabel2.Text = "RCT2 Water Creator";
-			this.rctLabel2.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-			// 
-			// rctLabel3
-			// 
-			this.rctLabel3.FontType = CustomControls.Visuals.FontType.Bold;
-			this.rctLabel3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(119)))), ((int)(((byte)(187)))), ((int)(((byte)(239)))));
-			this.rctLabel3.Location = new System.Drawing.Point(19, 93);
-			this.rctLabel3.Name = "rctLabel3";
-			this.rctLabel3.OutlineColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctLabel3.Size = new System.Drawing.Size(160, 14);
-			this.rctLabel3.TabIndex = 7;
-			this.rctLabel3.Text = "© Robert Jordan 2015";
-			this.rctLabel3.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-			// 
-			// labelVersion
-			// 
-			this.labelVersion.FontType = CustomControls.Visuals.FontType.Bold;
-			this.labelVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(119)))), ((int)(((byte)(187)))), ((int)(((byte)(239)))));
-			this.labelVersion.Location = new System.Drawing.Point(36, 73);
-			this.labelVersion.Name = "labelVersion";
-			this.labelVersion.OutlineColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.labelVersion.Size = new System.Drawing.Size(90, 14);
-			this.labelVersion.TabIndex = 6;
-			this.labelVersion.Text = "Version 1.0.0.0";
-			this.labelVersion.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-			// 
-			// pictureBox1
-			// 
-			this.pictureBox1.Image = global::RCT2WaterCreator.Properties.Resources.AboutImage;
-			this.pictureBox1.Location = new System.Drawing.Point(160, 0);
-			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(160, 160);
-			this.pictureBox1.TabIndex = 5;
-			this.pictureBox1.TabStop = false;
+			this.labelTitle.FontType = CustomControls.Visuals.FontType.Bold;
+			this.labelTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(119)))), ((int)(((byte)(187)))), ((int)(((byte)(239)))));
+			this.labelTitle.Location = new System.Drawing.Point(0, 53);
+			this.labelTitle.Name = "labelTitle";
+			this.labelTitle.OutlineColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.labelTitle.Size = new System.Drawing.Size(160, 14);
+			this.labelTitle.TabIndex = 3;
+			this.labelTitle.Text = "RCT2 Program";
+			this.labelTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// AboutBox
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.ClientSize = new System.Drawing.Size(323, 191);
+			this.ClientSize = new System.Drawing.Size(323, 210);
+			this.Controls.Add(this.rctLabel1);
 			this.Controls.Add(this.pictureBox1);
-			this.Controls.Add(this.rctLabel3);
+			this.Controls.Add(this.labelCopyright);
 			this.Controls.Add(this.labelVersion);
 			this.Controls.Add(this.rctLabel4);
-			this.Controls.Add(this.rctLabel2);
+			this.Controls.Add(this.labelTitle);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
@@ -108,7 +124,7 @@
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "About RCT2 Water Creator";
+			this.Text = "About";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 
@@ -118,9 +134,10 @@
 
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private CustomControls.RCTLabel rctLabel4;
-		private CustomControls.RCTLabel rctLabel2;
-		private CustomControls.RCTLabel rctLabel3;
+		private CustomControls.RCTLabel labelTitle;
+		private CustomControls.RCTLabel labelCopyright;
 		private CustomControls.RCTLabel labelVersion;
+		private CustomControls.RCTLabel rctLabel1;
 
 	}
 }

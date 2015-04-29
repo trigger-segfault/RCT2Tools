@@ -1,7 +1,5 @@
 ﻿using CustomControls;
 using RCTDataEditor.DataObjects;
-using RCTDataEditor.DataObjects.Types;
-using RCTDataEditor.DataObjects.Types.AttractionInfo;
 using RCT2GroupCreator.Properties;
 using System;
 using System.Collections;
@@ -20,6 +18,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using RCT2ObjectData.DataObjects.Types;
+using RCT2ObjectData.DataObjects;
 
 namespace RCT2GroupCreator {
 	public partial class GroupForm : Form {
@@ -48,8 +48,11 @@ namespace RCT2GroupCreator {
 		bool dialogView = true;
 		/** <summary> The image to draw the object to. </summary> */
 		Image objectImage;
+		PaletteImage objectPaletteImage = new PaletteImage(new Size(190, 254));
 		/** <summary> The scenery group being edited. </summary> */
 		SceneryGroup sceneryGroup = null;
+
+		DrawSettings drawSettings;
 
 		Image iconImage = new Bitmap(46, 46);
 
@@ -84,8 +87,8 @@ namespace RCT2GroupCreator {
 		/** <summary> The sbold RCT sprite font. </summary> */
 		SpriteFont fontBold;
 
-		PaletteImage tabBack = PaletteImage.Load(Resources.TabBack);
-		PaletteImage tabFront = PaletteImage.Load(Resources.TabFront);
+		PaletteImage tabBack = PaletteImage.FromBuffer(Resources.TabBack);
+		PaletteImage tabFront = PaletteImage.FromBuffer(Resources.TabFront);
 
 		//AboutBox aboutForm = new AboutBox();
 
@@ -100,9 +103,17 @@ namespace RCT2GroupCreator {
 			InitializeComponent();
 
 			Pathing.SetPathSprites();
-			Water.LoadWaterSparkle();
+			Water.LoadResources();
+			ColorRemapping.LoadResources();
+			Terrain.LoadResources();
 
 			this.fontBold = new SpriteFont(Resources.BoldFont, ' ', 'z', 10);
+
+			this.drawSettings.Remap1 = RemapColors.Maroon;
+			this.drawSettings.Remap2 = RemapColors.Gold;
+			this.drawSettings.Remap3 = RemapColors.Bark;
+			this.drawSettings.Slope = -1;
+
 
 
 			this.labelCurrentObject.Text = "";
@@ -116,22 +127,7 @@ namespace RCT2GroupCreator {
 
 			this.sceneryGroup = new SceneryGroup();
 
-			this.sceneryGroup = (SceneryGroup)ObjectData.ReadObject("SCGCUST", Resources.SCGCUST);
-			/*this.sceneryGroup.Source = SourceTypes.Custom;
-			this.sceneryGroup.ObjectHeader.FileName = "SCGCUST";
-			this.sceneryGroup.GraphicsData.PaletteImages[0] = this.tabBack;
-			this.sceneryGroup.GraphicsData.PaletteImages[1] = this.tabFront;
-			this.sceneryGroup.Header.Unknown0x108 = 0x28;
-			this.sceneryGroup.Header.Unknown0x10A = 0x0;
-			this.sceneryGroup.Header.Unknown0x10B = 0x0;
-			for (int i = 0; i < 16; i++) {
-				this.sceneryGroup.StringTable.Entries[0].Languages[i] = "";
-			}
-			this.sceneryGroup.Contents.Clear();
-
-			ObjectData.WriteObject("SCGCUST.DAT", this.sceneryGroup);
-			this.sceneryGroup = (SceneryGroup)ObjectData.ReadObject("SCGCUST.DAT");*/
-
+			this.sceneryGroup = (SceneryGroup)ObjectData.FromBuffer(Resources.SCGCUST);
 			LoadSceneryGroup();
 		}
 
@@ -193,7 +189,7 @@ namespace RCT2GroupCreator {
 			for (int i = fileIndex; i < this.sceneryGroup.Items.Count && count < objectsPerTick; i++, fileIndex++, count++) {
 				string file = Path.Combine(this.directory, this.sceneryGroup.Items[i].FileName + ".DAT");
 				if (File.Exists(file)) {
-					ObjectDataInfo info = ObjectData.ReadObjectInfo(file, true);
+					ObjectDataInfo info = ObjectDataInfo.FromFile(file, true);
 					if (!info.Invalid) {
 						
 						ListViewItem item = new ListViewItem();
@@ -329,9 +325,7 @@ namespace RCT2GroupCreator {
 		private void ObjectChanged(object sender, ListViewItemSelectionChangedEventArgs e) {
 			if (e.Item.Selected && ((sender as ListView).SelectedItems.Count == 0 || (sender as ListView).SelectedItems[0] == e.Item)) {
 				objectIndex = e.ItemIndex;
-				objectData = ObjectData.ReadObject(Path.Combine(directory, e.Item.SubItems[2].Text));
-				Attraction.CurrentCar = 0;
-				Attraction.CarRotationFrame = 0;
+				objectData = ObjectData.FromFile(Path.Combine(directory, e.Item.SubItems[2].Text));
 				this.UpdateImages();
 				this.labelCurrentObject.Text = (objectData != null ? objectData.ObjectHeader.FileName + ".DAT" : "");
 				if (objectData == null) {
@@ -353,7 +347,7 @@ namespace RCT2GroupCreator {
 			StartScan(null, null);
 			Graphics g = Graphics.FromImage(this.iconImage);
 
-			Image icon = this.sceneryGroup.GraphicsData.Images[1];
+			Image icon = this.sceneryGroup.GraphicsData.GetPaletteImage(1).CreateImage(Palette.SceneryGroupPalette);
 			g.DrawImage(icon, (46 - icon.Width) / 2, (46 - icon.Height) / 2);
 			g.Dispose();
 
@@ -364,10 +358,7 @@ namespace RCT2GroupCreator {
 		}
 		/** <summary> Saves the scenery group from the editor. </summary> */
 		private void SaveSceneryGroup() {
-			/*this.sceneryGroup.Items.Clear();
-			for (int i = 0; i < this.tabGroupScenery.Items.Count; i++) {
-				this.sceneryGroup.Items.Add(Path.GetFileNameWithoutExtension(this.tabGroupScenery.Items[i].SubItems[2].Text));
-			}*/
+			
 		}
 		/** <summary> Changes the language names. </summary> */
 		private void ChangeNames(object sender, EventArgs e) {
@@ -387,7 +378,7 @@ namespace RCT2GroupCreator {
 		/** <summary> Creates a new water object. </summary> */
 		private void New(object sender, EventArgs e) {
 			if (!changed || WarningMessageBox.Show(this, "Scenery group has been changed.", "Are you sure you want to continue?") == DialogResult.Yes) {
-				sceneryGroup = (SceneryGroup)ObjectData.ReadObject("SCGCUST", Resources.SCGCUST);
+				sceneryGroup = (SceneryGroup)ObjectData.FromBuffer(Resources.SCGCUST);
 				LoadSceneryGroup();
 				fileName = "";
 			}
@@ -405,9 +396,9 @@ namespace RCT2GroupCreator {
 			if (!changed || WarningMessageBox.Show(this, "Scenery group has been changed.", "Are you sure you want to continue?") == DialogResult.Yes) {
 				if (openFileDialog.ShowDialog(this) == DialogResult.OK) {
 					fileName = openFileDialog.FileName;
-					ObjectData obj = ObjectData.ReadObject(fileName);
+					ObjectData obj = ObjectData.FromFile(fileName);
 					bool invalid = false;
-					if (obj is SceneryGroup) {
+					if (obj is SceneryGroup && (obj as SceneryGroup).GraphicsData.NumImages == 2) {
 						this.sceneryGroup = (SceneryGroup)obj;
 						LoadSceneryGroup();
 					}
@@ -427,7 +418,7 @@ namespace RCT2GroupCreator {
 			}
 			else {
 				SaveSceneryGroup();
-				ObjectData.WriteObject(fileName, sceneryGroup);
+				sceneryGroup.Save(fileName);
 			}
 		}
 		/** <summary> Saves as the water object. </summary> */
@@ -449,7 +440,7 @@ namespace RCT2GroupCreator {
 				sceneryGroup.ObjectHeader.FileName = Path.GetFileNameWithoutExtension(fileName).Substring(0, Math.Min(Path.GetFileNameWithoutExtension(fileName).Length, 8));
 				sceneryGroup.Source = SourceTypes.Custom;
 				SaveSceneryGroup();
-				ObjectData.WriteObject(fileName, sceneryGroup);
+				sceneryGroup.Save(fileName);
 			}
 		}
 
@@ -464,8 +455,6 @@ namespace RCT2GroupCreator {
 					this.tabGroupScenery.SelectedItems[0].Selected = false;
 				}
 				objectIndex--;
-				Attraction.CurrentCar = 0;
-				Attraction.CarRotationFrame = 0;
 				if (objectIndex < 0)
 					objectIndex = this.tabGroupScenery.Items.Count - 1;
 				this.tabGroupScenery.Items[objectIndex].Selected = true;
@@ -479,8 +468,6 @@ namespace RCT2GroupCreator {
 					this.tabGroupScenery.SelectedItems[0].Selected = false;
 				}
 				objectIndex++;
-				Attraction.CurrentCar = 0;
-				Attraction.CarRotationFrame = 0;
 				if (objectIndex >= this.tabGroupScenery.Items.Count)
 					objectIndex = 0;
 				this.tabGroupScenery.Items[objectIndex].Selected = true;
@@ -500,7 +487,7 @@ namespace RCT2GroupCreator {
 				for (int i = 0; i < this.openFileDialogScenery.FileNames.Length; i++) {
 					string file = this.openFileDialogScenery.FileNames[i];
 					if (File.Exists(file)) {
-						ObjectDataInfo info = ObjectData.ReadObjectInfo(file, true);
+						ObjectDataInfo info = ObjectDataInfo.FromFile(file, true);
 						if (!info.Invalid) {
 
 							if (info.Type != ObjectTypes.SmallScenery && info.Type != ObjectTypes.LargeScenery &&
@@ -590,7 +577,7 @@ namespace RCT2GroupCreator {
 				for (int i = 0; i < fileDrops.Length; i++) {
 					string file = fileDrops[i];
 					if (File.Exists(file)) {
-						ObjectDataInfo info = ObjectData.ReadObjectInfo(file, true);
+						ObjectDataInfo info = ObjectDataInfo.FromFile(file, true);
 						if (!info.Invalid) {
 
 							if (info.Type != ObjectTypes.SmallScenery && info.Type != ObjectTypes.LargeScenery &&
@@ -650,8 +637,8 @@ namespace RCT2GroupCreator {
 				for (int i = this.tabGroupScenery.SelectedItems.Count - 1; i >= 0; i--) {
 					items.Add(this.tabGroupScenery.SelectedItems[i]);
 					sgItems.Add(this.sceneryGroup.Items[i]);
-					this.tabGroupScenery.Items.RemoveAt(this.tabGroupScenery.SelectedItems[i].Index);
 					this.sceneryGroup.Items.RemoveAt(this.tabGroupScenery.SelectedItems[i].Index);
+					this.tabGroupScenery.Items.RemoveAt(this.tabGroupScenery.SelectedItems[i].Index);
 				}
 				for (int i = 0; i < items.Count; i++) {
 					this.tabGroupScenery.Items.Insert(Math.Max(0, dropIndex - itemsBefore) + i, items[items.Count - 1 - i]);
@@ -673,21 +660,19 @@ namespace RCT2GroupCreator {
 		private void ChangeTabIcon(object sender, EventArgs e) {
 			if (this.openFileDialogIcon.ShowDialog(this) == DialogResult.OK) {
 				try {
-					this.sceneryGroup.GraphicsData.PaletteImages[0] = PaletteImage.Load(Resources.TabBack);
-					this.sceneryGroup.GraphicsData.PaletteImages[1] = PaletteImage.Load(Resources.TabFront);
+					this.sceneryGroup.GraphicsData.Set(0, PaletteImage.FromBuffer(Resources.TabBack));
+					this.sceneryGroup.GraphicsData.Set(1, PaletteImage.FromBuffer(Resources.TabFront));
 
 					Bitmap icon = (Bitmap)Bitmap.FromFile(this.openFileDialogIcon.FileName);
-					int[] numWrites = new int[]{0, 0};
+					Color transparentColor = icon.GetPixel(0, 0);
 
 					for (int i = 0; i < 2; i++) {
-						for (int x = 0; x < this.sceneryGroup.GraphicsData.PaletteImages[i].Width; x++) {
-							for (int y = 0; y < this.sceneryGroup.GraphicsData.PaletteImages[i].Height; y++) {
+						for (int x = 0; x < this.sceneryGroup.GraphicsData.GetPaletteImage(i).Width; x++) {
+							for (int y = 0; y < this.sceneryGroup.GraphicsData.GetPaletteImage(i).Height; y++) {
 								if (x < icon.Width && y < icon.Height && (i == 1 || y < 26)) {
-									int colorIndex = FindClosestColor(icon.GetPixel(x, y));
+									int colorIndex = FindClosestColor(icon.GetPixel(x, y), transparentColor);
 									if (colorIndex != 0) {
-										this.sceneryGroup.GraphicsData.PaletteImages[i].Pixels[x, y] = (byte)colorIndex;
-										numWrites[i]++;
-										//Console.WriteLine(colorIndex);
+										this.sceneryGroup.GraphicsData.GetPaletteImage(i).Pixels[x, y] = (byte)colorIndex;
 									}
 								}
 							}
@@ -696,8 +681,8 @@ namespace RCT2GroupCreator {
 
 					Graphics g = Graphics.FromImage(this.iconImage);
 
-					PaletteImage icon2 = this.sceneryGroup.GraphicsData.PaletteImages[1];
-					this.sceneryGroup.GraphicsData.PaletteImages[1].Draw(g, (46 - icon2.Width) / 2, (46 - icon2.Height) / 2, Palette.SceneryGroupPalette, -1, -1, -1);
+					PaletteImage icon2 = this.sceneryGroup.GraphicsData.GetPaletteImage(1);
+					icon2.Draw(g, (46 - icon2.Width) / 2, (46 - icon2.Height) / 2, Palette.SceneryGroupPalette);
 					g.Dispose();
 
 					this.iconView.Image = this.iconImage;
@@ -709,17 +694,17 @@ namespace RCT2GroupCreator {
 				}
 			}
 		}
-		private int FindClosestColor(Color imageColor) {
+		private int FindClosestColor(Color imageColor, Color transparentColor) {
 			Palette palette = Palette.DefaultPalette;
 
 			int[] delta = new int[256];
 
 			for (int i = 0; i < 256; i++) {
-				delta[i] = GetColorDelta(imageColor, palette.Colors[i]);
+				delta[i] = GetColorDelta((imageColor == transparentColor) ? Color.Transparent : imageColor, palette.Colors[i]);
 			}
 			int minDelta = delta[0];
 			int minDeltaIndex = 0;
-			for (int i = 1; i < 256; i++) {
+			for (int i = 10; i < 243; i++) {
 				if (delta[i] < minDelta) {
 					minDelta = delta[i];
 					minDeltaIndex = i;
@@ -759,46 +744,33 @@ namespace RCT2GroupCreator {
 			}
 			else if (dialogView) {
 
-				Rectangle rect = new Rectangle(
-					0,
-					0,
-					192,
-					256
-				);
-				Rectangle dialogRect = new Rectangle(
-					objectImage.Width / 2 - 112 / 2,
-					objectImage.Height / 2 - 112 / 2,
-					112,
-					112
-				);
-				SolidBrush brush = new SolidBrush(Color.FromArgb(79, 135, 95));
-				g.FillRectangle(brush, rect);
-				brush.Dispose();
-				brush = new SolidBrush(Color.FromArgb(99, 155, 119));
-				g.FillRectangle(brush, dialogRect);
-				brush.Dispose();
 
-				error = !objectData.DrawDialog(g, dialogRect.Location, 0);
+				for (int x = 0; x < 190; x++) {
+					for (int y = 0; y < 254; y++) {
+						if (x >= 40 && x < 40 + 112 && y >= 72 && y < 72 + 112) {
+							objectPaletteImage.Pixels[x, y] = 149;
+						}
+					}
+				}
 
-				brush = new SolidBrush(Color.FromArgb(79, 135, 95));
-				g.FillRectangle(brush, new Rectangle(0, 0, dialogRect.X, rect.Height));
-				g.FillRectangle(brush, new Rectangle(dialogRect.Right, 0, dialogRect.X, rect.Height));
-				g.FillRectangle(brush, new Rectangle(0, 0, rect.Width, dialogRect.Y));
-				g.FillRectangle(brush, new Rectangle(0, dialogRect.Bottom, rect.Width, dialogRect.Y));
-				brush.Dispose();
-				brush = new SolidBrush(Color.FromArgb(47, 99, 59));
-				g.FillRectangle(brush, new Rectangle(dialogRect.X - 1, dialogRect.Y - 1, dialogRect.Width + 2, 1));
-				g.FillRectangle(brush, new Rectangle(dialogRect.X - 1, dialogRect.Y - 1, 1, dialogRect.Height + 2));
-				brush.Dispose();
-				brush = new SolidBrush(Color.FromArgb(123, 175, 139));
-				g.FillRectangle(brush, new Rectangle(dialogRect.X, dialogRect.Bottom, dialogRect.Width + 1, 1));
-				g.FillRectangle(brush, new Rectangle(dialogRect.Right, dialogRect.Y, 1, dialogRect.Height + 1));
-				brush.Dispose();
-			}
-			else {
-				Terrain.DrawTerrain(g, 5, 8, 65, 1);
+				error = !objectData.DrawDialog(objectPaletteImage, new Point(40, 72), new Size(112, 112), drawSettings);
 
-				error = !objectData.Draw(g, new Point(96, 192), 0, 0, -1, 0, 0);
+				for (int x = 0; x < 190; x++) {
+					for (int y = 0; y < 254; y++) {
+						if (x >= 40 && x < 40 + 112 && y >= 72 && y < 72 + 112) {
+
+						}
+						else if ((x == 39 && y >= 71 && y < 71 + 114) || (y == 71 && x >= 39 && x < 39 + 114))
+							objectPaletteImage.Pixels[x, y] = 146;
+						else if ((x == 39 + 113 && y >= 72 && y < 71 + 114) || (y == 71 + 113 && x >= 40 && x < 39 + 114))
+							objectPaletteImage.Pixels[x, y] = 150;
+						else
+							objectPaletteImage.Pixels[x, y] = 148;
+					}
+				}
+				if (!error) {
+					objectPaletteImage.Draw(g, Point.Empty, objectData.GetPalette(drawSettings));
+				}
 			}
 			if (error) {
 				g.Clear(Color.Transparent);
@@ -811,13 +783,14 @@ namespace RCT2GroupCreator {
 
 			this.objectView.Image = objectImage;
 
+
 			g = Graphics.FromImage(this.iconImage);
 
-			Image icon = this.sceneryGroup.GraphicsData.Images[1];
-			g.DrawImage(icon, (46 - icon.Width) / 2, (46 - icon.Height) / 2);
+			PaletteImage icon2 = this.sceneryGroup.GraphicsData.GetPaletteImage(1);
+			icon2.Draw(g, (46 - icon2.Width) / 2, (46 - icon2.Height) / 2, Palette.SceneryGroupPalette);
 			g.Dispose();
 
-			this.iconView.Image = iconImage;
+			this.iconView.Image = this.iconImage;
 		}
 		/** <summary> Draws the list view columns. </summary> */
 		private void ListViewDrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e) {

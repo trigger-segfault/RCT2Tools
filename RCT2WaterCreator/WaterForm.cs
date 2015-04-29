@@ -1,7 +1,7 @@
-﻿using RCT2WaterCreator.Properties;
+﻿using RCT2ObjectData.DataObjects;
+using RCT2ObjectData.DataObjects.Types;
+using RCT2WaterCreator.Properties;
 using RCTDataEditor;
-using RCTDataEditor.DataObjects;
-using RCTDataEditor.DataObjects.Types;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -90,7 +90,7 @@ namespace RCT2WaterCreator {
 			SetStyle(ControlStyles.SupportsTransparentBackColor, true);
 			InitializeComponent();
 
-			waterObject = (Water)ObjectData.ReadObject("WTRCYAN", Resources.WTRCYAN);
+			waterObject = (Water)ObjectData.FromBuffer(Resources.WTRCYAN);
 			waterObject.Source = SourceTypes.Custom;
 			LoadFromObject();
 			UpdatePalettes();
@@ -200,6 +200,7 @@ namespace RCT2WaterCreator {
 			(sender as Control).Focus();
 			currentColor = Color.FromArgb((int)this.numericUpDownRed.Value, (int)this.numericUpDownGreen.Value, (int)this.numericUpDownBlue.Value);
 			SetColor();
+			bool changedBefore = changed;
 			UpdatePalettes();
 			this.pictureBoxCurrentColor.BackColor = currentColor;
 			this.colorSelector.BackColor = currentColor;
@@ -225,6 +226,7 @@ namespace RCT2WaterCreator {
 				this.colorSelector.Size = new Size(18, 18);
 			}
 			SelectColor();
+			changed = changedBefore;
 		}
 
 		/** <summary> Activates the currently selected color from the palettes. </summary> */
@@ -378,39 +380,39 @@ namespace RCT2WaterCreator {
 		/** <summary> Saves the palettes to the water object. </summary> */
 		private void SaveToObject() {
 			for (int i = 0; i < this.palette0.Length; i++)
-				waterObject.GraphicsData.Palettes[0].Colors[180 + i] = this.palette0[i];
+				waterObject.GraphicsData.GetPalette(0).Colors[180 + i] = this.palette0[i];
 
 			for (int i = 0; i < this.palette1.Length; i++)
-				waterObject.GraphicsData.Palettes[1].Colors[i] = this.palette1[i];
+				waterObject.GraphicsData.GetPalette(1).Colors[i] = this.palette1[i];
 			for (int i = 0; i < this.palette2.Length; i++)
-				waterObject.GraphicsData.Palettes[2].Colors[i] = this.palette2[i];
+				waterObject.GraphicsData.GetPalette(2).Colors[i] = this.palette2[i];
 			for (int i = 0; i < this.palette3.Length; i++)
-				waterObject.GraphicsData.Palettes[3].Colors[i] = this.palette3[i];
+				waterObject.GraphicsData.GetPalette(3).Colors[i] = this.palette3[i];
 			for (int i = 0; i < this.palette4.Length; i++)
-				waterObject.GraphicsData.Palettes[4].Colors[i] = this.palette4[i];
+				waterObject.GraphicsData.GetPalette(4).Colors[i] = this.palette4[i];
 			for (int i = 0; i < this.palette5.Length; i++)
-				waterObject.GraphicsData.Palettes[5].Colors[i] = this.palette5[i];
+				waterObject.GraphicsData.GetPalette(5).Colors[i] = this.palette5[i];
 			for (int i = 0; i < this.palette6.Length; i++)
-				waterObject.GraphicsData.Palettes[6].Colors[i] = this.palette6[i];
+				waterObject.GraphicsData.GetPalette(6).Colors[i] = this.palette6[i];
 
 		}
 		/** <summary> Loads the palettes from the water object. </summary> */
 		private void LoadFromObject() {
 			for (int i = 0; i < this.palette0.Length; i++)
-				this.palette0[i] = waterObject.GraphicsData.Palettes[0].Colors[180 + i];
+				this.palette0[i] = waterObject.GraphicsData.GetPalette(0).Colors[180 + i];
 
 			for (int i = 0; i < this.palette1.Length; i++)
-				this.palette1[i] = waterObject.GraphicsData.Palettes[1].Colors[i];
+				this.palette1[i] = waterObject.GraphicsData.GetPalette(1).Colors[i];
 			for (int i = 0; i < this.palette2.Length; i++)
-				this.palette2[i] = waterObject.GraphicsData.Palettes[2].Colors[i];
+				this.palette2[i] = waterObject.GraphicsData.GetPalette(2).Colors[i];
 			for (int i = 0; i < this.palette3.Length; i++)
-				this.palette3[i] = waterObject.GraphicsData.Palettes[3].Colors[i];
+				this.palette3[i] = waterObject.GraphicsData.GetPalette(3).Colors[i];
 			for (int i = 0; i < this.palette4.Length; i++)
-				this.palette4[i] = waterObject.GraphicsData.Palettes[4].Colors[i];
+				this.palette4[i] = waterObject.GraphicsData.GetPalette(4).Colors[i];
 			for (int i = 0; i < this.palette5.Length; i++)
-				this.palette5[i] = waterObject.GraphicsData.Palettes[5].Colors[i];
+				this.palette5[i] = waterObject.GraphicsData.GetPalette(5).Colors[i];
 			for (int i = 0; i < this.palette6.Length; i++)
-				this.palette6[i] = waterObject.GraphicsData.Palettes[6].Colors[i];
+				this.palette6[i] = waterObject.GraphicsData.GetPalette(6).Colors[i];
 
 		}
 		/** <summary> Opens the about form. </summary> */
@@ -422,7 +424,7 @@ namespace RCT2WaterCreator {
 		/** <summary> Creates a new water object. </summary> */
 		private void New(object sender, EventArgs e) {
 			if (!changed || WarningMessageBox.Show(this, "Water object has been changed.", "Are you sure you want to continue?") == DialogResult.Yes) {
-				waterObject = (Water)ObjectData.ReadObject("WTRCYAN", Resources.WTRCYAN);
+				waterObject = (Water)ObjectData.FromBuffer(Resources.WTRCYAN);
 				waterObject.Source = SourceTypes.Custom;
 				LoadFromObject();
 				UpdatePalettes();
@@ -443,18 +445,18 @@ namespace RCT2WaterCreator {
 			if (!changed || WarningMessageBox.Show(this, "Water object has been changed.", "Are you sure you want to continue?") == DialogResult.Yes) {
 				if (openFileDialog.ShowDialog(this) == DialogResult.OK) {
 					fileName = openFileDialog.FileName;
-					ObjectData obj = ObjectData.ReadObject(fileName);
+					ObjectData obj = ObjectData.FromFile(fileName);
 					bool invalid = false;
 					if (obj is Water) {
 						waterObject = (Water)obj;
 						if (waterObject.GraphicsData.NumPalettes == 7 && waterObject.GraphicsData.NumImages == 0 &&
-							waterObject.GraphicsData.Palettes[0].Colors.Length == 236 &&
-							waterObject.GraphicsData.Palettes[1].Colors.Length == 15 &&
-							waterObject.GraphicsData.Palettes[2].Colors.Length == 15 &&
-							waterObject.GraphicsData.Palettes[3].Colors.Length == 15 &&
-							waterObject.GraphicsData.Palettes[4].Colors.Length == 15 &&
-							waterObject.GraphicsData.Palettes[5].Colors.Length == 15 &&
-							waterObject.GraphicsData.Palettes[6].Colors.Length == 15) {
+							waterObject.GraphicsData.GetPalette(0).Colors.Length == 236 &&
+							waterObject.GraphicsData.GetPalette(1).Colors.Length == 15 &&
+							waterObject.GraphicsData.GetPalette(2).Colors.Length == 15 &&
+							waterObject.GraphicsData.GetPalette(3).Colors.Length == 15 &&
+							waterObject.GraphicsData.GetPalette(4).Colors.Length == 15 &&
+							waterObject.GraphicsData.GetPalette(5).Colors.Length == 15 &&
+							waterObject.GraphicsData.GetPalette(6).Colors.Length == 15) {
 							LoadFromObject();
 							SelectColor();
 							changed = false;
@@ -479,7 +481,7 @@ namespace RCT2WaterCreator {
 			}
 			else {
 				SaveToObject();
-				ObjectData.WriteObject(fileName, waterObject);
+				waterObject.Save(fileName);
 			}
 		}
 		/** <summary> Saves as the water object. </summary> */
@@ -501,7 +503,7 @@ namespace RCT2WaterCreator {
 				waterObject.ObjectHeader.FileName = Path.GetFileNameWithoutExtension(fileName).Substring(0, Math.Min(Path.GetFileNameWithoutExtension(fileName).Length, 8));
 				SaveToObject();
 				waterObject.Source = SourceTypes.Custom;
-				ObjectData.WriteObject(fileName, waterObject);
+				waterObject.Save(fileName);
 			}
 		}
 

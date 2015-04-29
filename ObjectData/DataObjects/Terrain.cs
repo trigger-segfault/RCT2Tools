@@ -22,14 +22,6 @@ public class Terrain {
 
 	/** <summary> Loads the terrain resources. </summary> */
 	public static void LoadResources() {
-		/*ImageDirectory imageDirecory = new ImageDirectory();
-		GraphicsData graphicsData = new GraphicsData(imageDirecory);
-
-		BinaryReader reader = new BinaryReader(new MemoryStream(Resources.Terrain));
-		imageDirecory.Read(reader);
-		graphicsData.Read(reader);
-		reader.Close();*/
-
 		GraphicsData graphicsData = GraphicsData.FromBuffer(Resources.Terrain);
 
 		LandTiles = new PaletteImage[5];
@@ -68,14 +60,23 @@ public class Terrain {
 		point.Y -= 15 + ((Origin.X + Origin.Y) * 16);
 		for (int x1 = 0; x1 < Size.Width; x1++) {
 			for (int y1 = 0; y1 < Size.Height; y1++) {
-				if (Slope == -1 ||
-					(Slope % 2 == 0 && x1 < Origin.X - 1 && x1 > Origin.X + 1) ||
-					(Slope % 2 == 1 && y1 < Origin.Y - 1 && y1 > Origin.Y + 1)) {
+				if (Slope != -1 &&
+					((Slope == 0 && x1 < Origin.X - 0) || (Slope == 2 && x1 > Origin.X + 2) ||
+					(Slope == 1 && y1 < Origin.Y - 1) || (Slope == 3 && y1 > Origin.Y + 1))) {
+					LandTiles[0].DrawWithOffset(p, point.X + ((x1 - y1) * 32), point.Y + ((x1 + y1 - 1) * 16),
+						darkness, false, RemapColors.None, RemapColors.None, RemapColors.None
+					);
+				}
+				else if (Slope == -1 ||
+					(Slope % 2 == 0 && (x1 < Origin.X - 0 || x1 > Origin.X + 2)) ||
+					(Slope % 2 == 1 && (y1 < Origin.Y - 1 || y1 > Origin.Y + 1))) {
+					/*(Slope % 2 == 0 && (x1 < Origin.X - 0 || x1 > Origin.X + 2)) ||
+					(Slope % 2 == 1 && (y1 < Origin.Y - 1 || y1 > Origin.Y + 1))) {*/
 					LandTiles[0].DrawWithOffset(p, point.X + ((x1 - y1) * 32), point.Y + ((x1 + y1) * 16),
 						darkness, false, RemapColors.None, RemapColors.None, RemapColors.None
 					);
 				}
-				else if (Slope == 0 && x1 == Origin.X + 1) {
+				else if (Slope == 0 && x1 == Origin.X + 2) {
 					LandTiles[1].DrawWithOffset(p, point.X + ((x1 - y1) * 32), point.Y + ((x1 + y1) * 16),
 						darkness, false, RemapColors.None, RemapColors.None, RemapColors.None
 					);
@@ -85,7 +86,7 @@ public class Terrain {
 						darkness, false, RemapColors.None, RemapColors.None, RemapColors.None
 					);
 				}
-				else if (Slope == 2 && x1 == Origin.X - 1) {
+				else if (Slope == 2 && x1 == Origin.X - 0) {
 					LandTiles[3].DrawWithOffset(p, point.X + ((x1 - y1) * 32), point.Y + ((x1 + y1) * 16),
 						darkness, false, RemapColors.None, RemapColors.None, RemapColors.None
 					);

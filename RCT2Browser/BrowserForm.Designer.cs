@@ -26,35 +26,55 @@ namespace RCTDataEditor {
 		private void InitializeComponent() {
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BrowserForm));
-			System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("General", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Graphics", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("String Table", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Header", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup5 = new System.Windows.Forms.ListViewGroup("Header 1", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup6 = new System.Windows.Forms.ListViewGroup("Header 2", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup7 = new System.Windows.Forms.ListViewGroup("Header 3", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup8 = new System.Windows.Forms.ListViewGroup("Header 4", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup9 = new System.Windows.Forms.ListViewGroup("Group Info", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup10 = new System.Windows.Forms.ListViewGroup("Optional", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup11 = new System.Windows.Forms.ListViewGroup("Optional", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup12 = new System.Windows.Forms.ListViewGroup("Optional", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup37 = new System.Windows.Forms.ListViewGroup("General", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup38 = new System.Windows.Forms.ListViewGroup("Graphics", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup39 = new System.Windows.Forms.ListViewGroup("String Table", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup40 = new System.Windows.Forms.ListViewGroup("Header", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup41 = new System.Windows.Forms.ListViewGroup("Header 1", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup42 = new System.Windows.Forms.ListViewGroup("Header 2", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup43 = new System.Windows.Forms.ListViewGroup("Header 3", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup44 = new System.Windows.Forms.ListViewGroup("Header 4", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup45 = new System.Windows.Forms.ListViewGroup("Group Info", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup46 = new System.Windows.Forms.ListViewGroup("Optional", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup47 = new System.Windows.Forms.ListViewGroup("Optional", System.Windows.Forms.HorizontalAlignment.Left);
+			System.Windows.Forms.ListViewGroup listViewGroup48 = new System.Windows.Forms.ListViewGroup("Optional", System.Windows.Forms.HorizontalAlignment.Left);
 			this.splitContainerSideView = new System.Windows.Forms.SplitContainer();
-			this.imageListPaletteButton = new System.Windows.Forms.ImageList(this.components);
-			this.splitContainerTabs = new System.Windows.Forms.SplitContainer();
-			this.imageListFlags = new System.Windows.Forms.ImageList(this.components);
-			this.timerLoadObjects = new System.Windows.Forms.Timer(this.components);
-			this.objDataBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-			this.splitContainerStatusBar = new System.Windows.Forms.SplitContainer();
-			this.toolTips = new System.Windows.Forms.ToolTip(this.components);
-			this.timerExtract = new System.Windows.Forms.Timer(this.components);
+			this.panelColorPalette = new System.Windows.Forms.Panel();
 			this.rctPanel1 = new CustomControls.RCTPanel();
 			this.scrollBarImage = new System.Windows.Forms.HScrollBar();
+			this.objectView = new System.Windows.Forms.PictureBox();
 			this.labelImageOffset = new CustomControls.RCTLabel();
 			this.labelImageSize = new CustomControls.RCTLabel();
+			this.buttonNextObject = new CustomControls.RCTButton();
 			this.checkBoxImageView = new CustomControls.RCTCheckBox();
+			this.buttonElevate = new CustomControls.RCTButton();
+			this.buttonPreviousObject = new CustomControls.RCTButton();
+			this.buttonCorner = new CustomControls.RCTButton();
+			this.buttonSlope = new CustomControls.RCTButton();
+			this.buttonPreviousFrame = new CustomControls.RCTButton();
+			this.buttonRotate = new CustomControls.RCTButton();
+			this.buttonNextFrame = new CustomControls.RCTButton();
 			this.checkBoxDialogView = new CustomControls.RCTCheckBox();
+			this.buttonRemap1 = new System.Windows.Forms.Button();
+			this.imageListPaletteButton = new System.Windows.Forms.ImageList(this.components);
+			this.buttonRemap2 = new System.Windows.Forms.Button();
+			this.buttonRemap3 = new System.Windows.Forms.Button();
+			this.splitContainerTabs = new System.Windows.Forms.SplitContainer();
 			this.rctTabPanel1 = new CustomControls.RCTTabPanel();
 			this.buttonBrowse = new CustomControls.RCTButton();
+			this.tabInfo = new CustomControls.RCTTabButton();
+			this.tabAll = new CustomControls.RCTTabButton();
+			this.tabAttractions = new CustomControls.RCTTabButton();
+			this.tabSmallScenery = new CustomControls.RCTTabButton();
+			this.tabLargeScenery = new CustomControls.RCTTabButton();
+			this.tabWalls = new CustomControls.RCTTabButton();
+			this.tabSigns = new CustomControls.RCTTabButton();
+			this.tabPaths = new CustomControls.RCTTabButton();
+			this.tabPathAdditions = new CustomControls.RCTTabButton();
+			this.tabSceneryGroups = new CustomControls.RCTTabButton();
+			this.tabParkEntrances = new CustomControls.RCTTabButton();
+			this.tabWater = new CustomControls.RCTTabButton();
+			this.tabSettings = new CustomControls.RCTTabButton();
 			this.tabGroupSettings = new System.Windows.Forms.Panel();
 			this.checkBoxBackupDeletions = new CustomControls.RCTCheckBox();
 			this.checkBoxAllowDeletions = new CustomControls.RCTCheckBox();
@@ -76,6 +96,7 @@ namespace RCTDataEditor {
 			this.columnHeader49 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader50 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader63 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.imageListFlags = new System.Windows.Forms.ImageList(this.components);
 			this.tabGroupParkEntrances = new System.Windows.Forms.ListView();
 			this.columnHeader41 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader42 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -168,57 +189,36 @@ namespace RCTDataEditor {
 			this.infoFlags = new System.Windows.Forms.Label();
 			this.infoName = new System.Windows.Forms.Label();
 			this.infoFileName = new System.Windows.Forms.Label();
+			this.timerLoadObjects = new System.Windows.Forms.Timer(this.components);
+			this.objDataBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+			this.splitContainerStatusBar = new System.Windows.Forms.SplitContainer();
 			this.statusBar = new CustomControls.RCTStatusBar();
 			this.labelObjectsInGroup = new CustomControls.RCTLabel();
 			this.labelCurrentObject = new CustomControls.RCTLabel();
 			this.labelObjectsScanned = new CustomControls.RCTLabel();
 			this.labelScanProgress = new CustomControls.RCTLabel();
-			this.panelColorPalette = new System.Windows.Forms.Panel();
-			this.objectView = new System.Windows.Forms.PictureBox();
-			this.buttonNextObject = new CustomControls.RCTButton();
-			this.buttonElevate = new CustomControls.RCTButton();
-			this.buttonPreviousObject = new CustomControls.RCTButton();
-			this.buttonCorner = new CustomControls.RCTButton();
-			this.buttonSlope = new CustomControls.RCTButton();
-			this.buttonPreviousFrame = new CustomControls.RCTButton();
-			this.buttonRotate = new CustomControls.RCTButton();
-			this.buttonNextFrame = new CustomControls.RCTButton();
-			this.buttonRemap1 = new System.Windows.Forms.Button();
-			this.buttonRemap2 = new System.Windows.Forms.Button();
-			this.buttonRemap3 = new System.Windows.Forms.Button();
-			this.tabInfo = new CustomControls.RCTTabButton();
-			this.tabAll = new CustomControls.RCTTabButton();
-			this.tabAttractions = new CustomControls.RCTTabButton();
-			this.tabSmallScenery = new CustomControls.RCTTabButton();
-			this.tabLargeScenery = new CustomControls.RCTTabButton();
-			this.tabWalls = new CustomControls.RCTTabButton();
-			this.tabSigns = new CustomControls.RCTTabButton();
-			this.tabPaths = new CustomControls.RCTTabButton();
-			this.tabPathAdditions = new CustomControls.RCTTabButton();
-			this.tabSceneryGroups = new CustomControls.RCTTabButton();
-			this.tabParkEntrances = new CustomControls.RCTTabButton();
-			this.tabWater = new CustomControls.RCTTabButton();
-			this.tabSettings = new CustomControls.RCTTabButton();
+			this.toolTips = new System.Windows.Forms.ToolTip(this.components);
+			this.timerExtract = new System.Windows.Forms.Timer(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerSideView)).BeginInit();
 			this.splitContainerSideView.Panel1.SuspendLayout();
 			this.splitContainerSideView.Panel2.SuspendLayout();
 			this.splitContainerSideView.SuspendLayout();
+			this.rctPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.objectView)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerTabs)).BeginInit();
 			this.splitContainerTabs.Panel1.SuspendLayout();
 			this.splitContainerTabs.Panel2.SuspendLayout();
 			this.splitContainerTabs.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitContainerStatusBar)).BeginInit();
-			this.splitContainerStatusBar.Panel1.SuspendLayout();
-			this.splitContainerStatusBar.Panel2.SuspendLayout();
-			this.splitContainerStatusBar.SuspendLayout();
-			this.rctPanel1.SuspendLayout();
 			this.rctTabPanel1.SuspendLayout();
 			this.tabGroupSettings.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownObjectsPerTick)).BeginInit();
 			this.rctPanel2.SuspendLayout();
 			this.tabGroupInfoOld.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainerStatusBar)).BeginInit();
+			this.splitContainerStatusBar.Panel1.SuspendLayout();
+			this.splitContainerStatusBar.Panel2.SuspendLayout();
+			this.splitContainerStatusBar.SuspendLayout();
 			this.statusBar.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.objectView)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// splitContainerSideView
@@ -257,96 +257,17 @@ namespace RCTDataEditor {
 			this.splitContainerSideView.SplitterWidth = 1;
 			this.splitContainerSideView.TabIndex = 123;
 			// 
-			// imageListPaletteButton
+			// panelColorPalette
 			// 
-			this.imageListPaletteButton.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListPaletteButton.ImageStream")));
-			this.imageListPaletteButton.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageListPaletteButton.Images.SetKeyName(0, "PaletteButton.png");
-			this.imageListPaletteButton.Images.SetKeyName(1, "PaletteButton.png");
-			this.imageListPaletteButton.Images.SetKeyName(2, "PaletteButtonPressed.png");
-			// 
-			// splitContainerTabs
-			// 
-			this.splitContainerTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainerTabs.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-			this.splitContainerTabs.IsSplitterFixed = true;
-			this.splitContainerTabs.Location = new System.Drawing.Point(0, 0);
-			this.splitContainerTabs.Name = "splitContainerTabs";
-			this.splitContainerTabs.Orientation = System.Windows.Forms.Orientation.Horizontal;
-			// 
-			// splitContainerTabs.Panel1
-			// 
-			this.splitContainerTabs.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(103)))), ((int)(((byte)(75)))));
-			this.splitContainerTabs.Panel1.Controls.Add(this.rctTabPanel1);
-			this.splitContainerTabs.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			// 
-			// splitContainerTabs.Panel2
-			// 
-			this.splitContainerTabs.Panel2.Controls.Add(this.rctPanel2);
-			this.splitContainerTabs.Panel2.Padding = new System.Windows.Forms.Padding(3);
-			this.splitContainerTabs.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.splitContainerTabs.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.splitContainerTabs.Size = new System.Drawing.Size(553, 400);
-			this.splitContainerTabs.SplitterDistance = 32;
-			this.splitContainerTabs.SplitterWidth = 1;
-			this.splitContainerTabs.TabIndex = 33;
-			this.splitContainerTabs.TabStop = false;
-			// 
-			// imageListFlags
-			// 
-			this.imageListFlags.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListFlags.ImageStream")));
-			this.imageListFlags.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageListFlags.Images.SetKeyName(0, "CloseFlag.png");
-			this.imageListFlags.Images.SetKeyName(1, "TestFlag.png");
-			this.imageListFlags.Images.SetKeyName(2, "OpenFlagDown.png");
-			this.imageListFlags.Images.SetKeyName(3, "BrokenFlagDown.png");
-			// 
-			// timerLoadObjects
-			// 
-			this.timerLoadObjects.Interval = 200;
-			this.timerLoadObjects.Tick += new System.EventHandler(this.LoadObjects);
-			// 
-			// objDataBrowserDialog
-			// 
-			this.objDataBrowserDialog.Description = "ObjData Folder Location";
-			this.objDataBrowserDialog.SelectedPath = "Environment.SpecialFolder.Desktop";
-			this.objDataBrowserDialog.ShowNewFolderButton = false;
-			// 
-			// splitContainerStatusBar
-			// 
-			this.splitContainerStatusBar.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainerStatusBar.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
-			this.splitContainerStatusBar.IsSplitterFixed = true;
-			this.splitContainerStatusBar.Location = new System.Drawing.Point(0, 0);
-			this.splitContainerStatusBar.Name = "splitContainerStatusBar";
-			this.splitContainerStatusBar.Orientation = System.Windows.Forms.Orientation.Horizontal;
-			// 
-			// splitContainerStatusBar.Panel1
-			// 
-			this.splitContainerStatusBar.Panel1.Controls.Add(this.splitContainerSideView);
-			this.splitContainerStatusBar.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			// 
-			// splitContainerStatusBar.Panel2
-			// 
-			this.splitContainerStatusBar.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-			this.splitContainerStatusBar.Panel2.Controls.Add(this.statusBar);
-			this.splitContainerStatusBar.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.splitContainerStatusBar.Panel2MinSize = 26;
-			this.splitContainerStatusBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.splitContainerStatusBar.Size = new System.Drawing.Size(761, 427);
-			this.splitContainerStatusBar.SplitterDistance = 400;
-			this.splitContainerStatusBar.SplitterWidth = 1;
-			this.splitContainerStatusBar.TabIndex = 33;
-			// 
-			// toolTips
-			// 
-			this.toolTips.AutoPopDelay = 5000;
-			this.toolTips.InitialDelay = 1000;
-			this.toolTips.ReshowDelay = 600;
-			// 
-			// timerExtract
-			// 
-			this.timerExtract.Tick += new System.EventHandler(this.ExtractingImages);
+			this.panelColorPalette.BackgroundImage = global::RCTDataEditor.Properties.Resources.ColorPalette1;
+			this.panelColorPalette.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+			this.panelColorPalette.Location = new System.Drawing.Point(100, 345);
+			this.panelColorPalette.Margin = new System.Windows.Forms.Padding(0);
+			this.panelColorPalette.Name = "panelColorPalette";
+			this.panelColorPalette.Padding = new System.Windows.Forms.Padding(2);
+			this.panelColorPalette.Size = new System.Drawing.Size(100, 52);
+			this.panelColorPalette.TabIndex = 33;
+			this.panelColorPalette.Visible = false;
 			// 
 			// rctPanel1
 			// 
@@ -374,6 +295,19 @@ namespace RCTDataEditor {
 			this.scrollBarImage.Visible = false;
 			this.scrollBarImage.ValueChanged += new System.EventHandler(this.ScrollImages);
 			// 
+			// objectView
+			// 
+			this.objectView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.objectView.Cursor = System.Windows.Forms.Cursors.Default;
+			this.objectView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.objectView.ErrorImage = global::RCTDataEditor.Properties.Resources.MissingImagesError;
+			this.objectView.Location = new System.Drawing.Point(1, 1);
+			this.objectView.Margin = new System.Windows.Forms.Padding(0);
+			this.objectView.Name = "objectView";
+			this.objectView.Size = new System.Drawing.Size(190, 254);
+			this.objectView.TabIndex = 9;
+			this.objectView.TabStop = false;
+			// 
 			// labelImageOffset
 			// 
 			this.labelImageOffset.FontType = CustomControls.Visuals.FontType.Bold;
@@ -398,6 +332,29 @@ namespace RCTDataEditor {
 			this.labelImageSize.Text = "Image Size:";
 			this.labelImageSize.TextAlign = System.Drawing.ContentAlignment.TopLeft;
 			// 
+			// buttonNextObject
+			// 
+			this.buttonNextObject.BorderOnHover = true;
+			this.buttonNextObject.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonNextObject.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonNextObject.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonNextObject.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonNextObject.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonNextObject.Image = global::RCTDataEditor.Properties.Resources.ButtonRight;
+			this.buttonNextObject.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonNextObject.Location = new System.Drawing.Point(134, 266);
+			this.buttonNextObject.Name = "buttonNextObject";
+			this.buttonNextObject.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonNextObject.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonNextObject.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonNextObject.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonNextObject.Size = new System.Drawing.Size(20, 24);
+			this.buttonNextObject.TabIndex = 138;
+			this.buttonNextObject.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonNextObject.Toggleable = false;
+			this.buttonNextObject.Toggled = false;
+			this.buttonNextObject.ButtonPressed += new System.EventHandler(this.NextObject);
+			// 
 			// checkBoxImageView
 			// 
 			this.checkBoxImageView.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
@@ -415,6 +372,167 @@ namespace RCTDataEditor {
 			this.checkBoxImageView.Text = "Image";
 			this.checkBoxImageView.CheckStateChanged += new System.EventHandler(this.FrameView);
 			// 
+			// buttonElevate
+			// 
+			this.buttonElevate.BorderOnHover = true;
+			this.buttonElevate.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonElevate.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonElevate.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonElevate.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonElevate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonElevate.Image = global::RCTDataEditor.Properties.Resources.ButtonElevate;
+			this.buttonElevate.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonElevate.Location = new System.Drawing.Point(109, 266);
+			this.buttonElevate.Name = "buttonElevate";
+			this.buttonElevate.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonElevate.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonElevate.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonElevate.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonElevate.Size = new System.Drawing.Size(24, 24);
+			this.buttonElevate.TabIndex = 134;
+			this.buttonElevate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonElevate.Toggleable = false;
+			this.buttonElevate.Toggled = false;
+			this.buttonElevate.ButtonPressed += new System.EventHandler(this.ChangeElevation);
+			// 
+			// buttonPreviousObject
+			// 
+			this.buttonPreviousObject.BorderOnHover = true;
+			this.buttonPreviousObject.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonPreviousObject.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonPreviousObject.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonPreviousObject.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonPreviousObject.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonPreviousObject.Image = global::RCTDataEditor.Properties.Resources.ButtonLeft;
+			this.buttonPreviousObject.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonPreviousObject.Location = new System.Drawing.Point(13, 266);
+			this.buttonPreviousObject.Name = "buttonPreviousObject";
+			this.buttonPreviousObject.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonPreviousObject.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonPreviousObject.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonPreviousObject.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonPreviousObject.Size = new System.Drawing.Size(20, 24);
+			this.buttonPreviousObject.TabIndex = 137;
+			this.buttonPreviousObject.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonPreviousObject.Toggleable = false;
+			this.buttonPreviousObject.Toggled = false;
+			this.buttonPreviousObject.ButtonPressed += new System.EventHandler(this.PreviousObject);
+			// 
+			// buttonCorner
+			// 
+			this.buttonCorner.BorderOnHover = true;
+			this.buttonCorner.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonCorner.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonCorner.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonCorner.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonCorner.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonCorner.Image = global::RCTDataEditor.Properties.Resources.ButtonCorner;
+			this.buttonCorner.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonCorner.Location = new System.Drawing.Point(84, 266);
+			this.buttonCorner.Name = "buttonCorner";
+			this.buttonCorner.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonCorner.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonCorner.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonCorner.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonCorner.Size = new System.Drawing.Size(24, 24);
+			this.buttonCorner.TabIndex = 133;
+			this.buttonCorner.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonCorner.Toggleable = false;
+			this.buttonCorner.Toggled = false;
+			this.buttonCorner.ButtonPressed += new System.EventHandler(this.RotateCorner);
+			// 
+			// buttonSlope
+			// 
+			this.buttonSlope.BorderOnHover = true;
+			this.buttonSlope.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonSlope.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonSlope.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonSlope.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonSlope.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonSlope.Image = global::RCTDataEditor.Properties.Resources.ButtonSlope;
+			this.buttonSlope.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonSlope.Location = new System.Drawing.Point(59, 266);
+			this.buttonSlope.Name = "buttonSlope";
+			this.buttonSlope.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonSlope.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonSlope.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonSlope.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonSlope.Size = new System.Drawing.Size(24, 24);
+			this.buttonSlope.TabIndex = 132;
+			this.buttonSlope.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonSlope.Toggleable = false;
+			this.buttonSlope.Toggled = false;
+			this.buttonSlope.ButtonPressed += new System.EventHandler(this.RotateSlope);
+			// 
+			// buttonPreviousFrame
+			// 
+			this.buttonPreviousFrame.BorderOnHover = true;
+			this.buttonPreviousFrame.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonPreviousFrame.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonPreviousFrame.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonPreviousFrame.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonPreviousFrame.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonPreviousFrame.Image = global::RCTDataEditor.Properties.Resources.ButtonBack;
+			this.buttonPreviousFrame.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonPreviousFrame.Location = new System.Drawing.Point(13, 297);
+			this.buttonPreviousFrame.Name = "buttonPreviousFrame";
+			this.buttonPreviousFrame.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonPreviousFrame.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonPreviousFrame.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonPreviousFrame.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonPreviousFrame.Size = new System.Drawing.Size(24, 24);
+			this.buttonPreviousFrame.TabIndex = 135;
+			this.buttonPreviousFrame.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonPreviousFrame.Toggleable = false;
+			this.buttonPreviousFrame.Toggled = false;
+			this.buttonPreviousFrame.ButtonPressed += new System.EventHandler(this.PreviousFrame);
+			// 
+			// buttonRotate
+			// 
+			this.buttonRotate.BorderOnHover = true;
+			this.buttonRotate.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonRotate.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonRotate.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonRotate.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonRotate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonRotate.Image = global::RCTDataEditor.Properties.Resources.ButtonRotate;
+			this.buttonRotate.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonRotate.Location = new System.Drawing.Point(34, 266);
+			this.buttonRotate.Name = "buttonRotate";
+			this.buttonRotate.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonRotate.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonRotate.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonRotate.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonRotate.Size = new System.Drawing.Size(24, 24);
+			this.buttonRotate.TabIndex = 131;
+			this.buttonRotate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonRotate.Toggleable = false;
+			this.buttonRotate.Toggled = false;
+			this.buttonRotate.ButtonPressed += new System.EventHandler(this.RotateObject);
+			// 
+			// buttonNextFrame
+			// 
+			this.buttonNextFrame.BorderOnHover = true;
+			this.buttonNextFrame.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonNextFrame.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonNextFrame.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonNextFrame.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonNextFrame.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonNextFrame.Image = global::RCTDataEditor.Properties.Resources.ButtonForward;
+			this.buttonNextFrame.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonNextFrame.Location = new System.Drawing.Point(38, 297);
+			this.buttonNextFrame.Name = "buttonNextFrame";
+			this.buttonNextFrame.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonNextFrame.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonNextFrame.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonNextFrame.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonNextFrame.Size = new System.Drawing.Size(24, 24);
+			this.buttonNextFrame.TabIndex = 136;
+			this.buttonNextFrame.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonNextFrame.Toggleable = false;
+			this.buttonNextFrame.Toggled = false;
+			this.buttonNextFrame.ButtonPressed += new System.EventHandler(this.NextFrame);
+			// 
 			// checkBoxDialogView
 			// 
 			this.checkBoxDialogView.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
@@ -431,6 +549,104 @@ namespace RCTDataEditor {
 			this.checkBoxDialogView.TabIndex = 139;
 			this.checkBoxDialogView.Text = "Dialog";
 			this.checkBoxDialogView.CheckStateChanged += new System.EventHandler(this.DialogView);
+			// 
+			// buttonRemap1
+			// 
+			this.buttonRemap1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonRemap1.FlatAppearance.BorderSize = 0;
+			this.buttonRemap1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonRemap1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonRemap1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.buttonRemap1.ImageIndex = 0;
+			this.buttonRemap1.ImageList = this.imageListPaletteButton;
+			this.buttonRemap1.Location = new System.Drawing.Point(159, 271);
+			this.buttonRemap1.Name = "buttonRemap1";
+			this.buttonRemap1.Size = new System.Drawing.Size(13, 13);
+			this.buttonRemap1.TabIndex = 34;
+			this.buttonRemap1.TabStop = false;
+			this.buttonRemap1.UseVisualStyleBackColor = true;
+			this.buttonRemap1.Click += new System.EventHandler(this.ChangeRemap);
+			this.buttonRemap1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ButtonDown);
+			this.buttonRemap1.MouseLeave += new System.EventHandler(this.ButtonLeave);
+			this.buttonRemap1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ButtonHover);
+			this.buttonRemap1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ButtonUp);
+			// 
+			// imageListPaletteButton
+			// 
+			this.imageListPaletteButton.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListPaletteButton.ImageStream")));
+			this.imageListPaletteButton.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageListPaletteButton.Images.SetKeyName(0, "PaletteButton.png");
+			this.imageListPaletteButton.Images.SetKeyName(1, "PaletteButton.png");
+			this.imageListPaletteButton.Images.SetKeyName(2, "PaletteButtonPressed.png");
+			// 
+			// buttonRemap2
+			// 
+			this.buttonRemap2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonRemap2.FlatAppearance.BorderSize = 0;
+			this.buttonRemap2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonRemap2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonRemap2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.buttonRemap2.ImageIndex = 0;
+			this.buttonRemap2.ImageList = this.imageListPaletteButton;
+			this.buttonRemap2.Location = new System.Drawing.Point(171, 271);
+			this.buttonRemap2.Name = "buttonRemap2";
+			this.buttonRemap2.Size = new System.Drawing.Size(13, 13);
+			this.buttonRemap2.TabIndex = 35;
+			this.buttonRemap2.TabStop = false;
+			this.buttonRemap2.UseVisualStyleBackColor = true;
+			this.buttonRemap2.Click += new System.EventHandler(this.ChangeRemap);
+			this.buttonRemap2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ButtonDown);
+			this.buttonRemap2.MouseLeave += new System.EventHandler(this.ButtonLeave);
+			this.buttonRemap2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ButtonHover);
+			this.buttonRemap2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ButtonUp);
+			// 
+			// buttonRemap3
+			// 
+			this.buttonRemap3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonRemap3.FlatAppearance.BorderSize = 0;
+			this.buttonRemap3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonRemap3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonRemap3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.buttonRemap3.ImageIndex = 0;
+			this.buttonRemap3.ImageList = this.imageListPaletteButton;
+			this.buttonRemap3.Location = new System.Drawing.Point(183, 271);
+			this.buttonRemap3.Name = "buttonRemap3";
+			this.buttonRemap3.Size = new System.Drawing.Size(13, 13);
+			this.buttonRemap3.TabIndex = 36;
+			this.buttonRemap3.TabStop = false;
+			this.buttonRemap3.UseVisualStyleBackColor = true;
+			this.buttonRemap3.Click += new System.EventHandler(this.ChangeRemap);
+			this.buttonRemap3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ButtonDown);
+			this.buttonRemap3.MouseLeave += new System.EventHandler(this.ButtonLeave);
+			this.buttonRemap3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ButtonHover);
+			this.buttonRemap3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ButtonUp);
+			// 
+			// splitContainerTabs
+			// 
+			this.splitContainerTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainerTabs.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+			this.splitContainerTabs.IsSplitterFixed = true;
+			this.splitContainerTabs.Location = new System.Drawing.Point(0, 0);
+			this.splitContainerTabs.Name = "splitContainerTabs";
+			this.splitContainerTabs.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// splitContainerTabs.Panel1
+			// 
+			this.splitContainerTabs.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(103)))), ((int)(((byte)(75)))));
+			this.splitContainerTabs.Panel1.Controls.Add(this.rctTabPanel1);
+			this.splitContainerTabs.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			// 
+			// splitContainerTabs.Panel2
+			// 
+			this.splitContainerTabs.Panel2.Controls.Add(this.rctPanel2);
+			this.splitContainerTabs.Panel2.Padding = new System.Windows.Forms.Padding(3);
+			this.splitContainerTabs.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.splitContainerTabs.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.splitContainerTabs.Size = new System.Drawing.Size(553, 400);
+			this.splitContainerTabs.SplitterDistance = 32;
+			this.splitContainerTabs.SplitterWidth = 1;
+			this.splitContainerTabs.TabIndex = 33;
+			this.splitContainerTabs.TabStop = false;
 			// 
 			// rctTabPanel1
 			// 
@@ -486,6 +702,318 @@ namespace RCTDataEditor {
 			this.buttonBrowse.Toggleable = false;
 			this.buttonBrowse.Toggled = false;
 			this.buttonBrowse.ButtonPressed += new System.EventHandler(this.BrowseDirectory);
+			// 
+			// tabInfo
+			// 
+			this.tabInfo.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabInfo.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabInfo.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabInfo.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabInfo.Image = global::RCTDataEditor.Properties.Resources.TabInfo;
+			this.tabInfo.Location = new System.Drawing.Point(4, 5);
+			this.tabInfo.Name = "tabInfo";
+			this.tabInfo.NextTabButton = this.tabAll;
+			this.tabInfo.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabInfo.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabInfo.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabInfo.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabInfo.PreviousTabButton = null;
+			this.tabInfo.Size = new System.Drawing.Size(31, 27);
+			this.tabInfo.TabControlIndex = ((uint)(0u));
+			this.tabInfo.TabIndex = 126;
+			this.tabInfo.TabPage = this.tabGroupInfo;
+			this.tabInfo.Text = "rctTabButton1";
+			this.tabInfo.Toggled = false;
+			this.tabInfo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabAll
+			// 
+			this.tabAll.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabAll.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabAll.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabAll.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabAll.Image = global::RCTDataEditor.Properties.Resources.TabAll;
+			this.tabAll.Location = new System.Drawing.Point(35, 5);
+			this.tabAll.Name = "tabAll";
+			this.tabAll.NextTabButton = this.tabAttractions;
+			this.tabAll.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabAll.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabAll.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabAll.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabAll.PreviousTabButton = this.tabInfo;
+			this.tabAll.Size = new System.Drawing.Size(31, 27);
+			this.tabAll.TabControlIndex = ((uint)(1u));
+			this.tabAll.TabIndex = 127;
+			this.tabAll.TabPage = this.tabGroupAll;
+			this.tabAll.Text = "rctTabButton1";
+			this.tabAll.Toggled = true;
+			this.tabAll.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabAttractions
+			// 
+			this.tabAttractions.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabAttractions.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabAttractions.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabAttractions.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabAttractions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabAttractions.Image = global::RCTDataEditor.Properties.Resources.TabAttractions;
+			this.tabAttractions.Location = new System.Drawing.Point(66, 5);
+			this.tabAttractions.Name = "tabAttractions";
+			this.tabAttractions.NextTabButton = this.tabSmallScenery;
+			this.tabAttractions.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabAttractions.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabAttractions.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabAttractions.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabAttractions.PreviousTabButton = this.tabAll;
+			this.tabAttractions.Size = new System.Drawing.Size(31, 27);
+			this.tabAttractions.TabControlIndex = ((uint)(2u));
+			this.tabAttractions.TabIndex = 128;
+			this.tabAttractions.TabPage = this.tabGroupAttractions;
+			this.tabAttractions.Text = "rctTabButton1";
+			this.tabAttractions.Toggled = false;
+			this.tabAttractions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabSmallScenery
+			// 
+			this.tabSmallScenery.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabSmallScenery.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabSmallScenery.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSmallScenery.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSmallScenery.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabSmallScenery.Image = global::RCTDataEditor.Properties.Resources.TabSmallScenery;
+			this.tabSmallScenery.Location = new System.Drawing.Point(97, 5);
+			this.tabSmallScenery.Name = "tabSmallScenery";
+			this.tabSmallScenery.NextTabButton = this.tabLargeScenery;
+			this.tabSmallScenery.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSmallScenery.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabSmallScenery.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabSmallScenery.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSmallScenery.PreviousTabButton = this.tabAttractions;
+			this.tabSmallScenery.Size = new System.Drawing.Size(31, 27);
+			this.tabSmallScenery.TabControlIndex = ((uint)(3u));
+			this.tabSmallScenery.TabIndex = 129;
+			this.tabSmallScenery.TabPage = this.tabGroupSmallScenery;
+			this.tabSmallScenery.Text = "rctTabButton1";
+			this.tabSmallScenery.Toggled = false;
+			this.tabSmallScenery.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabLargeScenery
+			// 
+			this.tabLargeScenery.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabLargeScenery.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabLargeScenery.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabLargeScenery.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabLargeScenery.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabLargeScenery.Image = global::RCTDataEditor.Properties.Resources.TabLargeScenery;
+			this.tabLargeScenery.Location = new System.Drawing.Point(128, 5);
+			this.tabLargeScenery.Name = "tabLargeScenery";
+			this.tabLargeScenery.NextTabButton = this.tabWalls;
+			this.tabLargeScenery.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabLargeScenery.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabLargeScenery.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabLargeScenery.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabLargeScenery.PreviousTabButton = this.tabSmallScenery;
+			this.tabLargeScenery.Size = new System.Drawing.Size(31, 27);
+			this.tabLargeScenery.TabControlIndex = ((uint)(4u));
+			this.tabLargeScenery.TabIndex = 130;
+			this.tabLargeScenery.TabPage = this.tabGroupLargeScenery;
+			this.tabLargeScenery.Text = "rctTabButton2";
+			this.tabLargeScenery.Toggled = false;
+			this.tabLargeScenery.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabWalls
+			// 
+			this.tabWalls.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabWalls.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabWalls.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabWalls.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabWalls.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabWalls.Image = global::RCTDataEditor.Properties.Resources.TabWalls;
+			this.tabWalls.Location = new System.Drawing.Point(159, 5);
+			this.tabWalls.Name = "tabWalls";
+			this.tabWalls.NextTabButton = this.tabSigns;
+			this.tabWalls.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabWalls.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabWalls.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabWalls.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabWalls.PreviousTabButton = this.tabLargeScenery;
+			this.tabWalls.Size = new System.Drawing.Size(31, 27);
+			this.tabWalls.TabControlIndex = ((uint)(5u));
+			this.tabWalls.TabIndex = 135;
+			this.tabWalls.TabPage = this.tabGroupWalls;
+			this.tabWalls.Text = "rctTabButton7";
+			this.tabWalls.Toggled = false;
+			this.tabWalls.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabSigns
+			// 
+			this.tabSigns.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabSigns.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabSigns.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSigns.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSigns.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabSigns.Image = global::RCTDataEditor.Properties.Resources.TabSigns;
+			this.tabSigns.Location = new System.Drawing.Point(190, 5);
+			this.tabSigns.Name = "tabSigns";
+			this.tabSigns.NextTabButton = this.tabPaths;
+			this.tabSigns.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSigns.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabSigns.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabSigns.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSigns.PreviousTabButton = this.tabWalls;
+			this.tabSigns.Size = new System.Drawing.Size(31, 27);
+			this.tabSigns.TabControlIndex = ((uint)(6u));
+			this.tabSigns.TabIndex = 131;
+			this.tabSigns.TabPage = this.tabGroupSigns;
+			this.tabSigns.Text = "rctTabButton3";
+			this.tabSigns.Toggled = false;
+			this.tabSigns.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabPaths
+			// 
+			this.tabPaths.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabPaths.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabPaths.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabPaths.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabPaths.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabPaths.Image = global::RCTDataEditor.Properties.Resources.TabPaths;
+			this.tabPaths.Location = new System.Drawing.Point(221, 5);
+			this.tabPaths.Name = "tabPaths";
+			this.tabPaths.NextTabButton = this.tabPathAdditions;
+			this.tabPaths.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabPaths.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabPaths.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabPaths.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabPaths.PreviousTabButton = this.tabSigns;
+			this.tabPaths.Size = new System.Drawing.Size(31, 27);
+			this.tabPaths.TabControlIndex = ((uint)(7u));
+			this.tabPaths.TabIndex = 132;
+			this.tabPaths.TabPage = this.tabGroupPaths;
+			this.tabPaths.Text = "rctTabButton4";
+			this.tabPaths.Toggled = false;
+			this.tabPaths.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabPathAdditions
+			// 
+			this.tabPathAdditions.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabPathAdditions.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabPathAdditions.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabPathAdditions.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabPathAdditions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabPathAdditions.Image = global::RCTDataEditor.Properties.Resources.TabPathAdditions;
+			this.tabPathAdditions.Location = new System.Drawing.Point(252, 5);
+			this.tabPathAdditions.Name = "tabPathAdditions";
+			this.tabPathAdditions.NextTabButton = this.tabSceneryGroups;
+			this.tabPathAdditions.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabPathAdditions.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabPathAdditions.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabPathAdditions.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabPathAdditions.PreviousTabButton = this.tabPaths;
+			this.tabPathAdditions.Size = new System.Drawing.Size(31, 27);
+			this.tabPathAdditions.TabControlIndex = ((uint)(8u));
+			this.tabPathAdditions.TabIndex = 133;
+			this.tabPathAdditions.TabPage = this.tabGroupPathAdditions;
+			this.tabPathAdditions.Text = "rctTabButton5";
+			this.tabPathAdditions.Toggled = false;
+			this.tabPathAdditions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabSceneryGroups
+			// 
+			this.tabSceneryGroups.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabSceneryGroups.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabSceneryGroups.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSceneryGroups.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSceneryGroups.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabSceneryGroups.Image = global::RCTDataEditor.Properties.Resources.TabSceneryGroups;
+			this.tabSceneryGroups.Location = new System.Drawing.Point(283, 5);
+			this.tabSceneryGroups.Name = "tabSceneryGroups";
+			this.tabSceneryGroups.NextTabButton = this.tabParkEntrances;
+			this.tabSceneryGroups.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSceneryGroups.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabSceneryGroups.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabSceneryGroups.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSceneryGroups.PreviousTabButton = this.tabPathAdditions;
+			this.tabSceneryGroups.Size = new System.Drawing.Size(31, 27);
+			this.tabSceneryGroups.TabControlIndex = ((uint)(9u));
+			this.tabSceneryGroups.TabIndex = 134;
+			this.tabSceneryGroups.TabPage = this.tabGroupSceneryGroups;
+			this.tabSceneryGroups.Text = "rctTabButton6";
+			this.tabSceneryGroups.Toggled = false;
+			this.tabSceneryGroups.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabParkEntrances
+			// 
+			this.tabParkEntrances.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabParkEntrances.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabParkEntrances.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabParkEntrances.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabParkEntrances.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabParkEntrances.Image = global::RCTDataEditor.Properties.Resources.TabParkEntrances;
+			this.tabParkEntrances.Location = new System.Drawing.Point(314, 5);
+			this.tabParkEntrances.Name = "tabParkEntrances";
+			this.tabParkEntrances.NextTabButton = this.tabWater;
+			this.tabParkEntrances.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabParkEntrances.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabParkEntrances.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabParkEntrances.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabParkEntrances.PreviousTabButton = this.tabSceneryGroups;
+			this.tabParkEntrances.Size = new System.Drawing.Size(31, 27);
+			this.tabParkEntrances.TabControlIndex = ((uint)(10u));
+			this.tabParkEntrances.TabIndex = 136;
+			this.tabParkEntrances.TabPage = this.tabGroupParkEntrances;
+			this.tabParkEntrances.Text = "rctTabButton8";
+			this.tabParkEntrances.Toggled = false;
+			this.tabParkEntrances.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabWater
+			// 
+			this.tabWater.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabWater.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabWater.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabWater.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabWater.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabWater.Image = global::RCTDataEditor.Properties.Resources.TabWater;
+			this.tabWater.Location = new System.Drawing.Point(345, 5);
+			this.tabWater.Name = "tabWater";
+			this.tabWater.NextTabButton = this.tabSettings;
+			this.tabWater.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabWater.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabWater.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabWater.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabWater.PreviousTabButton = this.tabParkEntrances;
+			this.tabWater.Size = new System.Drawing.Size(31, 27);
+			this.tabWater.TabControlIndex = ((uint)(11u));
+			this.tabWater.TabIndex = 137;
+			this.tabWater.TabPage = this.tabGroupWater;
+			this.tabWater.Text = "rctTabButton9";
+			this.tabWater.Toggled = false;
+			this.tabWater.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabSettings
+			// 
+			this.tabSettings.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabSettings.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabSettings.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSettings.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabSettings.Image = global::RCTDataEditor.Properties.Resources.TabSettings;
+			this.tabSettings.Location = new System.Drawing.Point(376, 5);
+			this.tabSettings.Name = "tabSettings";
+			this.tabSettings.NextTabButton = null;
+			this.tabSettings.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSettings.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabSettings.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabSettings.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSettings.PreviousTabButton = this.tabWater;
+			this.tabSettings.Size = new System.Drawing.Size(31, 27);
+			this.tabSettings.TabControlIndex = ((uint)(12u));
+			this.tabSettings.TabIndex = 138;
+			this.tabSettings.TabPage = this.tabGroupSettings;
+			this.tabSettings.Text = "rctTabButton10";
+			this.tabSettings.Toggled = false;
+			this.tabSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
 			// 
 			// tabGroupSettings
 			// 
@@ -670,9 +1198,9 @@ namespace RCTDataEditor {
 			this.checkBoxQuickLoad.Location = new System.Drawing.Point(15, 105);
 			this.checkBoxQuickLoad.Name = "checkBoxQuickLoad";
 			this.checkBoxQuickLoad.OutlineColor = System.Drawing.Color.Transparent;
-			this.checkBoxQuickLoad.Size = new System.Drawing.Size(140, 11);
+			this.checkBoxQuickLoad.Size = new System.Drawing.Size(120, 11);
 			this.checkBoxQuickLoad.TabIndex = 142;
-			this.checkBoxQuickLoad.Text = "Quick Load Attractions";
+			this.checkBoxQuickLoad.Text = "Quick Load Images";
 			this.checkBoxQuickLoad.CheckStateChanged += new System.EventHandler(this.QuickLoadAttractions);
 			// 
 			// buttonSaveSettings
@@ -818,6 +1346,15 @@ namespace RCTDataEditor {
 			// 
 			this.columnHeader63.Text = "Subtype";
 			this.columnHeader63.Width = 80;
+			// 
+			// imageListFlags
+			// 
+			this.imageListFlags.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListFlags.ImageStream")));
+			this.imageListFlags.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageListFlags.Images.SetKeyName(0, "CloseFlag.png");
+			this.imageListFlags.Images.SetKeyName(1, "TestFlag.png");
+			this.imageListFlags.Images.SetKeyName(2, "OpenFlagDown.png");
+			this.imageListFlags.Images.SetKeyName(3, "BrokenFlagDown.png");
 			// 
 			// tabGroupParkEntrances
 			// 
@@ -1466,43 +2003,43 @@ namespace RCTDataEditor {
 			this.tabGroupInfo.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabGroupInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabGroupInfo.FullRowSelect = true;
-			listViewGroup1.Header = "General";
-			listViewGroup1.Name = "general";
-			listViewGroup2.Header = "Graphics";
-			listViewGroup2.Name = "graphics";
-			listViewGroup3.Header = "String Table";
-			listViewGroup3.Name = "strings";
-			listViewGroup4.Header = "Header";
-			listViewGroup4.Name = "header";
-			listViewGroup5.Header = "Header 1";
-			listViewGroup5.Name = "header1";
-			listViewGroup6.Header = "Header 2";
-			listViewGroup6.Name = "header2";
-			listViewGroup7.Header = "Header 3";
-			listViewGroup7.Name = "header3";
-			listViewGroup8.Header = "Header 4";
-			listViewGroup8.Name = "header4";
-			listViewGroup9.Header = "Group Info";
-			listViewGroup9.Name = "groupInfo";
-			listViewGroup10.Header = "Optional";
-			listViewGroup10.Name = "optional";
-			listViewGroup11.Header = "Optional";
-			listViewGroup11.Name = "optional1";
-			listViewGroup12.Header = "Optional";
-			listViewGroup12.Name = "optional2";
+			listViewGroup37.Header = "General";
+			listViewGroup37.Name = "general";
+			listViewGroup38.Header = "Graphics";
+			listViewGroup38.Name = "graphics";
+			listViewGroup39.Header = "String Table";
+			listViewGroup39.Name = "strings";
+			listViewGroup40.Header = "Header";
+			listViewGroup40.Name = "header";
+			listViewGroup41.Header = "Header 1";
+			listViewGroup41.Name = "header1";
+			listViewGroup42.Header = "Header 2";
+			listViewGroup42.Name = "header2";
+			listViewGroup43.Header = "Header 3";
+			listViewGroup43.Name = "header3";
+			listViewGroup44.Header = "Header 4";
+			listViewGroup44.Name = "header4";
+			listViewGroup45.Header = "Group Info";
+			listViewGroup45.Name = "groupInfo";
+			listViewGroup46.Header = "Optional";
+			listViewGroup46.Name = "optional";
+			listViewGroup47.Header = "Optional";
+			listViewGroup47.Name = "optional1";
+			listViewGroup48.Header = "Optional";
+			listViewGroup48.Name = "optional2";
 			this.tabGroupInfo.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2,
-            listViewGroup3,
-            listViewGroup4,
-            listViewGroup5,
-            listViewGroup6,
-            listViewGroup7,
-            listViewGroup8,
-            listViewGroup9,
-            listViewGroup10,
-            listViewGroup11,
-            listViewGroup12});
+            listViewGroup37,
+            listViewGroup38,
+            listViewGroup39,
+            listViewGroup40,
+            listViewGroup41,
+            listViewGroup42,
+            listViewGroup43,
+            listViewGroup44,
+            listViewGroup45,
+            listViewGroup46,
+            listViewGroup47,
+            listViewGroup48});
 			this.tabGroupInfo.Location = new System.Drawing.Point(1, 1);
 			this.tabGroupInfo.MultiSelect = false;
 			this.tabGroupInfo.Name = "tabGroupInfo";
@@ -1736,6 +2273,43 @@ namespace RCTDataEditor {
 			this.infoFileName.TabIndex = 24;
 			this.infoFileName.Text = "InfoFileName";
 			// 
+			// timerLoadObjects
+			// 
+			this.timerLoadObjects.Interval = 200;
+			this.timerLoadObjects.Tick += new System.EventHandler(this.LoadObjects);
+			// 
+			// objDataBrowserDialog
+			// 
+			this.objDataBrowserDialog.Description = "ObjData Folder Location";
+			this.objDataBrowserDialog.SelectedPath = "Environment.SpecialFolder.Desktop";
+			this.objDataBrowserDialog.ShowNewFolderButton = false;
+			// 
+			// splitContainerStatusBar
+			// 
+			this.splitContainerStatusBar.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainerStatusBar.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+			this.splitContainerStatusBar.IsSplitterFixed = true;
+			this.splitContainerStatusBar.Location = new System.Drawing.Point(0, 0);
+			this.splitContainerStatusBar.Name = "splitContainerStatusBar";
+			this.splitContainerStatusBar.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// splitContainerStatusBar.Panel1
+			// 
+			this.splitContainerStatusBar.Panel1.Controls.Add(this.splitContainerSideView);
+			this.splitContainerStatusBar.Panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			// 
+			// splitContainerStatusBar.Panel2
+			// 
+			this.splitContainerStatusBar.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+			this.splitContainerStatusBar.Panel2.Controls.Add(this.statusBar);
+			this.splitContainerStatusBar.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.splitContainerStatusBar.Panel2MinSize = 26;
+			this.splitContainerStatusBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
+			this.splitContainerStatusBar.Size = new System.Drawing.Size(761, 427);
+			this.splitContainerStatusBar.SplitterDistance = 400;
+			this.splitContainerStatusBar.SplitterWidth = 1;
+			this.splitContainerStatusBar.TabIndex = 33;
+			// 
 			// statusBar
 			// 
 			this.statusBar.Controls.Add(this.labelObjectsInGroup);
@@ -1806,589 +2380,15 @@ namespace RCTDataEditor {
 			this.labelScanProgress.Text = "Ready to Scan";
 			this.labelScanProgress.TextAlign = System.Drawing.ContentAlignment.TopLeft;
 			// 
-			// panelColorPalette
+			// toolTips
 			// 
-			this.panelColorPalette.BackgroundImage = global::RCTDataEditor.Properties.Resources.ColorPalette1;
-			this.panelColorPalette.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-			this.panelColorPalette.Location = new System.Drawing.Point(100, 345);
-			this.panelColorPalette.Margin = new System.Windows.Forms.Padding(0);
-			this.panelColorPalette.Name = "panelColorPalette";
-			this.panelColorPalette.Padding = new System.Windows.Forms.Padding(2);
-			this.panelColorPalette.Size = new System.Drawing.Size(100, 52);
-			this.panelColorPalette.TabIndex = 33;
-			this.panelColorPalette.Visible = false;
+			this.toolTips.AutoPopDelay = 5000;
+			this.toolTips.InitialDelay = 1000;
+			this.toolTips.ReshowDelay = 600;
 			// 
-			// objectView
+			// timerExtract
 			// 
-			this.objectView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.objectView.Cursor = System.Windows.Forms.Cursors.Default;
-			this.objectView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.objectView.ErrorImage = global::RCTDataEditor.Properties.Resources.MissingImagesError;
-			this.objectView.Location = new System.Drawing.Point(1, 1);
-			this.objectView.Margin = new System.Windows.Forms.Padding(0);
-			this.objectView.Name = "objectView";
-			this.objectView.Size = new System.Drawing.Size(190, 254);
-			this.objectView.TabIndex = 9;
-			this.objectView.TabStop = false;
-			// 
-			// buttonNextObject
-			// 
-			this.buttonNextObject.BorderOnHover = true;
-			this.buttonNextObject.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonNextObject.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonNextObject.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonNextObject.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonNextObject.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonNextObject.Image = global::RCTDataEditor.Properties.Resources.ButtonRight;
-			this.buttonNextObject.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonNextObject.Location = new System.Drawing.Point(134, 266);
-			this.buttonNextObject.Name = "buttonNextObject";
-			this.buttonNextObject.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonNextObject.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonNextObject.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonNextObject.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonNextObject.Size = new System.Drawing.Size(20, 24);
-			this.buttonNextObject.TabIndex = 138;
-			this.buttonNextObject.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonNextObject.Toggleable = false;
-			this.buttonNextObject.Toggled = false;
-			this.buttonNextObject.ButtonPressed += new System.EventHandler(this.NextObject);
-			// 
-			// buttonElevate
-			// 
-			this.buttonElevate.BorderOnHover = true;
-			this.buttonElevate.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonElevate.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonElevate.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonElevate.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonElevate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonElevate.Image = global::RCTDataEditor.Properties.Resources.ButtonElevate;
-			this.buttonElevate.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonElevate.Location = new System.Drawing.Point(109, 266);
-			this.buttonElevate.Name = "buttonElevate";
-			this.buttonElevate.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonElevate.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonElevate.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonElevate.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonElevate.Size = new System.Drawing.Size(24, 24);
-			this.buttonElevate.TabIndex = 134;
-			this.buttonElevate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonElevate.Toggleable = false;
-			this.buttonElevate.Toggled = false;
-			this.buttonElevate.ButtonPressed += new System.EventHandler(this.ChangeElevation);
-			// 
-			// buttonPreviousObject
-			// 
-			this.buttonPreviousObject.BorderOnHover = true;
-			this.buttonPreviousObject.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonPreviousObject.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonPreviousObject.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonPreviousObject.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonPreviousObject.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonPreviousObject.Image = global::RCTDataEditor.Properties.Resources.ButtonLeft;
-			this.buttonPreviousObject.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonPreviousObject.Location = new System.Drawing.Point(13, 266);
-			this.buttonPreviousObject.Name = "buttonPreviousObject";
-			this.buttonPreviousObject.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonPreviousObject.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonPreviousObject.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonPreviousObject.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonPreviousObject.Size = new System.Drawing.Size(20, 24);
-			this.buttonPreviousObject.TabIndex = 137;
-			this.buttonPreviousObject.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonPreviousObject.Toggleable = false;
-			this.buttonPreviousObject.Toggled = false;
-			this.buttonPreviousObject.ButtonPressed += new System.EventHandler(this.PreviousObject);
-			// 
-			// buttonCorner
-			// 
-			this.buttonCorner.BorderOnHover = true;
-			this.buttonCorner.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonCorner.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonCorner.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonCorner.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonCorner.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonCorner.Image = global::RCTDataEditor.Properties.Resources.ButtonCorner;
-			this.buttonCorner.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonCorner.Location = new System.Drawing.Point(84, 266);
-			this.buttonCorner.Name = "buttonCorner";
-			this.buttonCorner.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonCorner.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonCorner.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonCorner.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonCorner.Size = new System.Drawing.Size(24, 24);
-			this.buttonCorner.TabIndex = 133;
-			this.buttonCorner.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonCorner.Toggleable = false;
-			this.buttonCorner.Toggled = false;
-			this.buttonCorner.ButtonPressed += new System.EventHandler(this.RotateCorner);
-			// 
-			// buttonSlope
-			// 
-			this.buttonSlope.BorderOnHover = true;
-			this.buttonSlope.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonSlope.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonSlope.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonSlope.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonSlope.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonSlope.Image = global::RCTDataEditor.Properties.Resources.ButtonSlope;
-			this.buttonSlope.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonSlope.Location = new System.Drawing.Point(59, 266);
-			this.buttonSlope.Name = "buttonSlope";
-			this.buttonSlope.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonSlope.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonSlope.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonSlope.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonSlope.Size = new System.Drawing.Size(24, 24);
-			this.buttonSlope.TabIndex = 132;
-			this.buttonSlope.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonSlope.Toggleable = false;
-			this.buttonSlope.Toggled = false;
-			this.buttonSlope.ButtonPressed += new System.EventHandler(this.RotateSlope);
-			// 
-			// buttonPreviousFrame
-			// 
-			this.buttonPreviousFrame.BorderOnHover = true;
-			this.buttonPreviousFrame.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonPreviousFrame.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonPreviousFrame.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonPreviousFrame.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonPreviousFrame.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonPreviousFrame.Image = global::RCTDataEditor.Properties.Resources.ButtonBack;
-			this.buttonPreviousFrame.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonPreviousFrame.Location = new System.Drawing.Point(13, 297);
-			this.buttonPreviousFrame.Name = "buttonPreviousFrame";
-			this.buttonPreviousFrame.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonPreviousFrame.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonPreviousFrame.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonPreviousFrame.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonPreviousFrame.Size = new System.Drawing.Size(24, 24);
-			this.buttonPreviousFrame.TabIndex = 135;
-			this.buttonPreviousFrame.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonPreviousFrame.Toggleable = false;
-			this.buttonPreviousFrame.Toggled = false;
-			this.buttonPreviousFrame.ButtonPressed += new System.EventHandler(this.PreviousFrame);
-			// 
-			// buttonRotate
-			// 
-			this.buttonRotate.BorderOnHover = true;
-			this.buttonRotate.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonRotate.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonRotate.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonRotate.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonRotate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonRotate.Image = global::RCTDataEditor.Properties.Resources.ButtonRotate;
-			this.buttonRotate.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonRotate.Location = new System.Drawing.Point(34, 266);
-			this.buttonRotate.Name = "buttonRotate";
-			this.buttonRotate.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonRotate.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonRotate.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonRotate.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonRotate.Size = new System.Drawing.Size(24, 24);
-			this.buttonRotate.TabIndex = 131;
-			this.buttonRotate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonRotate.Toggleable = false;
-			this.buttonRotate.Toggled = false;
-			this.buttonRotate.ButtonPressed += new System.EventHandler(this.RotateObject);
-			// 
-			// buttonNextFrame
-			// 
-			this.buttonNextFrame.BorderOnHover = true;
-			this.buttonNextFrame.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonNextFrame.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonNextFrame.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonNextFrame.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonNextFrame.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonNextFrame.Image = global::RCTDataEditor.Properties.Resources.ButtonForward;
-			this.buttonNextFrame.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonNextFrame.Location = new System.Drawing.Point(38, 297);
-			this.buttonNextFrame.Name = "buttonNextFrame";
-			this.buttonNextFrame.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonNextFrame.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonNextFrame.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonNextFrame.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonNextFrame.Size = new System.Drawing.Size(24, 24);
-			this.buttonNextFrame.TabIndex = 136;
-			this.buttonNextFrame.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonNextFrame.Toggleable = false;
-			this.buttonNextFrame.Toggled = false;
-			this.buttonNextFrame.ButtonPressed += new System.EventHandler(this.NextFrame);
-			// 
-			// buttonRemap1
-			// 
-			this.buttonRemap1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonRemap1.FlatAppearance.BorderSize = 0;
-			this.buttonRemap1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonRemap1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonRemap1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonRemap1.ImageIndex = 0;
-			this.buttonRemap1.ImageList = this.imageListPaletteButton;
-			this.buttonRemap1.Location = new System.Drawing.Point(159, 271);
-			this.buttonRemap1.Name = "buttonRemap1";
-			this.buttonRemap1.Size = new System.Drawing.Size(13, 13);
-			this.buttonRemap1.TabIndex = 34;
-			this.buttonRemap1.TabStop = false;
-			this.buttonRemap1.UseVisualStyleBackColor = true;
-			this.buttonRemap1.Click += new System.EventHandler(this.ChangeRemap);
-			this.buttonRemap1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ButtonDown);
-			this.buttonRemap1.MouseLeave += new System.EventHandler(this.ButtonLeave);
-			this.buttonRemap1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ButtonHover);
-			this.buttonRemap1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ButtonUp);
-			// 
-			// buttonRemap2
-			// 
-			this.buttonRemap2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonRemap2.FlatAppearance.BorderSize = 0;
-			this.buttonRemap2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonRemap2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonRemap2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonRemap2.ImageIndex = 0;
-			this.buttonRemap2.ImageList = this.imageListPaletteButton;
-			this.buttonRemap2.Location = new System.Drawing.Point(171, 271);
-			this.buttonRemap2.Name = "buttonRemap2";
-			this.buttonRemap2.Size = new System.Drawing.Size(13, 13);
-			this.buttonRemap2.TabIndex = 35;
-			this.buttonRemap2.TabStop = false;
-			this.buttonRemap2.UseVisualStyleBackColor = true;
-			this.buttonRemap2.Click += new System.EventHandler(this.ChangeRemap);
-			this.buttonRemap2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ButtonDown);
-			this.buttonRemap2.MouseLeave += new System.EventHandler(this.ButtonLeave);
-			this.buttonRemap2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ButtonHover);
-			this.buttonRemap2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ButtonUp);
-			// 
-			// buttonRemap3
-			// 
-			this.buttonRemap3.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonRemap3.FlatAppearance.BorderSize = 0;
-			this.buttonRemap3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonRemap3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonRemap3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonRemap3.ImageIndex = 0;
-			this.buttonRemap3.ImageList = this.imageListPaletteButton;
-			this.buttonRemap3.Location = new System.Drawing.Point(183, 271);
-			this.buttonRemap3.Name = "buttonRemap3";
-			this.buttonRemap3.Size = new System.Drawing.Size(13, 13);
-			this.buttonRemap3.TabIndex = 36;
-			this.buttonRemap3.TabStop = false;
-			this.buttonRemap3.UseVisualStyleBackColor = true;
-			this.buttonRemap3.Click += new System.EventHandler(this.ChangeRemap);
-			this.buttonRemap3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ButtonDown);
-			this.buttonRemap3.MouseLeave += new System.EventHandler(this.ButtonLeave);
-			this.buttonRemap3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ButtonHover);
-			this.buttonRemap3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ButtonUp);
-			// 
-			// tabInfo
-			// 
-			this.tabInfo.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabInfo.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabInfo.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabInfo.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabInfo.Image = global::RCTDataEditor.Properties.Resources.TabInfo;
-			this.tabInfo.Location = new System.Drawing.Point(4, 5);
-			this.tabInfo.Name = "tabInfo";
-			this.tabInfo.NextTabButton = this.tabAll;
-			this.tabInfo.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabInfo.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabInfo.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabInfo.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabInfo.PreviousTabButton = null;
-			this.tabInfo.Size = new System.Drawing.Size(31, 27);
-			this.tabInfo.TabControlIndex = ((uint)(0u));
-			this.tabInfo.TabIndex = 126;
-			this.tabInfo.TabPage = this.tabGroupInfo;
-			this.tabInfo.Text = "rctTabButton1";
-			this.tabInfo.Toggled = false;
-			this.tabInfo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabAll
-			// 
-			this.tabAll.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabAll.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabAll.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabAll.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabAll.Image = global::RCTDataEditor.Properties.Resources.TabAll;
-			this.tabAll.Location = new System.Drawing.Point(35, 5);
-			this.tabAll.Name = "tabAll";
-			this.tabAll.NextTabButton = this.tabAttractions;
-			this.tabAll.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabAll.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabAll.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabAll.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabAll.PreviousTabButton = this.tabInfo;
-			this.tabAll.Size = new System.Drawing.Size(31, 27);
-			this.tabAll.TabControlIndex = ((uint)(1u));
-			this.tabAll.TabIndex = 127;
-			this.tabAll.TabPage = this.tabGroupAll;
-			this.tabAll.Text = "rctTabButton1";
-			this.tabAll.Toggled = true;
-			this.tabAll.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabAttractions
-			// 
-			this.tabAttractions.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabAttractions.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabAttractions.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabAttractions.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabAttractions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabAttractions.Image = global::RCTDataEditor.Properties.Resources.TabAttractions;
-			this.tabAttractions.Location = new System.Drawing.Point(66, 5);
-			this.tabAttractions.Name = "tabAttractions";
-			this.tabAttractions.NextTabButton = this.tabSmallScenery;
-			this.tabAttractions.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabAttractions.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabAttractions.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabAttractions.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabAttractions.PreviousTabButton = this.tabAll;
-			this.tabAttractions.Size = new System.Drawing.Size(31, 27);
-			this.tabAttractions.TabControlIndex = ((uint)(2u));
-			this.tabAttractions.TabIndex = 128;
-			this.tabAttractions.TabPage = this.tabGroupAttractions;
-			this.tabAttractions.Text = "rctTabButton1";
-			this.tabAttractions.Toggled = false;
-			this.tabAttractions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabSmallScenery
-			// 
-			this.tabSmallScenery.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabSmallScenery.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabSmallScenery.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSmallScenery.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSmallScenery.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabSmallScenery.Image = global::RCTDataEditor.Properties.Resources.TabSmallScenery;
-			this.tabSmallScenery.Location = new System.Drawing.Point(97, 5);
-			this.tabSmallScenery.Name = "tabSmallScenery";
-			this.tabSmallScenery.NextTabButton = this.tabLargeScenery;
-			this.tabSmallScenery.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSmallScenery.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabSmallScenery.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabSmallScenery.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSmallScenery.PreviousTabButton = this.tabAttractions;
-			this.tabSmallScenery.Size = new System.Drawing.Size(31, 27);
-			this.tabSmallScenery.TabControlIndex = ((uint)(3u));
-			this.tabSmallScenery.TabIndex = 129;
-			this.tabSmallScenery.TabPage = this.tabGroupSmallScenery;
-			this.tabSmallScenery.Text = "rctTabButton1";
-			this.tabSmallScenery.Toggled = false;
-			this.tabSmallScenery.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabLargeScenery
-			// 
-			this.tabLargeScenery.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabLargeScenery.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabLargeScenery.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabLargeScenery.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabLargeScenery.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabLargeScenery.Image = global::RCTDataEditor.Properties.Resources.TabLargeScenery;
-			this.tabLargeScenery.Location = new System.Drawing.Point(128, 5);
-			this.tabLargeScenery.Name = "tabLargeScenery";
-			this.tabLargeScenery.NextTabButton = this.tabWalls;
-			this.tabLargeScenery.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabLargeScenery.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabLargeScenery.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabLargeScenery.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabLargeScenery.PreviousTabButton = this.tabSmallScenery;
-			this.tabLargeScenery.Size = new System.Drawing.Size(31, 27);
-			this.tabLargeScenery.TabControlIndex = ((uint)(4u));
-			this.tabLargeScenery.TabIndex = 130;
-			this.tabLargeScenery.TabPage = this.tabGroupLargeScenery;
-			this.tabLargeScenery.Text = "rctTabButton2";
-			this.tabLargeScenery.Toggled = false;
-			this.tabLargeScenery.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabWalls
-			// 
-			this.tabWalls.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabWalls.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabWalls.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabWalls.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabWalls.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabWalls.Image = global::RCTDataEditor.Properties.Resources.TabWalls;
-			this.tabWalls.Location = new System.Drawing.Point(159, 5);
-			this.tabWalls.Name = "tabWalls";
-			this.tabWalls.NextTabButton = this.tabSigns;
-			this.tabWalls.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabWalls.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabWalls.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabWalls.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabWalls.PreviousTabButton = this.tabLargeScenery;
-			this.tabWalls.Size = new System.Drawing.Size(31, 27);
-			this.tabWalls.TabControlIndex = ((uint)(5u));
-			this.tabWalls.TabIndex = 135;
-			this.tabWalls.TabPage = this.tabGroupWalls;
-			this.tabWalls.Text = "rctTabButton7";
-			this.tabWalls.Toggled = false;
-			this.tabWalls.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabSigns
-			// 
-			this.tabSigns.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabSigns.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabSigns.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSigns.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSigns.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabSigns.Image = global::RCTDataEditor.Properties.Resources.TabSigns;
-			this.tabSigns.Location = new System.Drawing.Point(190, 5);
-			this.tabSigns.Name = "tabSigns";
-			this.tabSigns.NextTabButton = this.tabPaths;
-			this.tabSigns.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSigns.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabSigns.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabSigns.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSigns.PreviousTabButton = this.tabWalls;
-			this.tabSigns.Size = new System.Drawing.Size(31, 27);
-			this.tabSigns.TabControlIndex = ((uint)(6u));
-			this.tabSigns.TabIndex = 131;
-			this.tabSigns.TabPage = this.tabGroupSigns;
-			this.tabSigns.Text = "rctTabButton3";
-			this.tabSigns.Toggled = false;
-			this.tabSigns.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabPaths
-			// 
-			this.tabPaths.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabPaths.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabPaths.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabPaths.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabPaths.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabPaths.Image = global::RCTDataEditor.Properties.Resources.TabPaths;
-			this.tabPaths.Location = new System.Drawing.Point(221, 5);
-			this.tabPaths.Name = "tabPaths";
-			this.tabPaths.NextTabButton = this.tabPathAdditions;
-			this.tabPaths.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabPaths.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabPaths.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabPaths.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabPaths.PreviousTabButton = this.tabSigns;
-			this.tabPaths.Size = new System.Drawing.Size(31, 27);
-			this.tabPaths.TabControlIndex = ((uint)(7u));
-			this.tabPaths.TabIndex = 132;
-			this.tabPaths.TabPage = this.tabGroupPaths;
-			this.tabPaths.Text = "rctTabButton4";
-			this.tabPaths.Toggled = false;
-			this.tabPaths.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabPathAdditions
-			// 
-			this.tabPathAdditions.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabPathAdditions.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabPathAdditions.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabPathAdditions.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabPathAdditions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabPathAdditions.Image = global::RCTDataEditor.Properties.Resources.TabPathAdditions;
-			this.tabPathAdditions.Location = new System.Drawing.Point(252, 5);
-			this.tabPathAdditions.Name = "tabPathAdditions";
-			this.tabPathAdditions.NextTabButton = this.tabSceneryGroups;
-			this.tabPathAdditions.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabPathAdditions.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabPathAdditions.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabPathAdditions.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabPathAdditions.PreviousTabButton = this.tabPaths;
-			this.tabPathAdditions.Size = new System.Drawing.Size(31, 27);
-			this.tabPathAdditions.TabControlIndex = ((uint)(8u));
-			this.tabPathAdditions.TabIndex = 133;
-			this.tabPathAdditions.TabPage = this.tabGroupPathAdditions;
-			this.tabPathAdditions.Text = "rctTabButton5";
-			this.tabPathAdditions.Toggled = false;
-			this.tabPathAdditions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabSceneryGroups
-			// 
-			this.tabSceneryGroups.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabSceneryGroups.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabSceneryGroups.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSceneryGroups.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSceneryGroups.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabSceneryGroups.Image = global::RCTDataEditor.Properties.Resources.TabSceneryGroups;
-			this.tabSceneryGroups.Location = new System.Drawing.Point(283, 5);
-			this.tabSceneryGroups.Name = "tabSceneryGroups";
-			this.tabSceneryGroups.NextTabButton = this.tabParkEntrances;
-			this.tabSceneryGroups.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSceneryGroups.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabSceneryGroups.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabSceneryGroups.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSceneryGroups.PreviousTabButton = this.tabPathAdditions;
-			this.tabSceneryGroups.Size = new System.Drawing.Size(31, 27);
-			this.tabSceneryGroups.TabControlIndex = ((uint)(9u));
-			this.tabSceneryGroups.TabIndex = 134;
-			this.tabSceneryGroups.TabPage = this.tabGroupSceneryGroups;
-			this.tabSceneryGroups.Text = "rctTabButton6";
-			this.tabSceneryGroups.Toggled = false;
-			this.tabSceneryGroups.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabParkEntrances
-			// 
-			this.tabParkEntrances.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabParkEntrances.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabParkEntrances.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabParkEntrances.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabParkEntrances.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabParkEntrances.Image = global::RCTDataEditor.Properties.Resources.TabParkEntrances;
-			this.tabParkEntrances.Location = new System.Drawing.Point(314, 5);
-			this.tabParkEntrances.Name = "tabParkEntrances";
-			this.tabParkEntrances.NextTabButton = this.tabWater;
-			this.tabParkEntrances.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabParkEntrances.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabParkEntrances.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabParkEntrances.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabParkEntrances.PreviousTabButton = this.tabSceneryGroups;
-			this.tabParkEntrances.Size = new System.Drawing.Size(31, 27);
-			this.tabParkEntrances.TabControlIndex = ((uint)(10u));
-			this.tabParkEntrances.TabIndex = 136;
-			this.tabParkEntrances.TabPage = this.tabGroupParkEntrances;
-			this.tabParkEntrances.Text = "rctTabButton8";
-			this.tabParkEntrances.Toggled = false;
-			this.tabParkEntrances.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabWater
-			// 
-			this.tabWater.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabWater.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabWater.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabWater.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabWater.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabWater.Image = global::RCTDataEditor.Properties.Resources.TabWater;
-			this.tabWater.Location = new System.Drawing.Point(345, 5);
-			this.tabWater.Name = "tabWater";
-			this.tabWater.NextTabButton = this.tabSettings;
-			this.tabWater.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabWater.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabWater.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabWater.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabWater.PreviousTabButton = this.tabParkEntrances;
-			this.tabWater.Size = new System.Drawing.Size(31, 27);
-			this.tabWater.TabControlIndex = ((uint)(11u));
-			this.tabWater.TabIndex = 137;
-			this.tabWater.TabPage = this.tabGroupWater;
-			this.tabWater.Text = "rctTabButton9";
-			this.tabWater.Toggled = false;
-			this.tabWater.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabSettings
-			// 
-			this.tabSettings.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabSettings.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabSettings.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSettings.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabSettings.Image = global::RCTDataEditor.Properties.Resources.TabSettings;
-			this.tabSettings.Location = new System.Drawing.Point(376, 5);
-			this.tabSettings.Name = "tabSettings";
-			this.tabSettings.NextTabButton = null;
-			this.tabSettings.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSettings.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabSettings.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabSettings.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSettings.PreviousTabButton = this.tabWater;
-			this.tabSettings.Size = new System.Drawing.Size(31, 27);
-			this.tabSettings.TabControlIndex = ((uint)(12u));
-			this.tabSettings.TabIndex = 138;
-			this.tabSettings.TabPage = this.tabGroupSettings;
-			this.tabSettings.Text = "rctTabButton10";
-			this.tabSettings.Toggled = false;
-			this.tabSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			this.timerExtract.Tick += new System.EventHandler(this.ExtractingImages);
 			// 
 			// BrowserForm
 			// 
@@ -2401,21 +2401,18 @@ namespace RCTDataEditor {
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(777, 430);
 			this.Name = "BrowserForm";
-			this.Text = "RCT2 Content Browser";
+			this.Text = "Trigger\'s Content Browser";
 			this.Load += new System.EventHandler(this.OnFormLoad);
 			this.splitContainerSideView.Panel1.ResumeLayout(false);
 			this.splitContainerSideView.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerSideView)).EndInit();
 			this.splitContainerSideView.ResumeLayout(false);
+			this.rctPanel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.objectView)).EndInit();
 			this.splitContainerTabs.Panel1.ResumeLayout(false);
 			this.splitContainerTabs.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerTabs)).EndInit();
 			this.splitContainerTabs.ResumeLayout(false);
-			this.splitContainerStatusBar.Panel1.ResumeLayout(false);
-			this.splitContainerStatusBar.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitContainerStatusBar)).EndInit();
-			this.splitContainerStatusBar.ResumeLayout(false);
-			this.rctPanel1.ResumeLayout(false);
 			this.rctTabPanel1.ResumeLayout(false);
 			this.tabGroupSettings.ResumeLayout(false);
 			this.tabGroupSettings.PerformLayout();
@@ -2423,8 +2420,11 @@ namespace RCTDataEditor {
 			this.rctPanel2.ResumeLayout(false);
 			this.tabGroupInfoOld.ResumeLayout(false);
 			this.tabGroupInfoOld.PerformLayout();
+			this.splitContainerStatusBar.Panel1.ResumeLayout(false);
+			this.splitContainerStatusBar.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainerStatusBar)).EndInit();
+			this.splitContainerStatusBar.ResumeLayout(false);
 			this.statusBar.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.objectView)).EndInit();
 			this.ResumeLayout(false);
 
 		}

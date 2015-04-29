@@ -104,14 +104,15 @@ public class ImageDirectory {
 	#region Reading
 
 	/** <summary> Reads the image directory. </summary> */
-	public void Read(BinaryReader reader) {
+	public void Read(BinaryReader reader, bool quickLoad = false) {
 		int count = reader.ReadInt32();
 		this.ScanLineLength = reader.ReadInt32();
 
 		for (int i = 0; i < count; i++) {
 			ImageEntry entry = new ImageEntry();
 			entry.Read(reader);
-			this.entries.Add(entry);
+			if (!quickLoad || i < 168)
+				this.entries.Add(entry);
 		}
 	}
 	/** <summary> Writes the image directory. </summary> */

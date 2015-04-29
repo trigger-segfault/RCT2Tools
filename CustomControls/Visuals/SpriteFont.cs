@@ -89,7 +89,9 @@ public class SpriteFont {
 		int spacing = 0;
 
 		for (int i = 0; i < text.Length; i++) {
-			spacing += charSpacing[(int)text[i] - (int)minRange] - (i != 0 ? 1 : 0);
+			if ((int)text[i] >= (int)minRange && (int)text[i] <= (int)maxRange) {
+				spacing += charSpacing[(int)text[i] - (int)minRange] - (i != 0 ? 1 : 0);
+			}
 		}
 		return new Size(spacing - 1, height);
 	}
@@ -108,26 +110,18 @@ public class SpriteFont {
 		imageAttributes.SetRemapTable(new ColorMap[] { colorMap, outlineMap });
 
 		for (int i = 0; i < text.Length; i++) {
-			g.DrawImage(image,
-				new Rectangle(position.X + spacing, position.Y, charSpacing[(int)text[i] - (int)minRange]/* - 1*/, height),
-				(int)charPositions[(int)text[i] - (int)minRange].X,
-				(int)charPositions[(int)text[i] - (int)minRange].Y,
-				(int)charSpacing[(int)text[i] - (int)minRange],// - (int)1,
-				(int)height,
-				GraphicsUnit.Pixel, imageAttributes
-			);
-			spacing += charSpacing[(int)text[i] - (int)minRange] - 1;
+			if ((int)text[i] >= (int)minRange && (int)text[i] <= (int)maxRange) {
+				g.DrawImage(image,
+					new Rectangle(position.X + spacing, position.Y, charSpacing[(int)text[i] - (int)minRange]/* - 1*/, height),
+					(int)charPositions[(int)text[i] - (int)minRange].X,
+					(int)charPositions[(int)text[i] - (int)minRange].Y,
+					(int)charSpacing[(int)text[i] - (int)minRange],// - (int)1,
+					(int)height,
+					GraphicsUnit.Pixel, imageAttributes
+				);
+				spacing += charSpacing[(int)text[i] - (int)minRange] - 1;
+			}
 		}
-
-		/*for (int i = 0; i < text.Length; i++) {
-			g.DrawImage(image, position.X + spacing, position.Y,
-				new Rectangle(
-					new Point(charPositions[(int)text[i] - (int)minRange].X, charPositions[(int)text[i] - (int)minRange].Y),
-					new Size(charSpacing[(int)text[i] - (int)minRange] - 1, height)
-				), GraphicsUnit.Pixel
-			);
-			spacing += charSpacing[(int)text[i] - (int)minRange];
-		}*/
 	}
 	/** <summary> Draws the aligned text. </summary> */
 	public void DrawAligned(Graphics g, Rectangle rect, ContentAlignment align, string text, Color color, Color outline) {
@@ -160,15 +154,17 @@ public class SpriteFont {
 		imageAttributes.SetRemapTable(new ColorMap[] { colorMap, outlineMap });
 
 		for (int i = 0; i < text.Length; i++) {
-			g.DrawImage(image,
-				new Rectangle(rect.X + point.X + spacing, rect.Y + point.Y, charSpacing[(int)text[i] - (int)minRange]/* - 1*/, height),
-				(int)charPositions[(int)text[i] - (int)minRange].X,
-				(int)charPositions[(int)text[i] - (int)minRange].Y,
-				(int)charSpacing[(int)text[i] - (int)minRange],//- (int)1,
-				(int)height,
-				GraphicsUnit.Pixel, imageAttributes
-			);
-			spacing += charSpacing[(int)text[i] - (int)minRange] - 1;
+			if ((int)text[i] >= (int)minRange && (int)text[i] <= (int)maxRange) {
+				g.DrawImage(image,
+					new Rectangle(rect.X + point.X + spacing, rect.Y + point.Y, charSpacing[(int)text[i] - (int)minRange], height),
+					(int)charPositions[(int)text[i] - (int)minRange].X,
+					(int)charPositions[(int)text[i] - (int)minRange].Y,
+					(int)charSpacing[(int)text[i] - (int)minRange],//- (int)1,
+					(int)height,
+					GraphicsUnit.Pixel, imageAttributes
+				);
+				spacing += charSpacing[(int)text[i] - (int)minRange] - 1;
+			}
 		}
 	}
 

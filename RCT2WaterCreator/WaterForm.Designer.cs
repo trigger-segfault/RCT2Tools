@@ -718,7 +718,7 @@
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.Name = "WaterForm";
-			this.Text = "RCT2 Water Creator";
+			this.Text = "Trigger\'s Water Creator";
 			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.RemoveTextFocus);
 			this.rctPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxPreview)).EndInit();

@@ -190,7 +190,7 @@
 			this.rctStatusBar1.PanelBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
 			this.rctStatusBar1.PanelBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.rctStatusBar1.PanelBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.rctStatusBar1.Size = new System.Drawing.Size(262, 26);
+			this.rctStatusBar1.Size = new System.Drawing.Size(282, 26);
 			this.rctStatusBar1.TabIndex = 8;
 			// 
 			// labelComplete
@@ -215,7 +215,7 @@
 			this.loadingBar.Margin = new System.Windows.Forms.Padding(4);
 			this.loadingBar.Name = "loadingBar";
 			this.loadingBar.Padding = new System.Windows.Forms.Padding(4);
-			this.loadingBar.Size = new System.Drawing.Size(254, 18);
+			this.loadingBar.Size = new System.Drawing.Size(274, 18);
 			this.loadingBar.TabIndex = 9;
 			this.loadingBar.TabStop = false;
 			this.loadingBar.Visible = false;
@@ -304,7 +304,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.ClientSize = new System.Drawing.Size(262, 212);
+			this.ClientSize = new System.Drawing.Size(282, 212);
 			this.Controls.Add(this.buttonAbout);
 			this.Controls.Add(this.checkBoxRCT2Images);
 			this.Controls.Add(this.rctButton1);
@@ -320,7 +320,7 @@
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MaximizeBox = false;
 			this.Name = "ExtractorForm";
-			this.Text = "RCT2 Graphics Extractor";
+			this.Text = "Trigger\'s Graphics Extractor";
 			this.rctStatusBar1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.loadingBar)).EndInit();
 			this.ResumeLayout(false);

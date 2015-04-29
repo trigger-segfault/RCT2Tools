@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RCT2WaterCreator</RootNamespace>
-    <AssemblyName>RCT2 Water Creator</AssemblyName>
+    <AssemblyName>Triggers Water Creator</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -53,13 +53,6 @@
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataObjects\GraphicsData.cs" />
-    <Compile Include="DataObjects\GroupInfo.cs" />
-    <Compile Include="DataObjects\ImageDirectory.cs" />
-    <Compile Include="DataObjects\ObjectData.cs" />
-    <Compile Include="DataObjects\Palette.cs" />
-    <Compile Include="DataObjects\StringTable.cs" />
-    <Compile Include="DataObjects\Types\Water.cs" />
     <Compile Include="WarningMessageBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -129,6 +122,10 @@
     <ProjectReference Include="..\CustomControls\CustomControls.csproj">
       <Project>{b278983b-b66a-4add-84a4-dff9120633f0}</Project>
       <Name>CustomControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ObjectData\ObjectData.csproj">
+      <Project>{556c9dbf-1a2e-46fe-9efa-0e0e54e6549e}</Project>
+      <Name>ObjectData</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

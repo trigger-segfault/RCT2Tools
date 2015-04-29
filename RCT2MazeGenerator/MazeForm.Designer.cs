@@ -28,6 +28,10 @@
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+			this.timerGenerator = new System.Windows.Forms.Timer(this.components);
+			this.checkBoxFastGeneration = new CustomControls.RCTCheckBox();
+			this.checkBoxWallsMakeTiles = new CustomControls.RCTCheckBox();
+			this.rctLabel5 = new CustomControls.RCTLabel();
 			this.buttonPlaceModeRestrict = new CustomControls.RCTButton();
 			this.buttonSave = new CustomControls.RCTButton();
 			this.buttonPlaceModeGenerate = new CustomControls.RCTButton();
@@ -49,7 +53,6 @@
 			this.rctPanel2 = new CustomControls.RCTPanel();
 			this.rctPanel1 = new CustomControls.RCTPanel();
 			this.rctPanel4 = new CustomControls.RCTPanel();
-			this.rctLabel5 = new CustomControls.RCTLabel();
 			this.buttonGrid = new CustomControls.RCTButton();
 			this.buttonZoomOut = new CustomControls.RCTButton();
 			this.buttonZoomIn = new CustomControls.RCTButton();
@@ -66,10 +69,7 @@
 			this.buttonResizePlusY = new CustomControls.RCTButton();
 			this.buttonResizeMinusY = new CustomControls.RCTButton();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
-			this.checkBoxWallsMakeTiles = new CustomControls.RCTCheckBox();
-			this.timerGenerator = new System.Windows.Forms.Timer(this.components);
 			this.mazeEditor1 = new RCT2MazeGenerator.MazeEditor();
-			this.checkBoxFastGeneration = new CustomControls.RCTCheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -140,6 +140,56 @@
 			// 
 			this.openFileDialog.DefaultExt = "TD6";
 			this.openFileDialog.Filter = "RCT Track Designs|*.TD6";
+			// 
+			// timerGenerator
+			// 
+			this.timerGenerator.Tick += new System.EventHandler(this.ContinueGeneration);
+			// 
+			// checkBoxFastGeneration
+			// 
+			this.checkBoxFastGeneration.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.checkBoxFastGeneration.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.checkBoxFastGeneration.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.checkBoxFastGeneration.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
+			this.checkBoxFastGeneration.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBoxFastGeneration.FontType = CustomControls.Visuals.FontType.Bold;
+			this.checkBoxFastGeneration.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.checkBoxFastGeneration.Location = new System.Drawing.Point(20, 159);
+			this.checkBoxFastGeneration.Name = "checkBoxFastGeneration";
+			this.checkBoxFastGeneration.OutlineColor = System.Drawing.Color.Transparent;
+			this.checkBoxFastGeneration.Size = new System.Drawing.Size(110, 11);
+			this.checkBoxFastGeneration.TabIndex = 152;
+			this.checkBoxFastGeneration.Text = "Fast generation";
+			this.checkBoxFastGeneration.CheckStateChanged += new System.EventHandler(this.FastGeneration);
+			// 
+			// checkBoxWallsMakeTiles
+			// 
+			this.checkBoxWallsMakeTiles.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.checkBoxWallsMakeTiles.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.checkBoxWallsMakeTiles.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.checkBoxWallsMakeTiles.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
+			this.checkBoxWallsMakeTiles.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBoxWallsMakeTiles.FontType = CustomControls.Visuals.FontType.Bold;
+			this.checkBoxWallsMakeTiles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.checkBoxWallsMakeTiles.Location = new System.Drawing.Point(20, 88);
+			this.checkBoxWallsMakeTiles.Name = "checkBoxWallsMakeTiles";
+			this.checkBoxWallsMakeTiles.OutlineColor = System.Drawing.Color.Transparent;
+			this.checkBoxWallsMakeTiles.Size = new System.Drawing.Size(110, 11);
+			this.checkBoxWallsMakeTiles.TabIndex = 151;
+			this.checkBoxWallsMakeTiles.Text = "Walls make tiles";
+			this.checkBoxWallsMakeTiles.CheckStateChanged += new System.EventHandler(this.WallsMakeTiles);
+			// 
+			// rctLabel5
+			// 
+			this.rctLabel5.FontType = CustomControls.Visuals.FontType.Bold;
+			this.rctLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.rctLabel5.Location = new System.Drawing.Point(12, 367);
+			this.rctLabel5.Name = "rctLabel5";
+			this.rctLabel5.OutlineColor = System.Drawing.Color.Transparent;
+			this.rctLabel5.Size = new System.Drawing.Size(180, 14);
+			this.rctLabel5.TabIndex = 149;
+			this.rctLabel5.Text = "View:";
+			this.rctLabel5.TextAlign = System.Drawing.ContentAlignment.TopLeft;
 			// 
 			// buttonPlaceModeRestrict
 			// 
@@ -545,18 +595,6 @@
 			this.rctPanel4.Size = new System.Drawing.Size(440, 472);
 			this.rctPanel4.TabIndex = 0;
 			// 
-			// rctLabel5
-			// 
-			this.rctLabel5.FontType = CustomControls.Visuals.FontType.Bold;
-			this.rctLabel5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctLabel5.Location = new System.Drawing.Point(12, 367);
-			this.rctLabel5.Name = "rctLabel5";
-			this.rctLabel5.OutlineColor = System.Drawing.Color.Transparent;
-			this.rctLabel5.Size = new System.Drawing.Size(180, 14);
-			this.rctLabel5.TabIndex = 149;
-			this.rctLabel5.Text = "View:";
-			this.rctLabel5.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-			// 
 			// buttonGrid
 			// 
 			this.buttonGrid.BorderOnHover = false;
@@ -912,30 +950,10 @@
 			this.pictureBox1.TabIndex = 1;
 			this.pictureBox1.TabStop = false;
 			// 
-			// checkBoxWallsMakeTiles
-			// 
-			this.checkBoxWallsMakeTiles.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.checkBoxWallsMakeTiles.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.checkBoxWallsMakeTiles.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.checkBoxWallsMakeTiles.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
-			this.checkBoxWallsMakeTiles.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBoxWallsMakeTiles.FontType = CustomControls.Visuals.FontType.Bold;
-			this.checkBoxWallsMakeTiles.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.checkBoxWallsMakeTiles.Location = new System.Drawing.Point(20, 88);
-			this.checkBoxWallsMakeTiles.Name = "checkBoxWallsMakeTiles";
-			this.checkBoxWallsMakeTiles.OutlineColor = System.Drawing.Color.Transparent;
-			this.checkBoxWallsMakeTiles.Size = new System.Drawing.Size(110, 11);
-			this.checkBoxWallsMakeTiles.TabIndex = 151;
-			this.checkBoxWallsMakeTiles.Text = "Walls make tiles";
-			this.checkBoxWallsMakeTiles.CheckStateChanged += new System.EventHandler(this.WallsMakeTiles);
-			// 
-			// timerGenerator
-			// 
-			this.timerGenerator.Tick += new System.EventHandler(this.ContinueGeneration);
-			// 
 			// mazeEditor1
 			// 
 			this.mazeEditor1.BackgroundImage = global::RCT2MazeGenerator.Properties.Resources.Grass;
+			this.mazeEditor1.FastGeneration = true;
 			this.mazeEditor1.Location = new System.Drawing.Point(0, 0);
 			this.mazeEditor1.MazeSize = new System.Drawing.Size(10, 10);
 			this.mazeEditor1.Name = "mazeEditor1";
@@ -950,23 +968,6 @@
 			this.mazeEditor1.GenerationStarted += new System.EventHandler(this.GenerationStarted);
 			this.mazeEditor1.GenerationFinished += new System.EventHandler(this.GenerationFinished);
 			// 
-			// checkBoxFastGeneration
-			// 
-			this.checkBoxFastGeneration.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.checkBoxFastGeneration.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.checkBoxFastGeneration.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.checkBoxFastGeneration.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
-			this.checkBoxFastGeneration.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBoxFastGeneration.FontType = CustomControls.Visuals.FontType.Bold;
-			this.checkBoxFastGeneration.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.checkBoxFastGeneration.Location = new System.Drawing.Point(20, 159);
-			this.checkBoxFastGeneration.Name = "checkBoxFastGeneration";
-			this.checkBoxFastGeneration.OutlineColor = System.Drawing.Color.Transparent;
-			this.checkBoxFastGeneration.Size = new System.Drawing.Size(110, 11);
-			this.checkBoxFastGeneration.TabIndex = 152;
-			this.checkBoxFastGeneration.Text = "Fast generation";
-			this.checkBoxFastGeneration.CheckStateChanged += new System.EventHandler(this.FastGeneration);
-			// 
 			// MazeForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -977,7 +978,7 @@
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(550, 518);
 			this.Name = "MazeForm";
-			this.Text = "RCT2 Maze Generator";
+			this.Text = "Trigger\'s Maze Generator";
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

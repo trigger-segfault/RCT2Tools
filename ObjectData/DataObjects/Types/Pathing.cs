@@ -357,9 +357,8 @@ public class Pathing : ObjectData {
 	/** <summary> Constructs the default object. </summary> */
 	public override bool Draw(PaletteImage p, Point position, DrawSettings drawSettings) {
 		position.Y -= drawSettings.Elevation * 2;
-		uint pathConnections = drawSettings.PathConnections;
 		if (drawSettings.Queue)
-			pathConnections &= 0x0000000F;
+			drawSettings.PathConnections &= 0x0000000F;
 		int offset = (drawSettings.Queue ? 51 : 0);
 
 		bool[,] connections = new bool[5, 5];
@@ -379,15 +378,15 @@ public class Pathing : ObjectData {
 
 		connections[2, 2] = true;
 
-		connections[3, 2] = (pathConnections & Convert.ToByte("00000001", 2)) != 0;
-		connections[2, 3] = (pathConnections & Convert.ToByte("00000010", 2)) != 0;
-		connections[1, 2] = (pathConnections & Convert.ToByte("00000100", 2)) != 0;
-		connections[2, 1] = (pathConnections & Convert.ToByte("00001000", 2)) != 0;
+		connections[3, 2] = (drawSettings.PathConnections & Convert.ToByte("00000001", 2)) != 0;
+		connections[2, 3] = (drawSettings.PathConnections & Convert.ToByte("00000010", 2)) != 0;
+		connections[1, 2] = (drawSettings.PathConnections & Convert.ToByte("00000100", 2)) != 0;
+		connections[2, 1] = (drawSettings.PathConnections & Convert.ToByte("00001000", 2)) != 0;
 
-		connections[3, 3] = (pathConnections & Convert.ToByte("00010000", 2)) != 0;
-		connections[1, 3] = (pathConnections & Convert.ToByte("00100000", 2)) != 0;
-		connections[1, 1] = (pathConnections & Convert.ToByte("01000000", 2)) != 0;
-		connections[3, 1] = (pathConnections & Convert.ToByte("10000000", 2)) != 0;
+		connections[3, 3] = (drawSettings.PathConnections & Convert.ToByte("00010000", 2)) != 0;
+		connections[1, 3] = (drawSettings.PathConnections & Convert.ToByte("00100000", 2)) != 0;
+		connections[1, 1] = (drawSettings.PathConnections & Convert.ToByte("01000000", 2)) != 0;
+		connections[3, 1] = (drawSettings.PathConnections & Convert.ToByte("10000000", 2)) != 0;
 
 		try {
 			DrawPathParts(p, position, drawSettings, connections);
@@ -399,6 +398,7 @@ public class Pathing : ObjectData {
 	/** <summary> Draws the object data in the dialog. </summary> */
 	public override bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		try {
+			position = Point.Add(position, new Size(dialogSize.Width / 2, dialogSize.Height / 2));
 			graphicsData.paletteImages[71].Draw(p, Point.Add(position, new Size(-4 - 44, -16)), 0, false);
 			graphicsData.paletteImages[72].Draw(p, Point.Add(position, new Size(4, -16)), 0, false);
 		}

@@ -23,10 +23,11 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
-			this.rctLabel4 = new CustomControls.RCTLabel();
-			this.labelTitle = new CustomControls.RCTLabel();
+			this.rctLabel1 = new CustomControls.RCTLabel();
 			this.labelCopyright = new CustomControls.RCTLabel();
 			this.labelVersion = new CustomControls.RCTLabel();
+			this.rctLabel4 = new CustomControls.RCTLabel();
+			this.labelTitle = new CustomControls.RCTLabel();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -38,6 +39,44 @@
 			this.pictureBox1.Size = new System.Drawing.Size(160, 160);
 			this.pictureBox1.TabIndex = 5;
 			this.pictureBox1.TabStop = false;
+			// 
+			// rctLabel1
+			// 
+			this.rctLabel1.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.rctLabel1.FontType = CustomControls.Visuals.FontType.Bold;
+			this.rctLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.rctLabel1.Location = new System.Drawing.Point(12, 189);
+			this.rctLabel1.Name = "rctLabel1";
+			this.rctLabel1.OutlineColor = System.Drawing.Color.Transparent;
+			this.rctLabel1.Size = new System.Drawing.Size(290, 14);
+			this.rctLabel1.TabIndex = 8;
+			this.rctLabel1.Text = "Website:   http://trigger-death.github.io/RCT2Tools/";
+			this.rctLabel1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+			this.rctLabel1.Click += new System.EventHandler(this.OpenWebsitePage);
+			// 
+			// labelCopyright
+			// 
+			this.labelCopyright.FontType = CustomControls.Visuals.FontType.Bold;
+			this.labelCopyright.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(119)))), ((int)(((byte)(187)))), ((int)(((byte)(239)))));
+			this.labelCopyright.Location = new System.Drawing.Point(0, 93);
+			this.labelCopyright.Name = "labelCopyright";
+			this.labelCopyright.OutlineColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.labelCopyright.Size = new System.Drawing.Size(160, 14);
+			this.labelCopyright.TabIndex = 7;
+			this.labelCopyright.Text = "© Robert Jordan 2015";
+			this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			// 
+			// labelVersion
+			// 
+			this.labelVersion.FontType = CustomControls.Visuals.FontType.Bold;
+			this.labelVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(119)))), ((int)(((byte)(187)))), ((int)(((byte)(239)))));
+			this.labelVersion.Location = new System.Drawing.Point(0, 73);
+			this.labelVersion.Name = "labelVersion";
+			this.labelVersion.OutlineColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.labelVersion.Size = new System.Drawing.Size(160, 14);
+			this.labelVersion.TabIndex = 6;
+			this.labelVersion.Text = "Version 1.0.0.0";
+			this.labelVersion.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// rctLabel4
 			// 
@@ -65,36 +104,13 @@
 			this.labelTitle.Text = "RCT2 Program";
 			this.labelTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
-			// labelCopyright
-			// 
-			this.labelCopyright.FontType = CustomControls.Visuals.FontType.Bold;
-			this.labelCopyright.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(119)))), ((int)(((byte)(187)))), ((int)(((byte)(239)))));
-			this.labelCopyright.Location = new System.Drawing.Point(0, 93);
-			this.labelCopyright.Name = "labelCopyright";
-			this.labelCopyright.OutlineColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.labelCopyright.Size = new System.Drawing.Size(160, 14);
-			this.labelCopyright.TabIndex = 7;
-			this.labelCopyright.Text = "© Robert Jordan 2015";
-			this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			// 
-			// labelVersion
-			// 
-			this.labelVersion.FontType = CustomControls.Visuals.FontType.Bold;
-			this.labelVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(119)))), ((int)(((byte)(187)))), ((int)(((byte)(239)))));
-			this.labelVersion.Location = new System.Drawing.Point(0, 73);
-			this.labelVersion.Name = "labelVersion";
-			this.labelVersion.OutlineColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.labelVersion.Size = new System.Drawing.Size(160, 14);
-			this.labelVersion.TabIndex = 6;
-			this.labelVersion.Text = "Version 1.0.0.0";
-			this.labelVersion.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			// 
 			// AboutBox
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.ClientSize = new System.Drawing.Size(323, 191);
+			this.ClientSize = new System.Drawing.Size(323, 210);
+			this.Controls.Add(this.rctLabel1);
 			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.labelCopyright);
 			this.Controls.Add(this.labelVersion);
@@ -108,7 +124,7 @@
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "About RCT2 Content Browser";
+			this.Text = "About";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 
@@ -121,6 +137,7 @@
 		private CustomControls.RCTLabel labelTitle;
 		private CustomControls.RCTLabel labelCopyright;
 		private CustomControls.RCTLabel labelVersion;
+		private CustomControls.RCTLabel rctLabel1;
 
 	}
 }

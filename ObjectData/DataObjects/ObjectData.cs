@@ -447,7 +447,7 @@ public class ObjectData {
 	#region Reading
 
 	/** <summary> Reads the object data. </summary> */
-	protected void Read(BinaryReader reader) {
+	protected void Read(BinaryReader reader, bool quickLoad = false) {
 		// Read the header
 		ReadHeader(reader);
 
@@ -461,7 +461,7 @@ public class ObjectData {
 		ReadOptional(reader);
 
 		// Read the image directory
-		imageDirectory.Read(reader);
+		imageDirectory.Read(reader, quickLoad);
 		// Read the graphics data
 		graphicsData.Read(reader);
 	}
@@ -579,7 +579,7 @@ public class ObjectData {
 		}
 	}
 	/** <summary> Returns an object loaded from the specified stream. </summary> */
-	public static ObjectData FromStream(Stream stream) {
+	public static ObjectData FromStream(Stream stream, bool quickLoad = false) {
 		ObjectData obj = null;
 		ObjectDataHeader objectHeader = new ObjectDataHeader();
 		ChunkHeader chunkHeader = new ChunkHeader();
@@ -610,7 +610,7 @@ public class ObjectData {
 			default: objectHeader.Flags = (uint)ObjectTypes.None; break; // Set as invalid
 			}
 			if (obj != null) {
-				obj.Read(reader);
+				obj.Read(reader, quickLoad);
 			}
 			reader.Close();
 		}
@@ -622,12 +622,12 @@ public class ObjectData {
 		return obj;
 	}
 	/** <summary> Returns an object loaded from the specified file path. </summary> */
-	public static ObjectData FromFile(string path) {
-		return FromStream(new FileStream(path, FileMode.Open, FileAccess.Read));
+	public static ObjectData FromFile(string path, bool quickLoad = false) {
+		return FromStream(new FileStream(path, FileMode.Open, FileAccess.Read), quickLoad);
 	}
 	/** <summary> Returns an object loaded from the specified buffer. </summary> */
-	public static ObjectData FromBuffer(byte[] buffer) {
-		return FromStream(new MemoryStream(buffer));
+	public static ObjectData FromBuffer(byte[] buffer, bool quickLoad = false) {
+		return FromStream(new MemoryStream(buffer), quickLoad);
 	}
 	/** <summary> Reads and decodes the chunk. </summary> */
 	public static byte[] ReadChunk(BinaryReader reader, ChunkHeader chunkHeader) {

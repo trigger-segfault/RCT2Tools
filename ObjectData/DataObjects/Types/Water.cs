@@ -156,6 +156,15 @@ public class Water : ObjectData {
 	/** <summary> Draws the object data in the dialog. </summary> */
 	public override bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		try {
+			position = Point.Add(position, new Size(dialogSize.Width / 2, dialogSize.Height / 2));
+			WaterSprites[2].DrawWithOffset(p, Point.Add(position, new Size(0, 0)), drawSettings.Darkness, false);
+			WaterSprites[3].DrawWithOffset(p, Point.Add(position, new Size(2, 0)), drawSettings.Darkness, false);
+			WaterSprites[4].DrawWithOffset(p, Point.Add(position, new Size(-2, 0)), drawSettings.Darkness, false);
+			WaterSprites[3].DrawWithOffset(p, Point.Add(position, new Size(-30, 16)), drawSettings.Darkness, false);
+			WaterSprites[4].DrawWithOffset(p, Point.Add(position, new Size(30, 16)), drawSettings.Darkness, false);
+
+			WaterSprites[0].DrawWithOffset(p, Point.Add(position, new Size(0, -15)), drawSettings.Darkness, true);
+			WaterSprites[1].DrawWithOffset(p, Point.Add(position, new Size(0, -15)), drawSettings.Darkness, false);
 			/*g.DrawImage(PreviewImage, position.X - 32 + 112 / 2, position.Y - 16 + 112 / 2);
 			for (int i = 0; i < 5; i++)
 				Water.WaterPalette.Colors[230 + i] = graphicsData.Palettes[1].Colors[(i * 3) % 15];

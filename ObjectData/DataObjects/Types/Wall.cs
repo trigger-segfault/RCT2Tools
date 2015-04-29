@@ -150,11 +150,11 @@ public class Wall : ObjectData {
 
 			int offset = (2 + (!flat ? 4 : 0)) * (twoSides ? 2 : 1) * (door ? 2 : 1);
 
-			DrawDialogFrame(p, position, drawSettings, 0, false);
+			DrawDialogFrame(p, Point.Add(position, new Size(dialogSize.Width / 2, dialogSize.Height / 2)), drawSettings, 0, false);
 			if (door)
-				DrawDialogFrame(p, position, drawSettings, 1, false);
+				DrawDialogFrame(p, Point.Add(position, new Size(dialogSize.Width / 2, dialogSize.Height / 2)), drawSettings, 1, false);
 			if (glass)
-				DrawDialogFrame(p, position, drawSettings, offset, true);
+				DrawDialogFrame(p, Point.Add(position, new Size(dialogSize.Width / 2, dialogSize.Height / 2)), drawSettings, offset, true);
 		}
 		catch (IndexOutOfRangeException) { return false; }
 		catch (ArgumentOutOfRangeException) { return false; }
@@ -162,6 +162,9 @@ public class Wall : ObjectData {
 	}
 	private void DrawFrame(PaletteImage p, Point position, DrawSettings drawSettings, int frame, bool glass) {
 		Size offset = Size.Empty;
+		if (drawSettings.Slope >= 2) {
+			drawSettings.Rotation = (drawSettings.Rotation + 2) % 4;
+		}
 		if (drawSettings.Slope != -1 && !Header.Flags.HasFlag(WallFlags.Flat)) {
 			if (drawSettings.Slope == drawSettings.Rotation) {
 				if (drawSettings.Slope < 2) offset.Height = -16;
@@ -183,18 +186,18 @@ public class Wall : ObjectData {
 		else if (drawSettings.Rotation == 3) { offset.Width = -32; offset.Height = 16; }
 
 		graphicsData.paletteImages[frame].DrawWithOffset(p, Point.Add(position, offset), drawSettings.Darkness, glass,
-			(Header.Flags.HasFlag(WallFlags.Remap1) || Header.Flags.HasFlag(WallFlags.Remap2) || Header.Flags.HasFlag(WallFlags.Remap3)) ? drawSettings.Remap1 : RemapColors.None,
-			(Header.Flags.HasFlag(WallFlags.Remap2) || Header.Flags.HasFlag(WallFlags.Remap3)) ? (glass ? drawSettings.Remap1 : drawSettings.Remap2) : RemapColors.None,
-			Header.Flags.HasFlag(WallFlags.Remap3) ? drawSettings.Remap3 : RemapColors.None
+			(Header.Flags.HasFlag(WallFlags.Remap1) || Header.Flags.HasFlag(WallFlags.Remap2) || Header.Flags.HasFlag(WallFlags.Remap3)) ? drawSettings.Remap1 : (glass ? drawSettings.Remap1 : RemapColors.None),
+			(Header.Flags.HasFlag(WallFlags.Remap2) || Header.Flags.HasFlag(WallFlags.Remap3)) ? (glass ? drawSettings.Remap1 : drawSettings.Remap2) : (glass ? drawSettings.Remap1 : RemapColors.None),
+			Header.Flags.HasFlag(WallFlags.Remap3) ? (glass ? drawSettings.Remap1 : drawSettings.Remap3) : (glass ? drawSettings.Remap1 : RemapColors.None)
 		);
 	}
 	private void DrawDialogFrame(PaletteImage p, Point position, DrawSettings drawSettings, int frame, bool glass) {
 		Size offset = new Size(16, 16);
 
 		graphicsData.paletteImages[frame].DrawWithOffset(p, Point.Add(position, offset), drawSettings.Darkness, glass,
-			(Header.Flags.HasFlag(WallFlags.Remap1) || Header.Flags.HasFlag(WallFlags.Remap2) || Header.Flags.HasFlag(WallFlags.Remap3)) ? drawSettings.Remap1 : RemapColors.None,
-			(Header.Flags.HasFlag(WallFlags.Remap2) || Header.Flags.HasFlag(WallFlags.Remap3)) ? (glass ? drawSettings.Remap1 : drawSettings.Remap2) : RemapColors.None,
-			Header.Flags.HasFlag(WallFlags.Remap3) ? drawSettings.Remap3 : RemapColors.None
+			(Header.Flags.HasFlag(WallFlags.Remap1) || Header.Flags.HasFlag(WallFlags.Remap2) || Header.Flags.HasFlag(WallFlags.Remap3)) ? drawSettings.Remap1 : (glass ? drawSettings.Remap1 : RemapColors.None),
+			(Header.Flags.HasFlag(WallFlags.Remap2) || Header.Flags.HasFlag(WallFlags.Remap3)) ? (glass ? drawSettings.Remap1 : drawSettings.Remap2) : (glass ? drawSettings.Remap1 : RemapColors.None),
+			Header.Flags.HasFlag(WallFlags.Remap3) ? (glass ? drawSettings.Remap1 : drawSettings.Remap3) : (glass ? drawSettings.Remap1 : RemapColors.None)
 		);
 	}
 

@@ -699,7 +699,7 @@ namespace RCT2GroupCreator {
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimumSize = new System.Drawing.Size(772, 425);
 			this.Name = "GroupForm";
-			this.Text = "RCT2 Group Creator";
+			this.Text = "Trigger\'s Group Creator";
 			this.Load += new System.EventHandler(this.OnFormLoad);
 			this.splitContainerSideView.Panel1.ResumeLayout(false);
 			this.splitContainerSideView.Panel2.ResumeLayout(false);

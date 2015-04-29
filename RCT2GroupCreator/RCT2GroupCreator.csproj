@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RCT2GroupCreator</RootNamespace>
-    <AssemblyName>RCT2 Group Creator</AssemblyName>
+    <AssemblyName>Triggers Group Creator</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -65,29 +65,7 @@
     <Compile Include="GroupForm.Designer.cs">
       <DependentUpon>GroupForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataObjects\GraphicsData.cs" />
-    <Compile Include="DataObjects\GroupInfo.cs" />
-    <Compile Include="DataObjects\ImageDirectory.cs" />
-    <Compile Include="DataObjects\ObjectData.cs" />
-    <Compile Include="DataObjects\Palette.cs" />
     <Compile Include="DataObjects\SpriteFont.cs" />
-    <Compile Include="DataObjects\StringTable.cs" />
-    <Compile Include="DataObjects\Terrain.cs" />
-    <Compile Include="DataObjects\Types\Attraction.cs" />
-    <Compile Include="DataObjects\Types\AttractionInfo\AttractionFlags.cs" />
-    <Compile Include="DataObjects\Types\AttractionInfo\CarFlags.cs" />
-    <Compile Include="DataObjects\Types\AttractionInfo\CarFrames.cs" />
-    <Compile Include="DataObjects\Types\AttractionInfo\ItemFlags.cs" />
-    <Compile Include="DataObjects\Types\AttractionInfo\TrackSections.cs" />
-    <Compile Include="DataObjects\Types\LargeScenery.cs" />
-    <Compile Include="DataObjects\Types\ParkEntrance.cs" />
-    <Compile Include="DataObjects\Types\PathAddition.cs" />
-    <Compile Include="DataObjects\Types\PathBanner.cs" />
-    <Compile Include="DataObjects\Types\Pathing.cs" />
-    <Compile Include="DataObjects\Types\SceneryGroup.cs" />
-    <Compile Include="DataObjects\Types\SmallScenery.cs" />
-    <Compile Include="DataObjects\Types\Wall.cs" />
-    <Compile Include="DataObjects\Types\Water.cs" />
     <Compile Include="NamesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -175,6 +153,10 @@
     <ProjectReference Include="..\CustomControls\CustomControls.csproj">
       <Project>{b278983b-b66a-4add-84a4-dff9120633f0}</Project>
       <Name>CustomControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ObjectData\ObjectData.csproj">
+      <Project>{556c9dbf-1a2e-46fe-9efa-0e0e54e6549e}</Project>
+      <Name>ObjectData</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

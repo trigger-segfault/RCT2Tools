@@ -118,6 +118,7 @@ public class ParkEntrance : ObjectData {
 	/** <summary> Draws the object data in the dialog. </summary> */
 	public override bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		try {
+			position = Point.Add(position, new Size(dialogSize.Width / 2, dialogSize.Height / 2));
 			int xoffset = ((drawSettings.Rotation == 1 || drawSettings.Rotation == 2) ? -32 : 32);
 			int yoffset = ((drawSettings.Rotation == 2 || drawSettings.Rotation == 3) ? -16 : 16);
 			if (drawSettings.Rotation >= 2) { xoffset *= -1; yoffset *= -1; }

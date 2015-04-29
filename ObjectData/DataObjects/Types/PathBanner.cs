@@ -117,6 +117,7 @@ public class PathBanner : ObjectData {
 	/** <summary> Draws the object data in the dialog. </summary> */
 	public override bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		try {
+			position = Point.Add(position, new Size(dialogSize.Width / 2, dialogSize.Height / 2));
 			graphicsData.paletteImages[drawSettings.Rotation * 2 + 0].DrawWithOffset(p, position, drawSettings.Darkness, false,
 				Header.Flags.HasFlag(PathBannerFlags.Color1) ? drawSettings.Remap1 : RemapColors.None,
 				RemapColors.None,

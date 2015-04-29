@@ -78,7 +78,7 @@ public class PathAddition : ObjectData {
 	}
 	/** <summary> Gets the number of color remaps. </summary> */
 	public override int ColorRemaps {
-		get { return (Header.Flags.HasFlag(PathBannerFlags.Color1) ? 1 : 0); }
+		get { return 0; }
 	}
 	/** <summary> Gets if the dialog view has color remaps. </summary> */
 	public override bool HasDialogColorRemaps {
@@ -145,6 +145,7 @@ public class PathAddition : ObjectData {
 	/** <summary> Draws the object data in the dialog. </summary> */
 	public override bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		try {
+			position = Point.Add(position, new Size(dialogSize.Width / 2, dialogSize.Height / 2));
 			graphicsData.paletteImages[0].DrawWithOffset(p, Point.Add(position, new Size(-20, -16)), drawSettings.Darkness, false);
 		}
 		catch (IndexOutOfRangeException) { return false; }

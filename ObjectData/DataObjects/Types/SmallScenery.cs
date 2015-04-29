@@ -178,6 +178,7 @@ public class SmallScenery : ObjectData {
 	/** <summary> Draws the object data in the dialog. </summary> */
 	public override bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		try {
+			position = Point.Add(position, new Size(dialogSize.Width / 2, dialogSize.Height / 2));
 			bool fullSquare = Header.Flags.HasFlag(SmallSceneryFlags.FullSquare);
 			bool drawDialog2 = Header.Flags.HasFlag(SmallSceneryFlags.DrawDialogTwo);
 			bool glass = Header.Flags.HasFlag(SmallSceneryFlags.Glass);

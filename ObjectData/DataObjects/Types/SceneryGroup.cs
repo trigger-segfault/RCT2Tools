@@ -245,6 +245,7 @@ public class SceneryGroup : ObjectData {
 	/** <summary> Draws the object data in the dialog. </summary> */
 	public override bool DrawDialog(PaletteImage p, Point position, Size dialogSize, DrawSettings drawSettings) {
 		try {
+			position = Point.Add(position, new Size(dialogSize.Width / 2, dialogSize.Height / 2));
 			graphicsData.paletteImages[drawSettings.Frame].Draw(p, Point.Add(position, new Size(-16, -14)), 0, false, RemapColors.SeaGreen);
 		}
 		catch (IndexOutOfRangeException) { return false; }

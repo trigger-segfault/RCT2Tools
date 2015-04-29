@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RCT2 Maze Generator")]
+[assembly: AssemblyTitle("Trigger's Maze Generator")]
 [assembly: AssemblyDescription("A program for generating random mazes.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RCT2 Maze Generator")]
+[assembly: AssemblyProduct("Trigger's Maze Generator")]
 [assembly: AssemblyCopyright("© Robert Jordan & Lewis Fox 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
