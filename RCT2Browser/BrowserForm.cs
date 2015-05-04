@@ -372,7 +372,7 @@ namespace RCTDataEditor {
 		}
 		/** <summary> Called to load the settings file. </summary> */
 		private void LoadSettings(object sender, EventArgs e) {
-			string pathToSettings = Path.Combine(Path.GetDirectoryName (Assembly.GetEntryAssembly().Location), "Settings - Content Browser.xml");
+			string pathToSettings = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Settings - Content Browser.xml");
 			if (File.Exists(pathToSettings)) {
 				XmlDocument doc = new XmlDocument();
 				doc.Load(pathToSettings);

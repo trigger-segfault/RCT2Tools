@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectData", "ObjectData\Ob
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCT2MazeGenerator", "RCT2MazeGenerator\RCT2MazeGenerator.csproj", "{B087FFDA-E9DB-4B43-96B8-119BA589E07B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCT2MusicManager", "RCT2MusicManager\RCT2MusicManager.csproj", "{284CA69E-EA28-4594-826B-762FC9C5DE15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{B087FFDA-E9DB-4B43-96B8-119BA589E07B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B087FFDA-E9DB-4B43-96B8-119BA589E07B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B087FFDA-E9DB-4B43-96B8-119BA589E07B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{284CA69E-EA28-4594-826B-762FC9C5DE15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{284CA69E-EA28-4594-826B-762FC9C5DE15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{284CA69E-EA28-4594-826B-762FC9C5DE15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{284CA69E-EA28-4594-826B-762FC9C5DE15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
