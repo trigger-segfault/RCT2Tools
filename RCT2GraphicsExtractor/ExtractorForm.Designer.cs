@@ -103,7 +103,7 @@
 			this.rctLabel1.OutlineColor = System.Drawing.Color.Transparent;
 			this.rctLabel1.Size = new System.Drawing.Size(98, 14);
 			this.rctLabel1.TabIndex = 2;
-			this.rctLabel1.Text = "G1.dat Directory:";
+			this.rctLabel1.Text = "Data Directory:";
 			this.rctLabel1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
 			// 
 			// rctLabel2
@@ -247,7 +247,7 @@
 			// 
 			// folderBrowserDialog
 			// 
-			this.folderBrowserDialog.Description = "Choose the directory containing g1.dat";
+			this.folderBrowserDialog.Description = "Choose the RCT2 Data directory";
 			this.folderBrowserDialog.ShowNewFolderButton = false;
 			// 
 			// timerExtract

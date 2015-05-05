@@ -1,6 +1,7 @@
 ﻿using CustomControls;
 using NAudio;
 using NAudio.Wave;
+using NAudio.MediaFoundation;
 using RCT2MusicManager.Properties;
 using RCT2ObjectData.DataObjects;
 using RCT2ObjectData.DataObjects.Types;
@@ -25,6 +26,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using NAudio.Lame;
 
 namespace RCT2MusicManager {
 	public partial class MusicForm : Form {
@@ -146,6 +148,36 @@ namespace RCT2MusicManager {
 				Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music"));
 			}
 
+			/*LameMP3FileWriter mp3Writer = null;
+
+			WaveFormat format = new WaveFormat(22050, 2);
+
+			using (AudioFileReader reader = new AudioFileReader(file)) {
+				using (var resampler = new MediaFoundationResampler(reader, format)) {
+					// resampler.ResamplerQuality = 60;
+					using (LameMP3FileWriter writer = new LameMP3FileWriter("css.mp3", format, 22050)) {
+						writer.
+					}
+					LameMP3FileWriter.CreateWaveFile(destination, resampler);
+				}
+			}*/
+
+			WaveToMP3(Path.Combine(this.dataDirectory, "css3.dat"), "Dodgems Style.mp3", 705);
+
+			TagLib.File f = TagLib.File.Create("Dodgems Style.mp3");
+			f.Tag.Album = "RollerCoaster Tycoon 2";
+			f.Tag.Artists = new string[] { "Allister Brimble" };
+			f.Tag.AlbumArtists = new string[] { "Allister Brimble" };
+			f.Tag.Title = "Dodgems Beat";
+			f.Tag.Genres = new string[] { "Soundtrack" };
+			f.Tag.Track = 13;
+			f.Save();
+
+			//Console.WriteLine(MediaFoundationEncoder.GetOutputMediaTypes(AudioSubtypes.MFAudioFormat_MP3));
+
+			/*using (var reader = new MediaFoundationReader(Path.Combine(dataDirectory, "css3.dat"))) {
+				MediaFoundationEncoder.EncodeToMp3(reader, "css3.mp3");
+			}*/
 
 			/*FileStream stream = new FileStream(Path.Combine(this.dataDirectory, "CSS1.DAT"), FileMode.Open, FileAccess.Read);
 
@@ -183,6 +215,12 @@ namespace RCT2MusicManager {
 			song2.Play();
 
 			stream.Close();*/
+		}
+
+		public static void WaveToMP3(string waveFileName, string mp3FileName, int bitRate = 128) {
+			using (var reader = new WaveFileReader(waveFileName))
+			using (var writer = new LameMP3FileWriter(mp3FileName, reader.WaveFormat, bitRate))
+				reader.CopyTo(writer);
 		}
 
 		#endregion
