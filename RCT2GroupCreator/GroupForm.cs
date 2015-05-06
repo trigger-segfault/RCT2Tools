@@ -156,7 +156,7 @@ namespace RCT2GroupCreator {
 		}
 		/** <summary> Called to load the settings file. </summary> */
 		private void LoadSettings(object sender, EventArgs e) {
-			string pathToSettings = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Settings - GroupCreator.xml");
+			string pathToSettings = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Settings - Group Creator.xml");
 			if (File.Exists(pathToSettings)) {
 				XmlDocument doc = new XmlDocument();
 				doc.Load(pathToSettings);
@@ -181,7 +181,7 @@ namespace RCT2GroupCreator {
 			settings.AppendChild(element);
 			element.AppendChild(doc.CreateTextNode(this.directory));
 
-			doc.Save(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Settings - GroupCreator.xml"));
+			doc.Save(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Settings - Group Creator.xml"));
 		}
 		/** <summary> Loads objects from the directory every tick. </summary> */
 		private void LoadObjects(object sender, EventArgs e) {

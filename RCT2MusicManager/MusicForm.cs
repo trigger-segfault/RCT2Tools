@@ -26,47 +26,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using NAudio.Lame;
 
 namespace RCT2MusicManager {
 	public partial class MusicForm : Form {
 
 		//========== CONSTANTS ===========
 		#region Constants
-
-		/** <summary> The list of tab names. </summary> */
-		string[] tabList = new string[]{
-			"Info",
-			"All",
-			"Attractions",
-			"SmallScenery",
-			"LargeScenery",
-			"Walls",
-			"Signs",
-			"Paths",
-			"PathAdditions",
-			"SceneryGroups",
-			"ParkEntrances",
-			"Water",
-			"Settings"
-		};
-		/** <summary> The list of real tab names. </summary> */
-		string[] tabNames = new string[]{
-			"Information",
-			"All",
-			"Attractions",
-			"Small Scenery",
-			"Large Scenery",
-			"Walls",
-			"Banners",
-			"Paths",
-			"Path Additions",
-			"Scenery Groups",
-			"Park Entrances",
-			"Water",
-			"Settings",
-			"About"
-		};
 
 		#endregion
 		//=========== MEMBERS ============
@@ -86,6 +51,8 @@ namespace RCT2MusicManager {
 		bool playing = false;
 		/** <summary> True if a song being played is custom. </summary> */
 		bool playingCustom = false;
+		/** <summary> TThe value for the last volume change. </summary> */
+		int lastVolume = 100;
 
 		#endregion
 		//--------------------------------
@@ -147,80 +114,10 @@ namespace RCT2MusicManager {
 			if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music"))) {
 				Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music"));
 			}
-
-			/*LameMP3FileWriter mp3Writer = null;
-
-			WaveFormat format = new WaveFormat(22050, 2);
-
-			using (AudioFileReader reader = new AudioFileReader(file)) {
-				using (var resampler = new MediaFoundationResampler(reader, format)) {
-					// resampler.ResamplerQuality = 60;
-					using (LameMP3FileWriter writer = new LameMP3FileWriter("css.mp3", format, 22050)) {
-						writer.
-					}
-					LameMP3FileWriter.CreateWaveFile(destination, resampler);
-				}
-			}*/
-
-			WaveToMP3(Path.Combine(this.dataDirectory, "css3.dat"), "Dodgems Style.mp3", 705);
-
-			TagLib.File f = TagLib.File.Create("Dodgems Style.mp3");
-			f.Tag.Album = "RollerCoaster Tycoon 2";
-			f.Tag.Artists = new string[] { "Allister Brimble" };
-			f.Tag.AlbumArtists = new string[] { "Allister Brimble" };
-			f.Tag.Title = "Dodgems Beat";
-			f.Tag.Genres = new string[] { "Soundtrack" };
-			f.Tag.Track = 13;
-			f.Save();
-
-			//Console.WriteLine(MediaFoundationEncoder.GetOutputMediaTypes(AudioSubtypes.MFAudioFormat_MP3));
-
-			/*using (var reader = new MediaFoundationReader(Path.Combine(dataDirectory, "css3.dat"))) {
-				MediaFoundationEncoder.EncodeToMp3(reader, "css3.mp3");
-			}*/
-
-			/*FileStream stream = new FileStream(Path.Combine(this.dataDirectory, "CSS1.DAT"), FileMode.Open, FileAccess.Read);
-
-			BinaryReader reader = new BinaryReader(stream);
-
-			uint NumSounds = reader.ReadUInt32();
-			uint[] Offsets = new uint[NumSounds];
-			for (uint i = 0; i < NumSounds; i++) {
-				Offsets[i] = reader.ReadUInt32();
-			}
-			uint DataSize = reader.ReadUInt32();
-			WaveFormat format = new WaveFormat(22050, 16, 1);
-			for (uint i = 0; i < NumSounds; i++) {
-				stream.Position = (long)Offsets[i];
-				using (WaveFileWriter writer = new WaveFileWriter(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Sounds", i.ToString() + ".wav"), format)) {
-					uint length = reader.ReadUInt32();
-					Console.WriteLine(length + " " + (i + 1 < NumSounds ? (Offsets[i + 1] - Offsets[i]).ToString() : ""));
-					reader.ReadBytes(24);
-					for (int j = 0; j < length; j++) {
-						writer.WriteByte(reader.ReadByte());
-					}
-					writer.Close();
-				}
-				using (WaveFileReader waveReader = new WaveFileReader(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Sounds", i.ToString() + ".wav"))) {
-					//WaveOut outDevice = new WaveOut();
-					//outDevice.Init(waveReader);
-					//outDevice.Play();
-					SoundPlayer song = new SoundPlayer(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Sounds", i.ToString() + ".wav"));
-					song.Play();
-					Thread.Sleep((int)waveReader.TotalTime.TotalMilliseconds);
-				}
+			if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified"))) {
+				Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified"));
 			}
 
-			SoundPlayer song2 = new SoundPlayer(Path.Combine(this.dataDirectory, "CSS43.DAT"));
-			song2.Play();
-
-			stream.Close();*/
-		}
-
-		public static void WaveToMP3(string waveFileName, string mp3FileName, int bitRate = 128) {
-			using (var reader = new WaveFileReader(waveFileName))
-			using (var writer = new LameMP3FileWriter(mp3FileName, reader.WaveFormat, bitRate))
-				reader.CopyTo(writer);
 		}
 
 		#endregion
@@ -242,6 +139,8 @@ namespace RCT2MusicManager {
 				element = doc.GetElementsByTagName("DataDirectory");
 				if (element.Count != 0) this.dataDirectory = element[0].InnerText;
 
+				element = doc.GetElementsByTagName("LastVolume");
+				if (element.Count != 0) this.lastVolume = Int32.Parse(element[0].InnerText);
 			}
 			else {
 				SaveSettings(null, null);
@@ -258,6 +157,10 @@ namespace RCT2MusicManager {
 			XmlElement element = doc.CreateElement("DataDirectory");
 			settings.AppendChild(element);
 			element.AppendChild(doc.CreateTextNode(this.dataDirectory));
+
+			element = doc.CreateElement("LastVolume");
+			settings.AppendChild(element);
+			element.AppendChild(doc.CreateTextNode(this.lastVolume.ToString()));
 
 			doc.Save(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Settings - Music Manager.xml"));
 		}
@@ -326,6 +229,8 @@ namespace RCT2MusicManager {
 								item.SubItems.Add(new ListViewItem.ListViewSubItem(item, reader.TotalTime.ToString((reader.TotalTime.TotalHours >= 1) ? @"hh\:mm\:ss" : @"mm\:ss")));
 							}
 
+							item.SubItems.Add(new ListViewItem.ListViewSubItem(item, ""));
+
 							this.listViewSongs.Items.Add(item);
 
 
@@ -342,11 +247,19 @@ namespace RCT2MusicManager {
 							SoundPlayer song = new SoundPlayer(files[i]);
 							song.Dispose();
 
+
 							ListViewItem item = new ListViewItem(this.listViewSongs.Groups["musicList"]);
 							item.SubItems.Add(new ListViewItem.ListViewSubItem(item, Path.GetFileName(files[i])));
 
 							using (WaveFileReader reader = new WaveFileReader(files[i])) {
 								item.SubItems.Add(new ListViewItem.ListViewSubItem(item, reader.TotalTime.ToString((reader.TotalTime.TotalHours >= 1) ? @"hh\:mm\:ss" : @"mm\:ss")));
+							}
+							
+							if (File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified", Path.GetFileName(files[i])))) {
+								item.SubItems.Add(new ListViewItem.ListViewSubItem(item, "*"));
+							}
+							else {
+								item.SubItems.Add(new ListViewItem.ListViewSubItem(item, ""));
 							}
 
 							this.listViewSongs.Items.Add(item);
@@ -380,6 +293,10 @@ namespace RCT2MusicManager {
 						if (this.listViewSongs.SelectedItems[0].Group == this.listViewSongs.Groups["customMusic"]) {
 							this.currentSong = new SoundPlayer(Path.Combine(this.dataDirectory, this.listViewSongs.SelectedItems[0].SubItems[1].Text));
 							playingCustom = true;
+						}
+						else if (File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified", this.listViewSongs.SelectedItems[0].SubItems[1].Text))) {
+							this.currentSong = new SoundPlayer(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified", this.listViewSongs.SelectedItems[0].SubItems[1].Text));
+							playingCustom = false;
 						}
 						else {
 							this.currentSong = new SoundPlayer(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", this.listViewSongs.SelectedItems[0].SubItems[1].Text));
@@ -415,10 +332,20 @@ namespace RCT2MusicManager {
 			try {
 				if (this.listViewSongs.SelectedItems.Count > 0) {
 					if (this.listViewSongs.SelectedItems[0].Group != this.listViewSongs.Groups["customMusic"]) {
-						File.Copy(
-							Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", this.listViewSongs.SelectedItems[0].SubItems[1].Text),
-							Path.Combine(this.dataDirectory, "CUSTOM1.WAV")
-						, true);
+						if (File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified", this.listViewSongs.SelectedItems[0].SubItems[1].Text))) {
+							File.Copy(
+								Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified", this.listViewSongs.SelectedItems[0].SubItems[1].Text),
+								Path.Combine(this.dataDirectory, "CUSTOM1.WAV"),
+								true
+							);
+						}
+						else {
+							File.Copy(
+								Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", this.listViewSongs.SelectedItems[0].SubItems[1].Text),
+								Path.Combine(this.dataDirectory, "CUSTOM1.WAV"),
+								true
+							);
+						}
 						LoadCustomSongs();
 						if (playingCustom) {
 							this.currentSong.Stop();
@@ -438,10 +365,20 @@ namespace RCT2MusicManager {
 			try {
 				if (this.listViewSongs.SelectedItems.Count > 0) {
 					if (this.listViewSongs.SelectedItems[0].Group != this.listViewSongs.Groups["customMusic"]) {
-						File.Copy(
-							Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", this.listViewSongs.SelectedItems[0].SubItems[1].Text),
-							Path.Combine(this.dataDirectory, "CUSTOM2.WAV")
-						, true);
+						if (File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified", this.listViewSongs.SelectedItems[0].SubItems[1].Text))) {
+							File.Copy(
+								Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified", this.listViewSongs.SelectedItems[0].SubItems[1].Text),
+								Path.Combine(this.dataDirectory, "CUSTOM2.WAV"),
+								true
+							);
+						}
+						else {
+							File.Copy(
+								Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", this.listViewSongs.SelectedItems[0].SubItems[1].Text),
+								Path.Combine(this.dataDirectory, "CUSTOM2.WAV"),
+								true
+							);
+						}
 						LoadCustomSongs();
 						if (playingCustom) {
 							this.currentSong.Stop();
@@ -472,6 +409,12 @@ namespace RCT2MusicManager {
 									Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", this.listViewSongs.SelectedItems[0].SubItems[1].Text),
 									Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", newName)
 								);
+								if (File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified", this.listViewSongs.SelectedItems[0].SubItems[1].Text))) {
+									File.Move(
+										Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified", this.listViewSongs.SelectedItems[0].SubItems[1].Text),
+										Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified", newName)
+									);
+								}
 								this.listViewSongs.SelectedItems[0].SubItems[1].Text = newName;
 								if (this.listViewSongs.SelectedItems[0].ImageIndex == 1) {
 									this.listViewSongs.SelectedItems[0].ImageIndex = 0;
@@ -508,88 +451,37 @@ namespace RCT2MusicManager {
 				about.ShowDialog(this);
 			}
 		}
+
+		private void DeleteSong(object sender, EventArgs e) {
+			if (WarningMessageBox.Show(this, "Are you sure you want to delete", "these songs?") == DialogResult.Yes) {
+				for (int i = this.listViewSongs.SelectedItems.Count - 1; i >= 0; i--) {
+					if (this.listViewSongs.SelectedItems[i].ImageIndex == 1) {
+						this.currentSong.Stop();
+						this.playing = false;
+						this.playingCustom = false;
+						this.buttonPlay.Text = "Play";
+					}
+					if (this.listViewSongs.SelectedItems[i].Group == this.listViewSongs.Groups["customMusic"]) {
+						File.Delete(Path.Combine(this.dataDirectory, this.listViewSongs.SelectedItems[i].SubItems[1].Text));
+						this.listViewSongs.Items.RemoveAt(this.listViewSongs.SelectedItems[i].Index);
+					}
+					else {
+						File.Delete(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", this.listViewSongs.SelectedItems[i].SubItems[1].Text));
+						if (File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified", this.listViewSongs.SelectedItems[0].SubItems[1].Text))) {
+							File.Delete(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified", this.listViewSongs.SelectedItems[i].SubItems[1].Text));
+						}
+						this.listViewSongs.Items.RemoveAt(this.listViewSongs.SelectedItems[i].Index);
+
+					}
+				}
+			}
+		}
 		/** <summary> Called when the delete button is pressed in the scenery list. </summary> */
-		private void DeleteSong(object sender, KeyEventArgs e) {
+		private void DeleteSongKey(object sender, KeyEventArgs e) {
 			if (e.KeyCode == Keys.Delete) {
-				if (WarningMessageBox.Show(this, "Are you sure you want to delete", "these songs?") == DialogResult.Yes) {
-					for (int i = this.listViewSongs.SelectedItems.Count - 1; i >= 0; i--) {
-						if (this.listViewSongs.SelectedItems[i].ImageIndex == 1) {
-							this.currentSong.Stop();
-							this.playing = false;
-							this.playingCustom = false;
-							this.buttonPlay.Text = "Play";
-						}
-						if (this.listViewSongs.SelectedItems[i].Group == this.listViewSongs.Groups["customMusic"]) {
-							File.Delete(Path.Combine(this.dataDirectory, this.listViewSongs.SelectedItems[i].SubItems[1].Text));
-							this.listViewSongs.Items.RemoveAt(this.listViewSongs.SelectedItems[i].Index);
-						}
-						else {
-							File.Delete(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", this.listViewSongs.SelectedItems[i].SubItems[1].Text));
-							this.listViewSongs.Items.RemoveAt(this.listViewSongs.SelectedItems[i].Index);
-						}
-					}
-				}
+				DeleteSong(null, null);
 			}
 		}
-
-		#endregion
-		//=========== SORTING ============
-		#region Sorting
-
-		/** <summary> The class used to sort the columns. </summary> */
-		class ListViewItemComparer : IComparer {
-			private int col;
-			private bool reverse;
-			public ListViewItemComparer() {
-				this.col = 0;
-			}
-			public ListViewItemComparer(int column, bool reverse = false) {
-				this.col = column;
-				this.reverse = reverse;
-			}
-			public int Compare(object x, object y) {
-				return String.Compare(((ListViewItem)(reverse ? y : x)).SubItems[col].Text, ((ListViewItem)(reverse ? x : y)).SubItems[col].Text);
-			}
-		}
-		/** <summary> Sorts the specified column. </summary> */
-		private void ColumnSort(object sender, ColumnClickEventArgs e) {
-			if (e.Column != 0) {
-				string name = (sender as ListView).Name.Replace("tabGroup", "");
-				int index = 0;
-				//Console.WriteLine(name);
-				for (int i = 0; i < tabList.Length; i++) {
-					if (tabList[i] == name) {
-						index = i;
-						break;
-					}
-				}
-				//Console.WriteLine(index);
-				//Console.WriteLine(GetTabIndex(name));
-				if (e.Column == currentColumn[index]) {
-					currentListOrder[index] = !currentListOrder[index];
-				}
-				else {
-					currentColumn[index] = e.Column;
-					currentListOrder[index] = false;
-				}
-				//Console.WriteLine("Sort");
-				//currentListColumn = e.Column;
-				//listSortOrder = currentListOrder[index];
-				(sender as ListView).ListViewItemSorter = new ListViewItemComparer(e.Column, currentListOrder[index]);
-				(sender as ListView).Refresh();
-			}
-		}
-		
-
-		#endregion
-		//============= TABS =============
-		#region Tabs
-
-
-		#endregion
-		//=========== BUTTONS ============
-		#region Buttons
-
 
 		#endregion
 		//=========== VISUALS ============
@@ -681,6 +573,8 @@ namespace RCT2MusicManager {
 												item.SubItems.Add(new ListViewItem.ListViewSubItem(item, reader2.TotalTime.ToString((reader2.TotalTime.TotalHours >= 1) ? @"hh\:mm\:ss" : @"mm\:ss")));
 											}
 
+											item.SubItems.Add(new ListViewItem.ListViewSubItem(item, ""));
+
 											this.listViewSongs.Items.Add(item);
 										}
 										else {
@@ -736,5 +630,51 @@ namespace RCT2MusicManager {
 				}
 			}
 		}
+
+		private void ChangeVolume(object sender, EventArgs e) {
+			if (this.listViewSongs.SelectedItems.Count > 0) {
+				if (this.listViewSongs.SelectedItems[0].Group != this.listViewSongs.Groups["customMusic"]) {
+					using (VolumeMessageBox messageBox = new VolumeMessageBox(this.lastVolume)) {
+						if (messageBox.ShowDialog(this) == DialogResult.OK) {
+							this.lastVolume = messageBox.NewVolume;
+							SaveSettings(null, null);
+
+							if (this.listViewSongs.SelectedItems[0].ImageIndex == 1) {
+								this.listViewSongs.SelectedItems[0].ImageIndex = 0;
+								this.currentSong.Stop();
+								this.playing = false;
+								this.playingCustom = false;
+								this.buttonPlay.Text = "Play";
+							}
+							if (this.lastVolume == 100) {
+								if (File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified", this.listViewSongs.SelectedItems[0].SubItems[1].Text))) {
+									File.Delete(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified", this.listViewSongs.SelectedItems[0].SubItems[1].Text));
+								}
+
+								this.listViewSongs.SelectedItems[0].SubItems[3].Text = "";
+							}
+							else {
+								using (WaveFileReader reader = new WaveFileReader(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", this.listViewSongs.SelectedItems[0].SubItems[1].Text))) {
+									using (WaveFileWriter writer = new WaveFileWriter(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Custom Music", "Modified", this.listViewSongs.SelectedItems[0].SubItems[1].Text), reader.WaveFormat)) {
+
+										float[] samples = reader.ReadNextSampleFrame();
+										while (samples != null) {
+											for (int i = 0; i < samples.Length; i++) {
+												writer.WriteSample(samples[i] * ((float)this.lastVolume / 100.0f));
+											}
+											samples = reader.ReadNextSampleFrame();
+										}
+									}
+								}
+								this.listViewSongs.SelectedItems[0].SubItems[3].Text = "*";
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+
 	}
 }

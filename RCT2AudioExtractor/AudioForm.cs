@@ -214,8 +214,8 @@ namespace RCT2AudioExtractor {
 				}
 				this.extractFileIndex++;
 			}
-			this.loadingBar.Width = 274 * (this.css1Index + this.extractFileIndex - 1) / ((int)this.css1NumSounds + 41);
-			if ((this.css1Index + this.extractFileIndex - 1) == ((int)this.css1NumSounds + 41)) {
+			this.loadingBar.Width = 274 * (this.css1Index + this.extractFileIndex - 1) / ((int)this.css1NumSounds + 46);
+			if ((this.css1Index + this.extractFileIndex - 1) == ((int)this.css1NumSounds + 46)) {
 				reader.Close();
 				this.labelComplete.Visible = true;
 				this.labelComplete.Text = "Finished - Took " + Math.Round((DateTime.Now - this.extractStart).TotalSeconds) + " seconds";
@@ -315,31 +315,6 @@ namespace RCT2AudioExtractor {
 						this.reader.ReadUInt32();
 
 						this.timerExtract.Start();
-
-						/*for (int i = 1; i <= 46; i++) {
-							if (File.Exists(Path.Combine(this.dataDirectory, "css" + i.ToString() + ".dat"))) {
-								if (i == 1) {
-									// Extract all sounds
-								}
-								else if (IsSong(i)) {
-									SongInfo info = GetSongInfo(i);
-
-									WriteSong(
-										Path.Combine(this.dataDirectory, "css" + i.ToString() + ".dat"),
-										Path.Combine(this.outputDirectory, "Music", info.RCT2Name + ".mp3"),
-										info
-									);
-								}
-								else if (i != 10 && i != 16) {
-									Console.WriteLine(i);
-									File.Copy(
-										Path.Combine(this.dataDirectory, "css" + i.ToString() + ".dat"),
-										Path.Combine(this.outputDirectory, i.ToString() + "-0" + ".wav"),
-										true
-									);
-								}
-							}
-						}*/
 					}
 					else {
 						this.labelError.Visible = true;

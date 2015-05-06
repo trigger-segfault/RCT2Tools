@@ -35,17 +35,11 @@
     <ApplicationIcon>App.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NAudio, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libraries\NAudio\NAudio.dll</HintPath>
+    <Reference Include="NAudio">
+      <HintPath>.\NAudio.dll</HintPath>
     </Reference>
-    <Reference Include="NAudio.Lame, Version=1.0.5603.19534, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libraries\NAudio\NAudio.Lame.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.WindowsMediaFormat, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libraries\NAudio\NAudio.WindowsMediaFormat.dll</HintPath>
+    <Reference Include="NAudio.WindowsMediaFormat">
+      <HintPath>.\NAudio.WindowsMediaFormat.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -57,10 +51,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="taglib-sharp, Version=2.1.0.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Libraries\NAudio\taglib-sharp.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutBox.cs">
@@ -68,6 +58,15 @@
     </Compile>
     <Compile Include="AboutBox.Designer.cs">
       <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NoFocusTrackBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="VolumeMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VolumeMessageBox.Designer.cs">
+      <DependentUpon>VolumeMessageBox.cs</DependentUpon>
     </Compile>
     <Compile Include="RenameMessageBox.cs">
       <SubType>Form</SubType>
@@ -98,6 +97,9 @@
     </Compile>
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VolumeMessageBox.resx">
+      <DependentUpon>VolumeMessageBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RenameMessageBox.resx">
       <DependentUpon>RenameMessageBox.cs</DependentUpon>

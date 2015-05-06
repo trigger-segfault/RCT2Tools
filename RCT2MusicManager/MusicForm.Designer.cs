@@ -29,6 +29,7 @@ namespace RCT2MusicManager {
 			System.Windows.Forms.ListViewGroup listViewGroup4 = new System.Windows.Forms.ListViewGroup("Music List", System.Windows.Forms.HorizontalAlignment.Left);
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MusicForm));
 			this.splitContainerSideView = new System.Windows.Forms.SplitContainer();
+			this.buttonVolume = new CustomControls.RCTButton();
 			this.buttonRename = new CustomControls.RCTButton();
 			this.buttonRefresh = new CustomControls.RCTButton();
 			this.buttonAbout = new CustomControls.RCTButton();
@@ -44,6 +45,8 @@ namespace RCT2MusicManager {
 			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageListPlaying = new System.Windows.Forms.ImageList(this.components);
 			this.dataBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.buttonDelete = new CustomControls.RCTButton();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerSideView)).BeginInit();
 			this.splitContainerSideView.Panel1.SuspendLayout();
 			this.splitContainerSideView.Panel2.SuspendLayout();
@@ -64,6 +67,8 @@ namespace RCT2MusicManager {
 			// splitContainerSideView.Panel1
 			// 
 			this.splitContainerSideView.Panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(79)))), ((int)(((byte)(79)))));
+			this.splitContainerSideView.Panel1.Controls.Add(this.buttonDelete);
+			this.splitContainerSideView.Panel1.Controls.Add(this.buttonVolume);
 			this.splitContainerSideView.Panel1.Controls.Add(this.buttonRename);
 			this.splitContainerSideView.Panel1.Controls.Add(this.buttonRefresh);
 			this.splitContainerSideView.Panel1.Controls.Add(this.buttonAbout);
@@ -75,10 +80,34 @@ namespace RCT2MusicManager {
 			// splitContainerSideView.Panel2
 			// 
 			this.splitContainerSideView.Panel2.Controls.Add(this.panel1);
-			this.splitContainerSideView.Size = new System.Drawing.Size(489, 252);
+			this.splitContainerSideView.Size = new System.Drawing.Size(513, 252);
 			this.splitContainerSideView.SplitterDistance = 100;
 			this.splitContainerSideView.SplitterWidth = 1;
 			this.splitContainerSideView.TabIndex = 123;
+			// 
+			// buttonVolume
+			// 
+			this.buttonVolume.BorderOnHover = false;
+			this.buttonVolume.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(79)))), ((int)(((byte)(79)))));
+			this.buttonVolume.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
+			this.buttonVolume.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
+			this.buttonVolume.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonVolume.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonVolume.Image = null;
+			this.buttonVolume.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonVolume.Location = new System.Drawing.Point(12, 84);
+			this.buttonVolume.Name = "buttonVolume";
+			this.buttonVolume.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonVolume.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(103)))), ((int)(((byte)(103)))));
+			this.buttonVolume.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
+			this.buttonVolume.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
+			this.buttonVolume.Size = new System.Drawing.Size(80, 18);
+			this.buttonVolume.TabIndex = 151;
+			this.buttonVolume.Text = "Volume";
+			this.buttonVolume.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonVolume.Toggleable = false;
+			this.buttonVolume.Toggled = false;
+			this.buttonVolume.ButtonPressed += new System.EventHandler(this.ChangeVolume);
 			// 
 			// buttonRename
 			// 
@@ -90,7 +119,7 @@ namespace RCT2MusicManager {
 			this.buttonRename.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonRename.Image = null;
 			this.buttonRename.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonRename.Location = new System.Drawing.Point(12, 84);
+			this.buttonRename.Location = new System.Drawing.Point(12, 108);
 			this.buttonRename.Name = "buttonRename";
 			this.buttonRename.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonRename.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(103)))), ((int)(((byte)(103)))));
@@ -114,7 +143,7 @@ namespace RCT2MusicManager {
 			this.buttonRefresh.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonRefresh.Image = null;
 			this.buttonRefresh.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonRefresh.Location = new System.Drawing.Point(12, 132);
+			this.buttonRefresh.Location = new System.Drawing.Point(12, 180);
 			this.buttonRefresh.Name = "buttonRefresh";
 			this.buttonRefresh.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonRefresh.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(103)))), ((int)(((byte)(103)))));
@@ -138,7 +167,7 @@ namespace RCT2MusicManager {
 			this.buttonAbout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonAbout.Image = null;
 			this.buttonAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonAbout.Location = new System.Drawing.Point(12, 156);
+			this.buttonAbout.Location = new System.Drawing.Point(12, 204);
 			this.buttonAbout.Name = "buttonAbout";
 			this.buttonAbout.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonAbout.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(103)))), ((int)(((byte)(103)))));
@@ -162,7 +191,7 @@ namespace RCT2MusicManager {
 			this.buttonBrowse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonBrowse.Image = null;
 			this.buttonBrowse.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonBrowse.Location = new System.Drawing.Point(12, 108);
+			this.buttonBrowse.Location = new System.Drawing.Point(12, 156);
 			this.buttonBrowse.Name = "buttonBrowse";
 			this.buttonBrowse.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonBrowse.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(103)))), ((int)(((byte)(103)))));
@@ -256,7 +285,7 @@ namespace RCT2MusicManager {
 			this.panel1.Margin = new System.Windows.Forms.Padding(0);
 			this.panel1.Name = "panel1";
 			this.panel1.Padding = new System.Windows.Forms.Padding(3);
-			this.panel1.Size = new System.Drawing.Size(388, 252);
+			this.panel1.Size = new System.Drawing.Size(412, 252);
 			this.panel1.TabIndex = 142;
 			// 
 			// rctPanel1
@@ -270,7 +299,7 @@ namespace RCT2MusicManager {
 			this.rctPanel1.PanelBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(79)))), ((int)(((byte)(79)))));
 			this.rctPanel1.PanelBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
 			this.rctPanel1.PanelBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-			this.rctPanel1.Size = new System.Drawing.Size(382, 246);
+			this.rctPanel1.Size = new System.Drawing.Size(406, 246);
 			this.rctPanel1.TabIndex = 141;
 			// 
 			// listViewSongs
@@ -281,7 +310,8 @@ namespace RCT2MusicManager {
 			this.listViewSongs.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2,
-            this.columnHeader3});
+            this.columnHeader3,
+            this.columnHeader4});
 			this.listViewSongs.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listViewSongs.FullRowSelect = true;
 			listViewGroup3.Header = "Custom Music";
@@ -296,7 +326,7 @@ namespace RCT2MusicManager {
 			this.listViewSongs.MultiSelect = false;
 			this.listViewSongs.Name = "listViewSongs";
 			this.listViewSongs.OwnerDraw = true;
-			this.listViewSongs.Size = new System.Drawing.Size(380, 244);
+			this.listViewSongs.Size = new System.Drawing.Size(404, 244);
 			this.listViewSongs.SmallImageList = this.imageListPlaying;
 			this.listViewSongs.TabIndex = 123;
 			this.listViewSongs.TabStop = false;
@@ -308,7 +338,7 @@ namespace RCT2MusicManager {
 			this.listViewSongs.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.SongChanged);
 			this.listViewSongs.DragDrop += new System.Windows.Forms.DragEventHandler(this.SongDragDrop);
 			this.listViewSongs.DragEnter += new System.Windows.Forms.DragEventHandler(this.SongDragEnter);
-			this.listViewSongs.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DeleteSong);
+			this.listViewSongs.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DeleteSongKey);
 			this.listViewSongs.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.SongDoubleClick);
 			// 
 			// columnHeader1
@@ -339,16 +369,45 @@ namespace RCT2MusicManager {
 			this.dataBrowserDialog.SelectedPath = "Environment.SpecialFolder.Desktop";
 			this.dataBrowserDialog.ShowNewFolderButton = false;
 			// 
+			// columnHeader4
+			// 
+			this.columnHeader4.Text = "V";
+			this.columnHeader4.Width = 24;
+			// 
+			// buttonDelete
+			// 
+			this.buttonDelete.BorderOnHover = false;
+			this.buttonDelete.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(79)))), ((int)(((byte)(79)))));
+			this.buttonDelete.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
+			this.buttonDelete.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
+			this.buttonDelete.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonDelete.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonDelete.Image = null;
+			this.buttonDelete.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonDelete.Location = new System.Drawing.Point(12, 132);
+			this.buttonDelete.Name = "buttonDelete";
+			this.buttonDelete.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonDelete.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(199)))), ((int)(((byte)(103)))), ((int)(((byte)(103)))));
+			this.buttonDelete.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(143)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
+			this.buttonDelete.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
+			this.buttonDelete.Size = new System.Drawing.Size(80, 18);
+			this.buttonDelete.TabIndex = 152;
+			this.buttonDelete.Text = "Delete";
+			this.buttonDelete.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonDelete.Toggleable = false;
+			this.buttonDelete.Toggled = false;
+			this.buttonDelete.ButtonPressed += new System.EventHandler(this.DeleteSong);
+			// 
 			// MusicForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(179)))), ((int)(((byte)(79)))), ((int)(((byte)(79)))));
-			this.ClientSize = new System.Drawing.Size(489, 252);
+			this.ClientSize = new System.Drawing.Size(513, 252);
 			this.Controls.Add(this.splitContainerSideView);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.MinimumSize = new System.Drawing.Size(380, 224);
+			this.MinimumSize = new System.Drawing.Size(380, 274);
 			this.Name = "MusicForm";
 			this.Text = "Trigger\'s Music Manager";
 			this.Load += new System.EventHandler(this.OnFormLoad);
@@ -380,6 +439,9 @@ namespace RCT2MusicManager {
 		private RCTButton buttonRefresh;
 		private System.Windows.Forms.ColumnHeader columnHeader3;
 		private RCTButton buttonRename;
+		private RCTButton buttonVolume;
+		private System.Windows.Forms.ColumnHeader columnHeader4;
+		private RCTButton buttonDelete;
 	}
 }
 
