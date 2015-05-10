@@ -477,7 +477,7 @@ namespace RCT2AudioExtractor {
 				case 37: return "Click 3";
 				case 38: return "Duck Quack";
 				case 39: return "Notification";
-				case 40: return "Click 4";
+				case 40: return "Window open";
 				case 41: return "Happy 1";
 				case 42: return "Happy 2";
 				case 43: return "Happy 3";
