@@ -200,8 +200,8 @@ public class Palette {
 	/** <summary> The default color palette for the game </summary> */
 	public static Palette DefaultPalette = new Palette(new Color[]{
 		
-		Color.Transparent, Color.Black, Color.Black, Color.Black, Color.Black,
-		Color.Black, Color.Black, Color.Black, Color.Black, Color.Black,
+		Color.Transparent, Color.Black, Color.FromArgb(20, 20, 20), Color.FromArgb(40, 40, 40), Color.FromArgb(60, 60, 60),
+		Color.FromArgb(80, 80, 80), Color.FromArgb(100, 100, 100), Color.FromArgb(120, 120, 120),Color.FromArgb(140, 140, 140), Color.FromArgb(160, 160, 160),
 
 		Color.FromArgb(23, 35, 35), Color.FromArgb(35, 51, 51), Color.FromArgb(47, 67, 67), Color.FromArgb(63, 83, 83),
 		Color.FromArgb(75, 99, 99), Color.FromArgb(91, 115, 115), Color.FromArgb(111, 131, 131), Color.FromArgb(131, 151, 151),

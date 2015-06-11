@@ -109,7 +109,7 @@ namespace RCT2GroupCreator {
 
 			this.fontBold = new SpriteFont(Resources.BoldFont, ' ', 'z', 10);
 
-			this.drawSettings.Remap1 = RemapColors.Maroon;
+			this.drawSettings.Remap1 = RemapColors.IndianRed;
 			this.drawSettings.Remap2 = RemapColors.Gold;
 			this.drawSettings.Remap3 = RemapColors.Bark;
 			this.drawSettings.Slope = -1;

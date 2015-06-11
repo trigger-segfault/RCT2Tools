@@ -202,7 +202,7 @@ namespace RCTDataEditor {
 			this.terrain.Origin = new Point(8, 8);
 			this.terrain.Size = new Size(13, 13);
 
-			this.drawSettings.Remap1 = RemapColors.Maroon;
+			this.drawSettings.Remap1 = RemapColors.IndianRed;
 			this.drawSettings.Remap2 = RemapColors.Gold;
 			this.drawSettings.Remap3 = RemapColors.Bark;
 			this.drawSettings.Slope = -1;

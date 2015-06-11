@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Trigger's Water Creator")]
-[assembly: AssemblyDescription("Creates custom water objects from palettes.")]
+[assembly: AssemblyTitle("Trigger's OpenRCT2 Stub")]
+[assembly: AssemblyDescription("Launch RCT2 or OpenRCT2 through Steam")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Trigger's Water Creator")]
-[assembly: AssemblyCopyright("© Robert Jordan 2015")]
+[assembly: AssemblyProduct("Trigger's OpenRCT2 Stub")]
+[assembly: AssemblyCopyright("© Robert Jordan  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("08ceb815-7d5a-40df-9c1a-2be11d062579")]
+[assembly: Guid("69122527-3e1e-424d-8044-9ffac2be5fef")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.1.0")]
-[assembly: AssemblyFileVersion("1.1.1.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

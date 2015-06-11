@@ -15,7 +15,7 @@ public class Water : ObjectData {
 	#region Constants
 
 	/** <summary> The size of the header for this object type. </summary> */
-	public const uint HeaderSize = 0x0E;
+	public const uint HeaderSize = 0x10;
 	/** <summary> The sprites used for drawing water. </summary> */
 	private static PaletteImage[] WaterSprites;
 
@@ -194,7 +194,7 @@ public class WaterHeader : ObjectTypeHeader {
 
 	/** <summary> Constructs the default object header. </summary> */
 	public WaterHeader() {
-		this.Reserved0	= new byte[14];
+		this.Reserved0	= new byte[16];
 	}
 
 	#endregion
@@ -219,6 +219,11 @@ public class WaterHeader : ObjectTypeHeader {
 	/** <summary> Reads the object header. </summary> */
 	internal override void Read(BinaryReader reader) {
 		reader.Read(this.Reserved0, 0, this.Reserved0.Length);
+		if (this.Reserved0[this.Reserved0.Length - 1] != 0) {
+			reader.BaseStream.Position -= 2;
+			this.Reserved0[this.Reserved0.Length - 1] = 0;
+			this.Reserved0[this.Reserved0.Length - 2] = 0;
+		}
 	}
 	/** <summary> Writes the object header. </summary> */
 	internal override void Write(BinaryWriter writer) {

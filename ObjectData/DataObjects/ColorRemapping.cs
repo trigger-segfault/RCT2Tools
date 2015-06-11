@@ -126,7 +126,7 @@ public enum RemapColors : int {
 
 	Bark = 24,
 	Tan = 25,
-	Maroon = 26,
+	IndianRed = 26,
 	DarkRed = 27,
 	Red = 28,
 	Magenta = 29,

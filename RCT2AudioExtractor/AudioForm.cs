@@ -160,7 +160,6 @@ namespace RCT2AudioExtractor {
 		}
 
 		#endregion
-		
 		//========== EXTRACTING ==========
 		#region Extracting
 
@@ -172,6 +171,9 @@ namespace RCT2AudioExtractor {
 					reader.BaseStream.Position = (long)this.css1Offsets[this.css1Index];
 					WaveFormat format = new WaveFormat(22050, 16, 1);
 					string soundName = (this.nameFormat ? GetSoundName(this.extractFileIndex, this.css1Index) : this.extractFileIndex.ToString() + "-" + this.css1Index.ToString());
+					if (this.css1Index == 28 || this.css1Index == 44) { // A stereo sound
+						format = new WaveFormat(22050, 16, 2);
+					}
 					using (WaveFileWriter writer = new WaveFileWriter(Path.Combine(this.outputDirectory, soundName + ".wav"), format)) {
 						uint length = reader.ReadUInt32();
 						reader.ReadBytes(20);
@@ -457,33 +459,33 @@ namespace RCT2AudioExtractor {
 				case 19: return "Train Whistle Chugging";
 				case 20: return "Boat Splash";
 				case 21: return "Go Karts";
-				case 22: return "Vertical launch 1";
-				case 23: return "Vertical launch 2";
+				case 22: return "Vertical Launch 1";
+				case 23: return "Vertical Launch 2";
 				case 24: return "Cough 1";
 				case 25: return "Cough 2";
 				case 26: return "Cough 3";
 				case 27: return "Cough 4";
-				case 28: return "Rain 1";
+				case 28: return "Rain 1"; // Stereo
 				case 29: return "Thunder 1";
 				case 30: return "Thunder 2";
 
-				case 31: return "Miniature train running";
+				case 31: return "Miniature Train Running";
 				case 32: return "Rain 2";
 
 				case 33: return "Balloon Pop";
-				case 34: return "Repair broken brakes";
+				case 34: return "Repair Broken Brakes";
 				case 35: return "Scream 7";
 				case 36: return "Toilet Flush";
 				case 37: return "Click 3";
 				case 38: return "Duck Quack";
 				case 39: return "Notification";
-				case 40: return "Window open";
+				case 40: return "Window Open";
 				case 41: return "Happy 1";
 				case 42: return "Happy 2";
 				case 43: return "Happy 3";
-				case 44: return "Scenario Complete";
+				case 44: return "Scenario Complete"; // Stereo
 				case 45: return "Haunted House";
-				case 46: return "Haunted House scream";
+				case 46: return "Haunted House Scream";
 				case 47: return "Cry 1";
 				case 48: return "Brakes 1";
 				case 49: return "Brakes 2";
@@ -500,8 +502,6 @@ namespace RCT2AudioExtractor {
 				case 60: return "Door Squeaky Open";
 				case 61: return "Door Squeaky Close";
 				case 62: return "Door Portcullis Open";
-
-
 				}
 			}
 			else if (cssIndex == 2) {

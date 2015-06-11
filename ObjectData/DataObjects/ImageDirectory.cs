@@ -115,6 +115,18 @@ public class ImageDirectory {
 				this.entries.Add(entry);
 		}
 	}
+	/** <summary> Reads the image directory. </summary> */
+	public void ReadCSG1(BinaryReader reader) {
+		//int count = reader.ReadInt32();
+		//this.ScanLineLength = reader.ReadInt32();
+
+		//for (int i = 0; i < count; i++) {
+		while (reader.BaseStream.Position < reader.BaseStream.Length) {
+			ImageEntry entry = new ImageEntry();
+			entry.Read(reader);
+			this.entries.Add(entry);
+		}
+	}
 	/** <summary> Writes the image directory. </summary> */
 	public void Write(BinaryWriter writer) {
 		writer.Write(this.entries.Count);
