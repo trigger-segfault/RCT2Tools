@@ -64,7 +64,7 @@ public struct ObjectDataInfo {
 				if (c != ' ')
 					objInfo.FileName += c;
 			}
-			uint checkSum = reader.ReadUInt32();
+			objInfo.CheckSum = reader.ReadUInt32();
 			objInfo.Name = "";
 
 			if (readName) {

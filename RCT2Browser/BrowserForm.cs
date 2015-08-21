@@ -313,12 +313,6 @@ namespace RCTDataEditor {
 
 				this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + drawSettings.Frame : (!dialogView ? "frame " + drawSettings.Frame : "dialog"));
 			}
-
-			ImageDirectory id = new ImageDirectory();
-			GraphicsData gd = new GraphicsData();
-
-			BinaryReader stream = new BinaryReader(new FileStream("C:\\Programs\\Games\\Steam\\steamapps\\common\\Rollercoaster Tycoon 2\\Data\\g1.dat", FileMode.Open, FileAccess.Read));
-
 		}
 
 		private PaletteImage FromImage(Bitmap image) {

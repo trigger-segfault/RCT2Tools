@@ -128,6 +128,7 @@ namespace RCT2GroupCreator {
 			this.sceneryGroup = new SceneryGroup();
 
 			this.sceneryGroup = (SceneryGroup)ObjectData.FromBuffer(Resources.SCGCUST);
+			this.sceneryGroup.ObjectHeader.Flags = 0x7;
 			LoadSceneryGroup();
 		}
 
@@ -379,6 +380,7 @@ namespace RCT2GroupCreator {
 		private void New(object sender, EventArgs e) {
 			if (!changed || WarningMessageBox.Show(this, "Scenery group has been changed.", "Are you sure you want to continue?") == DialogResult.Yes) {
 				sceneryGroup = (SceneryGroup)ObjectData.FromBuffer(Resources.SCGCUST);
+				sceneryGroup.ObjectHeader.Flags = 0x7;
 				LoadSceneryGroup();
 				fileName = "";
 			}

@@ -601,6 +601,8 @@ namespace RCT2MusicManager {
 										item.SubItems.Add(new ListViewItem.ListViewSubItem(item, reader.TotalTime.ToString((reader.TotalTime.TotalHours >= 1) ? @"hh\:mm\:ss" : @"mm\:ss")));
 									}
 
+									item.SubItems.Add(new ListViewItem.ListViewSubItem(item, ""));
+									
 									this.listViewSongs.Items.Add(item);
 								}
 								catch (Exception) {
@@ -666,6 +668,7 @@ namespace RCT2MusicManager {
 										}
 									}
 								}
+
 								this.listViewSongs.SelectedItems[0].SubItems[3].Text = "*";
 							}
 						}
