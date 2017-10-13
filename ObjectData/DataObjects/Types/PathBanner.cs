@@ -44,11 +44,11 @@ public class PathBanner : ObjectData {
 	#region Reading
 
 	/** <summary> Gets the number of string table entries in the object. </summary> */
-	protected override int NumStringTableEntries {
+	public override int NumStringTableEntries {
 		get { return 1; }
 	}
 	/** <summary> Returns true if the object has a group info section. </summary> */
-	protected override bool HasGroupInfo {
+	public override bool HasGroupInfo {
 		get { return true; }
 	}
 

@@ -61,98 +61,32 @@ namespace RCTDataEditor {
 			this.buttonRemap3 = new System.Windows.Forms.Button();
 			this.splitContainerTabs = new System.Windows.Forms.SplitContainer();
 			this.rctTabPanel1 = new CustomControls.RCTTabPanel();
-			this.buttonBrowse = new CustomControls.RCTButton();
-			this.tabInfo = new CustomControls.RCTTabButton();
-			this.tabAll = new CustomControls.RCTTabButton();
-			this.tabAttractions = new CustomControls.RCTTabButton();
-			this.tabSmallScenery = new CustomControls.RCTTabButton();
-			this.tabLargeScenery = new CustomControls.RCTTabButton();
-			this.tabWalls = new CustomControls.RCTTabButton();
-			this.tabSigns = new CustomControls.RCTTabButton();
-			this.tabPaths = new CustomControls.RCTTabButton();
-			this.tabPathAdditions = new CustomControls.RCTTabButton();
-			this.tabSceneryGroups = new CustomControls.RCTTabButton();
-			this.tabParkEntrances = new CustomControls.RCTTabButton();
-			this.tabWater = new CustomControls.RCTTabButton();
 			this.tabSettings = new CustomControls.RCTTabButton();
-			this.tabGroupSettings = new System.Windows.Forms.Panel();
-			this.checkBoxBackupDeletions = new CustomControls.RCTCheckBox();
-			this.checkBoxAllowDeletions = new CustomControls.RCTCheckBox();
-			this.buttonOpenDir = new CustomControls.RCTButton();
-			this.buttonExtract = new CustomControls.RCTButton();
-			this.checkBoxRemapImage = new CustomControls.RCTCheckBox();
-			this.buttonAbout = new CustomControls.RCTButton();
-			this.rctLabel2 = new CustomControls.RCTLabel();
-			this.rctLabel1 = new CustomControls.RCTLabel();
-			this.checkBoxQuickLoad = new CustomControls.RCTCheckBox();
-			this.buttonSaveSettings = new CustomControls.RCTButton();
-			this.buttonBrowseDefault = new CustomControls.RCTButton();
-			this.numericUpDownObjectsPerTick = new System.Windows.Forms.NumericUpDown();
-			this.textBoxDirectory = new System.Windows.Forms.TextBox();
-			this.tabGroupWater = new System.Windows.Forms.ListView();
-			this.columnHeader46 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader47 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader48 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader49 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader50 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader63 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabScenarioText = new CustomControls.RCTTabButton();
+			this.tabWater = new CustomControls.RCTTabButton();
+			this.tabParkEntrances = new CustomControls.RCTTabButton();
+			this.tabSceneryGroups = new CustomControls.RCTTabButton();
+			this.tabPathAdditions = new CustomControls.RCTTabButton();
+			this.tabPaths = new CustomControls.RCTTabButton();
+			this.tabSigns = new CustomControls.RCTTabButton();
+			this.tabWalls = new CustomControls.RCTTabButton();
+			this.tabLargeScenery = new CustomControls.RCTTabButton();
+			this.tabSmallScenery = new CustomControls.RCTTabButton();
+			this.tabAttractions = new CustomControls.RCTTabButton();
+			this.tabAll = new CustomControls.RCTTabButton();
+			this.tabInfo = new CustomControls.RCTTabButton();
+			this.tabGroupInfo = new System.Windows.Forms.ListView();
+			this.columnHeader51 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader52 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader53 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabGroupAll = new System.Windows.Forms.ListView();
+			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader54 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.imageListFlags = new System.Windows.Forms.ImageList(this.components);
-			this.tabGroupParkEntrances = new System.Windows.Forms.ListView();
-			this.columnHeader41 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader42 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader43 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader44 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader45 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader57 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tabGroupSceneryGroups = new System.Windows.Forms.ListView();
-			this.columnHeader36 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader37 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader38 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader39 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader40 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader61 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tabGroupPathAdditions = new System.Windows.Forms.ListView();
-			this.columnHeader31 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader33 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader34 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader35 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader58 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tabGroupPaths = new System.Windows.Forms.ListView();
-			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader59 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tabGroupSigns = new System.Windows.Forms.ListView();
-			this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader27 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader30 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader60 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tabGroupWalls = new System.Windows.Forms.ListView();
-			this.columnHeaderFlag = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderFile = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeaderSubtype = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tabGroupLargeScenery = new System.Windows.Forms.ListView();
-			this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader56 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tabGroupSmallScenery = new System.Windows.Forms.ListView();
-			this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader62 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tabGroupAttractions = new System.Windows.Forms.ListView();
 			this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -161,20 +95,79 @@ namespace RCTDataEditor {
 			this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader55 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader64 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tabGroupAll = new System.Windows.Forms.ListView();
-			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader54 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tabGroupInfo = new System.Windows.Forms.ListView();
-			this.columnHeader51 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader52 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader53 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabGroupSmallScenery = new System.Windows.Forms.ListView();
+			this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader62 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabGroupLargeScenery = new System.Windows.Forms.ListView();
+			this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader56 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabGroupWalls = new System.Windows.Forms.ListView();
+			this.columnHeaderFlag = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderSource = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderFile = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeaderSubtype = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabGroupSigns = new System.Windows.Forms.ListView();
+			this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader27 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader30 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader60 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabGroupPaths = new System.Windows.Forms.ListView();
+			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader59 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabGroupPathAdditions = new System.Windows.Forms.ListView();
+			this.columnHeader31 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader33 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader34 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader35 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader58 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabGroupSceneryGroups = new System.Windows.Forms.ListView();
+			this.columnHeader36 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader37 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader38 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader39 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader40 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader61 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabGroupParkEntrances = new System.Windows.Forms.ListView();
+			this.columnHeader41 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader42 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader43 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader44 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader45 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader57 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabGroupWater = new System.Windows.Forms.ListView();
+			this.columnHeader46 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader47 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader48 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader49 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader50 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader63 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.buttonBrowse = new CustomControls.RCTButton();
 			this.buttonScan = new CustomControls.RCTButton();
 			this.rctPanel2 = new CustomControls.RCTPanel();
-			this.tabGroupInfoOld = new System.Windows.Forms.GroupBox();
+			this.tabGroupScenarioText = new System.Windows.Forms.ListView();
+			this.columnHeader65 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader66 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader67 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader68 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader69 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader70 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.label4 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.infoImageOffset = new System.Windows.Forms.Label();
@@ -199,6 +192,20 @@ namespace RCTDataEditor {
 			this.labelScanProgress = new CustomControls.RCTLabel();
 			this.toolTips = new System.Windows.Forms.ToolTip(this.components);
 			this.timerExtract = new System.Windows.Forms.Timer(this.components);
+			this.textBoxDirectory = new System.Windows.Forms.TextBox();
+			this.numericUpDownObjectsPerTick = new System.Windows.Forms.NumericUpDown();
+			this.buttonBrowseDefault = new CustomControls.RCTButton();
+			this.buttonSaveSettings = new CustomControls.RCTButton();
+			this.checkBoxQuickLoad = new CustomControls.RCTCheckBox();
+			this.rctLabel1 = new CustomControls.RCTLabel();
+			this.rctLabel2 = new CustomControls.RCTLabel();
+			this.buttonAbout = new CustomControls.RCTButton();
+			this.checkBoxRemapImage = new CustomControls.RCTCheckBox();
+			this.buttonExtract = new CustomControls.RCTButton();
+			this.buttonOpenDir = new CustomControls.RCTButton();
+			this.checkBoxAllowDeletions = new CustomControls.RCTCheckBox();
+			this.checkBoxBackupDeletions = new CustomControls.RCTCheckBox();
+			this.tabGroupSettings = new System.Windows.Forms.Panel();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerSideView)).BeginInit();
 			this.splitContainerSideView.Panel1.SuspendLayout();
 			this.splitContainerSideView.Panel2.SuspendLayout();
@@ -210,15 +217,14 @@ namespace RCTDataEditor {
 			this.splitContainerTabs.Panel2.SuspendLayout();
 			this.splitContainerTabs.SuspendLayout();
 			this.rctTabPanel1.SuspendLayout();
-			this.tabGroupSettings.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownObjectsPerTick)).BeginInit();
 			this.rctPanel2.SuspendLayout();
-			this.tabGroupInfoOld.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerStatusBar)).BeginInit();
 			this.splitContainerStatusBar.Panel1.SuspendLayout();
 			this.splitContainerStatusBar.Panel2.SuspendLayout();
 			this.splitContainerStatusBar.SuspendLayout();
 			this.statusBar.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownObjectsPerTick)).BeginInit();
+			this.tabGroupSettings.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainerSideView
@@ -252,7 +258,7 @@ namespace RCTDataEditor {
 			// splitContainerSideView.Panel2
 			// 
 			this.splitContainerSideView.Panel2.Controls.Add(this.splitContainerTabs);
-			this.splitContainerSideView.Size = new System.Drawing.Size(761, 400);
+			this.splitContainerSideView.Size = new System.Drawing.Size(792, 400);
 			this.splitContainerSideView.SplitterDistance = 207;
 			this.splitContainerSideView.SplitterWidth = 1;
 			this.splitContainerSideView.TabIndex = 123;
@@ -642,7 +648,7 @@ namespace RCTDataEditor {
 			this.splitContainerTabs.Panel2.Padding = new System.Windows.Forms.Padding(3);
 			this.splitContainerTabs.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.splitContainerTabs.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.splitContainerTabs.Size = new System.Drawing.Size(553, 400);
+			this.splitContainerTabs.Size = new System.Drawing.Size(584, 400);
 			this.splitContainerTabs.SplitterDistance = 32;
 			this.splitContainerTabs.SplitterWidth = 1;
 			this.splitContainerTabs.TabIndex = 33;
@@ -650,9 +656,10 @@ namespace RCTDataEditor {
 			// 
 			// rctTabPanel1
 			// 
+			this.rctTabPanel1.Controls.Add(this.tabSettings);
 			this.rctTabPanel1.Controls.Add(this.buttonBrowse);
 			this.rctTabPanel1.Controls.Add(this.tabInfo);
-			this.rctTabPanel1.Controls.Add(this.tabSettings);
+			this.rctTabPanel1.Controls.Add(this.tabScenarioText);
 			this.rctTabPanel1.Controls.Add(this.tabAll);
 			this.rctTabPanel1.Controls.Add(this.tabWater);
 			this.rctTabPanel1.Controls.Add(this.tabAttractions);
@@ -675,273 +682,80 @@ namespace RCTDataEditor {
 			this.rctTabPanel1.PanelBorderColorCorner = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.rctTabPanel1.PanelBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(91)))), ((int)(((byte)(63)))), ((int)(((byte)(31)))));
 			this.rctTabPanel1.PanelBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(163)))), ((int)(((byte)(147)))), ((int)(((byte)(127)))));
-			this.rctTabPanel1.Size = new System.Drawing.Size(553, 32);
+			this.rctTabPanel1.Size = new System.Drawing.Size(584, 32);
 			this.rctTabPanel1.TabIndex = 141;
 			// 
-			// buttonBrowse
+			// tabSettings
 			// 
-			this.buttonBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonBrowse.BorderOnHover = false;
-			this.buttonBrowse.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonBrowse.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonBrowse.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonBrowse.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonBrowse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonBrowse.Image = null;
-			this.buttonBrowse.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonBrowse.Location = new System.Drawing.Point(419, 9);
-			this.buttonBrowse.Name = "buttonBrowse";
-			this.buttonBrowse.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonBrowse.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonBrowse.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonBrowse.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonBrowse.Size = new System.Drawing.Size(60, 18);
-			this.buttonBrowse.TabIndex = 139;
-			this.buttonBrowse.Text = "Browse";
-			this.buttonBrowse.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonBrowse.Toggleable = false;
-			this.buttonBrowse.Toggled = false;
-			this.buttonBrowse.ButtonPressed += new System.EventHandler(this.BrowseDirectory);
+			this.tabSettings.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabSettings.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabSettings.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSettings.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabSettings.Image = global::RCTDataEditor.Properties.Resources.TabSettings;
+			this.tabSettings.Location = new System.Drawing.Point(407, 5);
+			this.tabSettings.Name = "tabSettings";
+			this.tabSettings.NextTabButton = null;
+			this.tabSettings.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSettings.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabSettings.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabSettings.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSettings.PreviousTabButton = this.tabScenarioText;
+			this.tabSettings.Size = new System.Drawing.Size(31, 27);
+			this.tabSettings.TabControlIndex = ((uint)(12u));
+			this.tabSettings.TabIndex = 140;
+			this.tabSettings.TabPage = this.tabGroupSettings;
+			this.tabSettings.Text = "rctTabButton10";
+			this.tabSettings.Toggled = false;
+			this.tabSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
 			// 
-			// tabInfo
+			// tabScenarioText
 			// 
-			this.tabInfo.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabInfo.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabInfo.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabInfo.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabInfo.Image = global::RCTDataEditor.Properties.Resources.TabInfo;
-			this.tabInfo.Location = new System.Drawing.Point(4, 5);
-			this.tabInfo.Name = "tabInfo";
-			this.tabInfo.NextTabButton = this.tabAll;
-			this.tabInfo.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabInfo.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabInfo.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabInfo.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabInfo.PreviousTabButton = null;
-			this.tabInfo.Size = new System.Drawing.Size(31, 27);
-			this.tabInfo.TabControlIndex = ((uint)(0u));
-			this.tabInfo.TabIndex = 126;
-			this.tabInfo.TabPage = this.tabGroupInfo;
-			this.tabInfo.Text = "rctTabButton1";
-			this.tabInfo.Toggled = false;
-			this.tabInfo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			this.tabScenarioText.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabScenarioText.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabScenarioText.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabScenarioText.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabScenarioText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabScenarioText.Image = global::RCTDataEditor.Properties.Resources.TabScenarioText;
+			this.tabScenarioText.Location = new System.Drawing.Point(376, 5);
+			this.tabScenarioText.Name = "tabScenarioText";
+			this.tabScenarioText.NextTabButton = this.tabSettings;
+			this.tabScenarioText.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabScenarioText.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabScenarioText.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabScenarioText.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabScenarioText.PreviousTabButton = this.tabWater;
+			this.tabScenarioText.Size = new System.Drawing.Size(31, 27);
+			this.tabScenarioText.TabControlIndex = ((uint)(12u));
+			this.tabScenarioText.TabIndex = 138;
+			this.tabScenarioText.TabPage = this.tabGroupScenarioText;
+			this.tabScenarioText.Text = "rctTabButton10";
+			this.tabScenarioText.Toggled = false;
+			this.tabScenarioText.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
 			// 
-			// tabAll
+			// tabWater
 			// 
-			this.tabAll.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabAll.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabAll.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabAll.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabAll.Image = global::RCTDataEditor.Properties.Resources.TabAll;
-			this.tabAll.Location = new System.Drawing.Point(35, 5);
-			this.tabAll.Name = "tabAll";
-			this.tabAll.NextTabButton = this.tabAttractions;
-			this.tabAll.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabAll.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabAll.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabAll.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabAll.PreviousTabButton = this.tabInfo;
-			this.tabAll.Size = new System.Drawing.Size(31, 27);
-			this.tabAll.TabControlIndex = ((uint)(1u));
-			this.tabAll.TabIndex = 127;
-			this.tabAll.TabPage = this.tabGroupAll;
-			this.tabAll.Text = "rctTabButton1";
-			this.tabAll.Toggled = true;
-			this.tabAll.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabAttractions
-			// 
-			this.tabAttractions.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabAttractions.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabAttractions.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabAttractions.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabAttractions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabAttractions.Image = global::RCTDataEditor.Properties.Resources.TabAttractions;
-			this.tabAttractions.Location = new System.Drawing.Point(66, 5);
-			this.tabAttractions.Name = "tabAttractions";
-			this.tabAttractions.NextTabButton = this.tabSmallScenery;
-			this.tabAttractions.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabAttractions.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabAttractions.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabAttractions.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabAttractions.PreviousTabButton = this.tabAll;
-			this.tabAttractions.Size = new System.Drawing.Size(31, 27);
-			this.tabAttractions.TabControlIndex = ((uint)(2u));
-			this.tabAttractions.TabIndex = 128;
-			this.tabAttractions.TabPage = this.tabGroupAttractions;
-			this.tabAttractions.Text = "rctTabButton1";
-			this.tabAttractions.Toggled = false;
-			this.tabAttractions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabSmallScenery
-			// 
-			this.tabSmallScenery.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabSmallScenery.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabSmallScenery.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSmallScenery.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSmallScenery.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabSmallScenery.Image = global::RCTDataEditor.Properties.Resources.TabSmallScenery;
-			this.tabSmallScenery.Location = new System.Drawing.Point(97, 5);
-			this.tabSmallScenery.Name = "tabSmallScenery";
-			this.tabSmallScenery.NextTabButton = this.tabLargeScenery;
-			this.tabSmallScenery.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSmallScenery.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabSmallScenery.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabSmallScenery.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSmallScenery.PreviousTabButton = this.tabAttractions;
-			this.tabSmallScenery.Size = new System.Drawing.Size(31, 27);
-			this.tabSmallScenery.TabControlIndex = ((uint)(3u));
-			this.tabSmallScenery.TabIndex = 129;
-			this.tabSmallScenery.TabPage = this.tabGroupSmallScenery;
-			this.tabSmallScenery.Text = "rctTabButton1";
-			this.tabSmallScenery.Toggled = false;
-			this.tabSmallScenery.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabLargeScenery
-			// 
-			this.tabLargeScenery.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabLargeScenery.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabLargeScenery.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabLargeScenery.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabLargeScenery.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabLargeScenery.Image = global::RCTDataEditor.Properties.Resources.TabLargeScenery;
-			this.tabLargeScenery.Location = new System.Drawing.Point(128, 5);
-			this.tabLargeScenery.Name = "tabLargeScenery";
-			this.tabLargeScenery.NextTabButton = this.tabWalls;
-			this.tabLargeScenery.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabLargeScenery.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabLargeScenery.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabLargeScenery.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabLargeScenery.PreviousTabButton = this.tabSmallScenery;
-			this.tabLargeScenery.Size = new System.Drawing.Size(31, 27);
-			this.tabLargeScenery.TabControlIndex = ((uint)(4u));
-			this.tabLargeScenery.TabIndex = 130;
-			this.tabLargeScenery.TabPage = this.tabGroupLargeScenery;
-			this.tabLargeScenery.Text = "rctTabButton2";
-			this.tabLargeScenery.Toggled = false;
-			this.tabLargeScenery.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabWalls
-			// 
-			this.tabWalls.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabWalls.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabWalls.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabWalls.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabWalls.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabWalls.Image = global::RCTDataEditor.Properties.Resources.TabWalls;
-			this.tabWalls.Location = new System.Drawing.Point(159, 5);
-			this.tabWalls.Name = "tabWalls";
-			this.tabWalls.NextTabButton = this.tabSigns;
-			this.tabWalls.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabWalls.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabWalls.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabWalls.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabWalls.PreviousTabButton = this.tabLargeScenery;
-			this.tabWalls.Size = new System.Drawing.Size(31, 27);
-			this.tabWalls.TabControlIndex = ((uint)(5u));
-			this.tabWalls.TabIndex = 135;
-			this.tabWalls.TabPage = this.tabGroupWalls;
-			this.tabWalls.Text = "rctTabButton7";
-			this.tabWalls.Toggled = false;
-			this.tabWalls.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabSigns
-			// 
-			this.tabSigns.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabSigns.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabSigns.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSigns.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSigns.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabSigns.Image = global::RCTDataEditor.Properties.Resources.TabSigns;
-			this.tabSigns.Location = new System.Drawing.Point(190, 5);
-			this.tabSigns.Name = "tabSigns";
-			this.tabSigns.NextTabButton = this.tabPaths;
-			this.tabSigns.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSigns.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabSigns.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabSigns.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSigns.PreviousTabButton = this.tabWalls;
-			this.tabSigns.Size = new System.Drawing.Size(31, 27);
-			this.tabSigns.TabControlIndex = ((uint)(6u));
-			this.tabSigns.TabIndex = 131;
-			this.tabSigns.TabPage = this.tabGroupSigns;
-			this.tabSigns.Text = "rctTabButton3";
-			this.tabSigns.Toggled = false;
-			this.tabSigns.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabPaths
-			// 
-			this.tabPaths.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabPaths.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabPaths.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabPaths.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabPaths.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabPaths.Image = global::RCTDataEditor.Properties.Resources.TabPaths;
-			this.tabPaths.Location = new System.Drawing.Point(221, 5);
-			this.tabPaths.Name = "tabPaths";
-			this.tabPaths.NextTabButton = this.tabPathAdditions;
-			this.tabPaths.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabPaths.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabPaths.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabPaths.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabPaths.PreviousTabButton = this.tabSigns;
-			this.tabPaths.Size = new System.Drawing.Size(31, 27);
-			this.tabPaths.TabControlIndex = ((uint)(7u));
-			this.tabPaths.TabIndex = 132;
-			this.tabPaths.TabPage = this.tabGroupPaths;
-			this.tabPaths.Text = "rctTabButton4";
-			this.tabPaths.Toggled = false;
-			this.tabPaths.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabPathAdditions
-			// 
-			this.tabPathAdditions.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabPathAdditions.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabPathAdditions.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabPathAdditions.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabPathAdditions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabPathAdditions.Image = global::RCTDataEditor.Properties.Resources.TabPathAdditions;
-			this.tabPathAdditions.Location = new System.Drawing.Point(252, 5);
-			this.tabPathAdditions.Name = "tabPathAdditions";
-			this.tabPathAdditions.NextTabButton = this.tabSceneryGroups;
-			this.tabPathAdditions.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabPathAdditions.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabPathAdditions.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabPathAdditions.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabPathAdditions.PreviousTabButton = this.tabPaths;
-			this.tabPathAdditions.Size = new System.Drawing.Size(31, 27);
-			this.tabPathAdditions.TabControlIndex = ((uint)(8u));
-			this.tabPathAdditions.TabIndex = 133;
-			this.tabPathAdditions.TabPage = this.tabGroupPathAdditions;
-			this.tabPathAdditions.Text = "rctTabButton5";
-			this.tabPathAdditions.Toggled = false;
-			this.tabPathAdditions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabSceneryGroups
-			// 
-			this.tabSceneryGroups.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabSceneryGroups.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabSceneryGroups.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSceneryGroups.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSceneryGroups.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabSceneryGroups.Image = global::RCTDataEditor.Properties.Resources.TabSceneryGroups;
-			this.tabSceneryGroups.Location = new System.Drawing.Point(283, 5);
-			this.tabSceneryGroups.Name = "tabSceneryGroups";
-			this.tabSceneryGroups.NextTabButton = this.tabParkEntrances;
-			this.tabSceneryGroups.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSceneryGroups.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabSceneryGroups.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabSceneryGroups.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSceneryGroups.PreviousTabButton = this.tabPathAdditions;
-			this.tabSceneryGroups.Size = new System.Drawing.Size(31, 27);
-			this.tabSceneryGroups.TabControlIndex = ((uint)(9u));
-			this.tabSceneryGroups.TabIndex = 134;
-			this.tabSceneryGroups.TabPage = this.tabGroupSceneryGroups;
-			this.tabSceneryGroups.Text = "rctTabButton6";
-			this.tabSceneryGroups.Toggled = false;
-			this.tabSceneryGroups.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			this.tabWater.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabWater.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabWater.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabWater.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabWater.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabWater.Image = global::RCTDataEditor.Properties.Resources.TabWater;
+			this.tabWater.Location = new System.Drawing.Point(345, 5);
+			this.tabWater.Name = "tabWater";
+			this.tabWater.NextTabButton = this.tabScenarioText;
+			this.tabWater.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabWater.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabWater.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabWater.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabWater.PreviousTabButton = this.tabParkEntrances;
+			this.tabWater.Size = new System.Drawing.Size(31, 27);
+			this.tabWater.TabControlIndex = ((uint)(11u));
+			this.tabWater.TabIndex = 137;
+			this.tabWater.TabPage = this.tabGroupWater;
+			this.tabWater.Text = "rctTabButton9";
+			this.tabWater.Toggled = false;
+			this.tabWater.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
 			// 
 			// tabParkEntrances
 			// 
@@ -967,1029 +781,245 @@ namespace RCTDataEditor {
 			this.tabParkEntrances.Toggled = false;
 			this.tabParkEntrances.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
 			// 
-			// tabWater
-			// 
-			this.tabWater.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabWater.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabWater.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabWater.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabWater.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabWater.Image = global::RCTDataEditor.Properties.Resources.TabWater;
-			this.tabWater.Location = new System.Drawing.Point(345, 5);
-			this.tabWater.Name = "tabWater";
-			this.tabWater.NextTabButton = this.tabSettings;
-			this.tabWater.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabWater.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabWater.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabWater.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabWater.PreviousTabButton = this.tabParkEntrances;
-			this.tabWater.Size = new System.Drawing.Size(31, 27);
-			this.tabWater.TabControlIndex = ((uint)(11u));
-			this.tabWater.TabIndex = 137;
-			this.tabWater.TabPage = this.tabGroupWater;
-			this.tabWater.Text = "rctTabButton9";
-			this.tabWater.Toggled = false;
-			this.tabWater.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabSettings
-			// 
-			this.tabSettings.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
-			this.tabSettings.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
-			this.tabSettings.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSettings.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.tabSettings.Image = global::RCTDataEditor.Properties.Resources.TabSettings;
-			this.tabSettings.Location = new System.Drawing.Point(376, 5);
-			this.tabSettings.Name = "tabSettings";
-			this.tabSettings.NextTabButton = null;
-			this.tabSettings.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.tabSettings.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.tabSettings.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.tabSettings.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.tabSettings.PreviousTabButton = this.tabWater;
-			this.tabSettings.Size = new System.Drawing.Size(31, 27);
-			this.tabSettings.TabControlIndex = ((uint)(12u));
-			this.tabSettings.TabIndex = 138;
-			this.tabSettings.TabPage = this.tabGroupSettings;
-			this.tabSettings.Text = "rctTabButton10";
-			this.tabSettings.Toggled = false;
-			this.tabSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
-			// 
-			// tabGroupSettings
-			// 
-			this.tabGroupSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
-			this.tabGroupSettings.Controls.Add(this.checkBoxBackupDeletions);
-			this.tabGroupSettings.Controls.Add(this.checkBoxAllowDeletions);
-			this.tabGroupSettings.Controls.Add(this.buttonOpenDir);
-			this.tabGroupSettings.Controls.Add(this.buttonExtract);
-			this.tabGroupSettings.Controls.Add(this.checkBoxRemapImage);
-			this.tabGroupSettings.Controls.Add(this.buttonAbout);
-			this.tabGroupSettings.Controls.Add(this.rctLabel2);
-			this.tabGroupSettings.Controls.Add(this.rctLabel1);
-			this.tabGroupSettings.Controls.Add(this.checkBoxQuickLoad);
-			this.tabGroupSettings.Controls.Add(this.buttonSaveSettings);
-			this.tabGroupSettings.Controls.Add(this.buttonBrowseDefault);
-			this.tabGroupSettings.Controls.Add(this.numericUpDownObjectsPerTick);
-			this.tabGroupSettings.Controls.Add(this.textBoxDirectory);
-			this.tabGroupSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabGroupSettings.Location = new System.Drawing.Point(1, 1);
-			this.tabGroupSettings.Name = "tabGroupSettings";
-			this.tabGroupSettings.Size = new System.Drawing.Size(545, 359);
-			this.tabGroupSettings.TabIndex = 0;
-			this.tabGroupSettings.Visible = false;
-			// 
-			// checkBoxBackupDeletions
-			// 
-			this.checkBoxBackupDeletions.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.checkBoxBackupDeletions.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.checkBoxBackupDeletions.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.checkBoxBackupDeletions.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
-			this.checkBoxBackupDeletions.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBoxBackupDeletions.FontType = CustomControls.Visuals.FontType.Bold;
-			this.checkBoxBackupDeletions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.checkBoxBackupDeletions.Location = new System.Drawing.Point(163, 130);
-			this.checkBoxBackupDeletions.Name = "checkBoxBackupDeletions";
-			this.checkBoxBackupDeletions.OutlineColor = System.Drawing.Color.Transparent;
-			this.checkBoxBackupDeletions.Size = new System.Drawing.Size(110, 11);
-			this.checkBoxBackupDeletions.TabIndex = 153;
-			this.checkBoxBackupDeletions.Text = "Backup Deletions";
-			this.checkBoxBackupDeletions.CheckStateChanged += new System.EventHandler(this.BackupDeletions);
-			// 
-			// checkBoxAllowDeletions
-			// 
-			this.checkBoxAllowDeletions.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.checkBoxAllowDeletions.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.checkBoxAllowDeletions.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.checkBoxAllowDeletions.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
-			this.checkBoxAllowDeletions.CheckState = System.Windows.Forms.CheckState.Unchecked;
-			this.checkBoxAllowDeletions.FontType = CustomControls.Visuals.FontType.Bold;
-			this.checkBoxAllowDeletions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.checkBoxAllowDeletions.Location = new System.Drawing.Point(15, 130);
-			this.checkBoxAllowDeletions.Name = "checkBoxAllowDeletions";
-			this.checkBoxAllowDeletions.OutlineColor = System.Drawing.Color.Transparent;
-			this.checkBoxAllowDeletions.Size = new System.Drawing.Size(100, 11);
-			this.checkBoxAllowDeletions.TabIndex = 152;
-			this.checkBoxAllowDeletions.Text = "Allow Deletions";
-			this.checkBoxAllowDeletions.CheckStateChanged += new System.EventHandler(this.AllowDeletions);
-			// 
-			// buttonOpenDir
-			// 
-			this.buttonOpenDir.BorderOnHover = false;
-			this.buttonOpenDir.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonOpenDir.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonOpenDir.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonOpenDir.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonOpenDir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonOpenDir.Image = null;
-			this.buttonOpenDir.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonOpenDir.Location = new System.Drawing.Point(121, 154);
-			this.buttonOpenDir.Name = "buttonOpenDir";
-			this.buttonOpenDir.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonOpenDir.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonOpenDir.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonOpenDir.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonOpenDir.Size = new System.Drawing.Size(100, 18);
-			this.buttonOpenDir.TabIndex = 151;
-			this.buttonOpenDir.Text = "Open Directory";
-			this.buttonOpenDir.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonOpenDir.Toggleable = false;
-			this.buttonOpenDir.Toggled = false;
-			this.buttonOpenDir.ButtonPressed += new System.EventHandler(this.OpenExtractDirectory);
-			// 
-			// buttonExtract
-			// 
-			this.buttonExtract.BorderOnHover = false;
-			this.buttonExtract.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonExtract.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonExtract.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonExtract.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonExtract.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonExtract.Image = null;
-			this.buttonExtract.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonExtract.Location = new System.Drawing.Point(14, 154);
-			this.buttonExtract.Name = "buttonExtract";
-			this.buttonExtract.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonExtract.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonExtract.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonExtract.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonExtract.Size = new System.Drawing.Size(100, 18);
-			this.buttonExtract.TabIndex = 150;
-			this.buttonExtract.Text = "Extract Images";
-			this.buttonExtract.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonExtract.Toggleable = false;
-			this.buttonExtract.Toggled = false;
-			this.buttonExtract.ButtonPressed += new System.EventHandler(this.ExtractImages);
-			// 
-			// checkBoxRemapImage
-			// 
-			this.checkBoxRemapImage.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.checkBoxRemapImage.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.checkBoxRemapImage.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.checkBoxRemapImage.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
-			this.checkBoxRemapImage.CheckState = System.Windows.Forms.CheckState.Unchecked;
-			this.checkBoxRemapImage.FontType = CustomControls.Visuals.FontType.Bold;
-			this.checkBoxRemapImage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.checkBoxRemapImage.Location = new System.Drawing.Point(163, 105);
-			this.checkBoxRemapImage.Name = "checkBoxRemapImage";
-			this.checkBoxRemapImage.OutlineColor = System.Drawing.Color.Transparent;
-			this.checkBoxRemapImage.Size = new System.Drawing.Size(116, 11);
-			this.checkBoxRemapImage.TabIndex = 149;
-			this.checkBoxRemapImage.Text = "Remap Image View";
-			this.checkBoxRemapImage.CheckStateChanged += new System.EventHandler(this.RemapImageView);
-			// 
-			// buttonAbout
-			// 
-			this.buttonAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonAbout.BorderOnHover = false;
-			this.buttonAbout.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonAbout.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonAbout.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonAbout.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonAbout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonAbout.Image = null;
-			this.buttonAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonAbout.Location = new System.Drawing.Point(410, 10);
-			this.buttonAbout.Name = "buttonAbout";
-			this.buttonAbout.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonAbout.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonAbout.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonAbout.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonAbout.Size = new System.Drawing.Size(60, 18);
-			this.buttonAbout.TabIndex = 148;
-			this.buttonAbout.Text = "About";
-			this.buttonAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonAbout.Toggleable = false;
-			this.buttonAbout.Toggled = false;
-			this.buttonAbout.ButtonPressed += new System.EventHandler(this.OpenAboutForm);
-			// 
-			// rctLabel2
-			// 
-			this.rctLabel2.FontType = CustomControls.Visuals.FontType.Bold;
-			this.rctLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctLabel2.Location = new System.Drawing.Point(14, 16);
-			this.rctLabel2.Name = "rctLabel2";
-			this.rctLabel2.OutlineColor = System.Drawing.Color.Transparent;
-			this.rctLabel2.Size = new System.Drawing.Size(100, 14);
-			this.rctLabel2.TabIndex = 147;
-			this.rctLabel2.Text = "Default Directory:";
-			this.rctLabel2.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-			// 
-			// rctLabel1
-			// 
-			this.rctLabel1.FontType = CustomControls.Visuals.FontType.Bold;
-			this.rctLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.rctLabel1.Location = new System.Drawing.Point(16, 76);
-			this.rctLabel1.Name = "rctLabel1";
-			this.rctLabel1.OutlineColor = System.Drawing.Color.Transparent;
-			this.rctLabel1.Size = new System.Drawing.Size(94, 14);
-			this.rctLabel1.TabIndex = 146;
-			this.rctLabel1.Text = "Objects Per Tick:";
-			this.rctLabel1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
-			// 
-			// checkBoxQuickLoad
-			// 
-			this.checkBoxQuickLoad.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.checkBoxQuickLoad.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.checkBoxQuickLoad.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.checkBoxQuickLoad.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
-			this.checkBoxQuickLoad.CheckState = System.Windows.Forms.CheckState.Unchecked;
-			this.checkBoxQuickLoad.FontType = CustomControls.Visuals.FontType.Bold;
-			this.checkBoxQuickLoad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.checkBoxQuickLoad.Location = new System.Drawing.Point(15, 105);
-			this.checkBoxQuickLoad.Name = "checkBoxQuickLoad";
-			this.checkBoxQuickLoad.OutlineColor = System.Drawing.Color.Transparent;
-			this.checkBoxQuickLoad.Size = new System.Drawing.Size(120, 11);
-			this.checkBoxQuickLoad.TabIndex = 142;
-			this.checkBoxQuickLoad.Text = "Quick Load Images";
-			this.checkBoxQuickLoad.CheckStateChanged += new System.EventHandler(this.QuickLoadAttractions);
-			// 
-			// buttonSaveSettings
-			// 
-			this.buttonSaveSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonSaveSettings.BorderOnHover = false;
-			this.buttonSaveSettings.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonSaveSettings.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonSaveSettings.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonSaveSettings.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonSaveSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonSaveSettings.Image = null;
-			this.buttonSaveSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonSaveSettings.Location = new System.Drawing.Point(477, 10);
-			this.buttonSaveSettings.Name = "buttonSaveSettings";
-			this.buttonSaveSettings.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonSaveSettings.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonSaveSettings.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonSaveSettings.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonSaveSettings.Size = new System.Drawing.Size(60, 18);
-			this.buttonSaveSettings.TabIndex = 140;
-			this.buttonSaveSettings.Text = "Save";
-			this.buttonSaveSettings.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonSaveSettings.Toggleable = false;
-			this.buttonSaveSettings.Toggled = false;
-			this.buttonSaveSettings.ButtonPressed += new System.EventHandler(this.SaveSettings);
-			// 
-			// buttonBrowseDefault
-			// 
-			this.buttonBrowseDefault.BorderOnHover = false;
-			this.buttonBrowseDefault.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.buttonBrowseDefault.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonBrowseDefault.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonBrowseDefault.FontType = CustomControls.Visuals.FontType.Bold;
-			this.buttonBrowseDefault.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
-			this.buttonBrowseDefault.Image = null;
-			this.buttonBrowseDefault.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonBrowseDefault.Location = new System.Drawing.Point(118, 13);
-			this.buttonBrowseDefault.Name = "buttonBrowseDefault";
-			this.buttonBrowseDefault.OutlineColor = System.Drawing.Color.Transparent;
-			this.buttonBrowseDefault.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
-			this.buttonBrowseDefault.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
-			this.buttonBrowseDefault.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.buttonBrowseDefault.Size = new System.Drawing.Size(60, 18);
-			this.buttonBrowseDefault.TabIndex = 130;
-			this.buttonBrowseDefault.Text = "Browse";
-			this.buttonBrowseDefault.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonBrowseDefault.Toggleable = false;
-			this.buttonBrowseDefault.Toggled = false;
-			this.buttonBrowseDefault.ButtonPressed += new System.EventHandler(this.BrowseDefaultDirectory);
-			// 
-			// numericUpDownObjectsPerTick
-			// 
-			this.numericUpDownObjectsPerTick.Location = new System.Drawing.Point(114, 72);
-			this.numericUpDownObjectsPerTick.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-			this.numericUpDownObjectsPerTick.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.numericUpDownObjectsPerTick.Name = "numericUpDownObjectsPerTick";
-			this.numericUpDownObjectsPerTick.Size = new System.Drawing.Size(71, 20);
-			this.numericUpDownObjectsPerTick.TabIndex = 128;
-			this.toolTips.SetToolTip(this.numericUpDownObjectsPerTick, "Change the amount of objects loaded every 200 milliseconds");
-			this.numericUpDownObjectsPerTick.Value = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-			this.numericUpDownObjectsPerTick.ValueChanged += new System.EventHandler(this.ObjectsPerTickChanged);
-			// 
-			// textBoxDirectory
-			// 
-			this.textBoxDirectory.Location = new System.Drawing.Point(12, 40);
-			this.textBoxDirectory.Name = "textBoxDirectory";
-			this.textBoxDirectory.ReadOnly = true;
-			this.textBoxDirectory.Size = new System.Drawing.Size(509, 20);
-			this.textBoxDirectory.TabIndex = 1;
-			// 
-			// tabGroupWater
-			// 
-			this.tabGroupWater.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
-			this.tabGroupWater.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.tabGroupWater.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader46,
-            this.columnHeader47,
-            this.columnHeader48,
-            this.columnHeader49,
-            this.columnHeader50,
-            this.columnHeader63});
-			this.tabGroupWater.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabGroupWater.FullRowSelect = true;
-			this.tabGroupWater.HideSelection = false;
-			this.tabGroupWater.Location = new System.Drawing.Point(1, 1);
-			this.tabGroupWater.Name = "tabGroupWater";
-			this.tabGroupWater.OwnerDraw = true;
-			this.tabGroupWater.Size = new System.Drawing.Size(545, 359);
-			this.tabGroupWater.SmallImageList = this.imageListFlags;
-			this.tabGroupWater.TabIndex = 132;
-			this.tabGroupWater.TabStop = false;
-			this.tabGroupWater.UseCompatibleStateImageBehavior = false;
-			this.tabGroupWater.View = System.Windows.Forms.View.Details;
-			this.tabGroupWater.Visible = false;
-			this.tabGroupWater.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
-			this.tabGroupWater.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
-			this.tabGroupWater.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
-			this.tabGroupWater.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
-			this.tabGroupWater.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
-			this.tabGroupWater.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
-			this.tabGroupWater.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
-			// 
-			// columnHeader46
-			// 
-			this.columnHeader46.Text = "";
-			this.columnHeader46.Width = 32;
-			// 
-			// columnHeader47
-			// 
-			this.columnHeader47.Text = "Source";
-			this.columnHeader47.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader47.Width = 59;
-			// 
-			// columnHeader48
-			// 
-			this.columnHeader48.Text = "File";
-			this.columnHeader48.Width = 110;
-			// 
-			// columnHeader49
-			// 
-			this.columnHeader49.Text = "Name";
-			this.columnHeader49.Width = 142;
-			// 
-			// columnHeader50
-			// 
-			this.columnHeader50.Text = "Type";
-			this.columnHeader50.Width = 100;
-			// 
-			// columnHeader63
-			// 
-			this.columnHeader63.Text = "Subtype";
-			this.columnHeader63.Width = 80;
-			// 
-			// imageListFlags
-			// 
-			this.imageListFlags.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListFlags.ImageStream")));
-			this.imageListFlags.TransparentColor = System.Drawing.Color.Transparent;
-			this.imageListFlags.Images.SetKeyName(0, "CloseFlag.png");
-			this.imageListFlags.Images.SetKeyName(1, "TestFlag.png");
-			this.imageListFlags.Images.SetKeyName(2, "OpenFlagDown.png");
-			this.imageListFlags.Images.SetKeyName(3, "BrokenFlagDown.png");
-			// 
-			// tabGroupParkEntrances
-			// 
-			this.tabGroupParkEntrances.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
-			this.tabGroupParkEntrances.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.tabGroupParkEntrances.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader41,
-            this.columnHeader42,
-            this.columnHeader43,
-            this.columnHeader44,
-            this.columnHeader45,
-            this.columnHeader57});
-			this.tabGroupParkEntrances.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabGroupParkEntrances.FullRowSelect = true;
-			this.tabGroupParkEntrances.HideSelection = false;
-			this.tabGroupParkEntrances.Location = new System.Drawing.Point(1, 1);
-			this.tabGroupParkEntrances.Name = "tabGroupParkEntrances";
-			this.tabGroupParkEntrances.OwnerDraw = true;
-			this.tabGroupParkEntrances.Size = new System.Drawing.Size(545, 359);
-			this.tabGroupParkEntrances.SmallImageList = this.imageListFlags;
-			this.tabGroupParkEntrances.TabIndex = 131;
-			this.tabGroupParkEntrances.TabStop = false;
-			this.tabGroupParkEntrances.UseCompatibleStateImageBehavior = false;
-			this.tabGroupParkEntrances.View = System.Windows.Forms.View.Details;
-			this.tabGroupParkEntrances.Visible = false;
-			this.tabGroupParkEntrances.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
-			this.tabGroupParkEntrances.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
-			this.tabGroupParkEntrances.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
-			this.tabGroupParkEntrances.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
-			this.tabGroupParkEntrances.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
-			this.tabGroupParkEntrances.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
-			this.tabGroupParkEntrances.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
-			// 
-			// columnHeader41
-			// 
-			this.columnHeader41.Text = "";
-			this.columnHeader41.Width = 32;
-			// 
-			// columnHeader42
-			// 
-			this.columnHeader42.Text = "Source";
-			this.columnHeader42.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader42.Width = 59;
-			// 
-			// columnHeader43
-			// 
-			this.columnHeader43.Text = "File";
-			this.columnHeader43.Width = 110;
-			// 
-			// columnHeader44
-			// 
-			this.columnHeader44.Text = "Name";
-			this.columnHeader44.Width = 142;
-			// 
-			// columnHeader45
-			// 
-			this.columnHeader45.Text = "Type";
-			this.columnHeader45.Width = 100;
-			// 
-			// columnHeader57
-			// 
-			this.columnHeader57.Text = "Subtype";
-			this.columnHeader57.Width = 80;
-			// 
-			// tabGroupSceneryGroups
-			// 
-			this.tabGroupSceneryGroups.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
-			this.tabGroupSceneryGroups.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.tabGroupSceneryGroups.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader36,
-            this.columnHeader37,
-            this.columnHeader38,
-            this.columnHeader39,
-            this.columnHeader40,
-            this.columnHeader61});
-			this.tabGroupSceneryGroups.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabGroupSceneryGroups.FullRowSelect = true;
-			this.tabGroupSceneryGroups.HideSelection = false;
-			this.tabGroupSceneryGroups.Location = new System.Drawing.Point(1, 1);
-			this.tabGroupSceneryGroups.Name = "tabGroupSceneryGroups";
-			this.tabGroupSceneryGroups.OwnerDraw = true;
-			this.tabGroupSceneryGroups.Size = new System.Drawing.Size(545, 359);
-			this.tabGroupSceneryGroups.SmallImageList = this.imageListFlags;
-			this.tabGroupSceneryGroups.TabIndex = 130;
-			this.tabGroupSceneryGroups.TabStop = false;
-			this.tabGroupSceneryGroups.UseCompatibleStateImageBehavior = false;
-			this.tabGroupSceneryGroups.View = System.Windows.Forms.View.Details;
-			this.tabGroupSceneryGroups.Visible = false;
-			this.tabGroupSceneryGroups.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
-			this.tabGroupSceneryGroups.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
-			this.tabGroupSceneryGroups.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
-			this.tabGroupSceneryGroups.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
-			this.tabGroupSceneryGroups.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
-			this.tabGroupSceneryGroups.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
-			this.tabGroupSceneryGroups.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
-			// 
-			// columnHeader36
-			// 
-			this.columnHeader36.Text = "";
-			this.columnHeader36.Width = 32;
-			// 
-			// columnHeader37
-			// 
-			this.columnHeader37.Text = "Source";
-			this.columnHeader37.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader37.Width = 59;
-			// 
-			// columnHeader38
-			// 
-			this.columnHeader38.Text = "File";
-			this.columnHeader38.Width = 110;
-			// 
-			// columnHeader39
-			// 
-			this.columnHeader39.Text = "Name";
-			this.columnHeader39.Width = 142;
-			// 
-			// columnHeader40
-			// 
-			this.columnHeader40.Text = "Type";
-			this.columnHeader40.Width = 100;
-			// 
-			// columnHeader61
-			// 
-			this.columnHeader61.Text = "Subtype";
-			this.columnHeader61.Width = 80;
-			// 
-			// tabGroupPathAdditions
-			// 
-			this.tabGroupPathAdditions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
-			this.tabGroupPathAdditions.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.tabGroupPathAdditions.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader31,
-            this.columnHeader32,
-            this.columnHeader33,
-            this.columnHeader34,
-            this.columnHeader35,
-            this.columnHeader58});
-			this.tabGroupPathAdditions.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabGroupPathAdditions.FullRowSelect = true;
-			this.tabGroupPathAdditions.HideSelection = false;
-			this.tabGroupPathAdditions.Location = new System.Drawing.Point(1, 1);
-			this.tabGroupPathAdditions.Name = "tabGroupPathAdditions";
-			this.tabGroupPathAdditions.OwnerDraw = true;
-			this.tabGroupPathAdditions.Size = new System.Drawing.Size(545, 359);
-			this.tabGroupPathAdditions.SmallImageList = this.imageListFlags;
-			this.tabGroupPathAdditions.TabIndex = 129;
-			this.tabGroupPathAdditions.TabStop = false;
-			this.tabGroupPathAdditions.UseCompatibleStateImageBehavior = false;
-			this.tabGroupPathAdditions.View = System.Windows.Forms.View.Details;
-			this.tabGroupPathAdditions.Visible = false;
-			this.tabGroupPathAdditions.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
-			this.tabGroupPathAdditions.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
-			this.tabGroupPathAdditions.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
-			this.tabGroupPathAdditions.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
-			this.tabGroupPathAdditions.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
-			this.tabGroupPathAdditions.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
-			this.tabGroupPathAdditions.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
-			// 
-			// columnHeader31
-			// 
-			this.columnHeader31.Text = "";
-			this.columnHeader31.Width = 32;
-			// 
-			// columnHeader32
-			// 
-			this.columnHeader32.Text = "Source";
-			this.columnHeader32.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader32.Width = 59;
-			// 
-			// columnHeader33
-			// 
-			this.columnHeader33.Text = "File";
-			this.columnHeader33.Width = 110;
-			// 
-			// columnHeader34
-			// 
-			this.columnHeader34.Text = "Name";
-			this.columnHeader34.Width = 142;
-			// 
-			// columnHeader35
-			// 
-			this.columnHeader35.Text = "Type";
-			this.columnHeader35.Width = 100;
-			// 
-			// columnHeader58
-			// 
-			this.columnHeader58.Text = "Subtype";
-			this.columnHeader58.Width = 80;
-			// 
-			// tabGroupPaths
-			// 
-			this.tabGroupPaths.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
-			this.tabGroupPaths.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.tabGroupPaths.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader21,
-            this.columnHeader22,
-            this.columnHeader23,
-            this.columnHeader24,
-            this.columnHeader25,
-            this.columnHeader59});
-			this.tabGroupPaths.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabGroupPaths.FullRowSelect = true;
-			this.tabGroupPaths.HideSelection = false;
-			this.tabGroupPaths.Location = new System.Drawing.Point(1, 1);
-			this.tabGroupPaths.Name = "tabGroupPaths";
-			this.tabGroupPaths.OwnerDraw = true;
-			this.tabGroupPaths.Size = new System.Drawing.Size(545, 359);
-			this.tabGroupPaths.SmallImageList = this.imageListFlags;
-			this.tabGroupPaths.TabIndex = 127;
-			this.tabGroupPaths.TabStop = false;
-			this.tabGroupPaths.UseCompatibleStateImageBehavior = false;
-			this.tabGroupPaths.View = System.Windows.Forms.View.Details;
-			this.tabGroupPaths.Visible = false;
-			this.tabGroupPaths.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
-			this.tabGroupPaths.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
-			this.tabGroupPaths.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
-			this.tabGroupPaths.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
-			this.tabGroupPaths.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
-			this.tabGroupPaths.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
-			this.tabGroupPaths.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
-			// 
-			// columnHeader21
-			// 
-			this.columnHeader21.Text = "";
-			this.columnHeader21.Width = 32;
-			// 
-			// columnHeader22
-			// 
-			this.columnHeader22.Text = "Source";
-			this.columnHeader22.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader22.Width = 59;
-			// 
-			// columnHeader23
-			// 
-			this.columnHeader23.Text = "File";
-			this.columnHeader23.Width = 110;
-			// 
-			// columnHeader24
-			// 
-			this.columnHeader24.Text = "Name";
-			this.columnHeader24.Width = 142;
-			// 
-			// columnHeader25
-			// 
-			this.columnHeader25.Text = "Type";
-			this.columnHeader25.Width = 100;
-			// 
-			// columnHeader59
-			// 
-			this.columnHeader59.Text = "Subtype";
-			this.columnHeader59.Width = 80;
-			// 
-			// tabGroupSigns
-			// 
-			this.tabGroupSigns.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
-			this.tabGroupSigns.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.tabGroupSigns.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader26,
-            this.columnHeader27,
-            this.columnHeader28,
-            this.columnHeader29,
-            this.columnHeader30,
-            this.columnHeader60});
-			this.tabGroupSigns.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabGroupSigns.FullRowSelect = true;
-			this.tabGroupSigns.HideSelection = false;
-			this.tabGroupSigns.Location = new System.Drawing.Point(1, 1);
-			this.tabGroupSigns.Name = "tabGroupSigns";
-			this.tabGroupSigns.OwnerDraw = true;
-			this.tabGroupSigns.Size = new System.Drawing.Size(545, 359);
-			this.tabGroupSigns.SmallImageList = this.imageListFlags;
-			this.tabGroupSigns.TabIndex = 128;
-			this.tabGroupSigns.TabStop = false;
-			this.tabGroupSigns.UseCompatibleStateImageBehavior = false;
-			this.tabGroupSigns.View = System.Windows.Forms.View.Details;
-			this.tabGroupSigns.Visible = false;
-			this.tabGroupSigns.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
-			this.tabGroupSigns.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
-			this.tabGroupSigns.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
-			this.tabGroupSigns.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
-			this.tabGroupSigns.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
-			this.tabGroupSigns.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
-			this.tabGroupSigns.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
-			// 
-			// columnHeader26
-			// 
-			this.columnHeader26.Text = "";
-			this.columnHeader26.Width = 32;
-			// 
-			// columnHeader27
-			// 
-			this.columnHeader27.Text = "Source";
-			this.columnHeader27.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader27.Width = 59;
-			// 
-			// columnHeader28
-			// 
-			this.columnHeader28.Text = "File";
-			this.columnHeader28.Width = 110;
-			// 
-			// columnHeader29
-			// 
-			this.columnHeader29.Text = "Name";
-			this.columnHeader29.Width = 142;
-			// 
-			// columnHeader30
-			// 
-			this.columnHeader30.Text = "Type";
-			this.columnHeader30.Width = 100;
-			// 
-			// columnHeader60
-			// 
-			this.columnHeader60.Text = "Subtype";
-			this.columnHeader60.Width = 80;
-			// 
-			// tabGroupWalls
-			// 
-			this.tabGroupWalls.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
-			this.tabGroupWalls.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.tabGroupWalls.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeaderFlag,
-            this.columnHeaderSource,
-            this.columnHeaderFile,
-            this.columnHeaderName,
-            this.columnHeaderType,
-            this.columnHeaderSubtype});
-			this.tabGroupWalls.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabGroupWalls.FullRowSelect = true;
-			this.tabGroupWalls.HideSelection = false;
-			this.tabGroupWalls.Location = new System.Drawing.Point(1, 1);
-			this.tabGroupWalls.Name = "tabGroupWalls";
-			this.tabGroupWalls.OwnerDraw = true;
-			this.tabGroupWalls.Size = new System.Drawing.Size(545, 359);
-			this.tabGroupWalls.SmallImageList = this.imageListFlags;
-			this.tabGroupWalls.TabIndex = 122;
-			this.tabGroupWalls.TabStop = false;
-			this.tabGroupWalls.UseCompatibleStateImageBehavior = false;
-			this.tabGroupWalls.View = System.Windows.Forms.View.Details;
-			this.tabGroupWalls.Visible = false;
-			this.tabGroupWalls.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
-			this.tabGroupWalls.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
-			this.tabGroupWalls.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
-			this.tabGroupWalls.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
-			this.tabGroupWalls.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
-			this.tabGroupWalls.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
-			this.tabGroupWalls.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
-			// 
-			// columnHeaderFlag
-			// 
-			this.columnHeaderFlag.Text = "";
-			this.columnHeaderFlag.Width = 32;
-			// 
-			// columnHeaderSource
-			// 
-			this.columnHeaderSource.Text = "Source";
-			this.columnHeaderSource.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeaderSource.Width = 59;
-			// 
-			// columnHeaderFile
-			// 
-			this.columnHeaderFile.Text = "File";
-			this.columnHeaderFile.Width = 110;
-			// 
-			// columnHeaderName
-			// 
-			this.columnHeaderName.Text = "Name";
-			this.columnHeaderName.Width = 142;
-			// 
-			// columnHeaderType
-			// 
-			this.columnHeaderType.Text = "Type";
-			this.columnHeaderType.Width = 100;
-			// 
-			// columnHeaderSubtype
-			// 
-			this.columnHeaderSubtype.Text = "Subtype";
-			this.columnHeaderSubtype.Width = 80;
-			// 
-			// tabGroupLargeScenery
-			// 
-			this.tabGroupLargeScenery.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
-			this.tabGroupLargeScenery.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.tabGroupLargeScenery.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader16,
-            this.columnHeader17,
-            this.columnHeader18,
-            this.columnHeader19,
-            this.columnHeader20,
-            this.columnHeader56});
-			this.tabGroupLargeScenery.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabGroupLargeScenery.FullRowSelect = true;
-			this.tabGroupLargeScenery.HideSelection = false;
-			this.tabGroupLargeScenery.Location = new System.Drawing.Point(1, 1);
-			this.tabGroupLargeScenery.Name = "tabGroupLargeScenery";
-			this.tabGroupLargeScenery.OwnerDraw = true;
-			this.tabGroupLargeScenery.Size = new System.Drawing.Size(545, 359);
-			this.tabGroupLargeScenery.SmallImageList = this.imageListFlags;
-			this.tabGroupLargeScenery.TabIndex = 126;
-			this.tabGroupLargeScenery.TabStop = false;
-			this.tabGroupLargeScenery.UseCompatibleStateImageBehavior = false;
-			this.tabGroupLargeScenery.View = System.Windows.Forms.View.Details;
-			this.tabGroupLargeScenery.Visible = false;
-			this.tabGroupLargeScenery.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
-			this.tabGroupLargeScenery.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
-			this.tabGroupLargeScenery.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
-			this.tabGroupLargeScenery.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
-			this.tabGroupLargeScenery.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
-			this.tabGroupLargeScenery.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
-			this.tabGroupLargeScenery.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
-			// 
-			// columnHeader16
-			// 
-			this.columnHeader16.Text = "";
-			this.columnHeader16.Width = 32;
-			// 
-			// columnHeader17
-			// 
-			this.columnHeader17.Text = "Source";
-			this.columnHeader17.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader17.Width = 59;
-			// 
-			// columnHeader18
-			// 
-			this.columnHeader18.Text = "File";
-			this.columnHeader18.Width = 110;
-			// 
-			// columnHeader19
-			// 
-			this.columnHeader19.Text = "Name";
-			this.columnHeader19.Width = 142;
-			// 
-			// columnHeader20
-			// 
-			this.columnHeader20.Text = "Type";
-			this.columnHeader20.Width = 100;
-			// 
-			// columnHeader56
-			// 
-			this.columnHeader56.Text = "Subtype";
-			this.columnHeader56.Width = 80;
-			// 
-			// tabGroupSmallScenery
-			// 
-			this.tabGroupSmallScenery.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
-			this.tabGroupSmallScenery.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.tabGroupSmallScenery.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader11,
-            this.columnHeader12,
-            this.columnHeader13,
-            this.columnHeader14,
-            this.columnHeader15,
-            this.columnHeader62});
-			this.tabGroupSmallScenery.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabGroupSmallScenery.FullRowSelect = true;
-			this.tabGroupSmallScenery.HideSelection = false;
-			this.tabGroupSmallScenery.Location = new System.Drawing.Point(1, 1);
-			this.tabGroupSmallScenery.Name = "tabGroupSmallScenery";
-			this.tabGroupSmallScenery.OwnerDraw = true;
-			this.tabGroupSmallScenery.Size = new System.Drawing.Size(545, 359);
-			this.tabGroupSmallScenery.SmallImageList = this.imageListFlags;
-			this.tabGroupSmallScenery.TabIndex = 125;
-			this.tabGroupSmallScenery.TabStop = false;
-			this.tabGroupSmallScenery.UseCompatibleStateImageBehavior = false;
-			this.tabGroupSmallScenery.View = System.Windows.Forms.View.Details;
-			this.tabGroupSmallScenery.Visible = false;
-			this.tabGroupSmallScenery.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
-			this.tabGroupSmallScenery.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
-			this.tabGroupSmallScenery.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
-			this.tabGroupSmallScenery.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
-			this.tabGroupSmallScenery.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
-			this.tabGroupSmallScenery.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
-			this.tabGroupSmallScenery.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
-			// 
-			// columnHeader11
-			// 
-			this.columnHeader11.Text = "";
-			this.columnHeader11.Width = 32;
-			// 
-			// columnHeader12
-			// 
-			this.columnHeader12.Text = "Source";
-			this.columnHeader12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader12.Width = 59;
-			// 
-			// columnHeader13
-			// 
-			this.columnHeader13.Text = "File";
-			this.columnHeader13.Width = 110;
-			// 
-			// columnHeader14
-			// 
-			this.columnHeader14.Text = "Name";
-			this.columnHeader14.Width = 142;
-			// 
-			// columnHeader15
-			// 
-			this.columnHeader15.Text = "Type";
-			this.columnHeader15.Width = 100;
-			// 
-			// columnHeader62
-			// 
-			this.columnHeader62.Text = "Subtype";
-			this.columnHeader62.Width = 80;
-			// 
-			// tabGroupAttractions
-			// 
-			this.tabGroupAttractions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
-			this.tabGroupAttractions.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.tabGroupAttractions.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader6,
-            this.columnHeader7,
-            this.columnHeader8,
-            this.columnHeader9,
-            this.columnHeader10,
-            this.columnHeader55,
-            this.columnHeader64});
-			this.tabGroupAttractions.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabGroupAttractions.FullRowSelect = true;
-			this.tabGroupAttractions.HideSelection = false;
-			this.tabGroupAttractions.Location = new System.Drawing.Point(1, 1);
-			this.tabGroupAttractions.Name = "tabGroupAttractions";
-			this.tabGroupAttractions.OwnerDraw = true;
-			this.tabGroupAttractions.Size = new System.Drawing.Size(545, 359);
-			this.tabGroupAttractions.SmallImageList = this.imageListFlags;
-			this.tabGroupAttractions.TabIndex = 124;
-			this.tabGroupAttractions.TabStop = false;
-			this.tabGroupAttractions.UseCompatibleStateImageBehavior = false;
-			this.tabGroupAttractions.View = System.Windows.Forms.View.Details;
-			this.tabGroupAttractions.Visible = false;
-			this.tabGroupAttractions.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
-			this.tabGroupAttractions.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
-			this.tabGroupAttractions.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
-			this.tabGroupAttractions.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
-			this.tabGroupAttractions.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
-			this.tabGroupAttractions.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
-			this.tabGroupAttractions.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
-			// 
-			// columnHeader6
-			// 
-			this.columnHeader6.Text = "";
-			this.columnHeader6.Width = 32;
-			// 
-			// columnHeader7
-			// 
-			this.columnHeader7.Text = "Source";
-			this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader7.Width = 59;
-			// 
-			// columnHeader8
-			// 
-			this.columnHeader8.Text = "File";
-			this.columnHeader8.Width = 110;
-			// 
-			// columnHeader9
-			// 
-			this.columnHeader9.Text = "Name";
-			this.columnHeader9.Width = 142;
-			// 
-			// columnHeader10
-			// 
-			this.columnHeader10.Text = "Type";
-			this.columnHeader10.Width = 100;
-			// 
-			// columnHeader55
-			// 
-			this.columnHeader55.Text = "Ride Type";
-			this.columnHeader55.Width = 80;
-			// 
-			// columnHeader64
-			// 
-			this.columnHeader64.Text = "Track Type";
-			this.columnHeader64.Width = 160;
-			// 
-			// tabGroupAll
-			// 
-			this.tabGroupAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
-			this.tabGroupAll.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.tabGroupAll.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5,
-            this.columnHeader54});
-			this.tabGroupAll.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabGroupAll.FullRowSelect = true;
-			this.tabGroupAll.HideSelection = false;
-			this.tabGroupAll.Location = new System.Drawing.Point(1, 1);
-			this.tabGroupAll.Name = "tabGroupAll";
-			this.tabGroupAll.OwnerDraw = true;
-			this.tabGroupAll.Size = new System.Drawing.Size(545, 359);
-			this.tabGroupAll.SmallImageList = this.imageListFlags;
-			this.tabGroupAll.TabIndex = 123;
-			this.tabGroupAll.TabStop = false;
-			this.tabGroupAll.UseCompatibleStateImageBehavior = false;
-			this.tabGroupAll.View = System.Windows.Forms.View.Details;
-			this.tabGroupAll.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
-			this.tabGroupAll.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
-			this.tabGroupAll.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
-			this.tabGroupAll.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
-			this.tabGroupAll.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
-			this.tabGroupAll.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
-			this.tabGroupAll.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
-			// 
-			// columnHeader1
-			// 
-			this.columnHeader1.Text = "";
-			this.columnHeader1.Width = 32;
-			// 
-			// columnHeader2
-			// 
-			this.columnHeader2.Text = "Source";
-			this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader2.Width = 59;
-			// 
-			// columnHeader3
-			// 
-			this.columnHeader3.Text = "File";
-			this.columnHeader3.Width = 110;
-			// 
-			// columnHeader4
-			// 
-			this.columnHeader4.Text = "Name";
-			this.columnHeader4.Width = 142;
-			// 
-			// columnHeader5
-			// 
-			this.columnHeader5.Text = "Type";
-			this.columnHeader5.Width = 100;
-			// 
-			// columnHeader54
-			// 
-			this.columnHeader54.Text = "Subtype";
-			this.columnHeader54.Width = 80;
+			// tabSceneryGroups
+			// 
+			this.tabSceneryGroups.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabSceneryGroups.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabSceneryGroups.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSceneryGroups.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSceneryGroups.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabSceneryGroups.Image = global::RCTDataEditor.Properties.Resources.TabSceneryGroups;
+			this.tabSceneryGroups.Location = new System.Drawing.Point(283, 5);
+			this.tabSceneryGroups.Name = "tabSceneryGroups";
+			this.tabSceneryGroups.NextTabButton = this.tabParkEntrances;
+			this.tabSceneryGroups.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSceneryGroups.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabSceneryGroups.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabSceneryGroups.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSceneryGroups.PreviousTabButton = this.tabPathAdditions;
+			this.tabSceneryGroups.Size = new System.Drawing.Size(31, 27);
+			this.tabSceneryGroups.TabControlIndex = ((uint)(9u));
+			this.tabSceneryGroups.TabIndex = 134;
+			this.tabSceneryGroups.TabPage = this.tabGroupSceneryGroups;
+			this.tabSceneryGroups.Text = "rctTabButton6";
+			this.tabSceneryGroups.Toggled = false;
+			this.tabSceneryGroups.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabPathAdditions
+			// 
+			this.tabPathAdditions.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabPathAdditions.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabPathAdditions.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabPathAdditions.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabPathAdditions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabPathAdditions.Image = global::RCTDataEditor.Properties.Resources.TabPathAdditions;
+			this.tabPathAdditions.Location = new System.Drawing.Point(252, 5);
+			this.tabPathAdditions.Name = "tabPathAdditions";
+			this.tabPathAdditions.NextTabButton = this.tabSceneryGroups;
+			this.tabPathAdditions.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabPathAdditions.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabPathAdditions.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabPathAdditions.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabPathAdditions.PreviousTabButton = this.tabPaths;
+			this.tabPathAdditions.Size = new System.Drawing.Size(31, 27);
+			this.tabPathAdditions.TabControlIndex = ((uint)(8u));
+			this.tabPathAdditions.TabIndex = 133;
+			this.tabPathAdditions.TabPage = this.tabGroupPathAdditions;
+			this.tabPathAdditions.Text = "rctTabButton5";
+			this.tabPathAdditions.Toggled = false;
+			this.tabPathAdditions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabPaths
+			// 
+			this.tabPaths.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabPaths.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabPaths.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabPaths.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabPaths.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabPaths.Image = global::RCTDataEditor.Properties.Resources.TabPaths;
+			this.tabPaths.Location = new System.Drawing.Point(221, 5);
+			this.tabPaths.Name = "tabPaths";
+			this.tabPaths.NextTabButton = this.tabPathAdditions;
+			this.tabPaths.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabPaths.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabPaths.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabPaths.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabPaths.PreviousTabButton = this.tabSigns;
+			this.tabPaths.Size = new System.Drawing.Size(31, 27);
+			this.tabPaths.TabControlIndex = ((uint)(7u));
+			this.tabPaths.TabIndex = 132;
+			this.tabPaths.TabPage = this.tabGroupPaths;
+			this.tabPaths.Text = "rctTabButton4";
+			this.tabPaths.Toggled = false;
+			this.tabPaths.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabSigns
+			// 
+			this.tabSigns.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabSigns.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabSigns.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSigns.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSigns.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabSigns.Image = global::RCTDataEditor.Properties.Resources.TabSigns;
+			this.tabSigns.Location = new System.Drawing.Point(190, 5);
+			this.tabSigns.Name = "tabSigns";
+			this.tabSigns.NextTabButton = this.tabPaths;
+			this.tabSigns.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSigns.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabSigns.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabSigns.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSigns.PreviousTabButton = this.tabWalls;
+			this.tabSigns.Size = new System.Drawing.Size(31, 27);
+			this.tabSigns.TabControlIndex = ((uint)(6u));
+			this.tabSigns.TabIndex = 131;
+			this.tabSigns.TabPage = this.tabGroupSigns;
+			this.tabSigns.Text = "rctTabButton3";
+			this.tabSigns.Toggled = false;
+			this.tabSigns.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabWalls
+			// 
+			this.tabWalls.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabWalls.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabWalls.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabWalls.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabWalls.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabWalls.Image = global::RCTDataEditor.Properties.Resources.TabWalls;
+			this.tabWalls.Location = new System.Drawing.Point(159, 5);
+			this.tabWalls.Name = "tabWalls";
+			this.tabWalls.NextTabButton = this.tabSigns;
+			this.tabWalls.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabWalls.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabWalls.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabWalls.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabWalls.PreviousTabButton = this.tabLargeScenery;
+			this.tabWalls.Size = new System.Drawing.Size(31, 27);
+			this.tabWalls.TabControlIndex = ((uint)(5u));
+			this.tabWalls.TabIndex = 135;
+			this.tabWalls.TabPage = this.tabGroupWalls;
+			this.tabWalls.Text = "rctTabButton7";
+			this.tabWalls.Toggled = false;
+			this.tabWalls.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabLargeScenery
+			// 
+			this.tabLargeScenery.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabLargeScenery.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabLargeScenery.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabLargeScenery.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabLargeScenery.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabLargeScenery.Image = global::RCTDataEditor.Properties.Resources.TabLargeScenery;
+			this.tabLargeScenery.Location = new System.Drawing.Point(128, 5);
+			this.tabLargeScenery.Name = "tabLargeScenery";
+			this.tabLargeScenery.NextTabButton = this.tabWalls;
+			this.tabLargeScenery.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabLargeScenery.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabLargeScenery.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabLargeScenery.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabLargeScenery.PreviousTabButton = this.tabSmallScenery;
+			this.tabLargeScenery.Size = new System.Drawing.Size(31, 27);
+			this.tabLargeScenery.TabControlIndex = ((uint)(4u));
+			this.tabLargeScenery.TabIndex = 130;
+			this.tabLargeScenery.TabPage = this.tabGroupLargeScenery;
+			this.tabLargeScenery.Text = "rctTabButton2";
+			this.tabLargeScenery.Toggled = false;
+			this.tabLargeScenery.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabSmallScenery
+			// 
+			this.tabSmallScenery.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabSmallScenery.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabSmallScenery.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSmallScenery.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSmallScenery.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabSmallScenery.Image = global::RCTDataEditor.Properties.Resources.TabSmallScenery;
+			this.tabSmallScenery.Location = new System.Drawing.Point(97, 5);
+			this.tabSmallScenery.Name = "tabSmallScenery";
+			this.tabSmallScenery.NextTabButton = this.tabLargeScenery;
+			this.tabSmallScenery.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabSmallScenery.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabSmallScenery.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabSmallScenery.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabSmallScenery.PreviousTabButton = this.tabAttractions;
+			this.tabSmallScenery.Size = new System.Drawing.Size(31, 27);
+			this.tabSmallScenery.TabControlIndex = ((uint)(3u));
+			this.tabSmallScenery.TabIndex = 129;
+			this.tabSmallScenery.TabPage = this.tabGroupSmallScenery;
+			this.tabSmallScenery.Text = "rctTabButton1";
+			this.tabSmallScenery.Toggled = false;
+			this.tabSmallScenery.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabAttractions
+			// 
+			this.tabAttractions.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabAttractions.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabAttractions.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabAttractions.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabAttractions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabAttractions.Image = global::RCTDataEditor.Properties.Resources.TabAttractions;
+			this.tabAttractions.Location = new System.Drawing.Point(66, 5);
+			this.tabAttractions.Name = "tabAttractions";
+			this.tabAttractions.NextTabButton = this.tabSmallScenery;
+			this.tabAttractions.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabAttractions.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabAttractions.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabAttractions.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabAttractions.PreviousTabButton = this.tabAll;
+			this.tabAttractions.Size = new System.Drawing.Size(31, 27);
+			this.tabAttractions.TabControlIndex = ((uint)(2u));
+			this.tabAttractions.TabIndex = 128;
+			this.tabAttractions.TabPage = this.tabGroupAttractions;
+			this.tabAttractions.Text = "rctTabButton1";
+			this.tabAttractions.Toggled = false;
+			this.tabAttractions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabAll
+			// 
+			this.tabAll.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabAll.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabAll.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabAll.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabAll.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabAll.Image = global::RCTDataEditor.Properties.Resources.TabAll;
+			this.tabAll.Location = new System.Drawing.Point(35, 5);
+			this.tabAll.Name = "tabAll";
+			this.tabAll.NextTabButton = this.tabAttractions;
+			this.tabAll.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabAll.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabAll.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabAll.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabAll.PreviousTabButton = this.tabInfo;
+			this.tabAll.Size = new System.Drawing.Size(31, 27);
+			this.tabAll.TabControlIndex = ((uint)(1u));
+			this.tabAll.TabIndex = 127;
+			this.tabAll.TabPage = this.tabGroupAll;
+			this.tabAll.Text = "rctTabButton1";
+			this.tabAll.Toggled = true;
+			this.tabAll.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
+			// 
+			// tabInfo
+			// 
+			this.tabInfo.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(79)))), ((int)(((byte)(135)))), ((int)(((byte)(95)))));
+			this.tabInfo.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(99)))), ((int)(((byte)(59)))));
+			this.tabInfo.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabInfo.DepressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.tabInfo.Image = global::RCTDataEditor.Properties.Resources.TabInfo;
+			this.tabInfo.Location = new System.Drawing.Point(4, 5);
+			this.tabInfo.Name = "tabInfo";
+			this.tabInfo.NextTabButton = this.tabAll;
+			this.tabInfo.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.tabInfo.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.tabInfo.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.tabInfo.PressedBorderColorMedium = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.tabInfo.PreviousTabButton = null;
+			this.tabInfo.Size = new System.Drawing.Size(31, 27);
+			this.tabInfo.TabControlIndex = ((uint)(0u));
+			this.tabInfo.TabIndex = 126;
+			this.tabInfo.TabPage = this.tabGroupInfo;
+			this.tabInfo.Text = "rctTabButton1";
+			this.tabInfo.Toggled = false;
+			this.tabInfo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TabDown);
 			// 
 			// tabGroupInfo
 			// 
@@ -2044,7 +1074,7 @@ namespace RCTDataEditor {
 			this.tabGroupInfo.MultiSelect = false;
 			this.tabGroupInfo.Name = "tabGroupInfo";
 			this.tabGroupInfo.OwnerDraw = true;
-			this.tabGroupInfo.Size = new System.Drawing.Size(545, 359);
+			this.tabGroupInfo.Size = new System.Drawing.Size(576, 359);
 			this.tabGroupInfo.TabIndex = 133;
 			this.tabGroupInfo.TabStop = false;
 			this.tabGroupInfo.UseCompatibleStateImageBehavior = false;
@@ -2069,6 +1099,738 @@ namespace RCTDataEditor {
 			this.columnHeader53.Text = "Value";
 			this.columnHeader53.Width = 387;
 			// 
+			// tabGroupAll
+			// 
+			this.tabGroupAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
+			this.tabGroupAll.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tabGroupAll.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4,
+            this.columnHeader5,
+            this.columnHeader54});
+			this.tabGroupAll.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabGroupAll.FullRowSelect = true;
+			this.tabGroupAll.HideSelection = false;
+			this.tabGroupAll.Location = new System.Drawing.Point(1, 1);
+			this.tabGroupAll.Name = "tabGroupAll";
+			this.tabGroupAll.OwnerDraw = true;
+			this.tabGroupAll.Size = new System.Drawing.Size(576, 359);
+			this.tabGroupAll.SmallImageList = this.imageListFlags;
+			this.tabGroupAll.TabIndex = 123;
+			this.tabGroupAll.TabStop = false;
+			this.tabGroupAll.UseCompatibleStateImageBehavior = false;
+			this.tabGroupAll.View = System.Windows.Forms.View.Details;
+			this.tabGroupAll.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
+			this.tabGroupAll.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
+			this.tabGroupAll.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
+			this.tabGroupAll.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
+			this.tabGroupAll.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
+			this.tabGroupAll.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
+			this.tabGroupAll.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
+			// 
+			// columnHeader1
+			// 
+			this.columnHeader1.Text = "";
+			this.columnHeader1.Width = 32;
+			// 
+			// columnHeader2
+			// 
+			this.columnHeader2.Text = "Source";
+			this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.columnHeader2.Width = 59;
+			// 
+			// columnHeader3
+			// 
+			this.columnHeader3.Text = "File";
+			this.columnHeader3.Width = 110;
+			// 
+			// columnHeader4
+			// 
+			this.columnHeader4.Text = "Name";
+			this.columnHeader4.Width = 142;
+			// 
+			// columnHeader5
+			// 
+			this.columnHeader5.Text = "Type";
+			this.columnHeader5.Width = 100;
+			// 
+			// columnHeader54
+			// 
+			this.columnHeader54.Text = "Subtype";
+			this.columnHeader54.Width = 80;
+			// 
+			// imageListFlags
+			// 
+			this.imageListFlags.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListFlags.ImageStream")));
+			this.imageListFlags.TransparentColor = System.Drawing.Color.Transparent;
+			this.imageListFlags.Images.SetKeyName(0, "CloseFlag.png");
+			this.imageListFlags.Images.SetKeyName(1, "TestFlag.png");
+			this.imageListFlags.Images.SetKeyName(2, "OpenFlagDown.png");
+			this.imageListFlags.Images.SetKeyName(3, "BrokenFlagDown.png");
+			// 
+			// tabGroupAttractions
+			// 
+			this.tabGroupAttractions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
+			this.tabGroupAttractions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tabGroupAttractions.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader6,
+            this.columnHeader7,
+            this.columnHeader8,
+            this.columnHeader9,
+            this.columnHeader10,
+            this.columnHeader55,
+            this.columnHeader64});
+			this.tabGroupAttractions.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabGroupAttractions.FullRowSelect = true;
+			this.tabGroupAttractions.HideSelection = false;
+			this.tabGroupAttractions.Location = new System.Drawing.Point(1, 1);
+			this.tabGroupAttractions.Name = "tabGroupAttractions";
+			this.tabGroupAttractions.OwnerDraw = true;
+			this.tabGroupAttractions.Size = new System.Drawing.Size(576, 359);
+			this.tabGroupAttractions.SmallImageList = this.imageListFlags;
+			this.tabGroupAttractions.TabIndex = 124;
+			this.tabGroupAttractions.TabStop = false;
+			this.tabGroupAttractions.UseCompatibleStateImageBehavior = false;
+			this.tabGroupAttractions.View = System.Windows.Forms.View.Details;
+			this.tabGroupAttractions.Visible = false;
+			this.tabGroupAttractions.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
+			this.tabGroupAttractions.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
+			this.tabGroupAttractions.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
+			this.tabGroupAttractions.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
+			this.tabGroupAttractions.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
+			this.tabGroupAttractions.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
+			this.tabGroupAttractions.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
+			// 
+			// columnHeader6
+			// 
+			this.columnHeader6.Text = "";
+			this.columnHeader6.Width = 32;
+			// 
+			// columnHeader7
+			// 
+			this.columnHeader7.Text = "Source";
+			this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.columnHeader7.Width = 59;
+			// 
+			// columnHeader8
+			// 
+			this.columnHeader8.Text = "File";
+			this.columnHeader8.Width = 110;
+			// 
+			// columnHeader9
+			// 
+			this.columnHeader9.Text = "Name";
+			this.columnHeader9.Width = 142;
+			// 
+			// columnHeader10
+			// 
+			this.columnHeader10.Text = "Type";
+			this.columnHeader10.Width = 100;
+			// 
+			// columnHeader55
+			// 
+			this.columnHeader55.Text = "Ride Type";
+			this.columnHeader55.Width = 80;
+			// 
+			// columnHeader64
+			// 
+			this.columnHeader64.Text = "Track Type";
+			this.columnHeader64.Width = 160;
+			// 
+			// tabGroupSmallScenery
+			// 
+			this.tabGroupSmallScenery.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
+			this.tabGroupSmallScenery.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tabGroupSmallScenery.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader11,
+            this.columnHeader12,
+            this.columnHeader13,
+            this.columnHeader14,
+            this.columnHeader15,
+            this.columnHeader62});
+			this.tabGroupSmallScenery.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabGroupSmallScenery.FullRowSelect = true;
+			this.tabGroupSmallScenery.HideSelection = false;
+			this.tabGroupSmallScenery.Location = new System.Drawing.Point(1, 1);
+			this.tabGroupSmallScenery.Name = "tabGroupSmallScenery";
+			this.tabGroupSmallScenery.OwnerDraw = true;
+			this.tabGroupSmallScenery.Size = new System.Drawing.Size(576, 359);
+			this.tabGroupSmallScenery.SmallImageList = this.imageListFlags;
+			this.tabGroupSmallScenery.TabIndex = 125;
+			this.tabGroupSmallScenery.TabStop = false;
+			this.tabGroupSmallScenery.UseCompatibleStateImageBehavior = false;
+			this.tabGroupSmallScenery.View = System.Windows.Forms.View.Details;
+			this.tabGroupSmallScenery.Visible = false;
+			this.tabGroupSmallScenery.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
+			this.tabGroupSmallScenery.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
+			this.tabGroupSmallScenery.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
+			this.tabGroupSmallScenery.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
+			this.tabGroupSmallScenery.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
+			this.tabGroupSmallScenery.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
+			this.tabGroupSmallScenery.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
+			// 
+			// columnHeader11
+			// 
+			this.columnHeader11.Text = "";
+			this.columnHeader11.Width = 32;
+			// 
+			// columnHeader12
+			// 
+			this.columnHeader12.Text = "Source";
+			this.columnHeader12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.columnHeader12.Width = 59;
+			// 
+			// columnHeader13
+			// 
+			this.columnHeader13.Text = "File";
+			this.columnHeader13.Width = 110;
+			// 
+			// columnHeader14
+			// 
+			this.columnHeader14.Text = "Name";
+			this.columnHeader14.Width = 142;
+			// 
+			// columnHeader15
+			// 
+			this.columnHeader15.Text = "Type";
+			this.columnHeader15.Width = 100;
+			// 
+			// columnHeader62
+			// 
+			this.columnHeader62.Text = "Subtype";
+			this.columnHeader62.Width = 80;
+			// 
+			// tabGroupLargeScenery
+			// 
+			this.tabGroupLargeScenery.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
+			this.tabGroupLargeScenery.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tabGroupLargeScenery.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader16,
+            this.columnHeader17,
+            this.columnHeader18,
+            this.columnHeader19,
+            this.columnHeader20,
+            this.columnHeader56});
+			this.tabGroupLargeScenery.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabGroupLargeScenery.FullRowSelect = true;
+			this.tabGroupLargeScenery.HideSelection = false;
+			this.tabGroupLargeScenery.Location = new System.Drawing.Point(1, 1);
+			this.tabGroupLargeScenery.Name = "tabGroupLargeScenery";
+			this.tabGroupLargeScenery.OwnerDraw = true;
+			this.tabGroupLargeScenery.Size = new System.Drawing.Size(576, 359);
+			this.tabGroupLargeScenery.SmallImageList = this.imageListFlags;
+			this.tabGroupLargeScenery.TabIndex = 126;
+			this.tabGroupLargeScenery.TabStop = false;
+			this.tabGroupLargeScenery.UseCompatibleStateImageBehavior = false;
+			this.tabGroupLargeScenery.View = System.Windows.Forms.View.Details;
+			this.tabGroupLargeScenery.Visible = false;
+			this.tabGroupLargeScenery.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
+			this.tabGroupLargeScenery.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
+			this.tabGroupLargeScenery.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
+			this.tabGroupLargeScenery.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
+			this.tabGroupLargeScenery.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
+			this.tabGroupLargeScenery.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
+			this.tabGroupLargeScenery.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
+			// 
+			// columnHeader16
+			// 
+			this.columnHeader16.Text = "";
+			this.columnHeader16.Width = 32;
+			// 
+			// columnHeader17
+			// 
+			this.columnHeader17.Text = "Source";
+			this.columnHeader17.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.columnHeader17.Width = 59;
+			// 
+			// columnHeader18
+			// 
+			this.columnHeader18.Text = "File";
+			this.columnHeader18.Width = 110;
+			// 
+			// columnHeader19
+			// 
+			this.columnHeader19.Text = "Name";
+			this.columnHeader19.Width = 142;
+			// 
+			// columnHeader20
+			// 
+			this.columnHeader20.Text = "Type";
+			this.columnHeader20.Width = 100;
+			// 
+			// columnHeader56
+			// 
+			this.columnHeader56.Text = "Subtype";
+			this.columnHeader56.Width = 80;
+			// 
+			// tabGroupWalls
+			// 
+			this.tabGroupWalls.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
+			this.tabGroupWalls.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tabGroupWalls.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderFlag,
+            this.columnHeaderSource,
+            this.columnHeaderFile,
+            this.columnHeaderName,
+            this.columnHeaderType,
+            this.columnHeaderSubtype});
+			this.tabGroupWalls.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabGroupWalls.FullRowSelect = true;
+			this.tabGroupWalls.HideSelection = false;
+			this.tabGroupWalls.Location = new System.Drawing.Point(1, 1);
+			this.tabGroupWalls.Name = "tabGroupWalls";
+			this.tabGroupWalls.OwnerDraw = true;
+			this.tabGroupWalls.Size = new System.Drawing.Size(576, 359);
+			this.tabGroupWalls.SmallImageList = this.imageListFlags;
+			this.tabGroupWalls.TabIndex = 122;
+			this.tabGroupWalls.TabStop = false;
+			this.tabGroupWalls.UseCompatibleStateImageBehavior = false;
+			this.tabGroupWalls.View = System.Windows.Forms.View.Details;
+			this.tabGroupWalls.Visible = false;
+			this.tabGroupWalls.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
+			this.tabGroupWalls.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
+			this.tabGroupWalls.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
+			this.tabGroupWalls.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
+			this.tabGroupWalls.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
+			this.tabGroupWalls.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
+			this.tabGroupWalls.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
+			// 
+			// columnHeaderFlag
+			// 
+			this.columnHeaderFlag.Text = "";
+			this.columnHeaderFlag.Width = 32;
+			// 
+			// columnHeaderSource
+			// 
+			this.columnHeaderSource.Text = "Source";
+			this.columnHeaderSource.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.columnHeaderSource.Width = 59;
+			// 
+			// columnHeaderFile
+			// 
+			this.columnHeaderFile.Text = "File";
+			this.columnHeaderFile.Width = 110;
+			// 
+			// columnHeaderName
+			// 
+			this.columnHeaderName.Text = "Name";
+			this.columnHeaderName.Width = 142;
+			// 
+			// columnHeaderType
+			// 
+			this.columnHeaderType.Text = "Type";
+			this.columnHeaderType.Width = 100;
+			// 
+			// columnHeaderSubtype
+			// 
+			this.columnHeaderSubtype.Text = "Subtype";
+			this.columnHeaderSubtype.Width = 80;
+			// 
+			// tabGroupSigns
+			// 
+			this.tabGroupSigns.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
+			this.tabGroupSigns.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tabGroupSigns.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader26,
+            this.columnHeader27,
+            this.columnHeader28,
+            this.columnHeader29,
+            this.columnHeader30,
+            this.columnHeader60});
+			this.tabGroupSigns.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabGroupSigns.FullRowSelect = true;
+			this.tabGroupSigns.HideSelection = false;
+			this.tabGroupSigns.Location = new System.Drawing.Point(1, 1);
+			this.tabGroupSigns.Name = "tabGroupSigns";
+			this.tabGroupSigns.OwnerDraw = true;
+			this.tabGroupSigns.Size = new System.Drawing.Size(576, 359);
+			this.tabGroupSigns.SmallImageList = this.imageListFlags;
+			this.tabGroupSigns.TabIndex = 128;
+			this.tabGroupSigns.TabStop = false;
+			this.tabGroupSigns.UseCompatibleStateImageBehavior = false;
+			this.tabGroupSigns.View = System.Windows.Forms.View.Details;
+			this.tabGroupSigns.Visible = false;
+			this.tabGroupSigns.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
+			this.tabGroupSigns.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
+			this.tabGroupSigns.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
+			this.tabGroupSigns.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
+			this.tabGroupSigns.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
+			this.tabGroupSigns.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
+			this.tabGroupSigns.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
+			// 
+			// columnHeader26
+			// 
+			this.columnHeader26.Text = "";
+			this.columnHeader26.Width = 32;
+			// 
+			// columnHeader27
+			// 
+			this.columnHeader27.Text = "Source";
+			this.columnHeader27.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.columnHeader27.Width = 59;
+			// 
+			// columnHeader28
+			// 
+			this.columnHeader28.Text = "File";
+			this.columnHeader28.Width = 110;
+			// 
+			// columnHeader29
+			// 
+			this.columnHeader29.Text = "Name";
+			this.columnHeader29.Width = 142;
+			// 
+			// columnHeader30
+			// 
+			this.columnHeader30.Text = "Type";
+			this.columnHeader30.Width = 100;
+			// 
+			// columnHeader60
+			// 
+			this.columnHeader60.Text = "Subtype";
+			this.columnHeader60.Width = 80;
+			// 
+			// tabGroupPaths
+			// 
+			this.tabGroupPaths.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
+			this.tabGroupPaths.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tabGroupPaths.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader21,
+            this.columnHeader22,
+            this.columnHeader23,
+            this.columnHeader24,
+            this.columnHeader25,
+            this.columnHeader59});
+			this.tabGroupPaths.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabGroupPaths.FullRowSelect = true;
+			this.tabGroupPaths.HideSelection = false;
+			this.tabGroupPaths.Location = new System.Drawing.Point(1, 1);
+			this.tabGroupPaths.Name = "tabGroupPaths";
+			this.tabGroupPaths.OwnerDraw = true;
+			this.tabGroupPaths.Size = new System.Drawing.Size(576, 359);
+			this.tabGroupPaths.SmallImageList = this.imageListFlags;
+			this.tabGroupPaths.TabIndex = 127;
+			this.tabGroupPaths.TabStop = false;
+			this.tabGroupPaths.UseCompatibleStateImageBehavior = false;
+			this.tabGroupPaths.View = System.Windows.Forms.View.Details;
+			this.tabGroupPaths.Visible = false;
+			this.tabGroupPaths.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
+			this.tabGroupPaths.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
+			this.tabGroupPaths.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
+			this.tabGroupPaths.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
+			this.tabGroupPaths.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
+			this.tabGroupPaths.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
+			this.tabGroupPaths.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
+			// 
+			// columnHeader21
+			// 
+			this.columnHeader21.Text = "";
+			this.columnHeader21.Width = 32;
+			// 
+			// columnHeader22
+			// 
+			this.columnHeader22.Text = "Source";
+			this.columnHeader22.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.columnHeader22.Width = 59;
+			// 
+			// columnHeader23
+			// 
+			this.columnHeader23.Text = "File";
+			this.columnHeader23.Width = 110;
+			// 
+			// columnHeader24
+			// 
+			this.columnHeader24.Text = "Name";
+			this.columnHeader24.Width = 142;
+			// 
+			// columnHeader25
+			// 
+			this.columnHeader25.Text = "Type";
+			this.columnHeader25.Width = 100;
+			// 
+			// columnHeader59
+			// 
+			this.columnHeader59.Text = "Subtype";
+			this.columnHeader59.Width = 80;
+			// 
+			// tabGroupPathAdditions
+			// 
+			this.tabGroupPathAdditions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
+			this.tabGroupPathAdditions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tabGroupPathAdditions.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader31,
+            this.columnHeader32,
+            this.columnHeader33,
+            this.columnHeader34,
+            this.columnHeader35,
+            this.columnHeader58});
+			this.tabGroupPathAdditions.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabGroupPathAdditions.FullRowSelect = true;
+			this.tabGroupPathAdditions.HideSelection = false;
+			this.tabGroupPathAdditions.Location = new System.Drawing.Point(1, 1);
+			this.tabGroupPathAdditions.Name = "tabGroupPathAdditions";
+			this.tabGroupPathAdditions.OwnerDraw = true;
+			this.tabGroupPathAdditions.Size = new System.Drawing.Size(576, 359);
+			this.tabGroupPathAdditions.SmallImageList = this.imageListFlags;
+			this.tabGroupPathAdditions.TabIndex = 129;
+			this.tabGroupPathAdditions.TabStop = false;
+			this.tabGroupPathAdditions.UseCompatibleStateImageBehavior = false;
+			this.tabGroupPathAdditions.View = System.Windows.Forms.View.Details;
+			this.tabGroupPathAdditions.Visible = false;
+			this.tabGroupPathAdditions.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
+			this.tabGroupPathAdditions.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
+			this.tabGroupPathAdditions.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
+			this.tabGroupPathAdditions.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
+			this.tabGroupPathAdditions.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
+			this.tabGroupPathAdditions.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
+			this.tabGroupPathAdditions.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
+			// 
+			// columnHeader31
+			// 
+			this.columnHeader31.Text = "";
+			this.columnHeader31.Width = 32;
+			// 
+			// columnHeader32
+			// 
+			this.columnHeader32.Text = "Source";
+			this.columnHeader32.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.columnHeader32.Width = 59;
+			// 
+			// columnHeader33
+			// 
+			this.columnHeader33.Text = "File";
+			this.columnHeader33.Width = 110;
+			// 
+			// columnHeader34
+			// 
+			this.columnHeader34.Text = "Name";
+			this.columnHeader34.Width = 142;
+			// 
+			// columnHeader35
+			// 
+			this.columnHeader35.Text = "Type";
+			this.columnHeader35.Width = 100;
+			// 
+			// columnHeader58
+			// 
+			this.columnHeader58.Text = "Subtype";
+			this.columnHeader58.Width = 80;
+			// 
+			// tabGroupSceneryGroups
+			// 
+			this.tabGroupSceneryGroups.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
+			this.tabGroupSceneryGroups.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tabGroupSceneryGroups.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader36,
+            this.columnHeader37,
+            this.columnHeader38,
+            this.columnHeader39,
+            this.columnHeader40,
+            this.columnHeader61});
+			this.tabGroupSceneryGroups.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabGroupSceneryGroups.FullRowSelect = true;
+			this.tabGroupSceneryGroups.HideSelection = false;
+			this.tabGroupSceneryGroups.Location = new System.Drawing.Point(1, 1);
+			this.tabGroupSceneryGroups.Name = "tabGroupSceneryGroups";
+			this.tabGroupSceneryGroups.OwnerDraw = true;
+			this.tabGroupSceneryGroups.Size = new System.Drawing.Size(576, 359);
+			this.tabGroupSceneryGroups.SmallImageList = this.imageListFlags;
+			this.tabGroupSceneryGroups.TabIndex = 130;
+			this.tabGroupSceneryGroups.TabStop = false;
+			this.tabGroupSceneryGroups.UseCompatibleStateImageBehavior = false;
+			this.tabGroupSceneryGroups.View = System.Windows.Forms.View.Details;
+			this.tabGroupSceneryGroups.Visible = false;
+			this.tabGroupSceneryGroups.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
+			this.tabGroupSceneryGroups.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
+			this.tabGroupSceneryGroups.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
+			this.tabGroupSceneryGroups.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
+			this.tabGroupSceneryGroups.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
+			this.tabGroupSceneryGroups.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
+			this.tabGroupSceneryGroups.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
+			// 
+			// columnHeader36
+			// 
+			this.columnHeader36.Text = "";
+			this.columnHeader36.Width = 32;
+			// 
+			// columnHeader37
+			// 
+			this.columnHeader37.Text = "Source";
+			this.columnHeader37.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.columnHeader37.Width = 59;
+			// 
+			// columnHeader38
+			// 
+			this.columnHeader38.Text = "File";
+			this.columnHeader38.Width = 110;
+			// 
+			// columnHeader39
+			// 
+			this.columnHeader39.Text = "Name";
+			this.columnHeader39.Width = 142;
+			// 
+			// columnHeader40
+			// 
+			this.columnHeader40.Text = "Type";
+			this.columnHeader40.Width = 100;
+			// 
+			// columnHeader61
+			// 
+			this.columnHeader61.Text = "Subtype";
+			this.columnHeader61.Width = 80;
+			// 
+			// tabGroupParkEntrances
+			// 
+			this.tabGroupParkEntrances.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
+			this.tabGroupParkEntrances.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tabGroupParkEntrances.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader41,
+            this.columnHeader42,
+            this.columnHeader43,
+            this.columnHeader44,
+            this.columnHeader45,
+            this.columnHeader57});
+			this.tabGroupParkEntrances.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabGroupParkEntrances.FullRowSelect = true;
+			this.tabGroupParkEntrances.HideSelection = false;
+			this.tabGroupParkEntrances.Location = new System.Drawing.Point(1, 1);
+			this.tabGroupParkEntrances.Name = "tabGroupParkEntrances";
+			this.tabGroupParkEntrances.OwnerDraw = true;
+			this.tabGroupParkEntrances.Size = new System.Drawing.Size(576, 359);
+			this.tabGroupParkEntrances.SmallImageList = this.imageListFlags;
+			this.tabGroupParkEntrances.TabIndex = 131;
+			this.tabGroupParkEntrances.TabStop = false;
+			this.tabGroupParkEntrances.UseCompatibleStateImageBehavior = false;
+			this.tabGroupParkEntrances.View = System.Windows.Forms.View.Details;
+			this.tabGroupParkEntrances.Visible = false;
+			this.tabGroupParkEntrances.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
+			this.tabGroupParkEntrances.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
+			this.tabGroupParkEntrances.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
+			this.tabGroupParkEntrances.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
+			this.tabGroupParkEntrances.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
+			this.tabGroupParkEntrances.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
+			this.tabGroupParkEntrances.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
+			// 
+			// columnHeader41
+			// 
+			this.columnHeader41.Text = "";
+			this.columnHeader41.Width = 32;
+			// 
+			// columnHeader42
+			// 
+			this.columnHeader42.Text = "Source";
+			this.columnHeader42.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.columnHeader42.Width = 59;
+			// 
+			// columnHeader43
+			// 
+			this.columnHeader43.Text = "File";
+			this.columnHeader43.Width = 110;
+			// 
+			// columnHeader44
+			// 
+			this.columnHeader44.Text = "Name";
+			this.columnHeader44.Width = 142;
+			// 
+			// columnHeader45
+			// 
+			this.columnHeader45.Text = "Type";
+			this.columnHeader45.Width = 100;
+			// 
+			// columnHeader57
+			// 
+			this.columnHeader57.Text = "Subtype";
+			this.columnHeader57.Width = 80;
+			// 
+			// tabGroupWater
+			// 
+			this.tabGroupWater.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
+			this.tabGroupWater.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tabGroupWater.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader46,
+            this.columnHeader47,
+            this.columnHeader48,
+            this.columnHeader49,
+            this.columnHeader50,
+            this.columnHeader63});
+			this.tabGroupWater.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabGroupWater.FullRowSelect = true;
+			this.tabGroupWater.HideSelection = false;
+			this.tabGroupWater.Location = new System.Drawing.Point(1, 1);
+			this.tabGroupWater.Name = "tabGroupWater";
+			this.tabGroupWater.OwnerDraw = true;
+			this.tabGroupWater.Size = new System.Drawing.Size(576, 359);
+			this.tabGroupWater.SmallImageList = this.imageListFlags;
+			this.tabGroupWater.TabIndex = 132;
+			this.tabGroupWater.TabStop = false;
+			this.tabGroupWater.UseCompatibleStateImageBehavior = false;
+			this.tabGroupWater.View = System.Windows.Forms.View.Details;
+			this.tabGroupWater.Visible = false;
+			this.tabGroupWater.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
+			this.tabGroupWater.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
+			this.tabGroupWater.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
+			this.tabGroupWater.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
+			this.tabGroupWater.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
+			this.tabGroupWater.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
+			this.tabGroupWater.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
+			// 
+			// columnHeader46
+			// 
+			this.columnHeader46.Text = "";
+			this.columnHeader46.Width = 32;
+			// 
+			// columnHeader47
+			// 
+			this.columnHeader47.Text = "Source";
+			this.columnHeader47.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.columnHeader47.Width = 59;
+			// 
+			// columnHeader48
+			// 
+			this.columnHeader48.Text = "File";
+			this.columnHeader48.Width = 110;
+			// 
+			// columnHeader49
+			// 
+			this.columnHeader49.Text = "Name";
+			this.columnHeader49.Width = 142;
+			// 
+			// columnHeader50
+			// 
+			this.columnHeader50.Text = "Type";
+			this.columnHeader50.Width = 100;
+			// 
+			// columnHeader63
+			// 
+			this.columnHeader63.Text = "Subtype";
+			this.columnHeader63.Width = 80;
+			// 
+			// buttonBrowse
+			// 
+			this.buttonBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonBrowse.BorderOnHover = false;
+			this.buttonBrowse.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonBrowse.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonBrowse.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonBrowse.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonBrowse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonBrowse.Image = null;
+			this.buttonBrowse.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonBrowse.Location = new System.Drawing.Point(450, 9);
+			this.buttonBrowse.Name = "buttonBrowse";
+			this.buttonBrowse.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonBrowse.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonBrowse.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonBrowse.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonBrowse.Size = new System.Drawing.Size(60, 18);
+			this.buttonBrowse.TabIndex = 139;
+			this.buttonBrowse.Text = "Browse";
+			this.buttonBrowse.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonBrowse.Toggleable = false;
+			this.buttonBrowse.Toggled = false;
+			this.buttonBrowse.ButtonPressed += new System.EventHandler(this.BrowseDirectory);
+			// 
 			// buttonScan
 			// 
 			this.buttonScan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -2080,7 +1842,7 @@ namespace RCTDataEditor {
 			this.buttonScan.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.buttonScan.Image = null;
 			this.buttonScan.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buttonScan.Location = new System.Drawing.Point(486, 9);
+			this.buttonScan.Location = new System.Drawing.Point(517, 9);
 			this.buttonScan.Name = "buttonScan";
 			this.buttonScan.OutlineColor = System.Drawing.Color.Transparent;
 			this.buttonScan.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
@@ -2097,6 +1859,7 @@ namespace RCTDataEditor {
 			// rctPanel2
 			// 
 			this.rctPanel2.Controls.Add(this.tabGroupSettings);
+			this.rctPanel2.Controls.Add(this.tabGroupScenarioText);
 			this.rctPanel2.Controls.Add(this.tabGroupInfo);
 			this.rctPanel2.Controls.Add(this.tabGroupWater);
 			this.rctPanel2.Controls.Add(this.tabGroupParkEntrances);
@@ -2109,7 +1872,6 @@ namespace RCTDataEditor {
 			this.rctPanel2.Controls.Add(this.tabGroupAttractions);
 			this.rctPanel2.Controls.Add(this.tabGroupAll);
 			this.rctPanel2.Controls.Add(this.tabGroupWalls);
-			this.rctPanel2.Controls.Add(this.tabGroupInfoOld);
 			this.rctPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.rctPanel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
 			this.rctPanel2.Location = new System.Drawing.Point(3, 3);
@@ -2118,34 +1880,71 @@ namespace RCTDataEditor {
 			this.rctPanel2.PanelBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
 			this.rctPanel2.PanelBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
 			this.rctPanel2.PanelBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
-			this.rctPanel2.Size = new System.Drawing.Size(547, 361);
+			this.rctPanel2.Size = new System.Drawing.Size(578, 361);
 			this.rctPanel2.TabIndex = 141;
 			// 
-			// tabGroupInfoOld
+			// tabGroupScenarioText
 			// 
-			this.tabGroupInfoOld.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
-			this.tabGroupInfoOld.Controls.Add(this.label4);
-			this.tabGroupInfoOld.Controls.Add(this.label2);
-			this.tabGroupInfoOld.Controls.Add(this.infoImageOffset);
-			this.tabGroupInfoOld.Controls.Add(this.infoImageSize);
-			this.tabGroupInfoOld.Controls.Add(this.label1);
-			this.tabGroupInfoOld.Controls.Add(this.infoHeight);
-			this.tabGroupInfoOld.Controls.Add(this.label8);
-			this.tabGroupInfoOld.Controls.Add(this.label6);
-			this.tabGroupInfoOld.Controls.Add(this.label5);
-			this.tabGroupInfoOld.Controls.Add(this.label7);
-			this.tabGroupInfoOld.Controls.Add(this.infoFrames);
-			this.tabGroupInfoOld.Controls.Add(this.infoFlags);
-			this.tabGroupInfoOld.Controls.Add(this.infoName);
-			this.tabGroupInfoOld.Controls.Add(this.infoFileName);
-			this.tabGroupInfoOld.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tabGroupInfoOld.Location = new System.Drawing.Point(1, 1);
-			this.tabGroupInfoOld.Name = "tabGroupInfoOld";
-			this.tabGroupInfoOld.Size = new System.Drawing.Size(545, 359);
-			this.tabGroupInfoOld.TabIndex = 21;
-			this.tabGroupInfoOld.TabStop = false;
-			this.tabGroupInfoOld.Text = "Information";
-			this.tabGroupInfoOld.Visible = false;
+			this.tabGroupScenarioText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
+			this.tabGroupScenarioText.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.tabGroupScenarioText.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader65,
+            this.columnHeader66,
+            this.columnHeader67,
+            this.columnHeader68,
+            this.columnHeader69,
+            this.columnHeader70});
+			this.tabGroupScenarioText.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabGroupScenarioText.FullRowSelect = true;
+			this.tabGroupScenarioText.HideSelection = false;
+			this.tabGroupScenarioText.Location = new System.Drawing.Point(1, 1);
+			this.tabGroupScenarioText.Name = "tabGroupScenarioText";
+			this.tabGroupScenarioText.OwnerDraw = true;
+			this.tabGroupScenarioText.Size = new System.Drawing.Size(576, 359);
+			this.tabGroupScenarioText.SmallImageList = this.imageListFlags;
+			this.tabGroupScenarioText.TabIndex = 154;
+			this.tabGroupScenarioText.TabStop = false;
+			this.tabGroupScenarioText.UseCompatibleStateImageBehavior = false;
+			this.tabGroupScenarioText.View = System.Windows.Forms.View.Details;
+			this.tabGroupScenarioText.Visible = false;
+			this.tabGroupScenarioText.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ColumnSort);
+			this.tabGroupScenarioText.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewDrawColumnHeader);
+			this.tabGroupScenarioText.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewDrawItem);
+			this.tabGroupScenarioText.DrawSubItem += new System.Windows.Forms.DrawListViewSubItemEventHandler(this.ListViewDrawSubItem);
+			this.tabGroupScenarioText.ItemDrag += new System.Windows.Forms.ItemDragEventHandler(this.ObjectDrag);
+			this.tabGroupScenarioText.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.ObjectChanged);
+			this.tabGroupScenarioText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TabGroupDeleteSelection);
+			// 
+			// columnHeader65
+			// 
+			this.columnHeader65.Text = "";
+			this.columnHeader65.Width = 32;
+			// 
+			// columnHeader66
+			// 
+			this.columnHeader66.Text = "Source";
+			this.columnHeader66.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.columnHeader66.Width = 59;
+			// 
+			// columnHeader67
+			// 
+			this.columnHeader67.Text = "File";
+			this.columnHeader67.Width = 110;
+			// 
+			// columnHeader68
+			// 
+			this.columnHeader68.Text = "Name";
+			this.columnHeader68.Width = 142;
+			// 
+			// columnHeader69
+			// 
+			this.columnHeader69.Text = "Type";
+			this.columnHeader69.Width = 100;
+			// 
+			// columnHeader70
+			// 
+			this.columnHeader70.Text = "Subtype";
+			this.columnHeader70.Width = 80;
 			// 
 			// label4
 			// 
@@ -2305,7 +2104,7 @@ namespace RCTDataEditor {
 			this.splitContainerStatusBar.Panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
 			this.splitContainerStatusBar.Panel2MinSize = 26;
 			this.splitContainerStatusBar.RightToLeft = System.Windows.Forms.RightToLeft.No;
-			this.splitContainerStatusBar.Size = new System.Drawing.Size(761, 427);
+			this.splitContainerStatusBar.Size = new System.Drawing.Size(792, 427);
 			this.splitContainerStatusBar.SplitterDistance = 400;
 			this.splitContainerStatusBar.SplitterWidth = 1;
 			this.splitContainerStatusBar.TabIndex = 33;
@@ -2325,7 +2124,7 @@ namespace RCTDataEditor {
 			this.statusBar.PanelBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
 			this.statusBar.Separators.Add(202);
 			this.statusBar.Separators.Add(410);
-			this.statusBar.Size = new System.Drawing.Size(761, 26);
+			this.statusBar.Size = new System.Drawing.Size(792, 26);
 			this.statusBar.TabIndex = 141;
 			// 
 			// labelObjectsInGroup
@@ -2390,16 +2189,285 @@ namespace RCTDataEditor {
 			// 
 			this.timerExtract.Tick += new System.EventHandler(this.ExtractingImages);
 			// 
+			// textBoxDirectory
+			// 
+			this.textBoxDirectory.Location = new System.Drawing.Point(12, 40);
+			this.textBoxDirectory.Name = "textBoxDirectory";
+			this.textBoxDirectory.ReadOnly = true;
+			this.textBoxDirectory.Size = new System.Drawing.Size(509, 20);
+			this.textBoxDirectory.TabIndex = 1;
+			// 
+			// numericUpDownObjectsPerTick
+			// 
+			this.numericUpDownObjectsPerTick.Location = new System.Drawing.Point(114, 72);
+			this.numericUpDownObjectsPerTick.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.numericUpDownObjectsPerTick.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.numericUpDownObjectsPerTick.Name = "numericUpDownObjectsPerTick";
+			this.numericUpDownObjectsPerTick.Size = new System.Drawing.Size(71, 20);
+			this.numericUpDownObjectsPerTick.TabIndex = 128;
+			this.toolTips.SetToolTip(this.numericUpDownObjectsPerTick, "Change the amount of objects loaded every 200 milliseconds");
+			this.numericUpDownObjectsPerTick.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+			this.numericUpDownObjectsPerTick.ValueChanged += new System.EventHandler(this.ObjectsPerTickChanged);
+			// 
+			// buttonBrowseDefault
+			// 
+			this.buttonBrowseDefault.BorderOnHover = false;
+			this.buttonBrowseDefault.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonBrowseDefault.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonBrowseDefault.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonBrowseDefault.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonBrowseDefault.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonBrowseDefault.Image = null;
+			this.buttonBrowseDefault.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonBrowseDefault.Location = new System.Drawing.Point(118, 13);
+			this.buttonBrowseDefault.Name = "buttonBrowseDefault";
+			this.buttonBrowseDefault.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonBrowseDefault.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonBrowseDefault.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonBrowseDefault.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonBrowseDefault.Size = new System.Drawing.Size(60, 18);
+			this.buttonBrowseDefault.TabIndex = 130;
+			this.buttonBrowseDefault.Text = "Browse";
+			this.buttonBrowseDefault.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonBrowseDefault.Toggleable = false;
+			this.buttonBrowseDefault.Toggled = false;
+			this.buttonBrowseDefault.ButtonPressed += new System.EventHandler(this.BrowseDefaultDirectory);
+			// 
+			// buttonSaveSettings
+			// 
+			this.buttonSaveSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonSaveSettings.BorderOnHover = false;
+			this.buttonSaveSettings.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonSaveSettings.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonSaveSettings.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonSaveSettings.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonSaveSettings.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonSaveSettings.Image = null;
+			this.buttonSaveSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonSaveSettings.Location = new System.Drawing.Point(508, 10);
+			this.buttonSaveSettings.Name = "buttonSaveSettings";
+			this.buttonSaveSettings.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonSaveSettings.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonSaveSettings.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonSaveSettings.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonSaveSettings.Size = new System.Drawing.Size(60, 18);
+			this.buttonSaveSettings.TabIndex = 140;
+			this.buttonSaveSettings.Text = "Save";
+			this.buttonSaveSettings.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonSaveSettings.Toggleable = false;
+			this.buttonSaveSettings.Toggled = false;
+			this.buttonSaveSettings.ButtonPressed += new System.EventHandler(this.SaveSettings);
+			// 
+			// checkBoxQuickLoad
+			// 
+			this.checkBoxQuickLoad.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.checkBoxQuickLoad.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.checkBoxQuickLoad.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.checkBoxQuickLoad.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
+			this.checkBoxQuickLoad.CheckState = System.Windows.Forms.CheckState.Unchecked;
+			this.checkBoxQuickLoad.FontType = CustomControls.Visuals.FontType.Bold;
+			this.checkBoxQuickLoad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.checkBoxQuickLoad.Location = new System.Drawing.Point(15, 105);
+			this.checkBoxQuickLoad.Name = "checkBoxQuickLoad";
+			this.checkBoxQuickLoad.OutlineColor = System.Drawing.Color.Transparent;
+			this.checkBoxQuickLoad.Size = new System.Drawing.Size(120, 11);
+			this.checkBoxQuickLoad.TabIndex = 142;
+			this.checkBoxQuickLoad.Text = "Quick Load Images";
+			this.checkBoxQuickLoad.CheckStateChanged += new System.EventHandler(this.QuickLoadAttractions);
+			// 
+			// rctLabel1
+			// 
+			this.rctLabel1.FontType = CustomControls.Visuals.FontType.Bold;
+			this.rctLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.rctLabel1.Location = new System.Drawing.Point(16, 76);
+			this.rctLabel1.Name = "rctLabel1";
+			this.rctLabel1.OutlineColor = System.Drawing.Color.Transparent;
+			this.rctLabel1.Size = new System.Drawing.Size(94, 14);
+			this.rctLabel1.TabIndex = 146;
+			this.rctLabel1.Text = "Objects Per Tick:";
+			this.rctLabel1.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+			// 
+			// rctLabel2
+			// 
+			this.rctLabel2.FontType = CustomControls.Visuals.FontType.Bold;
+			this.rctLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.rctLabel2.Location = new System.Drawing.Point(14, 16);
+			this.rctLabel2.Name = "rctLabel2";
+			this.rctLabel2.OutlineColor = System.Drawing.Color.Transparent;
+			this.rctLabel2.Size = new System.Drawing.Size(100, 14);
+			this.rctLabel2.TabIndex = 147;
+			this.rctLabel2.Text = "Default Directory:";
+			this.rctLabel2.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+			// 
+			// buttonAbout
+			// 
+			this.buttonAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.buttonAbout.BorderOnHover = false;
+			this.buttonAbout.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonAbout.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonAbout.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonAbout.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonAbout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonAbout.Image = null;
+			this.buttonAbout.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonAbout.Location = new System.Drawing.Point(441, 10);
+			this.buttonAbout.Name = "buttonAbout";
+			this.buttonAbout.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonAbout.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonAbout.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonAbout.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonAbout.Size = new System.Drawing.Size(60, 18);
+			this.buttonAbout.TabIndex = 148;
+			this.buttonAbout.Text = "About";
+			this.buttonAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonAbout.Toggleable = false;
+			this.buttonAbout.Toggled = false;
+			this.buttonAbout.ButtonPressed += new System.EventHandler(this.OpenAboutForm);
+			// 
+			// checkBoxRemapImage
+			// 
+			this.checkBoxRemapImage.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.checkBoxRemapImage.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.checkBoxRemapImage.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.checkBoxRemapImage.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
+			this.checkBoxRemapImage.CheckState = System.Windows.Forms.CheckState.Unchecked;
+			this.checkBoxRemapImage.FontType = CustomControls.Visuals.FontType.Bold;
+			this.checkBoxRemapImage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.checkBoxRemapImage.Location = new System.Drawing.Point(163, 105);
+			this.checkBoxRemapImage.Name = "checkBoxRemapImage";
+			this.checkBoxRemapImage.OutlineColor = System.Drawing.Color.Transparent;
+			this.checkBoxRemapImage.Size = new System.Drawing.Size(116, 11);
+			this.checkBoxRemapImage.TabIndex = 149;
+			this.checkBoxRemapImage.Text = "Remap Image View";
+			this.checkBoxRemapImage.CheckStateChanged += new System.EventHandler(this.RemapImageView);
+			// 
+			// buttonExtract
+			// 
+			this.buttonExtract.BorderOnHover = false;
+			this.buttonExtract.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonExtract.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonExtract.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonExtract.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonExtract.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonExtract.Image = null;
+			this.buttonExtract.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonExtract.Location = new System.Drawing.Point(14, 154);
+			this.buttonExtract.Name = "buttonExtract";
+			this.buttonExtract.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonExtract.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonExtract.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonExtract.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonExtract.Size = new System.Drawing.Size(100, 18);
+			this.buttonExtract.TabIndex = 150;
+			this.buttonExtract.Text = "Extract Images";
+			this.buttonExtract.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonExtract.Toggleable = false;
+			this.buttonExtract.Toggled = false;
+			this.buttonExtract.ButtonPressed += new System.EventHandler(this.ExtractImages);
+			// 
+			// buttonOpenDir
+			// 
+			this.buttonOpenDir.BorderOnHover = false;
+			this.buttonOpenDir.DepressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.buttonOpenDir.DepressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonOpenDir.DepressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonOpenDir.FontType = CustomControls.Visuals.FontType.Bold;
+			this.buttonOpenDir.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.buttonOpenDir.Image = null;
+			this.buttonOpenDir.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonOpenDir.Location = new System.Drawing.Point(121, 154);
+			this.buttonOpenDir.Name = "buttonOpenDir";
+			this.buttonOpenDir.OutlineColor = System.Drawing.Color.Transparent;
+			this.buttonOpenDir.PressedBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(123)))), ((int)(((byte)(175)))), ((int)(((byte)(139)))));
+			this.buttonOpenDir.PressedBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.buttonOpenDir.PressedBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.buttonOpenDir.Size = new System.Drawing.Size(100, 18);
+			this.buttonOpenDir.TabIndex = 151;
+			this.buttonOpenDir.Text = "Open Directory";
+			this.buttonOpenDir.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buttonOpenDir.Toggleable = false;
+			this.buttonOpenDir.Toggled = false;
+			this.buttonOpenDir.ButtonPressed += new System.EventHandler(this.OpenExtractDirectory);
+			// 
+			// checkBoxAllowDeletions
+			// 
+			this.checkBoxAllowDeletions.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.checkBoxAllowDeletions.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.checkBoxAllowDeletions.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.checkBoxAllowDeletions.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
+			this.checkBoxAllowDeletions.CheckState = System.Windows.Forms.CheckState.Unchecked;
+			this.checkBoxAllowDeletions.FontType = CustomControls.Visuals.FontType.Bold;
+			this.checkBoxAllowDeletions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.checkBoxAllowDeletions.Location = new System.Drawing.Point(15, 130);
+			this.checkBoxAllowDeletions.Name = "checkBoxAllowDeletions";
+			this.checkBoxAllowDeletions.OutlineColor = System.Drawing.Color.Transparent;
+			this.checkBoxAllowDeletions.Size = new System.Drawing.Size(100, 11);
+			this.checkBoxAllowDeletions.TabIndex = 152;
+			this.checkBoxAllowDeletions.Text = "Allow Deletions";
+			this.checkBoxAllowDeletions.CheckStateChanged += new System.EventHandler(this.AllowDeletions);
+			// 
+			// checkBoxBackupDeletions
+			// 
+			this.checkBoxBackupDeletions.CheckBackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
+			this.checkBoxBackupDeletions.CheckBorderColorDark = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(115)))), ((int)(((byte)(75)))));
+			this.checkBoxBackupDeletions.CheckBorderColorLight = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(199)))), ((int)(((byte)(167)))));
+			this.checkBoxBackupDeletions.CheckColor = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(243)))), ((int)(((byte)(223)))));
+			this.checkBoxBackupDeletions.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBoxBackupDeletions.FontType = CustomControls.Visuals.FontType.Bold;
+			this.checkBoxBackupDeletions.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+			this.checkBoxBackupDeletions.Location = new System.Drawing.Point(163, 130);
+			this.checkBoxBackupDeletions.Name = "checkBoxBackupDeletions";
+			this.checkBoxBackupDeletions.OutlineColor = System.Drawing.Color.Transparent;
+			this.checkBoxBackupDeletions.Size = new System.Drawing.Size(110, 11);
+			this.checkBoxBackupDeletions.TabIndex = 153;
+			this.checkBoxBackupDeletions.Text = "Backup Deletions";
+			this.checkBoxBackupDeletions.CheckStateChanged += new System.EventHandler(this.BackupDeletions);
+			// 
+			// tabGroupSettings
+			// 
+			this.tabGroupSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(131)))), ((int)(((byte)(131)))));
+			this.tabGroupSettings.Controls.Add(this.checkBoxBackupDeletions);
+			this.tabGroupSettings.Controls.Add(this.checkBoxAllowDeletions);
+			this.tabGroupSettings.Controls.Add(this.buttonOpenDir);
+			this.tabGroupSettings.Controls.Add(this.buttonExtract);
+			this.tabGroupSettings.Controls.Add(this.checkBoxRemapImage);
+			this.tabGroupSettings.Controls.Add(this.buttonAbout);
+			this.tabGroupSettings.Controls.Add(this.rctLabel2);
+			this.tabGroupSettings.Controls.Add(this.rctLabel1);
+			this.tabGroupSettings.Controls.Add(this.checkBoxQuickLoad);
+			this.tabGroupSettings.Controls.Add(this.buttonSaveSettings);
+			this.tabGroupSettings.Controls.Add(this.buttonBrowseDefault);
+			this.tabGroupSettings.Controls.Add(this.numericUpDownObjectsPerTick);
+			this.tabGroupSettings.Controls.Add(this.textBoxDirectory);
+			this.tabGroupSettings.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tabGroupSettings.Location = new System.Drawing.Point(1, 1);
+			this.tabGroupSettings.Name = "tabGroupSettings";
+			this.tabGroupSettings.Size = new System.Drawing.Size(576, 359);
+			this.tabGroupSettings.TabIndex = 0;
+			this.tabGroupSettings.Visible = false;
+			// 
 			// BrowserForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(155)))), ((int)(((byte)(119)))));
-			this.ClientSize = new System.Drawing.Size(761, 427);
+			this.ClientSize = new System.Drawing.Size(792, 427);
 			this.Controls.Add(this.splitContainerStatusBar);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.MinimumSize = new System.Drawing.Size(777, 430);
+			this.MinimumSize = new System.Drawing.Size(808, 430);
 			this.Name = "BrowserForm";
 			this.Text = "Trigger\'s Content Browser";
 			this.Load += new System.EventHandler(this.OnFormLoad);
@@ -2414,17 +2482,15 @@ namespace RCTDataEditor {
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerTabs)).EndInit();
 			this.splitContainerTabs.ResumeLayout(false);
 			this.rctTabPanel1.ResumeLayout(false);
-			this.tabGroupSettings.ResumeLayout(false);
-			this.tabGroupSettings.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownObjectsPerTick)).EndInit();
 			this.rctPanel2.ResumeLayout(false);
-			this.tabGroupInfoOld.ResumeLayout(false);
-			this.tabGroupInfoOld.PerformLayout();
 			this.splitContainerStatusBar.Panel1.ResumeLayout(false);
 			this.splitContainerStatusBar.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainerStatusBar)).EndInit();
 			this.splitContainerStatusBar.ResumeLayout(false);
 			this.statusBar.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.numericUpDownObjectsPerTick)).EndInit();
+			this.tabGroupSettings.ResumeLayout(false);
+			this.tabGroupSettings.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -2432,7 +2498,6 @@ namespace RCTDataEditor {
 		#endregion
 
 		private System.Windows.Forms.PictureBox objectView;
-		private System.Windows.Forms.GroupBox tabGroupInfoOld;
 		private System.Windows.Forms.Label infoFrames;
 		private System.Windows.Forms.Label infoFileName;
 		private System.Windows.Forms.Label infoName;
@@ -2527,9 +2592,6 @@ namespace RCTDataEditor {
 		private System.Windows.Forms.ColumnHeader columnHeader51;
 		private System.Windows.Forms.FolderBrowserDialog objDataBrowserDialog;
 		private System.Windows.Forms.SplitContainer splitContainerStatusBar;
-		private System.Windows.Forms.Panel tabGroupSettings;
-		private System.Windows.Forms.NumericUpDown numericUpDownObjectsPerTick;
-		private System.Windows.Forms.TextBox textBoxDirectory;
 		private System.Windows.Forms.ImageList imageListPaletteButton;
 		private System.Windows.Forms.ColumnHeader columnHeader54;
 		private System.Windows.Forms.ColumnHeader columnHeader63;
@@ -2544,7 +2606,6 @@ namespace RCTDataEditor {
 		private System.Windows.Forms.ColumnHeader columnHeaderSubtype;
 		private System.Windows.Forms.HScrollBar scrollBarImage;
 		private System.Windows.Forms.ToolTip toolTips;
-		private RCTButton buttonBrowseDefault;
 		private RCTTabButton tabInfo;
 		private RCTTabButton tabAll;
 		private RCTTabButton tabAttractions;
@@ -2556,7 +2617,7 @@ namespace RCTDataEditor {
 		private RCTTabButton tabSigns;
 		private RCTTabButton tabLargeScenery;
 		private RCTTabButton tabWalls;
-		private RCTTabButton tabSettings;
+		private RCTTabButton tabScenarioText;
 		private RCTTabButton tabWater;
 		private RCTTabButton tabParkEntrances;
 		private RCTButton buttonBrowse;
@@ -2572,7 +2633,6 @@ namespace RCTDataEditor {
 		private RCTCheckBox checkBoxImageView;
 		private RCTLabel labelImageOffset;
 		private RCTLabel labelImageSize;
-		private RCTButton buttonSaveSettings;
 		private RCTLabel labelObjectsInGroup;
 		private RCTLabel labelObjectsScanned;
 		private RCTLabel labelScanProgress;
@@ -2582,16 +2642,29 @@ namespace RCTDataEditor {
 		private RCTPanel rctPanel2;
 		private RCTTabPanel rctTabPanel1;
 		private System.Windows.Forms.ColumnHeader columnHeader64;
+		private System.Windows.Forms.Timer timerExtract;
+		private RCTTabButton tabSettings;
+		private System.Windows.Forms.ListView tabGroupScenarioText;
+		private System.Windows.Forms.ColumnHeader columnHeader65;
+		private System.Windows.Forms.ColumnHeader columnHeader66;
+		private System.Windows.Forms.ColumnHeader columnHeader67;
+		private System.Windows.Forms.ColumnHeader columnHeader68;
+		private System.Windows.Forms.ColumnHeader columnHeader69;
+		private System.Windows.Forms.ColumnHeader columnHeader70;
+		private System.Windows.Forms.Panel tabGroupSettings;
+		private RCTCheckBox checkBoxBackupDeletions;
+		private RCTCheckBox checkBoxAllowDeletions;
+		private RCTButton buttonOpenDir;
+		private RCTButton buttonExtract;
+		private RCTCheckBox checkBoxRemapImage;
 		private RCTButton buttonAbout;
 		private RCTLabel rctLabel2;
 		private RCTLabel rctLabel1;
 		private RCTCheckBox checkBoxQuickLoad;
-		private RCTCheckBox checkBoxRemapImage;
-		private RCTButton buttonOpenDir;
-		private RCTButton buttonExtract;
-		private System.Windows.Forms.Timer timerExtract;
-		private RCTCheckBox checkBoxAllowDeletions;
-		private RCTCheckBox checkBoxBackupDeletions;
+		private RCTButton buttonSaveSettings;
+		private RCTButton buttonBrowseDefault;
+		private System.Windows.Forms.NumericUpDown numericUpDownObjectsPerTick;
+		private System.Windows.Forms.TextBox textBoxDirectory;
 	}
 }
 

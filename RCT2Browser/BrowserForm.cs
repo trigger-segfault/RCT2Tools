@@ -43,6 +43,7 @@ namespace RCTDataEditor {
 			"SceneryGroups",
 			"ParkEntrances",
 			"Water",
+			"ScenarioText",
 			"Settings"
 		};
 		/** <summary> The list of real tab names. </summary> */
@@ -59,6 +60,7 @@ namespace RCTDataEditor {
 			"Scenery Groups",
 			"Park Entrances",
 			"Water",
+			"Scenario Text",
 			"Settings",
 			"About"
 		};
@@ -490,6 +492,7 @@ namespace RCTDataEditor {
 						case ObjectTypes.SceneryGroup: this.tabGroupSceneryGroups.Items.Add(item); break;
 						case ObjectTypes.ParkEntrance: this.tabGroupParkEntrances.Items.Add(item); break;
 						case ObjectTypes.Water: this.tabGroupWater.Items.Add(item); break;
+						case ObjectTypes.ScenarioText: this.tabGroupScenarioText.Items.Add(item); break;
 						}
 					}
 					else {
@@ -832,6 +835,7 @@ namespace RCTDataEditor {
 								case ObjectTypes.SceneryGroup: listView = this.tabGroupSceneryGroups; break;
 								case ObjectTypes.ParkEntrance: listView = this.tabGroupParkEntrances; break;
 								case ObjectTypes.Water: listView = this.tabGroupWater; break;
+								case ObjectTypes.ScenarioText: listView = this.tabGroupScenarioText; break;
 								}
 								for (int i = 0; i < listView.Items.Count; i++) {
 									if (listView.Items[i].SubItems.Count > 2) {
@@ -917,7 +921,7 @@ namespace RCTDataEditor {
 					this.scrollBarImage.Enabled = false;
 					this.scrollBarImage.Visible = false;
 				}
-				if (this.imageView) {
+				if (this.imageView && objectData.ImageDirectory.NumEntries > 0) {
 					if (objectData.GraphicsData.IsPaletteImage(drawSettings.Frame)) {
 						this.labelImageSize.Text = "Image Size:  " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Width + ", " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Height + "";
 						this.labelImageOffset.Text = "Image Offset:  " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).XOffset + ", " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).YOffset + "";
@@ -1072,7 +1076,7 @@ namespace RCTDataEditor {
 					drawSettings.Frame--;
 				this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + drawSettings.Frame : (!dialogView ? "frame " + drawSettings.Frame : "dialog"));
 				this.UpdateImages();
-				if (imageView) {
+				if (imageView && objectData.ImageDirectory.NumEntries > 0) {
 					this.scrollBarImage.Value = drawSettings.Frame;
 					if (objectData.GraphicsData.IsPaletteImage(drawSettings.Frame)) {
 						this.labelImageSize.Text = "Image Size:  " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Width + ", " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Height + "";
@@ -1095,7 +1099,7 @@ namespace RCTDataEditor {
 					drawSettings.Frame++;
 				this.labelCurrentObject.Text = objectData.ObjectHeader.FileName + ".DAT - " + (imageView ? "image " + drawSettings.Frame : (!dialogView ? "frame " + drawSettings.Frame : "dialog"));
 				this.UpdateImages();
-				if (imageView) {
+				if (imageView && objectData.ImageDirectory.NumEntries > 0) {
 					this.scrollBarImage.Value = drawSettings.Frame;
 					if (objectData.GraphicsData.IsPaletteImage(drawSettings.Frame)) {
 						this.labelImageSize.Text = "Image Size:  " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Width + ", " + objectData.GraphicsData.GetPaletteImage(drawSettings.Frame).Height + "";
@@ -1407,11 +1411,15 @@ namespace RCTDataEditor {
 			AddInfoItem("general", "Name", (objectData.StringTable.Entries[0][Languages.British].Replace(" ", "").Length != 0 ? objectData.StringTable.Entries[0][Languages.British] : objectData.StringTable.Entries[0][Languages.American]));
 			AddInfoItem("general", "Type", objectData.Type.ToString());
 			AddInfoItem("general", "Source", objectData.Source.ToString());
-			AddInfoItem("graphics", "Images", objectData.GraphicsData.NumImages.ToString());
-			AddInfoItem("graphics", "Palettes", objectData.GraphicsData.NumPalettes.ToString());
+			if (objectData.HasGraphics) {
+				AddInfoItem("graphics", "Images", objectData.GraphicsData.NumImages.ToString());
+				AddInfoItem("graphics", "Palettes", objectData.GraphicsData.NumPalettes.ToString());
+			}
 
-			for (int i = 0; i < objectData.StringTable.Count; i++) {
-				AddInfoItem("strings", "Entry " + (i + 1), objectData.StringTable.Entries[i][Languages.British]);
+			if (objectData.NumStringTableEntries > 0) {
+				for (int i = 0; i < objectData.StringTable.Count; i++) {
+					AddInfoItem("strings", "Entry " + (i + 1), objectData.StringTable.Entries[i][Languages.British]);
+				}
 			}
 
 			if (objectData.GroupInfo.FileName.Length != 0) {
@@ -1580,7 +1588,10 @@ namespace RCTDataEditor {
 				AddInfoItem("header", "SignX", obj.Header.SignX.ToString());
 				AddInfoItem("header", "SignY", obj.Header.SignY.ToString());
 			}
-
+			else if (objectData is ScenarioText) {
+				ScenarioText obj = (ScenarioText)objectData;
+				AddInfoItem("header", "IsSixFlags", "0x" + obj.Header.IsSixFlags.ToString("X"));
+			}
 		}
 		/** <summary> Updates the object view. </summary> */
 		private void UpdateImages() {

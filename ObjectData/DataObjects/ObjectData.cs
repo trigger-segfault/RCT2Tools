@@ -81,7 +81,7 @@ public struct ObjectDataInfo {
 				case ObjectTypes.SceneryGroup: headerSize = SceneryGroup.HeaderSize; break;
 				case ObjectTypes.ParkEntrance: headerSize = ParkEntrance.HeaderSize; break;
 				case ObjectTypes.Water: headerSize = Water.HeaderSize; break;
-				case ObjectTypes.ScenarioText: headerSize = 0x0; break;
+				case ObjectTypes.ScenarioText: headerSize = ScenarioText.HeaderSize; break;
 				default: objInfo.Flags = 0xFFFFFFFF; break;
 				}
 
@@ -163,7 +163,15 @@ public struct ObjectDataInfo {
 
 			break;
 		case ChunkEncoding.Rotate:
-			Console.WriteLine("Rotate Encoding not supported!");
+			int shift = 1;
+			while (chunkPosition < (long)chunkSize) {
+				byte b = reader.ReadByte();
+				b = (byte)((b >> shift) | (b << (8 - shift)));
+				writer.Write(b);
+				chunkPosition++;
+				position++;
+				shift = (shift + 2) % 8;
+			}
 			break;
 		}
 
@@ -181,7 +189,7 @@ public struct ObjectDataInfo {
 		case ObjectTypes.SceneryGroup: objInfo.Header = new SceneryGroupHeader(); break;
 		case ObjectTypes.ParkEntrance: objInfo.Header = new ParkEntranceHeader(); break;
 		case ObjectTypes.Water: objInfo.Header = new WaterHeader(); break;
-		case ObjectTypes.ScenarioText: objInfo.Header = null; break;
+		case ObjectTypes.ScenarioText: objInfo.Header = new ScenarioTextHeader(); break;
 		}
 		if (objInfo.Header != null) {
 			objInfo.Header.Read(reader2);
@@ -403,12 +411,16 @@ public class ObjectData {
 	#region Reading
 
 	/** <summary> Gets the number of string table entries in the object. </summary> */
-	protected virtual int NumStringTableEntries {
+	public virtual int NumStringTableEntries {
 		get { return 1; }
 	}
 	/** <summary> Returns true if the object has a group info section. </summary> */
-	protected virtual bool HasGroupInfo {
+	public virtual bool HasGroupInfo {
 		get { return false; }
+	}
+	/** <summary> Returns true if the object has an image directory and graphics data section. </summary> */
+	public virtual bool HasGraphics {
+		get { return true; }
 	}
 
 	#endregion
@@ -460,10 +472,12 @@ public class ObjectData {
 		// Read the optional section
 		ReadOptional(reader);
 
-		// Read the image directory
-		imageDirectory.Read(reader, quickLoad);
-		// Read the graphics data
-		graphicsData.Read(reader);
+		if (HasGraphics) {
+			// Read the image directory
+			imageDirectory.Read(reader, quickLoad);
+			// Read the graphics data
+			graphicsData.Read(reader);
+		}
 	}
 	/** <summary> Writes the object data. </summary> */
 	protected void Write(BinaryWriter writer) {
@@ -481,17 +495,19 @@ public class ObjectData {
 
 		long imageDirectoryPosition = writer.BaseStream.Position;
 
-		// Write the image directory and graphics data
-		imageDirectory.Write(writer);
-		graphicsData.Write(writer);
+		if (HasGraphics) {
+			// Write the image directory and graphics data
+			imageDirectory.Write(writer);
+			graphicsData.Write(writer);
 
-		// Rewrite the image directory after the image addresses are known
-		long finalPosition = writer.BaseStream.Position;
-		writer.BaseStream.Position = imageDirectoryPosition;
-		imageDirectory.Write(writer);
+			// Rewrite the image directory after the image addresses are known
+			long finalPosition = writer.BaseStream.Position;
+			writer.BaseStream.Position = imageDirectoryPosition;
+			imageDirectory.Write(writer);
 
-		// Set the position to the end of the file so the file size is known
-		writer.BaseStream.Position = finalPosition;
+			// Set the position to the end of the file so the file size is known
+			writer.BaseStream.Position = finalPosition;
+		}
 	}
 	/** <summary> Reads the object data header. </summary> */
 	protected virtual void ReadHeader(BinaryReader reader) {
@@ -589,11 +605,11 @@ public class ObjectData {
 			objectHeader.Read(reader);
 
 			byte[] data = null;
-			if ((ObjectTypes)(objectHeader.Flags & 0xF) != ObjectTypes.ScenarioText) {
+			//if ((ObjectTypes)(objectHeader.Flags & 0xF) != ObjectTypes.ScenarioText) {
 				data = ObjectData.ReadChunk(reader, chunkHeader);
 				reader.Close();
 				reader = new BinaryReader(new MemoryStream(data));
-			}
+			//}
 
 			switch ((ObjectTypes)(objectHeader.Flags & 0xF)) {
 			case ObjectTypes.Attraction: obj = new Attraction(objectHeader, chunkHeader); break;
@@ -606,7 +622,7 @@ public class ObjectData {
 			case ObjectTypes.SceneryGroup: obj = new SceneryGroup(objectHeader, chunkHeader); break;
 			case ObjectTypes.ParkEntrance: obj = new ParkEntrance(objectHeader, chunkHeader); break;
 			case ObjectTypes.Water: obj = new Water(objectHeader, chunkHeader); break;
-			case ObjectTypes.ScenarioText:	/*obj = new ScenarioText(objectHeader, chunkHeader);*/	break;
+			case ObjectTypes.ScenarioText:	obj = new ScenarioText(objectHeader, chunkHeader); break;
 			default: objectHeader.Flags = (uint)ObjectTypes.None; break; // Set as invalid
 			}
 			if (obj != null) {
@@ -689,7 +705,15 @@ public class ObjectData {
 
 			break;
 		case ChunkEncoding.Rotate:
-			Console.WriteLine("Rotate Encoding not supported!");
+			int shift = 1;
+			while (chunkPosition < (long)chunkSize) {
+				byte b = reader.ReadByte();
+				b = (byte)((b >> shift) | (b << (8 - shift)));
+				writer.Write(b);
+				chunkPosition++;
+				position++;
+				shift = (shift + 2) % 8;
+			}
 			break;
 		}
 
@@ -824,6 +848,7 @@ public enum ObjectSubtypes : byte {
 	Entrance,
 	Group,
 	Path,
+	Text,
 	
 	#endregion
 	//--------------------------------

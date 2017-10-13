@@ -118,6 +118,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Tabs\TabScenarioText.png" />
     <None Include="Resources\Trash.png" />
     <None Include="Resources\SortUp.png" />
     <None Include="Resources\SortDown.png" />
@@ -156,6 +157,7 @@
     <None Include="Resources\Buttons\ButtonLeft.png" />
     <None Include="Resources\Buttons\ButtonRight.png" />
     <None Include="Resources\AboutImage.png" />
+    <None Include="Resources\Checkboxes\CheckboxChecked.png" />
     <Content Include="Resources\LandTile.png" />
     <Content Include="Resources\LandTileReal.png" />
     <None Include="Resources\SmallSceneryBackgroundLarge.png" />

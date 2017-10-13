@@ -65,6 +65,7 @@
     <Compile Include="DataObjects\Types\PathAddition.cs" />
     <Compile Include="DataObjects\Types\PathBanner.cs" />
     <Compile Include="DataObjects\Types\Pathing.cs" />
+    <Compile Include="DataObjects\Types\ScenarioText.cs" />
     <Compile Include="DataObjects\Types\SceneryGroup.cs" />
     <Compile Include="DataObjects\Types\SmallScenery.cs" />
     <Compile Include="DataObjects\Types\Wall.cs" />
