@@ -11,9 +11,10 @@ using System.Windows.Forms;
 using System.IO;
 using System.Drawing.Drawing2D;
 using CustomControls;
-using RCT2ObjectData.DataObjects;
+using RCT2ObjectData.Objects;
 using System.Xml;
 using System.Reflection;
+using RCT2ObjectData.Drawing;
 
 namespace RCT2GraphicsExtractor {
 	public partial class ExtractorForm : Form {

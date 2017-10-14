@@ -1,5 +1,5 @@
-﻿using RCT2ObjectData.DataObjects;
-using RCT2ObjectData.DataObjects.Types;
+﻿using RCT2ObjectData.Objects;
+using RCT2ObjectData.Objects.Types;
 using RCT2WaterCreator.Properties;
 using RCTDataEditor;
 using System;

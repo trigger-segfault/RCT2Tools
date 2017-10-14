@@ -7,23 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using RCT2ObjectData.DataObjects;
+using RCT2ObjectData.Objects;
 using System.IO;
-using RCT2ObjectData.DataObjects.Types;
+using RCT2ObjectData.Objects.Types;
 using RCT2PaletteConverter.Properties;
+using RCT2ObjectData.Drawing;
 
 namespace RCT2PaletteConverter {
 	public partial class ConverterForm : Form {
 
 		Bitmap image;
-		PaletteImage p;
-		Terrain terrain;
-		ObjectData obj;
-		DrawSettings drawSettings;
-		string MazePath = @"C:\Programs\Games\Steam\steamapps\common\Rollercoaster Tycoon 2\Tracks\Mini Maze.TD6";
-		string MazePath2 = @"C:\Programs\Games\Steam\steamapps\common\Rollercoaster Tycoon 2\Tracks\TestMaze3.TD6";
-		//string MazePath = @"C:\Programs\Games\Steam\steamapps\common\Rollercoaster Tycoon 2\Tracks\MicroMazeReddBaron.TD6";
-		//string MazePath = @"C:\Programs\Games\Steam\steamapps\common\Rollercoaster Tycoon 2\Tracks\Mini Maze.TD6";
 
 		public ConverterForm() {
 			InitializeComponent();

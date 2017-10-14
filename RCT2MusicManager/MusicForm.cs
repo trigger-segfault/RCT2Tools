@@ -3,9 +3,9 @@ using NAudio;
 using NAudio.Wave;
 using NAudio.MediaFoundation;
 using RCT2MusicManager.Properties;
-using RCT2ObjectData.DataObjects;
-using RCT2ObjectData.DataObjects.Types;
-using RCT2ObjectData.DataObjects.Types.AttractionInfo;
+using RCT2ObjectData.Objects;
+using RCT2ObjectData.Objects.Types;
+using RCT2ObjectData.Objects.Types.AttractionInfo;
 using RCTDataEditor.DataObjects;
 using System;
 using System.Collections;
@@ -26,6 +26,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using RCT2ObjectData.Drawing;
 
 namespace RCT2MusicManager {
 	public partial class MusicForm : Form {
@@ -57,11 +58,7 @@ namespace RCT2MusicManager {
 		#endregion
 		//--------------------------------
 		#region Tabs
-
-		/** <summary> The name of the current tab. </summary> */
-		string currentTab = "Info";
-		/** <summary> The current list containing the object. </summary> */
-		string currentList;
+		
 		/** <summary> The list of tab sort columns. </summary> */
 		int[] currentColumn = new int[]{
 			0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0
@@ -82,11 +79,6 @@ namespace RCT2MusicManager {
 		/** <summary> Constructs the form. </summary> */
 		public MusicForm() {
 			InitializeComponent();
-
-			Pathing.SetPathSprites();
-			Water.LoadResources();
-			Terrain.LoadResources();
-			ColorRemapping.LoadResources();
 
 			this.fontBold = new SpriteFont(Resources.BoldFont, ' ', 'z', 10);
 
@@ -356,7 +348,7 @@ namespace RCT2MusicManager {
 					}
 				}
 			}
-			catch (Exception exception) {
+			catch (Exception) {
 
 			}
 		}
@@ -389,7 +381,7 @@ namespace RCT2MusicManager {
 					}
 				}
 			}
-			catch (Exception exception) {
+			catch (Exception) {
 
 			}
 		}

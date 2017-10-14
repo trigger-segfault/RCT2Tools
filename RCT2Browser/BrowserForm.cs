@@ -1,7 +1,8 @@
 ﻿using CustomControls;
-using RCT2ObjectData.DataObjects;
-using RCT2ObjectData.DataObjects.Types;
-using RCT2ObjectData.DataObjects.Types.AttractionInfo;
+using RCT2ObjectData.Drawing;
+using RCT2ObjectData.Objects;
+using RCT2ObjectData.Objects.Types;
+using RCT2ObjectData.Objects.Types.AttractionInfo;
 using RCTDataEditor.DataObjects;
 using RCTDataEditor.FileIO;
 using RCTDataEditor.Properties;
@@ -184,11 +185,6 @@ namespace RCTDataEditor {
 		/** <summary> Constructs the form. </summary> */
 		public BrowserForm(string[] args) {
 			InitializeComponent();
-
-			Pathing.SetPathSprites();
-			Water.LoadResources();
-			Terrain.LoadResources();
-			ColorRemapping.LoadResources();
 
 			this.fontBold = new SpriteFont(Resources.BoldFont, ' ', 'z', 10);
 
@@ -950,7 +946,7 @@ namespace RCTDataEditor {
 			drawSettings.Rotation++;
 			if (objectData is Attraction) {
 				Attraction a = objectData as Attraction;
-				if (a.Header.RideType != RideTypes.Stall) {
+				if (a.Header.RideCategory != RideCategories.Stall) {
 					if (drawSettings.Rotation > a.Header.CarTypeList[(int)drawSettings.CurrentCar].LastRotationFrame)
 						drawSettings.Rotation = 0;
 				}
@@ -1093,7 +1089,7 @@ namespace RCTDataEditor {
 		private void NextFrame(object sender, EventArgs e) {
 			if (objectData != null && !objectData.Invalid) {
 				int animFrames = objectData.AnimationFrames;
-				if (objectData is Attraction && (objectData as Attraction).Header.RideType != RideTypes.Stall)
+				if (objectData is Attraction && (objectData as Attraction).Header.RideCategory != RideCategories.Stall)
 					animFrames = (objectData as Attraction).Header.CarTypeList[(int)drawSettings.CurrentCar].AnimationFrames;
 				if (drawSettings.Frame + 1 < (imageView ? objectData.ImageDirectory.NumEntries : animFrames))
 					drawSettings.Frame++;
@@ -1454,8 +1450,8 @@ namespace RCTDataEditor {
 				AddInfoItem("header", "Max Height", obj.Header.MaxHeight.ToString());
 				AddInfoFlags("header", "Available Tracks", obj.Header.AvailableTrackSections.ToString());
 
-				AddInfoItem("header", "Ride Type", obj.Header.RideType.ToString());
-				AddInfoItem("header", "2nd Ride Type", obj.Header.RideTypeAlternate.ToString());
+				AddInfoItem("header", "Ride Type", obj.Header.RideCategory.ToString());
+				AddInfoItem("header", "2nd Ride Type", obj.Header.RideCategoryAlternate.ToString());
 
 				AddInfoItem("header", "Sold Item 1", obj.Header.SoldItem1.ToString());
 				AddInfoItem("header", "Sold Item 2", obj.Header.SoldItem2.ToString());
@@ -1468,25 +1464,32 @@ namespace RCTDataEditor {
 
 					AddInfoItem(header, "Last Rotation Frame", car.LastRotationFrame.ToString());
 					//AddInfoBytes(header, "Reserved0x01", car.Reserved0x01);
-					AddInfoItem(header, "Unknown0x04", "0x" + car.Unknown0x04.ToString("X2") + " (" + car.Unknown0x04.ToString() + ")");
-					AddInfoItem(header, "Car Spacing", car.CarSpacing.ToString() + " (" + ((double)car.CarSpacing * 0.01).ToString() + " ft)");
+					AddInfoItem(header, "Num Vertical Frames", car.NumVerticalFramesUnused.ToString());
+					AddInfoItem(header, "Num Horizontal Frames", car.NumHorizontalFramesUnused.ToString());
+					AddInfoItem(header, "Car Spacing", car.Spacing.ToString());
 					//AddInfoItem(header, "Reserved0x07", "0x" + car.Reserved0x07.ToString("X2"));
 					AddInfoItem(header, "Car Friction", car.CarFriction.ToString());
 					AddInfoItem(header, "Car Tab Height", car.CarTabHeight.ToString());
 					AddInfoItem(header, "Rider Settings", (car.RiderSettings & 0x7F).ToString() + " Riders" + (((car.RiderSettings & 0x80) != 0) ? " in Pairs" : ""));
 					AddInfoFlags(header, "Sprite Flags", car.SpriteFlags.ToString());
-					AddInfoBytes(header, "Unknown0x0E", car.Unknown0x0E);
+					AddInfoItem(header, "Sprite Width", car.SpriteWidth.ToString());
+					AddInfoItem(header, "Sprite Height Positive", car.SpriteHeightPositive.ToString());
+					AddInfoItem(header, "Sprite Height Negative", car.SpriteHeightNegative.ToString());
+					AddInfoItem(header, "Animation", "0x" + car.Animation.ToString("X2"));
 					AddInfoFlags(header, "Flags", car.Flags.ToString());
-					//AddInfoItem(header, "Car Behavior", car.CarBehavior.ToString());
+					AddInfoItem(header, "Base Num Frames", car.BaseNumFrames.ToString());
 					//AddInfoBytes(header, "Reserved0x16", car.Reserved0x16);
 					AddInfoItem(header, "Rider Sprites", car.RiderSprites.ToString());
 					AddInfoItem(header, "Spinning Inertia", car.SpinningInertia.ToString());
 					AddInfoItem(header, "Spinning Friction", car.SpinningFriction.ToString());
-					AddInfoBytes(header, "Unknown0x57", car.Unknown0x57);
+					AddInfoItem(header, "Friction Sound ID", "0x" + car.FrictionSoundID.ToString("X2"));
+					AddInfoItem(header, "Unknown0x58", "0x" + car.Unknown0x58.ToString("X2"));
+					AddInfoItem(header, "Sound Range", "0x" + car.SoundRange.ToString("X2"));
+					AddInfoItem(header, "Unknown0x5A", "0x" + car.Unknown0x58.ToString("X2"));
 					AddInfoItem(header, "Powered Acceleration", car.PoweredAcceleration.ToString());
 					AddInfoItem(header, "Powered Max Speed", car.PoweredMaxSpeed.ToString());
 					AddInfoItem(header, "Car Visuals", car.CarVisual.ToString());
-					AddInfoItem(header, "Unknown Setting", car.UnknownSetting.ToString());
+					AddInfoItem(header, "Car Effect Visuals", car.EffectVisual.ToString());
 					AddInfoItem(header, "Draw Order", car.DrawOrder.ToString());
 					AddInfoItem(header, "Special Frames", car.SpecialFrames.ToString());
 					//AddInfoItem(header, "Reserved0x61", "0x" + car.Reserved0x61.ToString("X8"));

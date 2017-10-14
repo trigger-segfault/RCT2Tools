@@ -1,5 +1,5 @@
-﻿using RCT2ObjectData.DataObjects;
-using RCT2ObjectData.DataObjects.Types.AttractionInfo;
+﻿using RCT2ObjectData.Objects;
+using RCT2ObjectData.Objects.Types.AttractionInfo;
 using RCT2MazeGenerator.Properties;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RCT2ObjectData.Track;
+using RCT2ObjectData.Drawing;
 
 namespace RCT2MazeGenerator {
 public class MazeEditor : Control {
@@ -331,8 +333,8 @@ public class MazeEditor : Control {
 			newWalls |= SwapFlag(walls, MazeWalls.NorthRight, MazeWalls.SouthRight);
 
 			// Quadrants
-			newWalls |= SwapFlag(walls, MazeWalls.Quadrant4, MazeWalls.Quadrant3);
-			newWalls |= SwapFlag(walls, MazeWalls.Quadrant1, MazeWalls.Quadrant2);
+			newWalls |= SwapFlag(walls, MazeWalls.QuadrantNorthWest, MazeWalls.QuadrantSouthWest);
+			newWalls |= SwapFlag(walls, MazeWalls.QuadrantNorthEast, MazeWalls.QuadrantSouthEast);
 		}
 		return newWalls;
 	}
@@ -427,16 +429,16 @@ public class MazeEditor : Control {
 
 				switch (buildingDirection) {
 				case MazeBuildingDirections.North:
-					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.NorthLeft | MazeWalls.NorthMiddle | MazeWalls.NorthRight | MazeWalls.Quadrant4 | MazeWalls.Quadrant1);
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.NorthLeft | MazeWalls.NorthMiddle | MazeWalls.NorthRight | MazeWalls.QuadrantNorthWest | MazeWalls.QuadrantNorthEast);
 					break;
 				case MazeBuildingDirections.South:
-					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.SouthLeft | MazeWalls.SouthMiddle | MazeWalls.SouthRight | MazeWalls.Quadrant3 | MazeWalls.Quadrant2);
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.SouthLeft | MazeWalls.SouthMiddle | MazeWalls.SouthRight | MazeWalls.QuadrantSouthWest | MazeWalls.QuadrantSouthEast);
 					break;
 				case MazeBuildingDirections.West:
-					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.WestTop | MazeWalls.WestMiddle | MazeWalls.WestBottom | MazeWalls.Quadrant4 | MazeWalls.Quadrant3);
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.WestTop | MazeWalls.WestMiddle | MazeWalls.WestBottom | MazeWalls.QuadrantNorthWest | MazeWalls.QuadrantSouthWest);
 					break;
 				case MazeBuildingDirections.East:
-					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.EastTop | MazeWalls.EastMiddle | MazeWalls.EastBottom | MazeWalls.Quadrant1 | MazeWalls.Quadrant2);
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.EastTop | MazeWalls.EastMiddle | MazeWalls.EastBottom | MazeWalls.QuadrantNorthEast | MazeWalls.QuadrantSouthEast);
 					break;
 				}
 
@@ -451,16 +453,16 @@ public class MazeEditor : Control {
 
 				switch (buildingDirection) {
 				case MazeBuildingDirections.North:
-					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.NorthLeft | MazeWalls.NorthMiddle | MazeWalls.NorthRight | MazeWalls.Quadrant4 | MazeWalls.Quadrant1);
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.NorthLeft | MazeWalls.NorthMiddle | MazeWalls.NorthRight | MazeWalls.QuadrantNorthWest | MazeWalls.QuadrantNorthEast);
 					break;
 				case MazeBuildingDirections.South:
-					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.SouthLeft | MazeWalls.SouthMiddle | MazeWalls.SouthRight | MazeWalls.Quadrant3 | MazeWalls.Quadrant2);
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.SouthLeft | MazeWalls.SouthMiddle | MazeWalls.SouthRight | MazeWalls.QuadrantSouthWest | MazeWalls.QuadrantSouthEast);
 					break;
 				case MazeBuildingDirections.West:
-					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.WestTop | MazeWalls.WestMiddle | MazeWalls.WestBottom | MazeWalls.Quadrant4 | MazeWalls.Quadrant3);
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.WestTop | MazeWalls.WestMiddle | MazeWalls.WestBottom | MazeWalls.QuadrantNorthWest | MazeWalls.QuadrantSouthWest);
 					break;
 				case MazeBuildingDirections.East:
-					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.EastTop | MazeWalls.EastMiddle | MazeWalls.EastBottom | MazeWalls.Quadrant1 | MazeWalls.Quadrant2);
+					this.blocks[point.X, point.Y].Walls &= ~(MazeWalls.EastTop | MazeWalls.EastMiddle | MazeWalls.EastBottom | MazeWalls.QuadrantNorthEast | MazeWalls.QuadrantSouthEast);
 					break;
 				}
 			}
@@ -471,15 +473,15 @@ public class MazeEditor : Control {
 		MazeBlock block = GetNormalBlock(new Point(point.X / 2, point.Y / 2));
 		if (point.Y % 2 == 0) {
 			if (point.X % 2 == 0)
-				return block.Restrictions.HasFlag(MazeWalls.Quadrant4);
+				return block.Restrictions.HasFlag(MazeWalls.QuadrantNorthWest);
 			else
-				return block.Restrictions.HasFlag(MazeWalls.Quadrant1);
+				return block.Restrictions.HasFlag(MazeWalls.QuadrantNorthEast);
 		}
 		else {
 			if (point.X % 2 == 0)
-				return block.Restrictions.HasFlag(MazeWalls.Quadrant3);
+				return block.Restrictions.HasFlag(MazeWalls.QuadrantSouthWest);
 			else
-				return block.Restrictions.HasFlag(MazeWalls.Quadrant2);
+				return block.Restrictions.HasFlag(MazeWalls.QuadrantSouthEast);
 		}
 	}
 	/** <summary> Sets the restriction from the generator using this quadrant. </summary> */
@@ -487,22 +489,22 @@ public class MazeEditor : Control {
 		MazeBlock block = GetNormalBlock(new Point(point.X / 2, point.Y / 2));
 		if (point.Y % 2 == 0) {
 			if (point.X % 2 == 0) {
-				if (restrict) block.Restrictions |= MazeWalls.Quadrant4;
-				else block.Restrictions &= ~MazeWalls.Quadrant4;
+				if (restrict) block.Restrictions |= MazeWalls.QuadrantNorthWest;
+				else block.Restrictions &= ~MazeWalls.QuadrantNorthWest;
 			}
 			else {
-				if (restrict) block.Restrictions |= MazeWalls.Quadrant1;
-				else block.Restrictions &= ~MazeWalls.Quadrant1;
+				if (restrict) block.Restrictions |= MazeWalls.QuadrantNorthEast;
+				else block.Restrictions &= ~MazeWalls.QuadrantNorthEast;
 			}
 		}
 		else {
 			if (point.X % 2 == 0) {
-				if (restrict) block.Restrictions |= MazeWalls.Quadrant3;
-				else block.Restrictions &= ~MazeWalls.Quadrant3;
+				if (restrict) block.Restrictions |= MazeWalls.QuadrantSouthWest;
+				else block.Restrictions &= ~MazeWalls.QuadrantSouthWest;
 			}
 			else {
-				if (restrict) block.Restrictions |= MazeWalls.Quadrant2;
-				else block.Restrictions &= ~MazeWalls.Quadrant2;
+				if (restrict) block.Restrictions |= MazeWalls.QuadrantSouthEast;
+				else block.Restrictions &= ~MazeWalls.QuadrantSouthEast;
 			}
 		}
 	}
@@ -525,19 +527,19 @@ public class MazeEditor : Control {
 			switch (placeDirection) {
 			case MazeBuildingDirections.North:
 				sideBlock = GetNormalBlock(new Point(placePoint.X, placePoint.Y + 1));
-				sideBlock.Walls &= ~(MazeWalls.NorthLeft | MazeWalls.NorthMiddle | MazeWalls.NorthRight | MazeWalls.Quadrant4 | MazeWalls.Quadrant1);
+				sideBlock.Walls &= ~(MazeWalls.NorthLeft | MazeWalls.NorthMiddle | MazeWalls.NorthRight | MazeWalls.QuadrantNorthWest | MazeWalls.QuadrantNorthEast);
 				break;
 			case MazeBuildingDirections.South:
 				sideBlock = GetNormalBlock(new Point(placePoint.X, placePoint.Y - 1));
-				sideBlock.Walls &= ~(MazeWalls.SouthLeft | MazeWalls.SouthMiddle | MazeWalls.SouthRight | MazeWalls.Quadrant3 | MazeWalls.Quadrant2);
+				sideBlock.Walls &= ~(MazeWalls.SouthLeft | MazeWalls.SouthMiddle | MazeWalls.SouthRight | MazeWalls.QuadrantSouthWest | MazeWalls.QuadrantSouthEast);
 				break;
 			case MazeBuildingDirections.West:
 				sideBlock = GetNormalBlock(new Point(placePoint.X + 1, placePoint.Y));
-				sideBlock.Walls &= ~(MazeWalls.WestTop | MazeWalls.WestMiddle | MazeWalls.WestBottom | MazeWalls.Quadrant4 | MazeWalls.Quadrant3);
+				sideBlock.Walls &= ~(MazeWalls.WestTop | MazeWalls.WestMiddle | MazeWalls.WestBottom | MazeWalls.QuadrantNorthWest | MazeWalls.QuadrantSouthWest);
 				break;
 			case MazeBuildingDirections.East:
 				sideBlock = GetNormalBlock(new Point(placePoint.X - 1, placePoint.Y));
-				sideBlock.Walls &= ~(MazeWalls.EastTop | MazeWalls.EastMiddle | MazeWalls.EastBottom | MazeWalls.Quadrant1 | MazeWalls.Quadrant2);
+				sideBlock.Walls &= ~(MazeWalls.EastTop | MazeWalls.EastMiddle | MazeWalls.EastBottom | MazeWalls.QuadrantNorthEast | MazeWalls.QuadrantSouthEast);
 				break;
 			}
 		}
@@ -560,19 +562,19 @@ public class MazeEditor : Control {
 			switch (placeDirection) {
 			case MazeBuildingDirections.North:
 				sideBlock = GetNormalBlock(new Point(placePoint.X, placePoint.Y + 1));
-				sideBlock.Walls &= ~(MazeWalls.NorthLeft | MazeWalls.NorthMiddle | MazeWalls.NorthRight | MazeWalls.Quadrant4 | MazeWalls.Quadrant1);
+				sideBlock.Walls &= ~(MazeWalls.NorthLeft | MazeWalls.NorthMiddle | MazeWalls.NorthRight | MazeWalls.QuadrantNorthWest | MazeWalls.QuadrantNorthEast);
 				break;
 			case MazeBuildingDirections.South:
 				sideBlock = GetNormalBlock(new Point(placePoint.X, placePoint.Y - 1));
-				sideBlock.Walls &= ~(MazeWalls.SouthLeft | MazeWalls.SouthMiddle | MazeWalls.SouthRight | MazeWalls.Quadrant3 | MazeWalls.Quadrant2);
+				sideBlock.Walls &= ~(MazeWalls.SouthLeft | MazeWalls.SouthMiddle | MazeWalls.SouthRight | MazeWalls.QuadrantSouthWest | MazeWalls.QuadrantSouthEast);
 				break;
 			case MazeBuildingDirections.West:
 				sideBlock = GetNormalBlock(new Point(placePoint.X + 1, placePoint.Y));
-				sideBlock.Walls &= ~(MazeWalls.WestTop | MazeWalls.WestMiddle | MazeWalls.WestBottom | MazeWalls.Quadrant4 | MazeWalls.Quadrant3);
+				sideBlock.Walls &= ~(MazeWalls.WestTop | MazeWalls.WestMiddle | MazeWalls.WestBottom | MazeWalls.QuadrantNorthWest | MazeWalls.QuadrantSouthWest);
 				break;
 			case MazeBuildingDirections.East:
 				sideBlock = GetNormalBlock(new Point(placePoint.X - 1, placePoint.Y));
-				sideBlock.Walls &= ~(MazeWalls.EastTop | MazeWalls.EastMiddle | MazeWalls.EastBottom | MazeWalls.Quadrant1 | MazeWalls.Quadrant2);
+				sideBlock.Walls &= ~(MazeWalls.EastTop | MazeWalls.EastMiddle | MazeWalls.EastBottom | MazeWalls.QuadrantNorthEast | MazeWalls.QuadrantSouthEast);
 				break;
 			}
 		}
@@ -608,11 +610,11 @@ public class MazeEditor : Control {
 		if (point.Y % 2 == 0) {
 			if (point.X % 2 == 0 && GetBlock(new Point(point.X / 2 - 1, point.Y / 2)).BuildingDirection != MazeBuildingDirections.West) {
 				if (solid) block.Walls |= MazeWalls.WestMiddle;
-				else block.Walls &= ~(MazeWalls.WestMiddle | MazeWalls.Quadrant4 | MazeWalls.Quadrant3);
+				else block.Walls &= ~(MazeWalls.WestMiddle | MazeWalls.QuadrantNorthWest | MazeWalls.QuadrantSouthWest);
 			}
 			else if (point.X % 2 == 1 && GetBlock(new Point(point.X / 2 + 1, point.Y / 2)).BuildingDirection != MazeBuildingDirections.East) {
 				if (solid) block.Walls |= MazeWalls.EastMiddle;
-				else block.Walls &= ~(MazeWalls.EastMiddle | MazeWalls.Quadrant1 | MazeWalls.Quadrant2);
+				else block.Walls &= ~(MazeWalls.EastMiddle | MazeWalls.QuadrantNorthEast | MazeWalls.QuadrantSouthEast);
 			}
 		}
 		else if (!GetNormalBlock(new Point(point.X / 2, point.Y / 2 + 1)).Empty) {
@@ -622,8 +624,8 @@ public class MazeEditor : Control {
 					GetNormalBlock(new Point(point.X / 2, point.Y / 2 + 1)).Walls |= MazeWalls.NorthLeft;
 				}
 				else {
-					block.Walls &= ~(MazeWalls.SouthLeft | MazeWalls.Quadrant3);
-					GetNormalBlock(new Point(point.X / 2, point.Y / 2 + 1)).Walls &= ~(MazeWalls.NorthLeft | MazeWalls.Quadrant4);
+					block.Walls &= ~(MazeWalls.SouthLeft | MazeWalls.QuadrantSouthWest);
+					GetNormalBlock(new Point(point.X / 2, point.Y / 2 + 1)).Walls &= ~(MazeWalls.NorthLeft | MazeWalls.QuadrantNorthWest);
 				}
 			}
 			else {
@@ -632,8 +634,8 @@ public class MazeEditor : Control {
 					GetNormalBlock(new Point(point.X / 2, point.Y / 2 + 1)).Walls |= MazeWalls.NorthRight;
 				}
 				else {
-					block.Walls &= ~(MazeWalls.SouthRight | MazeWalls.Quadrant2);
-					GetNormalBlock(new Point(point.X / 2, point.Y / 2 + 1)).Walls &= ~(MazeWalls.NorthRight | MazeWalls.Quadrant1);
+					block.Walls &= ~(MazeWalls.SouthRight | MazeWalls.QuadrantSouthEast);
+					GetNormalBlock(new Point(point.X / 2, point.Y / 2 + 1)).Walls &= ~(MazeWalls.NorthRight | MazeWalls.QuadrantNorthEast);
 				}
 			}
 		}
@@ -668,11 +670,11 @@ public class MazeEditor : Control {
 		if (point.X % 2 == 0) {
 			if (point.Y % 2 == 0 && GetBlock(new Point(point.X / 2, point.Y / 2 - 1)).BuildingDirection != MazeBuildingDirections.North) {
 				if (solid) block.Walls |= MazeWalls.NorthMiddle;
-				else block.Walls &= ~(MazeWalls.NorthMiddle | MazeWalls.Quadrant4 | MazeWalls.Quadrant1);
+				else block.Walls &= ~(MazeWalls.NorthMiddle | MazeWalls.QuadrantNorthWest | MazeWalls.QuadrantNorthEast);
 			}
 			else if (point.Y % 2 == 1 && GetBlock(new Point(point.X / 2, point.Y / 2 + 1)).BuildingDirection != MazeBuildingDirections.South) {
 				if (solid) block.Walls |= MazeWalls.SouthMiddle;
-				else block.Walls &= ~(MazeWalls.SouthMiddle | MazeWalls.Quadrant3 | MazeWalls.Quadrant2);
+				else block.Walls &= ~(MazeWalls.SouthMiddle | MazeWalls.QuadrantSouthWest | MazeWalls.QuadrantSouthEast);
 			}
 		}
 		else if (!GetNormalBlock(new Point(point.X / 2 + 1, point.Y / 2)).Empty) {
@@ -683,8 +685,8 @@ public class MazeEditor : Control {
 					GetNormalBlock(new Point(point.X / 2 + 1, point.Y / 2)).Walls |= MazeWalls.WestTop;
 				}
 				else {
-					block.Walls &= ~(MazeWalls.EastTop | MazeWalls.Quadrant1);
-					GetNormalBlock(new Point(point.X / 2 + 1, point.Y / 2)).Walls &= ~(MazeWalls.WestTop | MazeWalls.Quadrant4);
+					block.Walls &= ~(MazeWalls.EastTop | MazeWalls.QuadrantNorthEast);
+					GetNormalBlock(new Point(point.X / 2 + 1, point.Y / 2)).Walls &= ~(MazeWalls.WestTop | MazeWalls.QuadrantNorthWest);
 				}
 			}
 			else {
@@ -693,8 +695,8 @@ public class MazeEditor : Control {
 					GetNormalBlock(new Point(point.X / 2 + 1, point.Y / 2)).Walls |= MazeWalls.WestBottom;
 				}
 				else {
-					block.Walls &= ~(MazeWalls.EastBottom | MazeWalls.Quadrant2);
-					GetNormalBlock(new Point(point.X / 2 + 1, point.Y / 2)).Walls &= ~(MazeWalls.WestBottom | MazeWalls.Quadrant3);
+					block.Walls &= ~(MazeWalls.EastBottom | MazeWalls.QuadrantSouthEast);
+					GetNormalBlock(new Point(point.X / 2 + 1, point.Y / 2)).Walls &= ~(MazeWalls.WestBottom | MazeWalls.QuadrantSouthWest);
 				}
 			}
 		}
@@ -707,15 +709,15 @@ public class MazeEditor : Control {
 		MazeBlock block = this.blocks[point.X / 2, point.Y / 2];
 		if (point.Y % 2 == 0) {
 			if (point.X % 2 == 0)
-				return block.Walls.HasFlag(MazeWalls.Quadrant4);
+				return block.Walls.HasFlag(MazeWalls.QuadrantNorthWest);
 			else
-				return block.Walls.HasFlag(MazeWalls.Quadrant1);
+				return block.Walls.HasFlag(MazeWalls.QuadrantNorthEast);
 		}
 		else {
 			if (point.X % 2 == 0)
-				return block.Walls.HasFlag(MazeWalls.Quadrant3);
+				return block.Walls.HasFlag(MazeWalls.QuadrantSouthWest);
 			else
-				return block.Walls.HasFlag(MazeWalls.Quadrant2);
+				return block.Walls.HasFlag(MazeWalls.QuadrantSouthEast);
 		}
 	}
 	/** <summary> Sets if the specified quadrant is solid. </summary> */
@@ -729,12 +731,12 @@ public class MazeEditor : Control {
 		bool valid = true;
 		if (point.Y % 2 == 0 && GetBlock(new Point(point.X / 2, point.Y / 2 - 1)).BuildingDirection != MazeBuildingDirections.North) {
 			if (point.X % 2 == 0 && GetBlock(new Point(point.X / 2 - 1, point.Y / 2)).BuildingDirection != MazeBuildingDirections.West) {
-				if (solid) block.Walls |= MazeWalls.Quadrant4;
-				else block.Walls &= ~MazeWalls.Quadrant4;
+				if (solid) block.Walls |= MazeWalls.QuadrantNorthWest;
+				else block.Walls &= ~MazeWalls.QuadrantNorthWest;
 			}
 			else if (point.X % 2 == 1 && GetBlock(new Point(point.X / 2 + 1, point.Y / 2)).BuildingDirection != MazeBuildingDirections.East) {
-				if (solid) block.Walls |= MazeWalls.Quadrant1;
-				else block.Walls &= ~MazeWalls.Quadrant1;
+				if (solid) block.Walls |= MazeWalls.QuadrantNorthEast;
+				else block.Walls &= ~MazeWalls.QuadrantNorthEast;
 			}
 			else {
 				valid = false;
@@ -742,12 +744,12 @@ public class MazeEditor : Control {
 		}
 		else if (point.Y % 2 == 1 && GetBlock(new Point(point.X / 2, point.Y / 2 + 1)).BuildingDirection != MazeBuildingDirections.South) {
 			if (point.X % 2 == 0 && GetBlock(new Point(point.X / 2 - 1, point.Y / 2)).BuildingDirection != MazeBuildingDirections.West) {
-				if (solid) block.Walls |= MazeWalls.Quadrant3;
-				else block.Walls &= ~MazeWalls.Quadrant3;
+				if (solid) block.Walls |= MazeWalls.QuadrantSouthWest;
+				else block.Walls &= ~MazeWalls.QuadrantSouthWest;
 			}
 			else if (point.X % 2 == 1 && GetBlock(new Point(point.X / 2 + 1, point.Y / 2)).BuildingDirection != MazeBuildingDirections.East) {
-				if (solid) block.Walls |= MazeWalls.Quadrant2;
-				else block.Walls &= ~MazeWalls.Quadrant2;
+				if (solid) block.Walls |= MazeWalls.QuadrantSouthEast;
+				else block.Walls &= ~MazeWalls.QuadrantSouthEast;
 			}
 			else {
 				valid = false;
@@ -1233,13 +1235,13 @@ public class MazeEditor : Control {
 					b.Dispose();
 
 					b = new SolidBrush(WallColors[(int)wallStyle]);
-					if (block.Walls.HasFlag(MazeWalls.Quadrant1))
+					if (block.Walls.HasFlag(MazeWalls.QuadrantNorthEast))
 						g.FillRectangle(b, new Rectangle(pos.X + PO, pos.Y + W, P, P));
-					if (block.Walls.HasFlag(MazeWalls.Quadrant2))
+					if (block.Walls.HasFlag(MazeWalls.QuadrantSouthEast))
 						g.FillRectangle(b, new Rectangle(pos.X + PO, pos.Y + PO, P, P));
-					if (block.Walls.HasFlag(MazeWalls.Quadrant3))
+					if (block.Walls.HasFlag(MazeWalls.QuadrantSouthWest))
 						g.FillRectangle(b, new Rectangle(pos.X + W, pos.Y + PO, P, P));
-					if (block.Walls.HasFlag(MazeWalls.Quadrant4))
+					if (block.Walls.HasFlag(MazeWalls.QuadrantNorthWest))
 						g.FillRectangle(b, new Rectangle(pos.X + W, pos.Y + W, P, P));
 
 					if (block.Walls.HasFlag(MazeWalls.NorthLeft))
@@ -1291,13 +1293,13 @@ public class MazeEditor : Control {
 					b.Dispose();
 
 					b = new SolidBrush(RestrictColor);
-					if (block.Restrictions.HasFlag(MazeWalls.Quadrant1))
+					if (block.Restrictions.HasFlag(MazeWalls.QuadrantNorthEast))
 						g.FillRectangle(b, new Rectangle(pos.X + HW, pos.Y, HW, HW));
-					if (block.Restrictions.HasFlag(MazeWalls.Quadrant2))
+					if (block.Restrictions.HasFlag(MazeWalls.QuadrantSouthEast))
 						g.FillRectangle(b, new Rectangle(pos.X + HW, pos.Y + HW, HW, HW));
-					if (block.Restrictions.HasFlag(MazeWalls.Quadrant3))
+					if (block.Restrictions.HasFlag(MazeWalls.QuadrantSouthWest))
 						g.FillRectangle(b, new Rectangle(pos.X, pos.Y + HW, HW, HW));
-					if (block.Restrictions.HasFlag(MazeWalls.Quadrant4))
+					if (block.Restrictions.HasFlag(MazeWalls.QuadrantNorthWest))
 						g.FillRectangle(b, new Rectangle(pos.X, pos.Y, HW, HW));
 
 					b.Dispose();

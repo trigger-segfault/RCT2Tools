@@ -3,9 +3,10 @@ using NAudio;
 using NAudio.Lame;
 using NAudio.Wave;
 using RCT2AudioExtractor.Properties;
-using RCT2ObjectData.DataObjects;
-using RCT2ObjectData.DataObjects.Types;
-using RCT2ObjectData.DataObjects.Types.AttractionInfo;
+using RCT2ObjectData.Drawing;
+using RCT2ObjectData.Objects;
+using RCT2ObjectData.Objects.Types;
+using RCT2ObjectData.Objects.Types.AttractionInfo;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -73,11 +74,6 @@ namespace RCT2AudioExtractor {
 		/** <summary> Constructs the form. </summary> */
 		public AudioForm() {
 			InitializeComponent();
-
-			Pathing.SetPathSprites();
-			Water.LoadResources();
-			Terrain.LoadResources();
-			ColorRemapping.LoadResources();
 
 			this.dataDirectory = "";
 			string[] possibleDirectories = {

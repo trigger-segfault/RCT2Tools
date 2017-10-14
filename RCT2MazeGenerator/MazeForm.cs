@@ -1,5 +1,7 @@
-﻿using RCT2ObjectData.DataObjects;
-using RCT2ObjectData.DataObjects.Types.AttractionInfo;
+﻿using RCT2ObjectData.Drawing;
+using RCT2ObjectData.Objects;
+using RCT2ObjectData.Objects.Types.AttractionInfo;
+using RCT2ObjectData.Track;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -181,7 +183,7 @@ namespace RCT2MazeGenerator {
 			TrackDesign newMaze = new TrackDesign();
 			newMaze.TrackType = TrackTypes.HedgeMaze;
 			newMaze.OperatingMode = OperatingModes.MazeMode;
-			newMaze.EntranceType = EntranceTypes.Normal;
+			newMaze.EntranceType = EntranceTypes.Plain;
 
 			newMaze.PoweredSpeedLapsMaxPeople = 4;
 

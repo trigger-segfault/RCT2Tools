@@ -18,8 +18,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using RCT2ObjectData.DataObjects.Types;
-using RCT2ObjectData.DataObjects;
+using RCT2ObjectData.Objects;
+using RCT2ObjectData.Objects.Types;
+using RCT2ObjectData.Drawing;
 
 namespace RCT2GroupCreator {
 	public partial class GroupForm : Form {
@@ -101,11 +102,6 @@ namespace RCT2GroupCreator {
 		/** <summary> Constructs the form. </summary> */
 		public GroupForm(string[] args) {
 			InitializeComponent();
-
-			Pathing.SetPathSprites();
-			Water.LoadResources();
-			ColorRemapping.LoadResources();
-			Terrain.LoadResources();
 
 			this.fontBold = new SpriteFont(Resources.BoldFont, ' ', 'z', 10);
 
@@ -508,7 +504,7 @@ namespace RCT2GroupCreator {
 								item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Type.ToString()));
 								item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Subtype.ToString()));
 								this.tabGroupScenery.Items.Add(item);
-								this.sceneryGroup.Items.Add(new SceneryGroupItem(info.Flags, info.FileName, info.CheckSum));
+								this.sceneryGroup.Items.Add(new ObjectEntry(info.Flags, info.FileName, info.CheckSum));
 							}
 						}
 						else {
@@ -598,7 +594,7 @@ namespace RCT2GroupCreator {
 								item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Type.ToString()));
 								item.SubItems.Add(new ListViewItem.ListViewSubItem(item, info.Subtype.ToString()));
 								this.tabGroupScenery.Items.Insert(dropIndex + i, item);
-								this.sceneryGroup.Items.Insert(dropIndex + i, new SceneryGroupItem(info.Flags, info.FileName, info.CheckSum));
+								this.sceneryGroup.Items.Insert(dropIndex + i, new ObjectEntry(info.Flags, info.FileName, info.CheckSum));
 							}
 						}
 						else {
@@ -635,7 +631,7 @@ namespace RCT2GroupCreator {
 						itemsAfter++;
 				}
 				List<ListViewItem> items = new List<ListViewItem>();
-				List<SceneryGroupItem> sgItems = new List<SceneryGroupItem>();
+				List<ObjectEntry> sgItems = new List<ObjectEntry>();
 				for (int i = this.tabGroupScenery.SelectedItems.Count - 1; i >= 0; i--) {
 					items.Add(this.tabGroupScenery.SelectedItems[i]);
 					sgItems.Add(this.sceneryGroup.Items[i]);
