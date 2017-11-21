@@ -10,47 +10,53 @@ namespace RCT2ObjectData.DataObjects.Types.AttractionInfo {
 public enum AttractionFlags : uint {
 	/** <summary> No flags are set. </summary> */
 	None = 0x00000000,
-
-	/** <summary> Disallow first remap color on the track. Used mainly for trams and trains. </summary> */
-	NoTrackRemap = 0x00000008,
+	/** <summary> Used to display mostly inverted vehicles correctly in the vehicle tab of the Ride window. </summary> */
+	VehicleTabScaleHalf = 0x00000001,
+	/** <summary> Disables inversions, even if the track allows for them. </summary> */
+	NoInversions = 0x00000002,
+	/** <summary> Disables banked track, even if the track allows for this. </summary> */
+	NoBankedTrack = 0x00000004,
+	/** <summary> Used mainly for trams and trains. </summary> */
+	PlayDepartSound = 0x00000008,
 	/** <summary> Set on magic carpet and swinging inverted ship. </summary> */
-	MagicCarpetInvertedShip = 0x00000010,
+	AlternativeSwingMode1 = 0x00000010,
 	/** <summary> Set on twist and snow cups. </summary> */
-	TwistSnowCups = 0x00000020,
+	AlternativeRotationMode1 = 0x00000020,
 	/** <summary> Set on enterprise. </summary> */
-	Enterprise = 0x00000040,
+	AlternativeRotationMode2 = 0x00000040,
+	
+	Unknown8_1 = 0x00000080,
+	
 	/** <summary> Riders will get wet if riding this ride. </summary> */
 	RidersGetWet = 0x00000100,
 	/** <summary> Only set on coaster boats. If unset, they do not slow down in water. </summary> */
 	SlowInWater = 0x00000200,
 	/** <summary> Ride is covered, guests won't care if it's raining. </summary> */
 	Covered = 0x00000400,
-	/** <summary> If set, this ride shows as a seperate ride instead of an alternate train type. If the track
+	/** <summary> Limit airtime bonus. Set on heartline twisters. </summary> */
+	LimitAirtimeBonus = 0x00000800,
+	
+	/** <summary> If set, this ride shows as a separate ride instead of an alternate train type. If the track
 	 * style doesn't support alternate train types, then this flag must be set or the ride won't show at all. </summary> */
 	SeparateRide = 0x00001000,
 	/** <summary> Set if SeparateRide is set. Not sure why. </summary> */
 	SeparateRide2 = 0x00002000,
 	/** <summary> Set on rowing boats, canoes and elevator. </summary> */
-	RowingBoatsCanoesElevator = 0x00004000,
-	/** <summary> Disables any shuttle type of mode on rides. </summary> */
-	DisableShuttleMode = 0x00008000,
+	CannotBreakDown = 0x00004000,
+	/** <summary> Disables last operating mode. On the Miniature Railway, this hides the shuttle mode (only available for Trams). </summary> */
+	DisableLastOperatingMode = 0x00008000,
 	/** <summary> Set on spinning wild mouse. </summary> */
 	SpinningWildMouse = 0x00010000,
-	/** <summary> Set on inverted shuttle and inverted vertical shuttle. </summary> */
-	InvertedAndVerticalShuttle = 0x00020000,
+	/** <summary> Disables the first two operating modes. Set on inverted shuttle and inverted vertical shuttle (a.o.). </summary> */
+	DisableFirstTwoOperatingModes = 0x00020000,
+	
+	Unknown4_4 = 0x00040000,
+	
 	/** <summary> Set only on sunglasses stall. </summary> */
 	SunglassesStall = 0x00080000,
 	/** <summary> Set only on magic carpet. </summary> */
 	MagicCarpet = 0x00100000,
-
-	Unknown1_0 = 0x00000001,
-	Unknown2_0 = 0x00000002,
-	Unknown8_2 = 0x00000800,
-	Unknown4_4 = 0x00040000,
-
-	Unused4_0 = 0x00000004,
-	Unused8_1 = 0x00000080,
-
+	
 	Unused2_5 = 0x00200000,
 	Unused4_5 = 0x00400000,
 	Unused8_5 = 0x00800000,
