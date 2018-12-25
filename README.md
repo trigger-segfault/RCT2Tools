@@ -2,6 +2,8 @@
 
 View the **[RCT2 Tools Website](http://trigger-death.github.io/RCT2Tools/)**.
 
+[![Discord](https://img.shields.io/discord/436949335947870238.svg?style=flat&logo=discord&label=chat&colorB=7389DC&link=https://discord.gg/vB7jUbY)](https://discord.gg/vB7jUbY)
+
 ## Requirements
 
 Works with Windows 7, Windows 8 has not been tested.
